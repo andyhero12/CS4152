@@ -64,6 +64,11 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _asteroids.init(_constants->get("asteroids"));
     _asteroids.setTexture(assets->get<Texture>("asteroid1"));
 
+    
+    // Init spawner controller
+    _spawnerController.init(_constants->get("spawner"));
+//    _spawnerController.setTexture(nullptr);
+
     // Initialize the Photon set
     _photons.init(_constants->get("photons"));
     _photons.setTexture(assets->get<Texture>("photon"));
@@ -108,11 +113,13 @@ void GameScene::dispose() {
 void GameScene::reset() {
     _gameEnded = false;
     _ship->setPosition(getSize()/2);
+    _ship->setAbsorbValue(0);
     _ship->setAngle(0);
     _ship->setVelocity(Vec2::ZERO);
     _ship->setHealth(_constants->get("ship")->getInt("health",0));
     _asteroids.init(_constants->get("asteroids"));
     _photons.init(_constants->get("photons"));
+    _spawnerController.init(_constants->get("spawner"));
 }
 
 /**
@@ -140,6 +147,7 @@ void GameScene::update(float timestep) {
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
+        _ship->subAbsorb(2);
     }
     
     // Move the ships and photons forward (ignoring collisions)
@@ -150,6 +158,7 @@ void GameScene::update(float timestep) {
     
     // Move the photons
     _photons.update(getSize());
+    _spawnerController.update(_asteroids);
     
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
@@ -161,7 +170,7 @@ void GameScene::update(float timestep) {
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
     // Update the health meter
-    _text->setText(strtool::format("Health %d", _ship->getHealth()));
+    _text->setText(strtool::format("Health %d, Absorb %d", _ship->getHealth(), _ship->getAbsorb()));
     _text->layout();
     
     // Check if game ended
@@ -188,6 +197,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     
     batch->draw(_background,Rect(Vec2::ZERO,getSize()));
     _asteroids.draw(batch,getSize());
+//    _spawnerController.draw();
     _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
     

@@ -20,6 +20,7 @@
 #include "SLAsteroidSet.h"
 #include "SLInputController.h"
 #include "SLCollisionController.h"
+#include "SpawnerController.h"
 
 
 
@@ -40,7 +41,8 @@ protected:
     InputController _input;
     /** The controller for managing collisions */
     CollisionController _collisions;
-    
+
+    SpawnerController _spawnerController;
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;
@@ -50,6 +52,7 @@ protected:
     AsteroidSet _asteroids;
     /** The location of all of the active asteroids */
     PhotonSet   _photons;
+    
 
     
     // VIEW items are going to be individual variables

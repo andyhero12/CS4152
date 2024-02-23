@@ -33,6 +33,7 @@ private:
     /** Velocity of the ship */
     cugl::Vec2 _vel;
         
+    int _absorbValue;
     // The following are protected, because they have no accessors
     /** Current angle of the ship */
     float _ang;
@@ -93,6 +94,11 @@ public:
 
     
 #pragma mark Properties
+    
+    void addAbsorb(int value);
+    void subAbsorb(int value);
+    int getAbsorb() const{ return _absorbValue;}
+    void setAbsorbValue(int x){_absorbValue = x;}
     /**
      * Returns the position of this ship.
      *
@@ -160,7 +166,6 @@ public:
      * @param value the angle of the ship
      */
     void setAngle(float value) { _ang = value; }
-    
     /**
      * Returns the current ship health.
      * 
@@ -188,7 +193,7 @@ public:
      * @return true if the ship can fire
      */
     bool canFireWeapon() const {
-        return (_refire > _firerate);
+        return (_refire > _firerate) && _absorbValue > 0;
     }
     
     /**
