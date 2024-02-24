@@ -22,7 +22,7 @@ public:
 //    std::shared_ptr<cugl::Texture> _monsterTexture;
 //    
 //    /* Spawner Textures */
-//    std::shared_ptr<cugl::Texture> _spawnerTexture;
+    std::shared_ptr<cugl::Texture> _texture;
     
     
     /* Set of spawners */
@@ -32,23 +32,16 @@ public:
     SpawnerController();
     
     ~SpawnerController();
-//    
-//    void setMonsterTexture(std::shared_ptr<cugl::Texture> &monster){
-//        _monsterTexture = monster;
-//    }
-//    
-//    void setSpawnerTexture(std::shared_ptr<cugl::Texture> &spawn){
-//        _spawnerTexture = spawn;
-//    }
-//    
-    
+
+    void setTexture(const std::shared_ptr<cugl::Texture>& value);
     
     void update(AsteroidSet &aset);
     
     bool init(std::shared_ptr<cugl::JsonValue> data);
     
-//    void draw();
+    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
     
+    bool win(){return _spawners.empty();}
     
 private:
     

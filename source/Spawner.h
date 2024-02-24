@@ -18,20 +18,22 @@ class Spawner{
 private:
     // Will include a spawner texture and a monster texture
     
-//    std::shared_ptr<cugl::Texture> _texture;
+    std::shared_ptr<cugl::Texture> _texture;
     int _spawnRate;
     int _respawnCnt;
+    int _health;
     cugl::Vec2 _position;
     
 public:
     
     Spawner(int rate, cugl::Vec2 pos);
     void update();
-//    void draw();
+//    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
 //    void setTexture(const std::shared_ptr<cugl::Texture>& value);
-//    const std::shared_ptr<cugl::Texture>& getTexture() const {
-//        return _texture;
-//    }
+    
+    const std::shared_ptr<cugl::Texture>& getTexture() const {
+        return _texture;
+    }
     
     
     bool canSpawn() const {
@@ -45,7 +47,8 @@ public:
     }
     const cugl::Vec2& getPos() const {
         return _position; }
-    
+    void subHealth(const int val);
+    bool dead(){return _health <= 0;}
 };
 
 #endif /* Spawner_hpp */

@@ -67,7 +67,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
-//    _spawnerController.setTexture(nullptr);
+    _spawnerController.setTexture(assets->get<Texture>("spawner"));
 
     // Initialize the Photon set
     _photons.init(_constants->get("photons"));
@@ -174,7 +174,7 @@ void GameScene::update(float timestep) {
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() || _spawnerController.win()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
@@ -197,7 +197,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     
     batch->draw(_background,Rect(Vec2::ZERO,getSize()));
     _asteroids.draw(batch,getSize());
-//    _spawnerController.draw();
+    _spawnerController.draw(batch, getSize());
     _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
     
@@ -208,7 +208,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() || _spawnerController.win()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);
