@@ -17,6 +17,7 @@
 //  Version: 2/21/21
 //
 #include "SLAsteroidSet.h"
+#include <random>
 
 using namespace cugl;
 
@@ -30,6 +31,15 @@ using namespace cugl;
  * @param v     The velocity
  */
 AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v) : Asteroid(p,v,3) {}
+
+// Function to generate a random value between 1 and 3
+int generateRandomValue1to3() {
+    // Static used for the seed to ensure it's only seeded once
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 3); // Range is 1 to 3, inclusive
+    return dis(gen);
+}
 
 /**
  * Allocates an asteroid by setting its position, velocity, and type
@@ -161,7 +171,7 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data) {
                 Vec2 vel;
                 vel.x = entry->get(1)->get(0)->asFloat(0);
                 vel.y = entry->get(1)->get(1)->asFloat(0);
-                spawnAsteroid(pos,vel);
+                spawnAsteroid(pos,vel,generateRandomValue1to3());
             }
         }
 

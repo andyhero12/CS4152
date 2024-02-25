@@ -1,0 +1,55 @@
+//
+//  Spawner.hpp
+//  Ship
+//
+//  Created by Henry Gao on 2/23/24.
+//
+#pragma once
+#ifndef Spawner_hpp
+#define Spawner_hpp
+
+#include <stdio.h>
+#include <cugl/cugl.h>
+#include <unordered_set>
+#include <vector>
+
+class Spawner{
+    
+private:
+    // Will include a spawner texture and a monster texture
+    
+    std::shared_ptr<cugl::Texture> _texture;
+    int _spawnRate;
+    int _respawnCnt;
+    int _health;
+    cugl::Vec2 _position;
+    
+public:
+    
+    Spawner(int rate, cugl::Vec2 pos);
+    void update();
+//    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
+//    void setTexture(const std::shared_ptr<cugl::Texture>& value);
+    
+    const std::shared_ptr<cugl::Texture>& getTexture() const {
+        return _texture;
+    }
+    
+    
+    bool canSpawn() const {
+        return (_respawnCnt > _spawnRate);
+    }
+    void reloadSpawner() {
+        _respawnCnt = 0;
+    }
+    const int getCnt() const {
+        return _respawnCnt;
+    }
+    const cugl::Vec2& getPos() const {
+        return _position; }
+    void subHealth(const int val);
+    bool dead(){return _health <= 0;}
+};
+
+#endif /* Spawner_hpp */
+

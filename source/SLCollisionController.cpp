@@ -107,7 +107,9 @@ bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset){
  */
 bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, AsteroidSet& aset) {
     bool collision = false;
-    for(auto it = aset.current.begin(); it != aset.current.end(); ++it) {
+    auto it = aset.current.begin();
+    while (it != aset.current.end()){
+//    for(auto it = aset.current.begin(); it != aset.current.end(); ++it) {
         // Calculate the normal of the (possible) point of collision
         std::shared_ptr<AsteroidSet::Asteroid> rock = *it;
         
@@ -132,6 +134,7 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
         }
         
         // If this normal is too small, there was a collision
+        auto curA = it++;
         if (distance < impactDistance) {
             // "Roll back" time so that the ships are barely touching (e.g. point of impact).
             norm.normalize();
@@ -159,8 +162,21 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
             rock->velocity = rock->velocity - temp;
             
             // Damage the ship as the last step
-            ship->setHealth(ship->getHealth()-aset.getDamage());
-            collision = true;
+//            ship->setHealth(ship->getHealth()-aset.getDamage());
+            if(rock->getType() == 1 ){
+//                ship->addAbsorb(rock->getAbsorbValue());
+                ship->addAbsorb(5);
+                aset.current.erase(curA);
+            }else if (rock->getType() == 2 && ship->getAbsorb() > 5){
+                ship->addAbsorb(rock->getAbsorbValue());
+                aset.current.erase(curA);
+            }else if (rock->getType() == 3 && ship->getAbsorb() > 10){
+                ship->addAbsorb(rock->getAbsorbValue());
+                aset.current.erase(curA);
+            }else{
+//                ship->setHealth(ship->getHealth()-aset.getDamage());
+            }
+                      
         }
     }
     return collision;

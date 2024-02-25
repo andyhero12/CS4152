@@ -35,6 +35,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _dang = 0;
     _refire = 0;
     _radius = 0;
+    _absorbValue = 0;
     
     // Physics
     _mass = data->getFloat("mass",1.0);
@@ -67,6 +68,17 @@ void Ship::setHealth(int value) {
         _health = value;
     } else {
         _health = 0;
+    }
+}
+
+void Ship::addAbsorb(int value) {
+    _absorbValue += value;
+}
+
+void Ship::subAbsorb(int value) {
+    _absorbValue -= value;
+    if (_absorbValue < 0){
+        _absorbValue = 0;
     }
 }
 

@@ -60,12 +60,17 @@ public:
     private:
         /** The type of the asteroid: 1, 2, or 3 */
         int _type;
+
         /** The drawing scale of the asteroid (to vary the size) */
         float _scale;
         /** The sprite sheet for animating the asteroid */
         std::shared_ptr<cugl::SpriteSheet> _sprite;
         
     public:
+        
+        int getAbsorbValue() const {
+            return _type;
+        }
         /**
          * Allocates an asteroid by setting its position and velocity.
          *
