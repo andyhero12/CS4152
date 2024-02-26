@@ -174,7 +174,7 @@ void GameScene::update(float timestep) {
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty() || _spawnerController.win()){
+    if (_asteroids.isEmpty()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
@@ -208,7 +208,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
-    if (_asteroids.isEmpty() || _spawnerController.win()){
+    if (_asteroids.isEmpty()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);
