@@ -36,6 +36,9 @@ public:
     
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
     
+    bool baseLost();
+    
+    int getFirstHealth();
 private:
     
 

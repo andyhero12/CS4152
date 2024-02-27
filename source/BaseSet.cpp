@@ -19,11 +19,17 @@ void BaseSet::update(AsteroidSet &aset){
     }
 
 }
-
+int BaseSet::getFirstHealth(){
+    return (*_bases.begin())->getHealth();
+}
 bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data) {
+    CULog("RENIT\n");
+    if (data){
+        CULog("DATA GOOD\n");
+    }
     if (data) {
         _bases.clear();
-//        CULog("INIT\n");
+        CULog("INIT\n");
         if (data->get("start")){
             auto baseValues = data->get("start")->children();
             for (auto it = baseValues.begin(); it != baseValues.end();it++){
@@ -55,7 +61,7 @@ void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size s
         cugl::Vec2 pos = base->getPos();
         cugl::Vec2 origin(0, 0);
         cugl::Affine2 trans;
-        float scale = 2;
+        float scale = 1;
         trans.scale(scale);
         trans.translate(pos);
         batch->draw(_texture, origin, trans);
@@ -65,4 +71,12 @@ void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size s
 //        spawner->draw(batch, size);
     }
     
+}
+bool BaseSet::baseLost(){
+    for (auto& base : _bases){
+        if (base->lost()){
+            return true;
+        }
+    }
+    return false;
 }

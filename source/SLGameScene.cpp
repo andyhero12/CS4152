@@ -122,7 +122,7 @@ void GameScene::reset() {
     _asteroids.init(_constants->get("asteroids"));
     _photons.init(_constants->get("photons"));
     _spawnerController.init(_constants->get("spawner"));
-    _bases.init(_constants->get("bases"));
+    _bases.init(_constants->get("base"));
 }
 
 /**
@@ -150,7 +150,7 @@ void GameScene::update(float timestep) {
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-        _ship->subAbsorb(2);
+//        _ship->subAbsorb(2);
     }
     
     // Move the ships and photons forward (ignoring collisions)
@@ -168,19 +168,23 @@ void GameScene::update(float timestep) {
     if (_collisions.resolveCollision(_ship, _asteroids)) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
     }
-    
+    if (_collisions.resolveCollision(_bases, _asteroids)){
+        CULog("asteroid hit base\n");
+    }
     // Check for collisions later for photons
     if (_collisions.resolveCollision(_photons, _asteroids)){
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d", _ship->getHealth(), _ship->getAbsorb()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Healh %d", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth()));
     _text->layout();
     
     // Check if game ended
     if (_asteroids.isEmpty()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
+        _gameEnded = true;
+    }else if (_bases.baseLost()){
         _gameEnded = true;
     }
 }
@@ -218,7 +222,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);
         batch->setColor(Color4::WHITE);
-    }else if (_ship->getHealth() == 0){
+    }else if (_ship->getHealth() == 0 || _bases.baseLost()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textLose->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::RED);
         batch->drawText(_textLose, trans);

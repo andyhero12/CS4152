@@ -26,6 +26,7 @@
 #include "SLShip.h"
 #include "SLPhotonSet.h"
 #include "SLAsteroidSet.h"
+#include "BaseSet.h"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -111,9 +112,7 @@ public:
      */
     bool resolveCollision(PhotonSet& pset, AsteroidSet& ast);
     
-    bool checkCollidePhotonAsteroid(
-       const std::shared_ptr<PhotonSet::Photon>& photon,
-       const std::shared_ptr<AsteroidSet::Asteroid>& asteroid);
+    bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

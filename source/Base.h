@@ -26,14 +26,20 @@ public:
     
     Base(int health, cugl::Vec2 pos);
     void update();
-    void subHealth(const int val);
+    void reduceHealth(int val);
     
+    bool lost(){
+        return _health <= 0;
+    }
     const std::shared_ptr<cugl::Texture>& getTexture() const {
         return _texture;
     }
     
     const cugl::Vec2& getPos() const {
         return _position;
+    }
+    const int getHealth() const{
+        return _health;
     }
 };
 

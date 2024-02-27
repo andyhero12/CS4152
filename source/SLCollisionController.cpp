@@ -88,6 +88,51 @@ bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset){
     return collision;
 }
 
+bool CollisionController::resolveCollision( BaseSet& bset, AsteroidSet& aset){
+    bool collision = false;
+//
+    auto itP = bset._bases.begin();
+    while (itP != bset._bases.end()){
+        std::shared_ptr<Base> base = *itP;
+        auto itA = aset.current.begin();
+        bool hitSomething = false;
+        while ( itA != aset.current.end()){
+            const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+            Vec2 norm = base->getPos() - rock->position;
+            float distance = norm.length();
+            float impactDistance = aset.getRadius()*rock->getScale();
+            
+            // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
+            for(int ii = -1; ii <= 1; ii++) {
+                for(int jj = -1; jj <= 1; jj++) {
+                    Vec2 pos = rock->position;
+                    pos.x += (ii)*_size.width;
+                    pos.y += (jj)*_size.height;
+                    pos = base->getPos() - pos;
+                    float dist = pos.length();
+                    if (dist < distance) {
+                        distance = dist;
+                        norm = pos;
+                    }
+                }
+            }
+            
+            // If this normal is too small, there was a collision
+            auto curA = itA++;
+            if (distance < impactDistance) {
+                hitSomething = true;
+                collision = true;
+                aset.current.erase(curA);
+            }
+        }
+        auto curP = itP++;
+        if (hitSomething){
+            (*curP)->reduceHealth(5);
+        }
+    }
+//    collision = true;
+    return collision;
+}
 
 /**
  * Returns true if there is a ship-asteroid collision
@@ -167,14 +212,16 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
 //                ship->addAbsorb(rock->getAbsorbValue());
                 ship->addAbsorb(5);
                 aset.current.erase(curA);
-            }else if (rock->getType() == 2 && ship->getAbsorb() > 5){
-                ship->addAbsorb(rock->getAbsorbValue());
+            }else if (rock->getType() == 2 && ship->getAbsorb() > 10){
+                ship->addAbsorb(5);
+//                ship->addAbsorb(rock->getAbsorbValue());
                 aset.current.erase(curA);
-            }else if (rock->getType() == 3 && ship->getAbsorb() > 10){
-                ship->addAbsorb(rock->getAbsorbValue());
+            }else if (rock->getType() == 3 && ship->getAbsorb() > 20){
+//                ship->addAbsorb(rock->getAbsorbValue());
+                ship->addAbsorb(5);
                 aset.current.erase(curA);
             }else{
-//                ship->setHealth(ship->getHealth()-aset.getDamage());
+                ship->setHealth(ship->getHealth()-aset.getDamage());
             }
                       
         }

@@ -6,7 +6,7 @@
 //
 
 #include <stdio.h>
-#include "base.h"
+#include "Base.h"
 Base::Base(int health, cugl::Vec2 pos)
 :_health{health}
 ,_position{pos}
@@ -18,6 +18,7 @@ void Base::update(){
     
 }
 
-void Base::subHealth(const int val){
+void Base::reduceHealth(int val){
     _health = _health - val;
 }
+
