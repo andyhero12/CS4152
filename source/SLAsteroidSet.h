@@ -20,6 +20,7 @@
 #define __SL_ASTERIOD_SET_H__
 #include <cugl/cugl.h>
 #include <unordered_set>
+#include "Base.h"
 
 /**
  * Model class representing a collection of asteroids.
@@ -56,6 +57,7 @@ public:
         cugl::Vec2 position;
         /** Photon velocity */
         cugl::Vec2 velocity;
+        cugl::Vec2 destination;
         // But these need to be protected for invariant reasons
     private:
         /** The type of the asteroid: 1, 2, or 3 */
@@ -65,7 +67,6 @@ public:
         float _scale;
         /** The sprite sheet for animating the asteroid */
         std::shared_ptr<cugl::SpriteSheet> _sprite;
-        
     public:
         
         int getAbsorbValue() const {
@@ -90,6 +91,7 @@ public:
          */
         Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type);
         
+        Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, cugl::Vec2 dest);
         /**
          * Returns the scale of this asteroid.
          *
@@ -157,10 +159,12 @@ public:
          * collision detection. Collisions are resolved afterwards.
          */
         void update(cugl::Size size);
+        void setTargetLocation(const cugl::Vec2 pos);
         
     };
 
 private:
+    std::vector<cugl::Vec2> _target;
     /** The texture for the asteroid sprite sheet. */
     std::shared_ptr<cugl::Texture> _texture;
 
