@@ -69,6 +69,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
 
+    _bases.init(_constants->get("base"));
+    _bases.setTexture(assets->get<Texture>("base"));
     // Initialize the Photon set
     _photons.init(_constants->get("photons"));
     _photons.setTexture(assets->get<Texture>("photon"));
@@ -120,6 +122,7 @@ void GameScene::reset() {
     _asteroids.init(_constants->get("asteroids"));
     _photons.init(_constants->get("photons"));
     _spawnerController.init(_constants->get("spawner"));
+    _bases.init(_constants->get("bases"));
 }
 
 /**
@@ -159,6 +162,7 @@ void GameScene::update(float timestep) {
     // Move the photons
     _photons.update(getSize());
     _spawnerController.update(_asteroids);
+    _bases.update(_asteroids);
     
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
@@ -198,6 +202,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     batch->draw(_background,Rect(Vec2::ZERO,getSize()));
     _asteroids.draw(batch,getSize());
     _spawnerController.draw(batch, getSize());
+    _bases.draw(batch,getSize());
     _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
     

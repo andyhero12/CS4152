@@ -19,6 +19,9 @@
         },
         "spawner": {
             "file": "textures/croc.png"
+        },
+        "base": {
+            "file": "textures/target.png"
         }
     },
     "fonts": {

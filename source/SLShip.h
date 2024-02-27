@@ -193,7 +193,7 @@ public:
      * @return true if the ship can fire
      */
     bool canFireWeapon() const {
-        return (_refire > _firerate) && _absorbValue > 0;
+        return (_refire > _firerate);
     }
     
     /**
