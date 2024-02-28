@@ -251,7 +251,6 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
 {
 
     int index = generateRandomValuelowToHigh(0,(int) _target.size());
-    CULog("new index: %d\n",index);
     // Determine direction and velocity of the photon.
     std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
     if (_texture)

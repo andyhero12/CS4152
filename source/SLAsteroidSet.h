@@ -75,7 +75,7 @@ public:
             return _targetIndex;
         }
         int getAbsorbValue() const {
-            return _type;
+            return _type*4;
         }
         /**
          * Allocates an asteroid by setting its position and velocity.

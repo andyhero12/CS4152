@@ -110,7 +110,7 @@ public:
      *
      * @return true if there is a ship-asteroid collision
      */
-    bool resolveCollision(PhotonSet& pset, AsteroidSet& ast);
+    bool resolveCollision(PhotonSet& pset, AsteroidSet& ast, std::shared_ptr<Ship> ship);
     
     bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
 };

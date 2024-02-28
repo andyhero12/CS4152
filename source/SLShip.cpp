@@ -121,6 +121,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if (_sprite) {
         // Transform to place the ship
         Affine2 shiptrans;
+        shiptrans.scale(getScale());
         shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(_pos);
         // Transform to place the shadow, and its color

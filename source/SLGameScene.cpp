@@ -141,16 +141,18 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    if (_input.didPressFire() && _ship->canFireWeapon()){
+    if (_input.didPressFire() && _ship->canFireWeapon() && !_ship->tooBig()){
         Vec2 p(_ship->getPosition().x,
-                _ship->getPosition().y);
+               _ship->getPosition().y);
         float rads = M_PI*_ship->getAngle()/180.0f + M_PI_2;
         Vec2 v =
         _photons._speed * Vec2::forAngle(rads) +_ship->getVelocity();
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-//        _ship->subAbsorb(2);
+        //        _ship->subAbsorb(2);
+    }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
+        _ship->setAbsorbValue(0);
     }
     
     // Move the ships and photons forward (ignoring collisions)
@@ -172,7 +174,7 @@ void GameScene::update(float timestep) {
         CULog("asteroid hit base\n");
     }
     // Check for collisions later for photons
-    if (_collisions.resolveCollision(_photons, _asteroids)){
+    if (_collisions.resolveCollision(_photons, _asteroids,_ship)){
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
     // Update the health meter
