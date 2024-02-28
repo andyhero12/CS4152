@@ -215,9 +215,15 @@ void Ship::move(float forward, float turn, Size size) {
     if (_ang < 0)
         _ang += 360;
     
-    
+    if (forward == 0){
+        _vel.x = 0;
+        _vel.y = 0;
+    }
+    else{
+        _vel.normalize();
+    }
     // Move the ship position by the ship velocity
-    _pos += _vel;
+    _pos += (_vel*3);
     wrapPosition(size);
 
     //Increment the refire readiness counter

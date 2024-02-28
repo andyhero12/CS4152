@@ -72,6 +72,7 @@ bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset){
                     v2.rotate(rads);
                     Vec2 v3 = v2;
                     v3.rotate(rads);
+                    CULog("split -------------");
                     aset.spawnAsteroid(nxtPos,v1, nxtType);
                     aset.spawnAsteroid(nxtPos,v2, nxtType);
                     aset.spawnAsteroid(nxtPos,v3, nxtType);

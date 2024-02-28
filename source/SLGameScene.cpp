@@ -180,7 +180,7 @@ void GameScene::update(float timestep) {
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() && _spawnerController.win()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
