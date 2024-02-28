@@ -52,17 +52,6 @@ int generateRandomValuelowToHigh(int low, int high)
 AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type): Asteroid(p, v, type, 0, 5) {}
 
 
-//AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, Vec2 dest, int damage) : destination(dest) , _damage(damage)
-//{
-//    position = p;
-//    velocity = v;
-//    _targetIndex = 0;
-//    setType(type);
-//    _attackCooldown = 15;
-//}
-//
-//<<<<<<< HEAD
-
 int AsteroidSet::Asteroid::getDamage() {
     CULog("attack %d", _attackCooldown);
     if (_attackCooldown == 60){
@@ -83,7 +72,6 @@ AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type
     _targetIndex = target;
     setType(type);
     _attackCooldown = 15;
-    //    destination = dest;
 }
 
 
