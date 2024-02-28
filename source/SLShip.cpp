@@ -194,7 +194,7 @@ void Ship::move(float forward, float turn, Size size) {
     processTurn(turn);
     
     if (forward == 0.0f){
-        _vel = _vel * 0.9f;
+        _vel = Vec2(0, 0);
     }
     
     // Process the ship thrust.
@@ -203,10 +203,6 @@ void Ship::move(float forward, float turn, Size size) {
         float rads = M_PI*_ang/180.0f+M_PI_2;
         Vec2 dir(cosf(rads),sinf(rads));
         _vel += dir * forward * _thrust;
-    }
-    if (_vel.length() > 10.f) {
-        _vel.normalize();
-        _vel = 10.0f*_vel;
     }
 
     // Move the ship, updating it.
@@ -219,6 +215,7 @@ void Ship::move(float forward, float turn, Size size) {
     if (_ang < 0)
         _ang += 360;
     
+    _vel = _vel.normalize() * 4;
     
     // Move the ship position by the ship velocity
     _pos += _vel;
