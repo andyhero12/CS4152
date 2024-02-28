@@ -61,7 +61,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _ship->setTexture(assets->get<Texture>("ship"));
 
     // Initialize the asteroid set
-    _asteroids.init(_constants->get("asteroids"));
+    _asteroids.init(_constants->get("asteroids"),_ship);
     _asteroids.setTexture(assets->get<Texture>("asteroid1"));
 
     
@@ -119,7 +119,7 @@ void GameScene::reset() {
     _ship->setAngle(0);
     _ship->setVelocity(Vec2::ZERO);
     _ship->setHealth(_constants->get("ship")->getInt("health",0));
-    _asteroids.init(_constants->get("asteroids"));
+    _asteroids.init(_constants->get("asteroids"),_ship);
     _photons.init(_constants->get("photons"));
     _spawnerController.init(_constants->get("spawner"));
     _bases.init(_constants->get("base"));
@@ -217,7 +217,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() && _spawnerController.win()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);

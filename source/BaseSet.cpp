@@ -8,7 +8,6 @@
 
 BaseSet::BaseSet()
 {
-    CULog("HERE\n");
 }
 BaseSet::~BaseSet()
 {
@@ -27,15 +26,9 @@ int BaseSet::getFirstHealth()
 }
 bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data)
 {
-    CULog("RENIT\n");
-    if (data)
-    {
-        CULog("DATA GOOD\n");
-    }
     if (data)
     {
         _bases.clear();
-        CULog("INIT\n");
         if (data->get("start"))
         {
             auto baseValues = data->get("start")->children();
