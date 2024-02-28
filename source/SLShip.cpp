@@ -192,7 +192,11 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 void Ship::move(float forward, float turn, Size size) {
     // Process the ship turning.
     processTurn(turn);
-
+    
+    if (forward == 0.0f){
+        _vel = _vel * 0.9f;
+    }
+    
     // Process the ship thrust.
     if (forward != 0.0f) {
         // Thrust key pressed; increase the ship velocity.
