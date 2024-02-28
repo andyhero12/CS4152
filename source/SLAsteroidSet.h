@@ -65,6 +65,8 @@ public:
 
         /** The drawing scale of the asteroid (to vary the size) */
         float _scale;
+        int _attackCooldown;
+        int _damage;
         /** The sprite sheet for animating the asteroid */
         std::shared_ptr<cugl::SpriteSheet> _sprite;
     public:
@@ -91,7 +93,7 @@ public:
          */
         Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type);
         
-        Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, cugl::Vec2 dest);
+        Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, cugl::Vec2 dest, int damage);
         /**
          * Returns the scale of this asteroid.
          *
@@ -102,7 +104,7 @@ public:
          * @return the scale of this asteroid.
          */
         float getScale() const { return _scale; }
-
+        int getDamage();
         /**
          * Returns the type of this asteroid.
          *

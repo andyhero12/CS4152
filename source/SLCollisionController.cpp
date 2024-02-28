@@ -222,7 +222,7 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
                 ship->addAbsorb(5);
                 aset.current.erase(curA);
             }else{
-                ship->setHealth(ship->getHealth()-aset.getDamage());
+                ship->setHealth(ship->getHealth()-rock->getDamage());
             }
                       
         }

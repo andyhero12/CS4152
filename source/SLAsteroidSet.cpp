@@ -49,20 +49,30 @@ int generateRandomValue1to3()
  * @param v     The velocity
  * @param type  The type (1, 2, or 3)
  */
-AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type)
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type): Asteroid(p, v, type, Vec2(0,0), 5) {}
+
+
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, Vec2 dest, int damage) : destination(dest) , _damage(damage)
 {
     position = p;
     velocity = v;
     setType(type);
+    _attackCooldown = 15;
 }
 
-AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, Vec2 dest) : destination(dest)
-{
-    position = p;
-    velocity = v;
-    setType(type);
-    //    destination = dest;
+
+int AsteroidSet::Asteroid::getDamage() {
+    CULog("attack %d", _attackCooldown);
+    if (_attackCooldown == 60){
+        _attackCooldown = 0;
+        return _damage;
+    }
+    else{
+        return 0;
+    }
 }
+
+
 
 void AsteroidSet::Asteroid::setTargetLocation(const cugl::Vec2 pos)
 {
@@ -123,6 +133,10 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &
  */
 void AsteroidSet::Asteroid::update(Size size)
 {
+    if (_attackCooldown < 60){
+        _attackCooldown += 1;
+    }
+    
     cugl::Vec2 direction = destination- position;
     
 //    CULog("x %f, y %f", direction.x, direction.y);
@@ -239,7 +253,6 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
     cugl::Vec2 closest = cugl::Vec2(0, 0);
     if (!_target.empty())
     {
-        CULog("adflkjf;a");
         closest = _target.front();
         for (const auto &dest : _target)
         {
@@ -250,7 +263,7 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
         }
     }
     // Determine direction and velocity of the photon.
-    std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, closest);
+    std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, closest, _damage);
     if (_texture)
     {
         int rows = _framesize / _framecols;
