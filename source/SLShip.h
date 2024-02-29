@@ -10,7 +10,7 @@
 //  With that said, you will notice several elements that look like they are
 //  part of the view, namely the texture and sound.  But this is the texture
 //  and sound DATA.  The actual view are the sprite batch and audio engine,
-//  respectively, that use this data to provide feedback on the screen.
+//  respectively, that use this
 //
 //  Author: Walker White
 //  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
