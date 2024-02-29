@@ -53,7 +53,6 @@ AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type
 
 
 int AsteroidSet::Asteroid::getDamage() {
-    CULog("attack %d", _attackCooldown);
     if (_attackCooldown == 60){
         _attackCooldown = 0;
         return _damage;

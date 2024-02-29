@@ -160,7 +160,7 @@ public:
      */
     float getAngle() const { return _ang; }
     
-    float getScale() const { return (1 + getAbsorb()/10.0f);}
+    float getScale() const { return (1 + getAbsorb()/15.0f);}
     /**
      * Sets the angle that this ship is facing.
      *

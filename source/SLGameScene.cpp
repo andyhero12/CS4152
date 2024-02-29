@@ -153,6 +153,7 @@ void GameScene::update(float timestep) {
         //        _ship->subAbsorb(2);
     }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
         _ship->setAbsorbValue(0);
+        _collisions.resolveBlowup(_ship, _asteroids);
     }
     
     // Move the ships and photons forward (ignoring collisions)
@@ -171,7 +172,7 @@ void GameScene::update(float timestep) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
     }
     if (_collisions.resolveCollision(_bases, _asteroids)){
-        CULog("asteroid hit base\n");
+//        CULog("asteroid hit base\n");
     }
     // Check for collisions later for photons
     if (_collisions.resolveCollision(_photons, _asteroids,_ship)){

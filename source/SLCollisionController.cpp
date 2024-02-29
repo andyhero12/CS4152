@@ -27,7 +27,20 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
-
+void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast){
+    float distanceCutoff = 100.0;
+    auto itA = ast.current.begin();
+    while (itA != ast.current.end()){
+        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+        Vec2 norm = ship->getPosition() - rock->position;
+        float distance = norm.length();
+        auto curA = itA++;
+//        CULog("distance %f\n", distance);
+        if (distance < distanceCutoff){
+            ast.current.erase(curA);
+        }
+    }
+}
 bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset, std::shared_ptr<Ship> ship){
     bool collision = false;
 //
