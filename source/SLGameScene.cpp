@@ -25,6 +25,7 @@ using namespace std;
 
 // Lock the screen size to fixed height regardless of aspect ratio
 #define SCENE_HEIGHT 720
+#define WORLD_SIZE 3
 
 #pragma mark -
 #pragma mark Constructors
@@ -151,7 +152,7 @@ void GameScene::update(float timestep) {
     }
     
     // Move the ships and photons forward (ignoring collisions)
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * 3);
+    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize());
@@ -207,7 +208,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     for (int i = -2; i <= 1; i++) {
         for (int j = -2; j <= 1; j++) {
             Color4 tint;
-            if (i + bgCellX < 0 || i + bgCellX >= 3 || j + bgCellY < 0 || j + bgCellY >= 3) {
+            if (i + bgCellX < 0 || i + bgCellX >= WORLD_SIZE || j + bgCellY < 0 || j + bgCellY >= WORLD_SIZE) {
                 tint = Color4("gray");
             }
             else {
