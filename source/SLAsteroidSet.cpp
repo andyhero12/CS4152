@@ -194,6 +194,7 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Shi
         // Reset all data
         current.clear();
         _pending.clear();
+        _target.clear();
 
         _mass = data->getFloat("mass", 0);
         _damage = data->getInt("damage", 0);
