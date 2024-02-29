@@ -151,7 +151,7 @@ void GameScene::update(float timestep) {
     }
     
     // Move the ships and photons forward (ignoring collisions)
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize());
+    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * 3);
     
     // Move the asteroids
     _asteroids.update(getSize());
@@ -201,7 +201,22 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
     
-    batch->draw(_background,Rect(Vec2::ZERO,getSize()));
+    //draw bg
+    int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
+    int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
+    for (int i = -2; i <= 1; i++) {
+        for (int j = -2; j <= 1; j++) {
+            Color4 tint;
+            if (i + bgCellX < 0 || i + bgCellX >= 3 || j + bgCellY < 0 || j + bgCellY >= 3) {
+                tint = Color4("gray");
+            }
+            else {
+                tint = Color4("white");
+            }
+            batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
+        }
+    }
+    
     _asteroids.draw(batch,getSize());
     _spawnerController.draw(batch, getSize());
     _photons.draw(batch, getSize());
