@@ -130,38 +130,6 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         
         _sprite->draw(batch,shadow,shadtrans);
         _sprite->draw(batch,shiptrans);
-        
-        // Duplicate images to support wrap
-        if (_pos.x+_radius > bounds.width) {
-            shiptrans.translate(-bounds.width,0);
-            shadtrans.translate(-bounds.width,0);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(bounds.width,0);
-            shadtrans.translate(bounds.width,0);
-        } else if (_pos.x-_radius < 0) {
-            shiptrans.translate(bounds.width,0);
-            shadtrans.translate(bounds.width,0);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(-bounds.width,0);
-            shadtrans.translate(-bounds.width,0);
-        }
-        if (_pos.y+_radius > bounds.height) {
-            shiptrans.translate(0,-bounds.height);
-            shadtrans.translate(0,-bounds.height);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(0,bounds.height);
-            shadtrans.translate(0,bounds.height);
-        } else if (_pos.y-_radius < 0) {
-            shiptrans.translate(0,bounds.height);
-            shadtrans.translate(0,bounds.height);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(0,-bounds.height);
-            shadtrans.translate(0,-bounds.height);
-        }
     }
 }
 
@@ -280,15 +248,15 @@ void Ship::processTurn(float turn) {
  */
 void Ship::wrapPosition(cugl::Size size) {
     while (_pos.x > size.width) {
-        _pos.x -= size.width;
+        _pos.x = size.width;
     }
     while (_pos.x < 0) {
-        _pos.x += size.width;
+        _pos.x = 0;
     }
     while (_pos.y > size.height) {
-        _pos.y -= size.height;
+        _pos.y = size.height;
     }
     while (_pos.y < 0) {
-        _pos.y += size.height;
+        _pos.y = 0;
     }
 }
