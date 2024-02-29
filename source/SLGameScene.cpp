@@ -193,6 +193,12 @@ void GameScene::update(float timestep) {
 void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     // For now we render 3152-style
     // DO NOT DO THIS IN YOUR FINAL GAME
+
+    //shift camera to follow ship; draw ingame objects here
+    cugl::Vec3 pos = cugl::Vec3();
+    pos.add(_ship->getPosition());
+    getCamera()->setPosition(pos);
+    getCamera()->update();
     batch->begin(getCamera()->getCombined());
     
     batch->draw(_background,Rect(Vec2::ZERO,getSize()));
@@ -200,7 +206,14 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     _spawnerController.draw(batch, getSize());
     _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
-    
+
+
+    // shift camera to draw for absolute positioning
+    getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
+    getCamera()->update();
+    batch->setPerspective(getCamera()->getCombined());
+
+
     batch->setColor(Color4::BLACK);
     batch->drawText(_text,Vec2(10,getSize().height-_text->getBounds().size.height));
     batch->setColor(Color4::WHITE);
