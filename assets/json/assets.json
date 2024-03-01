@@ -9,9 +9,8 @@
             "file": "textures/photon.png"
         },
         "ship": {
-            "front":{
-                "file": "textures/bear.png"
-            }
+            "file": "textures/bear.png"
+        
         },
         "asteroid1": {
             "file": "textures/monkey.png"

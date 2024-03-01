@@ -43,9 +43,9 @@ void Animation::updateAnimTime(float dt){
 }
 
 
-void Animation::stepAnimation(){
-    animSpriteFrames[prevAnimDir] = (animSpriteFrames[prevAnimDir] + 1) % currentAnimSprite->getSize();
-    currentAnimSprite->setFrame(animSpriteFrames[prevAnimDir]);}
+//void Animation::stepAnimation(){
+//    animSpriteFrames[prevAnimDir] = (animSpriteFrames[prevAnimDir] + 1) % currentAnimSprite->getSize();
+//    currentAnimSprite->setFrame(animSpriteFrames[prevAnimDir]);}
 
 const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
     return currentAnimSprite;
