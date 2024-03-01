@@ -7,10 +7,10 @@
 
 #include "Spawner.h"
 using namespace cugl;
-Spawner::Spawner(int rate, cugl::Vec2 pos)
+Spawner::Spawner(int rate, cugl::Vec2 pos, int health )
 : _spawnRate(rate)
 , _position(pos)
-, _health(100)
+, _health(health)
 {
     
 }

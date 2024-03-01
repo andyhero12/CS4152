@@ -20,6 +20,8 @@
 #define __SL_ASTERIOD_SET_H__
 #include <cugl/cugl.h>
 #include <unordered_set>
+#include "Base.h"
+#include "SLShip.h"
 
 /**
  * Model class representing a collection of asteroids.
@@ -49,6 +51,7 @@ public:
      *
      * Asteroids come in three different sizes, represented by their types.
      */
+    std::shared_ptr<Ship> _ship;
     class Asteroid {
     // It is okay for the user to access these directly
     public:
@@ -56,20 +59,23 @@ public:
         cugl::Vec2 position;
         /** Photon velocity */
         cugl::Vec2 velocity;
+        int _targetIndex;
         // But these need to be protected for invariant reasons
     private:
         /** The type of the asteroid: 1, 2, or 3 */
         int _type;
-
         /** The drawing scale of the asteroid (to vary the size) */
         float _scale;
+        int _attackCooldown;
+        int _damage;
         /** The sprite sheet for animating the asteroid */
         std::shared_ptr<cugl::SpriteSheet> _sprite;
-        
     public:
-        
+        int getTargetIndex() const{
+            return _targetIndex;
+        }
         int getAbsorbValue() const {
-            return _type;
+            return _type*4;
         }
         /**
          * Allocates an asteroid by setting its position and velocity.
@@ -90,6 +96,9 @@ public:
          */
         Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type);
         
+
+        Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, int target,  int damage);
+
         /**
          * Returns the scale of this asteroid.
          *
@@ -100,7 +109,7 @@ public:
          * @return the scale of this asteroid.
          */
         float getScale() const { return _scale; }
-
+        int getDamage();
         /**
          * Returns the type of this asteroid.
          *
@@ -156,11 +165,12 @@ public:
          * edge on the opposite side. However, this method performs no
          * collision detection. Collisions are resolved afterwards.
          */
-        void update(cugl::Size size);
+        void update(cugl::Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship);
         
     };
 
 private:
+    std::vector<cugl::Vec2> _target;
     /** The texture for the asteroid sprite sheet. */
     std::shared_ptr<cugl::Texture> _texture;
 
@@ -209,7 +219,7 @@ public:
      *
      * @return true if initialization was successful
      */
-    bool init(std::shared_ptr<cugl::JsonValue> data);
+    bool init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Ship> shipParam);
     
     /**
      * Returns true if the asteroid set is empty.

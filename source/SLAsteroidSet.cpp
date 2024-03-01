@@ -30,14 +30,15 @@ using namespace cugl;
  * @param p     The position
  * @param v     The velocity
  */
-AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v) : Asteroid(p,v,3) {}
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v) : Asteroid(p, v, 3) {}
 
 // Function to generate a random value between 1 and 3
-int generateRandomValue1to3() {
+int generateRandomValuelowToHigh(int low, int high)
+{
     // Static used for the seed to ensure it's only seeded once
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 3); // Range is 1 to 3, inclusive
+    std::uniform_int_distribution<> dis(low, high); // Range is 1 to 3, inclusive
     return dis(gen);
 }
 
@@ -48,11 +49,30 @@ int generateRandomValue1to3() {
  * @param v     The velocity
  * @param type  The type (1, 2, or 3)
  */
-AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type) {
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type): Asteroid(p, v, type, 0, 5) {}
+
+
+int AsteroidSet::Asteroid::getDamage() {
+    if (_attackCooldown == 60){
+        _attackCooldown = 0;
+        return _damage;
+    }
+    else{
+        return 0;
+    }
+}
+
+
+
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, int target, int damage): _damage(damage)
+{
     position = p;
     velocity = v;
+    _targetIndex = target;
     setType(type);
+    _attackCooldown = 15;
 }
+
 
 /**
  * Returns the type of this asteroid.
@@ -62,25 +82,27 @@ AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type
  *
  * @param type  The type of this asteroid.
  */
-void AsteroidSet::Asteroid::setType(int type) {
+void AsteroidSet::Asteroid::setType(int type)
+{
     CUAssertLog(type > 0 && type <= 3, "type must be 1, 2, or 3");
     _type = type;
-    switch (type) {
-        case 3:
-            _scale = 1.25;
-            break;
-        case 2:
-            _scale = 0.85;
-            break;
-        case 1:
-            _scale = .5;
-            break;
-        default:
-            _scale = 0.0f;
-            break;
+    switch (type)
+    {
+    case 3:
+        _scale = 1.25;
+        break;
+    case 2:
+        _scale = 0.85;
+        break;
+    case 1:
+        _scale = .5;
+        break;
+    default:
+        _scale = 0.0f;
+        break;
     }
 }
-    
+
 /**
  * Sets the sprite sheet for this asteroid.
  *
@@ -91,7 +113,8 @@ void AsteroidSet::Asteroid::setType(int type) {
  *
  * @param texture   The sprite sheet for this asteroid.
  */
-void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet>& sprite) {
+void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &sprite)
+{
     _sprite = sprite;
 }
 
@@ -103,18 +126,35 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet>& 
  * edge on the opposite side. However, this method performs no
  * collision detection. Collisions are resolved afterwards.
  */
-void AsteroidSet::Asteroid::update(Size size) {
-    position += velocity;
-    while (position.x > size.width) {
+void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
+{
+
+    if (_attackCooldown < 60){
+        _attackCooldown += 1;
+    }
+  
+    
+    cugl::Vec2 target_pos = _targetIndex == 0 ? ship->getPosition() : bases[_targetIndex-1] ;
+    cugl::Vec2 direction = target_pos- position;
+    
+//    CULog("x %f, y %f", direction.x, direction.y);
+    position += direction.normalize();
+//    position = destination;
+    //    position += velocity;
+    while (position.x > size.width)
+    {
         position.x -= size.width;
     }
-    while (position.x < 0) {
+    while (position.x < 0)
+    {
         position.x += size.width;
     }
-    while (position.y > size.height) {
+    while (position.y > size.height)
+    {
         position.y -= size.height;
     }
-    while (position.y < 0) {
+    while (position.y < 0)
+    {
         position.y += size.height;
     }
 }
@@ -128,12 +168,11 @@ void AsteroidSet::Asteroid::update(Size size) {
  * because the JSON value does not exist at the time the constructor
  * is called (because we do not create this object dynamically).
  */
-AsteroidSet::AsteroidSet() :
-_mass(0),
-_radius(0),
-_framecols(0),
-_framesize(0) {}
-    
+AsteroidSet::AsteroidSet() : _mass(0),
+                             _radius(0),
+                             _framecols(0),
+                             _framesize(0) {}
+
 /**
  * Initializes asteroid data with the given JSON
  *
@@ -148,22 +187,39 @@ _framesize(0) {}
  *
  * @return true if initialization was successful
  */
-bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data) {
-    if (data) {
+bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Ship> shipParam)
+{
+    if (data)
+    {
         // Reset all data
         current.clear();
         _pending.clear();
-        
-        _mass = data->getFloat("mass",0);
-        _damage = data->getInt("damage",0);
-        _hitratio = data->getFloat("hit ratio",1);
-        _framecols = data->getFloat("sprite cols",0);
-        _framesize = data->getFloat("sprite size",0);
-        
+        _target.clear();
+
+        _mass = data->getFloat("mass", 0);
+        _damage = data->getInt("damage", 0);
+        _hitratio = data->getFloat("hit ratio", 1);
+        _framecols = data->getFloat("sprite cols", 0);
+        _framesize = data->getFloat("sprite size", 0);
+        if (data->get("bases"))
+        {
+            auto base = data->get("bases")->children();
+            for (auto it = base.begin(); it != base.end(); ++it)
+            {
+                std::shared_ptr<JsonValue> entry = (*it);
+                Vec2 pos;
+                pos.x = entry->get(0)->asFloat(0);
+                pos.y = entry->get(1)->asFloat(0);
+                _target.emplace_back(pos);
+            }
+        }
+
         // This is an iterator over all of the elements of rocks
-        if (data->get("start")) {
+        if (data->get("start"))
+        {
             auto rocks = data->get("start")->children();
-            for(auto it = rocks.begin(); it != rocks.end(); ++it) {
+            for (auto it = rocks.begin(); it != rocks.end(); ++it)
+            {
                 std::shared_ptr<JsonValue> entry = (*it);
                 Vec2 pos;
                 pos.x = entry->get(0)->get(0)->asFloat(0);
@@ -171,10 +227,10 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data) {
                 Vec2 vel;
                 vel.x = entry->get(1)->get(0)->asFloat(0);
                 vel.y = entry->get(1)->get(1)->asFloat(0);
-                spawnAsteroid(pos,vel,generateRandomValue1to3());
+                spawnAsteroid(pos, vel, generateRandomValuelowToHigh(1,3));
             }
         }
-
+        _ship = shipParam;
         return true;
     }
     return false;
@@ -191,21 +247,25 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data) {
  * @param v     The asteroid velocity.
  * @param type  The asteroid type.
  */
-void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t) {
+void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
+{
+
+    int index = generateRandomValuelowToHigh(0,(int) _target.size());
     // Determine direction and velocity of the photon.
-    std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p,v,t);
-    if (_texture) {
-        int rows = _framesize/_framecols;
-        if (_framesize % _framecols != 0) {
+    std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
+    if (_texture)
+    {
+        int rows = _framesize / _framecols;
+        if (_framesize % _framecols != 0)
+        {
             rows++;
         }
-        
-        rock->setSprite(SpriteSheet::alloc(_texture,rows,_framecols,_framesize));
-        rock->getSprite()->setOrigin(Vec2(_radius,_radius));     
+        rock->setSprite(SpriteSheet::alloc(_texture, rows, _framecols, _framesize));
+        rock->getSprite()->setOrigin(Vec2(_radius, _radius));
     }
     _pending.emplace(rock);
 }
-    
+
 /**
  * Moves all the asteroids in the active set.
  *
@@ -217,20 +277,24 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t) {
  * side. However, this method performs no collision detection. Collisions
  * are resolved afterwards.
  */
-void AsteroidSet::update(Size size) {
+void AsteroidSet::update(Size size)
+{
     // Move asteroids, updating the animation frame
-    for(auto it = current.begin(); it != current.end(); ++it) {
-        (*it)->update(size);
+    for (auto it = current.begin(); it != current.end(); ++it)
+    {
+        (*it)->update(size,_target, _ship);
         auto sprite = (*it)->getSprite();
-        int frame = sprite->getFrame()+1;
-        if (frame >= sprite->getSize()) {
+        int frame = sprite->getFrame() + 1;
+        if (frame >= sprite->getSize())
+        {
             frame = 0;
         }
         sprite->setFrame(frame);
     }
-    
+
     // Move from pending to current
-    for(auto it = _pending.begin(); it != _pending.end(); ++it) {
+    for (auto it = _pending.begin(); it != _pending.end(); ++it)
+    {
         current.emplace(*it);
     }
     _pending.clear();
@@ -251,31 +315,38 @@ void AsteroidSet::update(Size size) {
  *
  * @param value the image for a single asteroid; reused by all asteroids.
  */
-void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture>& value) {
-    if (value && _framecols > 0) {
-        int rows = _framesize/_framecols;
-        if (_framesize % _framecols != 0) {
+void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
+{
+    if (value && _framecols > 0)
+    {
+        int rows = _framesize / _framecols;
+        if (_framesize % _framecols != 0)
+        {
             rows++;
         }
         Size size = value->getSize();
         size.width /= _framecols;
         size.height /= rows;
 
-        _radius = std::max(size.width,size.height)/2;
+        _radius = std::max(size.width, size.height) / 2;
         _texture = value;
-        
+
         // Update the sprite sheets of the asteroids as necessary
-        for(auto it = current.begin(); it != current.end(); ++it) {
+        for (auto it = current.begin(); it != current.end(); ++it)
+        {
             std::shared_ptr<Asteroid> rock = (*it);
             rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-            rock->getSprite()->setOrigin(Vec2(_radius,_radius));
+            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
-        for(auto it = _pending.begin(); it != _pending.end(); ++it) {
+        for (auto it = _pending.begin(); it != _pending.end(); ++it)
+        {
             std::shared_ptr<Asteroid> rock = (*it);
             rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-            rock->getSprite()->setOrigin(Vec2(_radius,_radius));
+            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
-    } else {
+    }
+    else
+    {
         _radius = 0;
         _texture = nullptr;
     }
@@ -293,37 +364,46 @@ void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture>& value) {
  * @param batch     The sprite batch to draw to
  * @param size      The size of the window (for wrap around)
  */
-void AsteroidSet::draw(const std::shared_ptr<SpriteBatch>& batch, Size size) {
-    if (_texture) {
-        for(auto it = current.begin(); it != current.end(); ++it) {
+void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size)
+{
+    if (_texture)
+    {
+        for (auto it = current.begin(); it != current.end(); ++it)
+        {
             float scale = (*it)->getScale();
             Vec2 pos = (*it)->position;
-            Vec2 origin(_radius,_radius);
+            Vec2 origin(_radius, _radius);
 
             Affine2 trans;
             trans.scale(scale);
             trans.translate(pos);
             auto sprite = (*it)->getSprite();
 
-            float r = _radius*scale;
-            sprite->draw(batch,trans);
-            if (pos.x+r > size.width) {
-                trans.translate(-size.width,0);
-                sprite->draw(batch,trans);
-                trans.translate(size.width,0);
-            } else if (pos.x-r < 0) {
-                trans.translate(size.width,0);
-                sprite->draw(batch,trans);
-                trans.translate(-size.width,0);
+            float r = _radius * scale;
+            sprite->draw(batch, trans);
+            if (pos.x + r > size.width)
+            {
+                trans.translate(-size.width, 0);
+                sprite->draw(batch, trans);
+                trans.translate(size.width, 0);
             }
-            if (pos.y+r > size.height) {
-                trans.translate(0,-size.height);
-                sprite->draw(batch,trans);
-                trans.translate(0,size.height);
-            } else if (pos.y-r < 0) {
-                trans.translate(0,size.height);
-                sprite->draw(batch,trans);
-                trans.translate(0,-size.height);
+            else if (pos.x - r < 0)
+            {
+                trans.translate(size.width, 0);
+                sprite->draw(batch, trans);
+                trans.translate(-size.width, 0);
+            }
+            if (pos.y + r > size.height)
+            {
+                trans.translate(0, -size.height);
+                sprite->draw(batch, trans);
+                trans.translate(0, size.height);
+            }
+            else if (pos.y - r < 0)
+            {
+                trans.translate(0, size.height);
+                sprite->draw(batch, trans);
+                trans.translate(0, -size.height);
             }
         }
     }

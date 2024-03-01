@@ -21,6 +21,7 @@
 #include "SLInputController.h"
 #include "SLCollisionController.h"
 #include "SpawnerController.h"
+#include "BaseSet.h"
 
 
 
@@ -53,7 +54,7 @@ protected:
     /** The location of all of the active asteroids */
     PhotonSet   _photons;
     
-
+    BaseSet     _bases;
     
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
