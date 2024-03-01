@@ -155,7 +155,7 @@ void GameScene::update(float timestep) {
         //        _ship->subAbsorb(2);
     }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
         _ship->setAbsorbValue(0);
-        _collisions.resolveBlowup(_ship, _asteroids);
+        _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
     }
     
     // Move the ships and photons forward (ignoring collisions)

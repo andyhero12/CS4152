@@ -27,6 +27,7 @@
 #include "SLPhotonSet.h"
 #include "SLAsteroidSet.h"
 #include "BaseSet.h"
+#include "Spawner.h"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -114,7 +115,7 @@ public:
     
     bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
     
-    void resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast);
+    void resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */
