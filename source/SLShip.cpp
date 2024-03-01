@@ -121,6 +121,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if (_sprite) {
         // Transform to place the ship
         Affine2 shiptrans;
+        shiptrans.scale(getScale());
         shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(_pos);
         // Transform to place the shadow, and its color
@@ -183,9 +184,15 @@ void Ship::move(float forward, float turn, Size size) {
     if (_ang < 0)
         _ang += 360;
     
-    
+    if (forward == 0){
+        _vel.x = 0;
+        _vel.y = 0;
+    }
+    else{
+        _vel.normalize();
+    }
     // Move the ship position by the ship velocity
-    _pos += _vel;
+    _pos += (_vel*3);
     wrapPosition(size);
 
     //Increment the refire readiness counter

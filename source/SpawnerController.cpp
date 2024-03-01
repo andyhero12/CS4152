@@ -29,7 +29,7 @@ void SpawnerController::update(AsteroidSet &aset){
     for(auto& spawner : _spawners) {
         spawner->update();
         if (spawner->canSpawn()){
-            spawner->subHealth(20);
+            spawner->subHealth(1);
             spawner->reloadSpawner();
             aset.spawnAsteroid(spawner->getPos(), cugl::Vec2(generateRandomValue(-3,3), generateRandomValue(-3,3)), generateRandomValue(1,3));
         }
@@ -62,7 +62,8 @@ bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data) {
                 pos.x = entry->get(0)->get(0)->asFloat(0);
                 pos.y = entry->get(0)->get(1)->asFloat(0);
                 int spawnRate = entry->get(1)->asInt(0);
-                _spawners.insert(std::make_shared<Spawner>(spawnRate,pos));
+                int health = 10;
+                _spawners.insert(std::make_shared<Spawner>(spawnRate,pos,health));
             }
         }
         return true;

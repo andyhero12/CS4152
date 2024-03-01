@@ -26,7 +26,7 @@ private:
     
 public:
     
-    Spawner(int rate, cugl::Vec2 pos);
+    Spawner(int rate, cugl::Vec2 pos, int health);
     void update();
 //    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
 //    void setTexture(const std::shared_ptr<cugl::Texture>& value);
