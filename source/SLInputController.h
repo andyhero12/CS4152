@@ -37,6 +37,12 @@ private:
     bool _didReset;
 
 public:
+
+    std::shared_ptr<cugl::GameController> _gameContrl;
+
+    bool init();
+
+    //GameController _gamecontr;
     /**
      * Returns the amount of forward movement.
      *

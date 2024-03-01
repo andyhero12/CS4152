@@ -30,7 +30,21 @@ _turning(0),
 _didFire(false) {
 }
 
+bool InputController::init() {
+    bool contSuccess = Input::activate<GameControllerInput>();
 
+    if (contSuccess) {
+
+        GameControllerInput* controller = Input::get<GameControllerInput>();
+        std::vector<std::string> deviceUUIDs = controller->devices();
+        _gameContrl = controller -> open(deviceUUIDs[0]);
+        std::cout << deviceUUIDs[0] << std::endl;
+        return true;
+    }
+
+    return false;
+
+}
 
 /**
  * Reads the input for this player and converts the result into game logic.
@@ -55,7 +69,12 @@ void InputController::readInput() {
     _didReset = false;
     
     // Movement forward/backward
+    float LR = _gameContrl->getAxisPosition(0);
+    float UD = _gameContrl->getAxisPosition(1);
+    std::cout << LR << " " << UD << std::endl;
+
     Keyboard* keys = Input::get<Keyboard>();
+
     if (keys->keyDown(up) && !keys->keyDown(down)) {
         _forward = 1;
     } else if (keys->keyDown(down) && !keys->keyDown(up)) {
@@ -78,4 +97,28 @@ void InputController::readInput() {
     if (keys->keyDown(reset)) {
         _didReset = true;
     }
+
+    if (keys->keyDown(up) && !keys->keyDown(down)) {
+        _forward = 1;
+    }
+    else if (keys->keyDown(down) && !keys->keyDown(up)) {
+        _forward = -1;
+    }
+    // Controller
+    // Movement left/right
+     
+    if (LR <= -0.2) {
+        _turning = -1;
+    }
+    else if (LR >= 0.2) {
+        _turning = 1;
+    }
+
+    if (UD<=-0.2) {
+        _forward = 1;
+    }
+    else if (UD>=0.2) {
+        _forward = -1;
+    }
+
 }

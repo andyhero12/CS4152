@@ -51,7 +51,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     
     // Start up the input handler
     _assets = assets;
-    
+    _input.init();
+
     // Get the background image and constant values
     _background = assets->get<Texture>("background");
     _constants = assets->get<JsonValue>("constants");
