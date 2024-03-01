@@ -25,6 +25,7 @@ using namespace std;
 
 // Lock the screen size to fixed height regardless of aspect ratio
 #define SCENE_HEIGHT 720
+#define WORLD_SIZE 3
 
 #pragma mark -
 #pragma mark Constructors
@@ -157,7 +158,7 @@ void GameScene::update(float timestep) {
     }
     
     // Move the ships and photons forward (ignoring collisions)
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize());
+    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize());
@@ -204,15 +205,43 @@ void GameScene::update(float timestep) {
 void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     // For now we render 3152-style
     // DO NOT DO THIS IN YOUR FINAL GAME
+
+    //shift camera to follow ship; draw ingame objects here
+    cugl::Vec3 pos = cugl::Vec3();
+    pos.add(_ship->getPosition());
+    getCamera()->setPosition(pos);
+    getCamera()->update();
     batch->begin(getCamera()->getCombined());
     
-    batch->draw(_background,Rect(Vec2::ZERO,getSize()));
+    //draw bg
+    int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
+    int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
+    for (int i = -2; i <= 1; i++) {
+        for (int j = -2; j <= 1; j++) {
+            Color4 tint;
+            if (i + bgCellX < 0 || i + bgCellX >= WORLD_SIZE || j + bgCellY < 0 || j + bgCellY >= WORLD_SIZE) {
+                tint = Color4("gray");
+            }
+            else {
+                tint = Color4("white");
+            }
+            batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
+        }
+    }
+    
     _asteroids.draw(batch,getSize());
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
     _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
-    
+
+
+    // shift camera to draw for absolute positioning
+    getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
+    getCamera()->update();
+    batch->setPerspective(getCamera()->getCombined());
+
+
     batch->setColor(Color4::BLACK);
     batch->drawText(_text,Vec2(10,getSize().height-_text->getBounds().size.height));
     batch->setColor(Color4::WHITE);
