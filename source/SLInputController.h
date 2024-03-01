@@ -39,7 +39,7 @@ private:
 public:
 
     std::shared_ptr<cugl::GameController> _gameContrl;
-
+    std::vector<cugl::Vec2> directions;
     bool init();
 
     //GameController _gamecontr;

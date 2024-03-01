@@ -93,6 +93,9 @@ void InputController::readInput() {
     if (keys->keyDown(shoot)) {
         _didFire = true;
     }
+    else if(_gameContrl->isButtonDown(0)){
+        _didFire = true;
+    }
     
     // Reset the game
     if (keys->keyDown(reset)) {
@@ -138,6 +141,40 @@ void InputController::readInput() {
         else {
 
         }
+        
+        /*if(_gameContrl->isButtonDown(0)){
+            std::cout << "0 is down" << std::endl;
+        }
+        if (_gameContrl->isButtonDown(1)) {
+            std::cout << "1 is down" << std::endl;
+        }
+        if (_gameContrl->isButtonDown(2)) {
+            std::cout << "2 is down" << std::endl;
+        }
+        if (_gameContrl->isButtonDown(3)) {
+            std::cout << "3 is down" << std::endl;
+        }
+        if (_gameContrl->isButtonDown(4)) {
+            std::cout << "4 is down" << std::endl;
+        }
+        if (_gameContrl->isButtonDown(5)) {
+            std::cout << "5 is down" << std::endl;
+        }*/
+        
+    }
+
+    std::cout << "printhere" << std::endl;
+    std::cout << _gameContrl->numberButtons() << std::endl;
+    std::cout << _gameContrl->numberHats() << std::endl;
+    std::cout << _gameContrl->numberAxes() << std::endl;
+    for (int i = 0; i < 128; i++)
+    {
+        if (_gameContrl->isButtonDown(i))
+        {
+            std::cout << i << std::endl;
+        }
+
+
     }
    /* if (LR <= -0.2 && LR < UD) {
         _turning = -1;
