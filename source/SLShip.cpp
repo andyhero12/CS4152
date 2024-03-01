@@ -17,6 +17,7 @@
 //  Version: 1/20/22
 //
 #include "SLShip.h"
+#include <cmath>
 
 using namespace cugl;
 
@@ -136,38 +137,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         
         _animations.getSprite()->draw(batch,shadow,shadtrans);
         _animations.getSprite()->draw(batch,shiptrans);
-        
-        // Duplicate images to support wrap
-        if (_pos.x+_radius > bounds.width) {
-            shiptrans.translate(-bounds.width,0);
-            shadtrans.translate(-bounds.width,0);
-            _animations.getSprite()->draw(batch,shadow,shadtrans);
-            _animations.getSprite()->draw(batch,shiptrans);
-            shiptrans.translate(bounds.width,0);
-            shadtrans.translate(bounds.width,0);
-        } else if (_pos.x-_radius < 0) {
-            shiptrans.translate(bounds.width,0);
-            shadtrans.translate(bounds.width,0);
-            _animations.getSprite()->draw(batch,shadow,shadtrans);
-            _animations.getSprite()->draw(batch,shiptrans);
-            shiptrans.translate(-bounds.width,0);
-            shadtrans.translate(-bounds.width,0);
-        }
-        if (_pos.y+_radius > bounds.height) {
-            shiptrans.translate(0,-bounds.height);
-            shadtrans.translate(0,-bounds.height);
-            _animations.getSprite()->draw(batch,shadow,shadtrans);
-            _animations.getSprite()->draw(batch,shiptrans);
-            shiptrans.translate(0,bounds.height);
-            shadtrans.translate(0,bounds.height);
-        } else if (_pos.y-_radius < 0) {
-            shiptrans.translate(0,bounds.height);
-            shadtrans.translate(0,bounds.height);
-            _animations.getSprite()->draw(batch,shadow,shadtrans);
-            _animations.getSprite()->draw(batch,shiptrans);
-            shiptrans.translate(0,-bounds.height);
-            shadtrans.translate(0,-bounds.height);
-        }
+
     }
 }
 
@@ -197,23 +167,32 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  */
 void Ship::move(float forward, float turn, Size size) {
     // Process the ship turning.
-    processTurn(turn);
+//    processTurn(turn);
+    
+    if (forward == 0.0f){
+        _vel = Vec2(0, 0);
+    }
+    
+    _vel = Vec2(turn, forward);
+    
 
+    
+    
+    
     // Process the ship thrust.
-    if (forward != 0.0f) {
-        // Thrust key pressed; increase the ship velocity.
-        float rads = M_PI*_ang/180.0f+M_PI_2;
-        Vec2 dir(cosf(rads),sinf(rads));
-        _vel += dir * forward * _thrust;
-    }
-    if (_vel.length() > 10.f) {
-        _vel.normalize();
-        _vel = 10.0f*_vel;
-    }
+//    if (forward != 0.0f) {
+//        // Thrust key pressed; increase the ship velocity.
+//        float rads = M_PI*_ang/180.0f+M_PI_2;
+//        Vec2 dir(cosf(rads),sinf(rads));
+//        _vel += dir * forward * _thrust;
+//    }
 
     // Move the ship, updating it.
     // Adjust the angle by the change in angle
-    setAngle(_ang+_dang);
+    if (!(forward==0 && turn==0)) {
+        _ang = atan2(forward, turn) * (180/M_PI) - 90;
+        setAngle(_ang);
+    }
     
     // INVARIANT: 0 <= ang < 360
     if (_ang > 360)
@@ -221,13 +200,8 @@ void Ship::move(float forward, float turn, Size size) {
     if (_ang < 0)
         _ang += 360;
     
-    if (forward == 0){
-        _vel.x = 0;
-        _vel.y = 0;
-    }
-    else{
-        _vel.normalize();
-    }
+    _vel = _vel.normalize();
+    
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
     wrapPosition(size);
@@ -302,15 +276,15 @@ void Ship::processTurn(float turn) {
  */
 void Ship::wrapPosition(cugl::Size size) {
     while (_pos.x > size.width) {
-        _pos.x -= size.width;
+        _pos.x = size.width;
     }
     while (_pos.x < 0) {
-        _pos.x += size.width;
+        _pos.x = 0;
     }
     while (_pos.y > size.height) {
-        _pos.y -= size.height;
+        _pos.y = size.height;
     }
     while (_pos.y < 0) {
-        _pos.y += size.height;
+        _pos.y = 0;
     }
 }
