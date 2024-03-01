@@ -130,7 +130,7 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &
  */
 void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
 {
-    _animations.updateAnimTime(1/60.0f);
+    _animations.updateAnimTime();
     if (_animations.frameUpdateReady()){
         _animations.stepAnimation();
     }

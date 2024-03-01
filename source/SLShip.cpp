@@ -212,7 +212,7 @@ void Ship::move(float forward, float turn, Size size) {
     }
     
     if (forward != 0 or turn != 0){
-        _animations.updateAnimTime(1/60.0f);
+        _animations.updateAnimTime();
         if (_animations.frameUpdateReady()){
             _animations.stepAnimation();
         }
