@@ -43,6 +43,8 @@
 		C68345842B89104B004B382A /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C68345812B89104B004B382A /* Monster.cpp */; };
 		C68345872B89148F004B382A /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C68345852B89148F004B382A /* SpawnerController.cpp */; };
 		C68345882B89148F004B382A /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C68345852B89148F004B382A /* SpawnerController.cpp */; };
+		C6A3A6CD2B9159E500875483 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6A3A6CB2B9159E500875483 /* Animation.cpp */; };
+		C6A3A6CE2B9159E500875483 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6A3A6CB2B9159E500875483 /* Animation.cpp */; };
 		EB0F3CB827FB9FD40037CC66 /* Mac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB0F3CB327FB9FD40037CC66 /* Mac.xcassets */; };
 		EB0F3CD527FBA2190037CC66 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC727FBA2180037CC66 /* ForceFeedback.framework */; };
 		EB0F3CD627FBA2190037CC66 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC827FBA2180037CC66 /* CoreHaptics.framework */; };
@@ -131,6 +133,8 @@
 		C68345822B89104B004B382A /* Monster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
 		C68345852B89148F004B382A /* SpawnerController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpawnerController.cpp; sourceTree = "<group>"; };
 		C68345862B89148F004B382A /* SpawnerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpawnerController.h; sourceTree = "<group>"; };
+		C6A3A6CB2B9159E500875483 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
+		C6A3A6CC2B9159E500875483 /* Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		EB0F3C9627FB9DCB0037CC66 /* Ship Lab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ship Lab.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB0F3CB027FB9FD40037CC66 /* Landscape.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Landscape.storyboard; sourceTree = "<group>"; };
 		EB0F3CB127FB9FD40037CC66 /* iOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = iOS.xcassets; sourceTree = "<group>"; };
@@ -246,6 +250,8 @@
 			isa = PBXGroup;
 			children = (
 				BA9540AEA1A66120EEC87741 /* SLShip.cpp */,
+				C6A3A6CB2B9159E500875483 /* Animation.cpp */,
+				C6A3A6CC2B9159E500875483 /* Animation.h */,
 				BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */,
 				BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */,
 				BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */,
@@ -510,6 +516,7 @@
 				BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */,
 				BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
+				C6A3A6CD2B9159E500875483 /* Animation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +538,7 @@
 				BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */,
 				BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */,
 				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
+				C6A3A6CE2B9159E500875483 /* Animation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
