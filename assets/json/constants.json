@@ -22,8 +22,8 @@
         "mass": 2,
         "damage": 5,
         "hit ratio": 0.8,
-        "sprite cols": 4,
-        "sprite size": 4,
+        "sprite cols": 6,
+        "sprite size": 6,
         "start": [
             [[50,200], [-2,2]],
             [[200,400], [2,-2]],
