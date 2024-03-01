@@ -11,7 +11,8 @@
         "shadow": 10,
         "sprite cols": 10,
         "sprite size": 10,
-        "sprite frame": 5
+        "sprite frame": 5,
+        "mode cooldown": 10
     },
     "photons": {
         "speed": 5,

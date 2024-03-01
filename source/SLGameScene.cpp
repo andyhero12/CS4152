@@ -139,6 +139,10 @@ void GameScene::update(float timestep) {
     if (_input.didPressReset()) {
         reset();
     }
+    if(_input.didChangeMode() && _ship->canChangeMode()){
+        _ship->toggleMode();
+        _ship->reloadMode();
+    }
     if (_gameEnded){
         return;
     }
@@ -180,7 +184,7 @@ void GameScene::update(float timestep) {
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d, Base_Healh %d", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth(), _ship->getMode().c_str()));
     _text->layout();
     
     // Check if game ended

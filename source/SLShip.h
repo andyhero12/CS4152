@@ -28,11 +28,16 @@
  */
 class Ship {
 private:
+    
+    std::array<std::string, 3> modes = {"1", "2", "3"};
+    
     /** Position of the ship */
     cugl::Vec2 _pos;
     /** Velocity of the ship */
     cugl::Vec2 _vel;
-        
+    
+    int _mode = 0;
+    
     int _absorbValue;
     // The following are protected, because they have no accessors
     /** Current angle of the ship */
@@ -67,6 +72,10 @@ private:
     float _maxbank;
     /** Amount to dampedn angular movement over time */
     float _angdamp;
+    
+    int _modeCooldown;
+    
+    int _modeTimer;
     
     // Asset references. These should be set by GameScene
     /** Reference to the ships sprite sheet */
@@ -200,6 +209,10 @@ public:
         return (_refire > _firerate);
     }
     
+    bool canChangeMode() const {
+        return (_modeCooldown < _modeTimer);
+    }
+    
     /**
      * Resets the reload counter so the ship cannot fire again immediately.
      *
@@ -209,7 +222,11 @@ public:
     void reloadWeapon() {
         _refire = 0;
     }
-
+    
+    void reloadMode(){
+        _modeTimer = 0;
+    }
+    
     /**
      * Returns the mass of the ship.
      *
@@ -232,6 +249,15 @@ public:
      */
     float getRadius() {
         return _radius;
+    }
+    
+    std::string getMode(){
+        return modes[_mode];
+    }
+    
+    void toggleMode(){
+        int length = sizeof(modes) / sizeof(modes[0]);
+        _mode = (_mode + 1) % length;
     }
     
 #pragma mark Graphics

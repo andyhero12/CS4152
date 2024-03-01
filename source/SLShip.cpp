@@ -36,6 +36,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _refire = 0;
     _radius = 0;
     _absorbValue = 0;
+    _modeTimer = 0;
     
     // Physics
     _mass = data->getFloat("mass",1.0);
@@ -53,6 +54,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _frameflat = data->getInt("sprite frame",0);
     
     _health = data->getInt("health",0);
+    _modeCooldown = data->getInt("mode cooldown",0);
 }
 
 /**
@@ -193,6 +195,10 @@ void Ship::move(float forward, float turn, Size size) {
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
+    }
+    
+    if (_modeTimer <= _modeCooldown){
+        _modeTimer++;
     }
 }
 

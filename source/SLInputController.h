@@ -35,6 +35,9 @@ private:
 
     /** Did we press the reset button? */
     bool _didReset;
+    
+    /** Did press the change mode button */
+    bool _didChangeMode;
 
 public:
     /**
@@ -75,6 +78,10 @@ public:
      */
     bool didPressReset() const {
         return _didReset;
+    }
+    
+    bool didChangeMode() const {
+        return _didChangeMode;
     }
 
     /**
