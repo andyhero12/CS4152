@@ -34,9 +34,11 @@ bool InputController::init() {
     bool contSuccess = Input::activate<GameControllerInput>();
 
     if (contSuccess) {
-
         GameControllerInput* controller = Input::get<GameControllerInput>();
         std::vector<std::string> deviceUUIDs = controller->devices();
+        if (deviceUUIDs.size() == 0){
+            return false;
+        }
         _gameContrl = controller -> open(deviceUUIDs[0]);
         std::cout << deviceUUIDs[0] << std::endl;
         directions = { {-1,0},{0,-1},{1,0}, {0,1} }; // left up right down
@@ -70,8 +72,6 @@ void InputController::readInput() {
     _didReset = false;
     
     // Movement forward/backward
-    float LR = _gameContrl->getAxisPosition(0);
-    float UD = _gameContrl->getAxisPosition(1);
    // std::cout << LR << " " << UD << std::endl;
 
     Keyboard* keys = Input::get<Keyboard>();
@@ -88,12 +88,8 @@ void InputController::readInput() {
     } else if (keys->keyDown(right) && !keys->keyDown(left)) {
         _turning = 1;
     }
-
     // Shooting
     if (keys->keyDown(shoot)) {
-        _didFire = true;
-    }
-    else if(_gameContrl->isButtonDown(0)){
         _didFire = true;
     }
     
@@ -108,73 +104,80 @@ void InputController::readInput() {
     else if (keys->keyDown(down) && !keys->keyDown(up)) {
         _forward = -1;
     }
-    // Controller
-    // Movement left/right
-    if (abs(LR) >= 0.2 || abs(UD) >= 0.2) {
-        int index = 0;
-        cugl::Vec2 curLoc(LR, UD);
-        float dist = curLoc.distance(directions[0]);
-        //std::cout << dist << std::endl;
-        for (int i = 1; i < directions.size(); i++) {
-            cugl::Vec2& direction = directions[i];
-            if (curLoc.distance(direction) < dist) {
-                index = i;
-                dist = curLoc.distance(direction);
+    if (_gameContrl){
+        float LR = _gameContrl->getAxisPosition(0);
+        float UD = _gameContrl->getAxisPosition(1);
+        if(_gameContrl->isButtonDown(0)){
+            _didFire = true;
+        }
+        // Controller
+        // Movement left/right
+        if (abs(LR) >= 0.2 || abs(UD) >= 0.2) {
+            int index = 0;
+            cugl::Vec2 curLoc(LR, UD);
+            float dist = curLoc.distance(directions[0]);
+            //std::cout << dist << std::endl;
+            for (int i = 1; i < directions.size(); i++) {
+                cugl::Vec2& direction = directions[i];
+                if (curLoc.distance(direction) < dist) {
+                    index = i;
+                    dist = curLoc.distance(direction);
+                }
             }
-        }
-        //std::cout << index << std::endl;
-        if (index == 0) {
-            _turning = -1;
-        }
-        else if (index == 1) {
-
-            _forward = 1;
-        }
-        else if (index == 2) {
-   
-            _turning = 1;
-        }
-        else if (index == 3) {
-          
-            _forward = -1;
-        }
-        else {
-
+            //std::cout << index << std::endl;
+            if (index == 0) {
+                _turning = -1;
+            }
+            else if (index == 1) {
+                
+                _forward = 1;
+            }
+            else if (index == 2) {
+                
+                _turning = 1;
+            }
+            else if (index == 3) {
+                
+                _forward = -1;
+            }
+            else {
+                
+            }
+            
+            /*if(_gameContrl->isButtonDown(0)){
+             std::cout << "0 is down" << std::endl;
+             }
+             if (_gameContrl->isButtonDown(1)) {
+             std::cout << "1 is down" << std::endl;
+             }
+             if (_gameContrl->isButtonDown(2)) {
+             std::cout << "2 is down" << std::endl;
+             }
+             if (_gameContrl->isButtonDown(3)) {
+             std::cout << "3 is down" << std::endl;
+             }
+             if (_gameContrl->isButtonDown(4)) {
+             std::cout << "4 is down" << std::endl;
+             }
+             if (_gameContrl->isButtonDown(5)) {
+             std::cout << "5 is down" << std::endl;
+             }*/
+            
         }
         
-        /*if(_gameContrl->isButtonDown(0)){
-            std::cout << "0 is down" << std::endl;
-        }
-        if (_gameContrl->isButtonDown(1)) {
-            std::cout << "1 is down" << std::endl;
-        }
-        if (_gameContrl->isButtonDown(2)) {
-            std::cout << "2 is down" << std::endl;
-        }
-        if (_gameContrl->isButtonDown(3)) {
-            std::cout << "3 is down" << std::endl;
-        }
-        if (_gameContrl->isButtonDown(4)) {
-            std::cout << "4 is down" << std::endl;
-        }
-        if (_gameContrl->isButtonDown(5)) {
-            std::cout << "5 is down" << std::endl;
-        }*/
-        
-    }
-
-    std::cout << "printhere" << std::endl;
-    std::cout << _gameContrl->numberButtons() << std::endl;
-    std::cout << _gameContrl->numberHats() << std::endl;
-    std::cout << _gameContrl->numberAxes() << std::endl;
-    for (int i = 0; i < 128; i++)
-    {
-        if (_gameContrl->isButtonDown(i))
+        std::cout << "printhere" << std::endl;
+        std::cout << _gameContrl->numberButtons() << std::endl;
+        std::cout << _gameContrl->numberHats() << std::endl;
+        std::cout << _gameContrl->numberAxes() << std::endl;
+        for (int i = 0; i < 128; i++)
         {
-            std::cout << i << std::endl;
+            if (_gameContrl->isButtonDown(i))
+            {
+                std::cout << i << std::endl;
+            }
+            
+            
         }
-
-
     }
    /* if (LR <= -0.2 && LR < UD) {
         _turning = -1;
