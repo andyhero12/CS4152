@@ -19,7 +19,8 @@
 #ifndef __GL_SHIP_H__
 #define __GL_SHIP_H__
 #include <cugl/cugl.h>
-
+#include "Animation.h"
+#include <vector>
 /** The number of frames until we can fire again */
 #define RELOAD_RATE 3
 
@@ -70,9 +71,11 @@ private:
     
     // Asset references. These should be set by GameScene
     /** Reference to the ships sprite sheet */
-    std::shared_ptr<cugl::SpriteSheet> _sprite;
+//    std::shared_ptr<cugl::SpriteSheet> _sprite;
     /** Radius of the ship in pixels (derived from sprite sheet) */
     float _radius;
+    
+    Animation _animations;
 
 public:
 #pragma mark Constructors
@@ -244,7 +247,7 @@ public:
      * @return the sprite sheet for the ship
      */
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        return _sprite;
+        return _animations.getSprite();
     }
 
     /**

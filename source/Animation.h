@@ -22,7 +22,7 @@ private:
     std::vector<int> animSpriteFrames;
 
 public:
-    Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>> animTextures, float freq);
+    Animation(){}
     Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>> animTextures, float freq, int startFrame);
     ~Animation() {}
     
@@ -40,5 +40,6 @@ public:
     float animFreq;
     /** Number of animation directions for the entity */
     int numAnimDirections;
+    const std::shared_ptr<cugl::SpriteSheet>& getSprite() const;
 };
 #endif /* Animation_hpp */

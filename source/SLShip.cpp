@@ -94,15 +94,20 @@ void Ship::subAbsorb(int value) {
  * @param texture   The texture for the sprite sheet
  */
 void Ship::setTexture(const std::shared_ptr<cugl::Texture>& texture) {
+    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
         if (_framesize % _framecols != 0) {
             rows++;
         }
-        _sprite = SpriteSheet::alloc(texture, rows, _framecols, _framesize);
-        _sprite->setFrame(_frameflat);
-        _radius = std::max(_sprite->getFrameSize().width, _sprite->getFrameSize().height)/2;
-        _sprite->setOrigin(_sprite->getFrameSize()/2);
+        std::shared_ptr<cugl::SpriteSheet> _sprite = SpriteSheet::alloc(texture, rows, _framecols, _framesize);
+        std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
+        anims.push_back(_sprite);
+        
+        _animations = Animation(1, anims, 10, _frameflat);
+        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
+        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
+
     }
 }
 
@@ -118,7 +123,7 @@ void Ship::setTexture(const std::shared_ptr<cugl::Texture>& texture) {
  */
 void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     // Don't draw if sprite not set
-    if (_sprite) {
+    if (_animations.getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
         shiptrans.scale(getScale());
@@ -129,37 +134,37 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         shadtrans.translate(_shadows,-_shadows);
         Color4f shadow(0,0,0,0.5f);
         
-        _sprite->draw(batch,shadow,shadtrans);
-        _sprite->draw(batch,shiptrans);
+        _animations.getSprite()->draw(batch,shadow,shadtrans);
+        _animations.getSprite()->draw(batch,shiptrans);
         
         // Duplicate images to support wrap
         if (_pos.x+_radius > bounds.width) {
             shiptrans.translate(-bounds.width,0);
             shadtrans.translate(-bounds.width,0);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
+            _animations.getSprite()->draw(batch,shadow,shadtrans);
+            _animations.getSprite()->draw(batch,shiptrans);
             shiptrans.translate(bounds.width,0);
             shadtrans.translate(bounds.width,0);
         } else if (_pos.x-_radius < 0) {
             shiptrans.translate(bounds.width,0);
             shadtrans.translate(bounds.width,0);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
+            _animations.getSprite()->draw(batch,shadow,shadtrans);
+            _animations.getSprite()->draw(batch,shiptrans);
             shiptrans.translate(-bounds.width,0);
             shadtrans.translate(-bounds.width,0);
         }
         if (_pos.y+_radius > bounds.height) {
             shiptrans.translate(0,-bounds.height);
             shadtrans.translate(0,-bounds.height);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
+            _animations.getSprite()->draw(batch,shadow,shadtrans);
+            _animations.getSprite()->draw(batch,shiptrans);
             shiptrans.translate(0,bounds.height);
             shadtrans.translate(0,bounds.height);
         } else if (_pos.y-_radius < 0) {
             shiptrans.translate(0,bounds.height);
             shadtrans.translate(0,bounds.height);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
+            _animations.getSprite()->draw(batch,shadow,shadtrans);
+            _animations.getSprite()->draw(batch,shiptrans);
             shiptrans.translate(0,-bounds.height);
             shadtrans.translate(0,-bounds.height);
         }
@@ -242,8 +247,8 @@ void Ship::move(float forward, float turn, Size size) {
  * @param turn Amount to turn the ship
  */
 void Ship::processTurn(float turn) {
-    int frame = (_sprite == nullptr ? 0 : _sprite->getFrame());
-    int fsize = (_sprite == nullptr ? 0 : _sprite->getSize());
+    int frame = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getFrame());
+    int fsize = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getSize());
     if (turn != 0.0f) {
         // The turning factor is cumulative.
         // The longer it is held down, the harder we bank.
@@ -272,8 +277,8 @@ void Ship::processTurn(float turn) {
         }
     }
     
-    if (_sprite) {
-        _sprite->setFrame(frame);
+    if (_animations.getSprite()) {
+        _animations.getSprite()->setFrame(frame);
     }
 }
 
