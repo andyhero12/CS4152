@@ -39,6 +39,7 @@ bool InputController::init() {
         std::vector<std::string> deviceUUIDs = controller->devices();
         _gameContrl = controller -> open(deviceUUIDs[0]);
         std::cout << deviceUUIDs[0] << std::endl;
+        directions = { {-1,0},{0,-1},{1,0}, {0,1} }; // left up right down
         return true;
     }
 
@@ -71,7 +72,7 @@ void InputController::readInput() {
     // Movement forward/backward
     float LR = _gameContrl->getAxisPosition(0);
     float UD = _gameContrl->getAxisPosition(1);
-    std::cout << LR << " " << UD << std::endl;
+   // std::cout << LR << " " << UD << std::endl;
 
     Keyboard* keys = Input::get<Keyboard>();
 
@@ -106,19 +107,50 @@ void InputController::readInput() {
     }
     // Controller
     // Movement left/right
-     
-    if (LR <= -0.2) {
+    if (abs(LR) >= 0.2 || abs(UD) >= 0.2) {
+        int index = 0;
+        cugl::Vec2 curLoc(LR, UD);
+        float dist = curLoc.distance(directions[0]);
+        //std::cout << dist << std::endl;
+        for (int i = 1; i < directions.size(); i++) {
+            cugl::Vec2& direction = directions[i];
+            if (curLoc.distance(direction) < dist) {
+                index = i;
+                dist = curLoc.distance(direction);
+            }
+        }
+        //std::cout << index << std::endl;
+        if (index == 0) {
+            _turning = -1;
+        }
+        else if (index == 1) {
+
+            _forward = 1;
+        }
+        else if (index == 2) {
+   
+            _turning = 1;
+        }
+        else if (index == 3) {
+          
+            _forward = -1;
+        }
+        else {
+
+        }
+    }
+   /* if (LR <= -0.2 && LR < UD) {
         _turning = -1;
     }
-    else if (LR >= 0.2) {
+    else if (LR >= 0.2 && LR > UD) {
         _turning = 1;
     }
 
-    if (UD<=-0.2) {
+    if (UD<=-0.2 && UD < LR) {
         _forward = 1;
     }
-    else if (UD>=0.2) {
+    else if (UD>=0.2 && UD > LR) {
         _forward = -1;
-    }
+    }*/
 
 }
