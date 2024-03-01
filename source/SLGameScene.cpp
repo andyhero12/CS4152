@@ -61,7 +61,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _ship->setTexture(assets->get<Texture>("ship"));
 
     // Initialize the asteroid set
-    _asteroids.init(_constants->get("asteroids"));
+    _asteroids.init(_constants->get("asteroids"),_ship);
     _asteroids.setTexture(assets->get<Texture>("asteroid1"));
 
     
@@ -119,7 +119,7 @@ void GameScene::reset() {
     _ship->setAngle(0);
     _ship->setVelocity(Vec2::ZERO);
     _ship->setHealth(_constants->get("ship")->getInt("health",0));
-    _asteroids.init(_constants->get("asteroids"));
+    _asteroids.init(_constants->get("asteroids"),_ship);
     _photons.init(_constants->get("photons"));
     _spawnerController.init(_constants->get("spawner"));
     _bases.init(_constants->get("base"));
@@ -141,16 +141,19 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    if (_input.didPressFire() && _ship->canFireWeapon()){
+    if (_input.didPressFire() && _ship->canFireWeapon() && !_ship->tooBig()){
         Vec2 p(_ship->getPosition().x,
-                _ship->getPosition().y);
+               _ship->getPosition().y);
         float rads = M_PI*_ship->getAngle()/180.0f + M_PI_2;
         Vec2 v =
         _photons._speed * Vec2::forAngle(rads) +_ship->getVelocity();
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-//        _ship->subAbsorb(2);
+        //        _ship->subAbsorb(2);
+    }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
+        _ship->setAbsorbValue(0);
+        _collisions.resolveBlowup(_ship, _asteroids);
     }
     
     // Move the ships and photons forward (ignoring collisions)
@@ -169,10 +172,10 @@ void GameScene::update(float timestep) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
     }
     if (_collisions.resolveCollision(_bases, _asteroids)){
-        CULog("asteroid hit base\n");
+//        CULog("asteroid hit base\n");
     }
     // Check for collisions later for photons
-    if (_collisions.resolveCollision(_photons, _asteroids)){
+    if (_collisions.resolveCollision(_photons, _asteroids,_ship)){
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
     // Update the health meter
@@ -180,7 +183,7 @@ void GameScene::update(float timestep) {
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() && _spawnerController.win()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
@@ -217,7 +220,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() && _spawnerController.win()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);

@@ -6,39 +6,40 @@
 //
 #include "BaseSet.h"
 
-BaseSet::BaseSet(){
-    CULog("HERE\n");
+BaseSet::BaseSet()
+{
 }
-BaseSet::~BaseSet(){
-    
+BaseSet::~BaseSet()
+{
 }
 
-void BaseSet::update(AsteroidSet &aset){
-    for(auto& base : _bases) {
+void BaseSet::update(AsteroidSet &aset)
+{
+    for (auto &base : _bases)
+    {
         base->update();
     }
-
 }
-int BaseSet::getFirstHealth(){
+int BaseSet::getFirstHealth()
+{
     return (*_bases.begin())->getHealth();
 }
-bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data) {
-    CULog("RENIT\n");
-    if (data){
-        CULog("DATA GOOD\n");
-    }
-    if (data) {
+bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data)
+{
+    if (data)
+    {
         _bases.clear();
-        CULog("INIT\n");
-        if (data->get("start")){
+        if (data->get("start"))
+        {
             auto baseValues = data->get("start")->children();
-            for (auto it = baseValues.begin(); it != baseValues.end();it++){
+            for (auto it = baseValues.begin(); it != baseValues.end(); it++)
+            {
                 std::shared_ptr<cugl::JsonValue> entry = (*it);
                 cugl::Vec2 pos;
                 pos.x = entry->get(0)->get(0)->asFloat(0);
                 pos.y = entry->get(0)->get(1)->asFloat(0);
                 int health = entry->get(1)->asInt(0);
-                _bases.insert(std::make_shared<Base>(health,pos));
+                _bases.insert(std::make_shared<Base>(health, pos));
             }
         }
         return true;
@@ -46,18 +47,19 @@ bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data) {
     return false;
 }
 
-
-
-void BaseSet::setTexture(const std::shared_ptr<cugl::Texture>& value){
+void BaseSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
+{
     _texture = value;
-//    for(auto& spawner : _spawners) {
-//        spawner->setTexture(value);
-//        std::cout << spawner->getTexture()<< std::endl;
-//    }
+    //    for(auto& spawner : _spawners) {
+    //        spawner->setTexture(value);
+    //        std::cout << spawner->getTexture()<< std::endl;
+    //    }
 }
 
-void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
-    for(auto& base : _bases) {
+void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch> &batch, cugl::Size size)
+{
+    for (auto &base : _bases)
+    {
         cugl::Vec2 pos = base->getPos();
         cugl::Vec2 origin(0, 0);
         cugl::Affine2 trans;
@@ -65,16 +67,17 @@ void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size s
         trans.scale(scale);
         trans.translate(pos);
         batch->draw(_texture, origin, trans);
-        
-        
-//        std::cout << spawner->getTexture()<< std::endl;
-//        spawner->draw(batch, size);
+
+        //        std::cout << spawner->getTexture()<< std::endl;
+        //        spawner->draw(batch, size);
     }
-    
 }
-bool BaseSet::baseLost(){
-    for (auto& base : _bases){
-        if (base->lost()){
+bool BaseSet::baseLost()
+{
+    for (auto &base : _bases)
+    {
+        if (base->lost())
+        {
             return true;
         }
     }

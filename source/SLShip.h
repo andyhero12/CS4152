@@ -94,7 +94,10 @@ public:
 
     
 #pragma mark Properties
-    
+    // Explodes if too big
+    bool tooBig(){
+        return _absorbValue >= 30;
+    }
     void addAbsorb(int value);
     void subAbsorb(int value);
     int getAbsorb() const{ return _absorbValue;}
@@ -157,6 +160,7 @@ public:
      */
     float getAngle() const { return _ang; }
     
+    float getScale() const { return (1 + getAbsorb()/15.0f);}
     /**
      * Sets the angle that this ship is facing.
      *

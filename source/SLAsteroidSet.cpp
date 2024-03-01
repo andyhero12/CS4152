@@ -33,12 +33,12 @@ using namespace cugl;
 AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v) : Asteroid(p, v, 3) {}
 
 // Function to generate a random value between 1 and 3
-int generateRandomValue1to3()
+int generateRandomValuelowToHigh(int low, int high)
 {
     // Static used for the seed to ensure it's only seeded once
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 3); // Range is 1 to 3, inclusive
+    std::uniform_int_distribution<> dis(low, high); // Range is 1 to 3, inclusive
     return dis(gen);
 }
 
@@ -49,25 +49,30 @@ int generateRandomValue1to3()
  * @param v     The velocity
  * @param type  The type (1, 2, or 3)
  */
-AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type)
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type): Asteroid(p, v, type, 0, 5) {}
+
+
+int AsteroidSet::Asteroid::getDamage() {
+    if (_attackCooldown == 60){
+        _attackCooldown = 0;
+        return _damage;
+    }
+    else{
+        return 0;
+    }
+}
+
+
+
+AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, int target, int damage): _damage(damage)
 {
     position = p;
     velocity = v;
+    _targetIndex = target;
     setType(type);
+    _attackCooldown = 15;
 }
 
-AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, Vec2 dest) : destination(dest)
-{
-    position = p;
-    velocity = v;
-    setType(type);
-    //    destination = dest;
-}
-
-void AsteroidSet::Asteroid::setTargetLocation(const cugl::Vec2 pos)
-{
-    //    _target = pos;
-}
 
 /**
  * Returns the type of this asteroid.
@@ -121,9 +126,16 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &
  * edge on the opposite side. However, this method performs no
  * collision detection. Collisions are resolved afterwards.
  */
-void AsteroidSet::Asteroid::update(Size size)
+void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
 {
-    cugl::Vec2 direction = destination- position;
+
+    if (_attackCooldown < 60){
+        _attackCooldown += 1;
+    }
+  
+    
+    cugl::Vec2 target_pos = _targetIndex == 0 ? ship->getPosition() : bases[_targetIndex-1] ;
+    cugl::Vec2 direction = target_pos- position;
     
 //    CULog("x %f, y %f", direction.x, direction.y);
     position += direction.normalize();
@@ -175,13 +187,14 @@ AsteroidSet::AsteroidSet() : _mass(0),
  *
  * @return true if initialization was successful
  */
-bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data)
+bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Ship> shipParam)
 {
     if (data)
     {
         // Reset all data
         current.clear();
         _pending.clear();
+        _target.clear();
 
         _mass = data->getFloat("mass", 0);
         _damage = data->getInt("damage", 0);
@@ -214,10 +227,10 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data)
                 Vec2 vel;
                 vel.x = entry->get(1)->get(0)->asFloat(0);
                 vel.y = entry->get(1)->get(1)->asFloat(0);
-                spawnAsteroid(pos, vel, generateRandomValue1to3());
+                spawnAsteroid(pos, vel, generateRandomValuelowToHigh(1,3));
             }
         }
-
+        _ship = shipParam;
         return true;
     }
     return false;
@@ -236,21 +249,10 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data)
  */
 void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
 {
-    cugl::Vec2 closest = cugl::Vec2(0, 0);
-    if (!_target.empty())
-    {
-        CULog("adflkjf;a");
-        closest = _target.front();
-        for (const auto &dest : _target)
-        {
-            if (closest.distance(p) > dest.distance(p))
-            {
-                closest = dest;
-            }
-        }
-    }
+
+    int index = generateRandomValuelowToHigh(0,(int) _target.size());
     // Determine direction and velocity of the photon.
-    std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, closest);
+    std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
     if (_texture)
     {
         int rows = _framesize / _framecols;
@@ -280,7 +282,7 @@ void AsteroidSet::update(Size size)
     // Move asteroids, updating the animation frame
     for (auto it = current.begin(); it != current.end(); ++it)
     {
-        (*it)->update(size);
+        (*it)->update(size,_target, _ship);
         auto sprite = (*it)->getSprite();
         int frame = sprite->getFrame() + 1;
         if (frame >= sprite->getSize())

@@ -9,9 +9,9 @@
         "angular damp": 0.0,
         "fire rate": 25,
         "shadow": 10,
-        "sprite cols": 5,
-        "sprite size": 18,
-        "sprite frame": 9
+        "sprite cols": 10,
+        "sprite size": 10,
+        "sprite frame": 5
     },
     "photons": {
         "speed": 5,
@@ -22,8 +22,8 @@
         "mass": 2,
         "damage": 5,
         "hit ratio": 0.8,
-        "sprite cols": 5,
-        "sprite size": 30,
+        "sprite cols": 4,
+        "sprite size": 4,
         "start": [
             [[50,200], [-2,2]],
             [[200,400], [2,-2]],
