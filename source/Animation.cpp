@@ -7,7 +7,7 @@
 
 #include "Animation.h"
 
-Animation::Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>> animTextures, float freq, int startFrame) :
+Animation::Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame) :
     numAnimDirections(numDirections),
     animFreq(freq),
     animSprite(animTextures),

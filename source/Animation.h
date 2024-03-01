@@ -23,7 +23,7 @@ private:
 
 public:
     Animation(){}
-    Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>> animTextures, float freq, int startFrame);
+    Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame);
     ~Animation() {}
     
     void setFrame(int frame);
