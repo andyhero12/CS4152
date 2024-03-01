@@ -46,3 +46,8 @@ void Animation::resetAnimation(int aimingDir){
 void Animation::updateAnimTime(float dt){
     timeSinceLastAnim += (timeSinceLastAnim <= (1.0/animFreq) ? dt : 0);
 }
+
+void Animation::stepAnimation(){
+    animSpriteFrames[prevAnimDir] = (animSpriteFrames[prevAnimDir] + 1) % currentAnimSprite->getSize();
+    currentAnimSprite->setFrame(animSpriteFrames[prevAnimDir]);
+}
