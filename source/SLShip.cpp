@@ -121,6 +121,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if (_sprite) {
         // Transform to place the ship
         Affine2 shiptrans;
+        shiptrans.scale(getScale());
         shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(_pos);
         // Transform to place the shadow, and its color
@@ -130,38 +131,6 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         
         _sprite->draw(batch,shadow,shadtrans);
         _sprite->draw(batch,shiptrans);
-        
-        // Duplicate images to support wrap
-        if (_pos.x+_radius > bounds.width) {
-            shiptrans.translate(-bounds.width,0);
-            shadtrans.translate(-bounds.width,0);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(bounds.width,0);
-            shadtrans.translate(bounds.width,0);
-        } else if (_pos.x-_radius < 0) {
-            shiptrans.translate(bounds.width,0);
-            shadtrans.translate(bounds.width,0);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(-bounds.width,0);
-            shadtrans.translate(-bounds.width,0);
-        }
-        if (_pos.y+_radius > bounds.height) {
-            shiptrans.translate(0,-bounds.height);
-            shadtrans.translate(0,-bounds.height);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(0,bounds.height);
-            shadtrans.translate(0,bounds.height);
-        } else if (_pos.y-_radius < 0) {
-            shiptrans.translate(0,bounds.height);
-            shadtrans.translate(0,bounds.height);
-            _sprite->draw(batch,shadow,shadtrans);
-            _sprite->draw(batch,shiptrans);
-            shiptrans.translate(0,-bounds.height);
-            shadtrans.translate(0,-bounds.height);
-        }
     }
 }
 
@@ -215,9 +184,15 @@ void Ship::move(float forward, float turn, Size size) {
     if (_ang < 0)
         _ang += 360;
     
-    
+    if (forward == 0){
+        _vel.x = 0;
+        _vel.y = 0;
+    }
+    else{
+        _vel.normalize();
+    }
     // Move the ship position by the ship velocity
-    _pos += _vel;
+    _pos += (_vel*3);
     wrapPosition(size);
 
     //Increment the refire readiness counter
@@ -280,15 +255,15 @@ void Ship::processTurn(float turn) {
  */
 void Ship::wrapPosition(cugl::Size size) {
     while (_pos.x > size.width) {
-        _pos.x -= size.width;
+        _pos.x = size.width;
     }
     while (_pos.x < 0) {
-        _pos.x += size.width;
+        _pos.x = 0;
     }
     while (_pos.y > size.height) {
-        _pos.y -= size.height;
+        _pos.y = size.height;
     }
     while (_pos.y < 0) {
-        _pos.y += size.height;
+        _pos.y = 0;
     }
 }

@@ -26,6 +26,7 @@
 #include "SLShip.h"
 #include "SLPhotonSet.h"
 #include "SLAsteroidSet.h"
+#include "BaseSet.h"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -109,11 +110,11 @@ public:
      *
      * @return true if there is a ship-asteroid collision
      */
-    bool resolveCollision(PhotonSet& pset, AsteroidSet& ast);
+    bool resolveCollision(PhotonSet& pset, AsteroidSet& ast, std::shared_ptr<Ship> ship);
     
-    bool checkCollidePhotonAsteroid(
-       const std::shared_ptr<PhotonSet::Photon>& photon,
-       const std::shared_ptr<AsteroidSet::Asteroid>& asteroid);
+    bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
+    
+    void resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

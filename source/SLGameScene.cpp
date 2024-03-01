@@ -25,6 +25,7 @@ using namespace std;
 
 // Lock the screen size to fixed height regardless of aspect ratio
 #define SCENE_HEIGHT 720
+#define WORLD_SIZE 3
 
 #pragma mark -
 #pragma mark Constructors
@@ -62,7 +63,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _ship->setTexture(assets->get<Texture>("ship"));
 
     // Initialize the asteroid set
-    _asteroids.init(_constants->get("asteroids"));
+    _asteroids.init(_constants->get("asteroids"),_ship);
     _asteroids.setTexture(assets->get<Texture>("asteroid1"));
 
     
@@ -70,6 +71,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
 
+    _bases.init(_constants->get("base"));
+    _bases.setTexture(assets->get<Texture>("base"));
     // Initialize the Photon set
     _photons.init(_constants->get("photons"));
     _photons.setTexture(assets->get<Texture>("photon"));
@@ -118,9 +121,10 @@ void GameScene::reset() {
     _ship->setAngle(0);
     _ship->setVelocity(Vec2::ZERO);
     _ship->setHealth(_constants->get("ship")->getInt("health",0));
-    _asteroids.init(_constants->get("asteroids"));
+    _asteroids.init(_constants->get("asteroids"),_ship);
     _photons.init(_constants->get("photons"));
     _spawnerController.init(_constants->get("spawner"));
+    _bases.init(_constants->get("base"));
 }
 
 /**
@@ -139,20 +143,23 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    if (_input.didPressFire() && _ship->canFireWeapon()){
+    if (_input.didPressFire() && _ship->canFireWeapon() && !_ship->tooBig()){
         Vec2 p(_ship->getPosition().x,
-                _ship->getPosition().y);
+               _ship->getPosition().y);
         float rads = M_PI*_ship->getAngle()/180.0f + M_PI_2;
         Vec2 v =
         _photons._speed * Vec2::forAngle(rads) +_ship->getVelocity();
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-        _ship->subAbsorb(2);
+        //        _ship->subAbsorb(2);
+    }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
+        _ship->setAbsorbValue(0);
+        _collisions.resolveBlowup(_ship, _asteroids);
     }
     
     // Move the ships and photons forward (ignoring collisions)
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize());
+    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize());
@@ -160,24 +167,29 @@ void GameScene::update(float timestep) {
     // Move the photons
     _photons.update(getSize());
     _spawnerController.update(_asteroids);
+    _bases.update(_asteroids);
     
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
     }
-    
+    if (_collisions.resolveCollision(_bases, _asteroids)){
+//        CULog("asteroid hit base\n");
+    }
     // Check for collisions later for photons
-    if (_collisions.resolveCollision(_photons, _asteroids)){
+    if (_collisions.resolveCollision(_photons, _asteroids,_ship)){
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d", _ship->getHealth(), _ship->getAbsorb()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Healh %d", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth()));
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() && _spawnerController.win()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
+        _gameEnded = true;
+    }else if (_bases.baseLost()){
         _gameEnded = true;
     }
 }
@@ -194,14 +206,43 @@ void GameScene::update(float timestep) {
 void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     // For now we render 3152-style
     // DO NOT DO THIS IN YOUR FINAL GAME
+
+    //shift camera to follow ship; draw ingame objects here
+    cugl::Vec3 pos = cugl::Vec3();
+    pos.add(_ship->getPosition());
+    getCamera()->setPosition(pos);
+    getCamera()->update();
     batch->begin(getCamera()->getCombined());
     
-    batch->draw(_background,Rect(Vec2::ZERO,getSize()));
+    //draw bg
+    int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
+    int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
+    for (int i = -2; i <= 1; i++) {
+        for (int j = -2; j <= 1; j++) {
+            Color4 tint;
+            if (i + bgCellX < 0 || i + bgCellX >= WORLD_SIZE || j + bgCellY < 0 || j + bgCellY >= WORLD_SIZE) {
+                tint = Color4("gray");
+            }
+            else {
+                tint = Color4("white");
+            }
+            batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
+        }
+    }
+    
     _asteroids.draw(batch,getSize());
     _spawnerController.draw(batch, getSize());
+    _bases.draw(batch,getSize());
     _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
-    
+
+
+    // shift camera to draw for absolute positioning
+    getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
+    getCamera()->update();
+    batch->setPerspective(getCamera()->getCombined());
+
+
     batch->setColor(Color4::BLACK);
     batch->drawText(_text,Vec2(10,getSize().height-_text->getBounds().size.height));
     batch->setColor(Color4::WHITE);
@@ -209,12 +250,12 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
-    if (_asteroids.isEmpty()){
+    if (_asteroids.isEmpty() && _spawnerController.win()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);
         batch->setColor(Color4::WHITE);
-    }else if (_ship->getHealth() == 0){
+    }else if (_ship->getHealth() == 0 || _bases.baseLost()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textLose->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::RED);
         batch->drawText(_textLose, trans);
