@@ -13,7 +13,7 @@
         
         },
         "asteroid1": {
-            "file": "textures/monkey.png"
+            "file": "textures/monkeys.png"
         },
         "asteroid2": {
             "file": "textures/asteroid2.png"

@@ -236,6 +236,16 @@ void Ship::move(float forward, float turn, Size size) {
     if (_refire <= _firerate) {
         _refire++;
     }
+    
+    if (forward != 0 or turn != 0){
+        _animations.updateAnimTime(1/60.0f);
+        if (_animations.frameUpdateReady()){
+            _animations.stepAnimation();
+        }
+    }
+    else{
+        _animations.resetAnimation(0);
+    }
 }
 
 /**

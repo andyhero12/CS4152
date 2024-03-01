@@ -33,7 +33,7 @@ public:
     void stepAnimation();
     void updateAnimTime(float dt);
     
-    
+    int frame;
     int prevAnimDir;
     float timeSinceLastAnim;
     /** Attack animation frequency */

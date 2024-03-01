@@ -22,7 +22,7 @@
 #include <unordered_set>
 #include "Base.h"
 #include "SLShip.h"
-
+#include "Animation.h"
 /**
  * Model class representing a collection of asteroids.
  *
@@ -69,7 +69,7 @@ public:
         int _attackCooldown;
         int _damage;
         /** The sprite sheet for animating the asteroid */
-        std::shared_ptr<cugl::SpriteSheet> _sprite;
+        Animation _animations;
     public:
         int getTargetIndex() const{
             return _targetIndex;
@@ -142,7 +142,7 @@ public:
          * @return the sprite sheet for the ship
          */
         const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-            return _sprite;
+            return _animations.getSprite();
         }
 
         /**

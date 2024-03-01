@@ -115,7 +115,9 @@ void AsteroidSet::Asteroid::setType(int type)
  */
 void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &sprite)
 {
-    _sprite = sprite;
+    std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
+    anims.push_back(sprite);
+    _animations = Animation(1, anims, 10, 0);
 }
 
 /**
@@ -128,6 +130,10 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &
  */
 void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
 {
+    _animations.updateAnimTime(1/60.0f);
+    if (_animations.frameUpdateReady()){
+        _animations.stepAnimation();
+    }
 
     if (_attackCooldown < 60){
         _attackCooldown += 1;
