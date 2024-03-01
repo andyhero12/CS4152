@@ -110,6 +110,10 @@ void InputController::readInput() {
         if(_gameContrl->isButtonDown(0)){
             _didFire = true;
         }
+
+        if(_gameContrl->isButtonDown(1)){
+            _didReset = true;
+        }
         // Controller
         // Movement left/right
         if (abs(LR) >= 0.2 || abs(UD) >= 0.2) {
