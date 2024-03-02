@@ -7,25 +7,22 @@
 
 #include "Animation.h"
 
-Animation::Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>> animTextures, float freq, int startFrame) :
+Animation::Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame) :
     numAnimDirections(numDirections),
     animFreq(freq),
     animSprite(animTextures),
     animSpriteFrames(animTextures.size())
-//    Animation(numDirections, animTextures, freq)
 {
     std::fill(animSpriteFrames.begin(), animSpriteFrames.end(), 0);
-    prevAnimDir = 0;
-    currentAnimSprite = animSprite[prevAnimDir];
+    currentAnimationDirection = 0;
+    currentAnimSprite = animSprite[currentAnimationDirection];
     std::fill(animSpriteFrames.begin(), animSpriteFrames.end(), startFrame);
     frame = startFrame;
-//    currentAnimSprite->setFrame(startFrame);
-    
 }
 
-/** Returns true if enough time has passed since the last animation frame update     */
+
 bool Animation::frameUpdateReady() {
-    if(timeSinceLastAnim > (1.0/animFreq)){
+    if(timeSinceLastAnim > (animFreq)){
         timeSinceLastAnim = 0;
         return true;
     }
@@ -34,19 +31,20 @@ bool Animation::frameUpdateReady() {
 
 void Animation::resetAnimation(int aimingDir){
     std::fill(animSpriteFrames.begin(), animSpriteFrames.end(), 0);
-    prevAnimDir = aimingDir;
-    currentAnimSprite = animSprite[prevAnimDir];
+    currentAnimationDirection = aimingDir;
+    currentAnimSprite = animSprite[currentAnimationDirection];
     frame = 0;
 }
 
-void Animation::updateAnimTime(float dt){
-    timeSinceLastAnim += (timeSinceLastAnim <= (1.0/animFreq) ? dt : 0);
+
+void Animation::updateAnimTime(){
+    timeSinceLastAnim += (timeSinceLastAnim <= (animFreq) ? 1 : 0);
 }
 
 
 void Animation::stepAnimation(){
-    animSpriteFrames[prevAnimDir] = (animSpriteFrames[prevAnimDir] + 1) % currentAnimSprite->getSize();
-    frame = animSpriteFrames[prevAnimDir];
+    animSpriteFrames[currentAnimationDirection] = (animSpriteFrames[currentAnimationDirection] + 1) % currentAnimSprite->getSize();
+    frame = animSpriteFrames[currentAnimationDirection];
 }
 
 const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
