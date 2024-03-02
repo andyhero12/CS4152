@@ -1,6 +1,6 @@
 LOCAL_PATH  := $(call my-dir)
 CURR_DEPTH  := ..
-CUGL_OFFSET := ../../../../../../cugl
+CUGL_OFFSET := ../../../../../cugl
 
 ########################
 #
@@ -26,9 +26,15 @@ LOCAL_PATH = $(PROJ_PATH)
 LOCAL_SRC_FILES := $(subst $(LOCAL_PATH)/,, \
 	$(LOCAL_PATH)/source/SLShip.cpp \
 	$(LOCAL_PATH)/source/SLAsteroidSet.cpp \
+	$(LOCAL_PATH)/source/Monster.cpp \
+	$(LOCAL_PATH)/source/BaseSet.cpp \
 	$(LOCAL_PATH)/source/SLPhotonSet.cpp \
+	$(LOCAL_PATH)/source/SpawnerController.cpp \
+	$(LOCAL_PATH)/source/Base.cpp \
 	$(LOCAL_PATH)/source/SLGameScene.cpp \
 	$(LOCAL_PATH)/source/SLInputController.cpp \
+	$(LOCAL_PATH)/source/Animation.cpp \
+	$(LOCAL_PATH)/source/Spawner.cpp \
 	$(LOCAL_PATH)/source/SLLoadingScene.cpp \
 	$(LOCAL_PATH)/source/SLApp.cpp \
 	$(LOCAL_PATH)/source/SLCollisionController.cpp \
