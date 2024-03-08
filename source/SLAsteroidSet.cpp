@@ -71,7 +71,7 @@ AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type
     _targetIndex = target;
     setType(type);
     _attackCooldown = 15;
-    _health = type * 3;
+    _health = type;
 }
 
 
