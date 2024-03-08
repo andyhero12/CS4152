@@ -93,7 +93,10 @@ bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset, 
                 hitSomething = true;
                 collision = true;
                 ship->addAbsorb((*curA)->getAbsorbValue());
-                aset.current.erase(curA);
+                rock->setHealth(rock->getHealth() - 1);
+                if(rock->getHealth() <= 0){
+                    aset.current.erase(curA);
+                }
             }
         }
         auto curP = itP++;
@@ -245,4 +248,5 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
     }
     return collision;
 }
+
 

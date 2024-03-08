@@ -8,9 +8,38 @@
         "photon": {
             "file": "textures/photon.png"
         },
-        "ship": {
-            "file": "textures/bear.png"
-        
+        "shipfront": {
+            "file": "textures/grape-front-walk.png"
+        },
+        "shipleft": {
+            "file": "textures/grape-left-walk.png"
+        },
+        "shipright": {
+            "file": "textures/grape-right-walk.png"
+        },
+        "monkey0":{
+            "file": "textures/monkey-walk-0.png"
+        },
+        "monkey1":{
+            "file": "textures/monkey-walk-1.png"
+        },
+        "monkey2":{
+            "file": "textures/monkey-walk-2.png"
+        },
+        "monkey3":{
+            "file": "textures/monkey-walk-3.png"
+        },
+        "monkey4":{
+            "file": "textures/monkey-walk-4.png"
+        },
+        "monkey5":{
+            "file": "textures/monkey-walk-5.png"
+        },
+        "monkey6":{
+            "file": "textures/monkey-walk-6.png"
+        },
+        "monkey7":{
+            "file": "textures/monkey-walk-7.png"
         },
         "asteroid1": {
             "file": "textures/monkeys.png"

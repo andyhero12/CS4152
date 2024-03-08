@@ -60,6 +60,7 @@ public:
         /** Photon velocity */
         cugl::Vec2 velocity;
         int _targetIndex;
+        int _prevDir;
         // But these need to be protected for invariant reasons
     private:
         /** The type of the asteroid: 1, 2, or 3 */
@@ -68,6 +69,8 @@ public:
         float _scale;
         int _attackCooldown;
         int _damage;
+        /** The amount of health this ship has */
+        int _health;
         /** The sprite sheet for animating the asteroid */
         Animation _animations;
     public:
@@ -155,7 +158,27 @@ public:
          *
          * @param texture   The sprite sheet for this asteroid.
          */
-        void setSprite(const std::shared_ptr<cugl::SpriteSheet>& sprite);
+        void setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize);
+                       
+//                       const std::shared_ptr<cugl::SpriteSheet>& sprite);
+        
+        /**
+         * Returns the current ship health.
+         *
+         * When the health of the ship is 0, it is "dead"
+         *
+         * @return the current ship health.
+         */
+        int getHealth() const { return _health; }
+
+        /**
+         * Sets the current ship health.
+         *
+         * When the health of the ship is 0, it is "dead"
+         *
+         * @param value The current ship health.
+         */
+        void setHealth(int value);
         
         /**
          * Moves the asteroid one animation frame
@@ -172,7 +195,8 @@ public:
 private:
     std::vector<cugl::Vec2> _target;
     /** The texture for the asteroid sprite sheet. */
-    std::shared_ptr<cugl::Texture> _texture;
+    std::vector<std::shared_ptr<cugl::Texture>> _texture;
+//    std::shared_ptr<cugl::Texture> _texture;
 
     /** The collection of all pending asteroids (for next frame). */
     std::unordered_set<std::shared_ptr<Asteroid>> _pending;
@@ -271,10 +295,10 @@ public:
      * been set in the initial JSON. If not, this texture will be ignored.
      *
      * @return the image for a single asteroid; reused by all asteroids.
-     */
-    const std::shared_ptr<cugl::Texture>& getTexture() const {
-        return _texture;
-    }
+//     */
+//    const std::shared_ptr<cugl::Texture>& getTexture() const {
+//        return _texture;
+//    }
 
     /**
      * Sets the image for a single photon; reused by all photons.
@@ -291,7 +315,7 @@ public:
      *
      * @param value the image for a single asteroid; reused by all asteroids.
      */
-    void setTexture(const std::shared_ptr<cugl::Texture>& value);
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
 
     /**
      * Adds an asteroid to the active queue.

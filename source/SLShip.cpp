@@ -94,21 +94,24 @@ void Ship::subAbsorb(int value) {
  *
  * @param texture   The texture for the sprite sheet
  */
-void Ship::setTexture(const std::shared_ptr<cugl::Texture>& texture) {
-    std::cout << texture << std::endl;
+void Ship::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+//    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
         if (_framesize % _framecols != 0) {
             rows++;
         }
-        std::shared_ptr<cugl::SpriteSheet> _sprite = SpriteSheet::alloc(texture, rows, _framecols, _framesize);
+        std::shared_ptr<cugl::SpriteSheet> _sprite ;
         std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
-        anims.push_back(_sprite);
-        
+        for(auto& text : texture) {
+            _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
+            anims.push_back(_sprite);
+//
+        }
         _animations = Animation(1, anims, 10, _frameflat);
-        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
-        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
-
+//        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
+//        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
+    
     }
 }
 
@@ -128,7 +131,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         // Transform to place the ship
         Affine2 shiptrans;
         shiptrans.scale(getScale());
-        shiptrans.rotate(_ang*M_PI/180);
+//        shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(_pos);
         // Transform to place the shadow, and its color
         Affine2 shadtrans = shiptrans;
@@ -211,15 +214,29 @@ void Ship::move(float forward, float turn, Size size) {
         _refire++;
     }
     
+    // changing direction
     if (forward != 0 or turn != 0){
+        if (_prevTurn != turn){
+            if (turn == -1){
+                _animations.resetAnimation(1);
+            }
+            else if (turn == 1){
+                _animations.resetAnimation(2);
+            }
+            else{
+                _animations.resetAnimation(0);
+            }
+        }
+        _prevTurn = turn;
+        
         _animations.updateAnimTime();
         if (_animations.frameUpdateReady()){
             _animations.stepAnimation();
         }
     }
-    else{
-        _animations.resetAnimation(0);
-    }
+//    else{
+//        _animations.resetAnimation(0);
+//    }
 }
 
 /**

@@ -44,6 +44,7 @@ private:
     int _refire;
     /** The amount of health this ship has */
     int _health;
+    int _prevTurn;
 
     // JSON DEFINED ATTRIBUTES
     /** Mass/weight of the ship. Used in collisions. */
@@ -260,7 +261,7 @@ public:
      *
      * @param texture   The texture for the sprite sheet
      */
-    void setTexture(const std::shared_ptr<cugl::Texture>& texture);
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
     
     /**
      * Draws this ship to the sprite batch within the given bounds.
