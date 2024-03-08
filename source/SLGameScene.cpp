@@ -178,7 +178,7 @@ void GameScene::update(float timestep) {
     }
     
     // Move the ships and photons forward (ignoring collisions)
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
+    _ship->move( _input.getForward(),  _input.getTurn(), _input.getVelocity(), getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize());

@@ -168,7 +168,7 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  * @param forward    Amount to move forward
  * @param turn        Amount to turn the ship
  */
-void Ship::move(float forward, float turn, Size size) {
+void Ship::move(float forward, float turn,cugl::Vec2 Vel, Size size) {
     // Process the ship turning.
 //    processTurn(turn);
     
@@ -176,10 +176,10 @@ void Ship::move(float forward, float turn, Size size) {
         _vel = Vec2(0, 0);
     }
     
-    _vel = Vec2(turn, forward);
+    //_vel = Vec2(turn, forward);
     
 
-    
+    _vel = Vel;
     
     
     // Process the ship thrust.
@@ -204,7 +204,6 @@ void Ship::move(float forward, float turn, Size size) {
         _ang += 360;
     
     _vel = _vel.normalize();
-    
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
     wrapPosition(size);

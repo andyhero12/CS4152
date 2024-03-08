@@ -27,9 +27,12 @@ using namespace cugl;
 InputController::InputController() :
 _forward(0),
 _turning(0),
-_didFire(false) {
+_didFire(false),
+_Vel(0,0),
+Keyboard_use(false),
+Controller_use(false){
 }
-
+/* */
 bool InputController::init() {
     bool contSuccess = Input::activate<GameControllerInput>();
 
@@ -70,12 +73,10 @@ void InputController::readInput() {
     _forward = _turning = 0;
     _didFire = false;
     _didReset = false;
-    
-    // Movement forward/backward
-   // std::cout << LR << " " << UD << std::endl;
 
     Keyboard* keys = Input::get<Keyboard>();
-
+    std::cout<<11<<std::endl;
+    //if(keys->keyDown(up) && keys->keyDown(down)
     if (keys->keyDown(up) && !keys->keyDown(down)) {
         _forward = 1;
     } else if (keys->keyDown(down) && !keys->keyDown(up)) {
@@ -97,13 +98,15 @@ void InputController::readInput() {
     if (keys->keyDown(reset)) {
         _didReset = true;
     }
-
+    // Movement forward/backward
     if (keys->keyDown(up) && !keys->keyDown(down)) {
         _forward = 1;
     }
     else if (keys->keyDown(down) && !keys->keyDown(up)) {
         _forward = -1;
     }
+    
+    /* Movement using controller*/
     if (_gameContrl){
         float LR = _gameContrl->getAxisPosition(cugl::GameController::Axis::LEFT_X);
         float UD = _gameContrl->getAxisPosition(cugl::GameController::Axis::LEFT_Y);
@@ -117,6 +120,9 @@ void InputController::readInput() {
         // Controller
         // Movement left/right
         if (abs(LR) >= 0.2 || abs(UD) >= 0.2) {
+            
+            _Vel = cugl::Vec2(LR,-UD);
+            
             int index = 0;
             cugl::Vec2 curLoc(LR, UD);
             float dist = curLoc.distance(directions[0]);
@@ -128,7 +134,7 @@ void InputController::readInput() {
                     dist = curLoc.distance(direction);
                 }
             }
-            //std::cout << index << std::endl;
+            std::cout << index << std::endl;
             if (index == 0) {
                 _turning = -1;
             }
@@ -147,54 +153,8 @@ void InputController::readInput() {
             else {
                 
             }
-            
-            /*if(_gameContrl->isButtonDown(0)){
-             std::cout << "0 is down" << std::endl;
-             }
-             if (_gameContrl->isButtonDown(1)) {
-             std::cout << "1 is down" << std::endl;
-             }
-             if (_gameContrl->isButtonDown(2)) {
-             std::cout << "2 is down" << std::endl;
-             }
-             if (_gameContrl->isButtonDown(3)) {
-             std::cout << "3 is down" << std::endl;
-             }
-             if (_gameContrl->isButtonDown(4)) {
-             std::cout << "4 is down" << std::endl;
-             }
-             if (_gameContrl->isButtonDown(5)) {
-             std::cout << "5 is down" << std::endl;
-             }*/
-            
         }
-        
-        /*std::cout << "printhere" << std::endl;
-        std::cout << _gameContrl->numberAxes() << std::endl;
-        std::cout << _gameContrl->numberHats() << std::endl;
-        std::cout << _gameContrl->numberAxes() << std::endl;
-        for (uint8_t i = 0; i < 128; i++)
-        {
-            if (_gameContrl->isButtonDown(i))
-            {
-                std::cout << i << std::endl;
-            }
-            
-            
-        }*/
     }
-   /* if (LR <= -0.2 && LR < UD) {
-        _turning = -1;
-    }
-    else if (LR >= 0.2 && LR > UD) {
-        _turning = 1;
-    }
-
-    if (UD<=-0.2 && UD < LR) {
-        _forward = 1;
-    }
-    else if (UD>=0.2 && UD > LR) {
-        _forward = -1;
-    }*/
+    
 
 }
