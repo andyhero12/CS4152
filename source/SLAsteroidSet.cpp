@@ -71,6 +71,7 @@ AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type
     _targetIndex = target;
     setType(type);
     _attackCooldown = 15;
+    _health = type * 3;
 }
 
 
@@ -100,6 +101,22 @@ void AsteroidSet::Asteroid::setType(int type)
     default:
         _scale = 0.0f;
         break;
+    }
+}
+
+/**
+ * Sets the current ship health.
+ *
+ * When the health of the ship is 0, it is "dead"
+ *
+ * @param value The current ship health.
+ */
+void AsteroidSet::Asteroid::setHealth(int value) {
+    if (value >= 0) {
+        // Do not allow health to go negative
+        _health = value;
+    } else {
+        _health = 0;
     }
 }
 

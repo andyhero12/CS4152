@@ -68,6 +68,8 @@ public:
         float _scale;
         int _attackCooldown;
         int _damage;
+        /** The amount of health this ship has */
+        int _health;
         /** The sprite sheet for animating the asteroid */
         Animation _animations;
     public:
@@ -156,6 +158,24 @@ public:
          * @param texture   The sprite sheet for this asteroid.
          */
         void setSprite(const std::shared_ptr<cugl::SpriteSheet>& sprite);
+        
+        /**
+         * Returns the current ship health.
+         *
+         * When the health of the ship is 0, it is "dead"
+         *
+         * @return the current ship health.
+         */
+        int getHealth() const { return _health; }
+
+        /**
+         * Sets the current ship health.
+         *
+         * When the health of the ship is 0, it is "dead"
+         *
+         * @param value The current ship health.
+         */
+        void setHealth(int value);
         
         /**
          * Moves the asteroid one animation frame
