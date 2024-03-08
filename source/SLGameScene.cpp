@@ -155,7 +155,9 @@ void GameScene::reset() {
  */
 void GameScene::update(float timestep) {
     // Read the keyboard for each controller.
+    _input.readInput_joystick();
     _input.readInput();
+
     if (_input.didPressReset()) {
         reset();
     }
@@ -178,7 +180,7 @@ void GameScene::update(float timestep) {
     }
     
     // Move the ships and photons forward (ignoring collisions)
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
+    _ship->move( _input.getForward(),  _input.getTurn(), _input.getVelocity(),_input.getControllerState(),_input.getKeyboardState(), getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize());

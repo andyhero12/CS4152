@@ -168,19 +168,21 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  * @param forward    Amount to move forward
  * @param turn        Amount to turn the ship
  */
-void Ship::move(float forward, float turn, Size size) {
+void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool _Usekeyboard, Size size) {
     // Process the ship turning.
 //    processTurn(turn);
     
     if (forward == 0.0f){
         _vel = Vec2(0, 0);
     }
-    
-    _vel = Vec2(turn, forward);
-    
-
-    
-    
+    if (_Usekeyboard) {
+        _vel = Vec2(turn, forward);
+    }
+    //std::cout << Vel.x << std::endl;
+    //std::cout << "state is "<<_UseJoystick << std::endl;
+    if (_UseJoystick) {
+        _vel = Vel;
+    }
     
     // Process the ship thrust.
 //    if (forward != 0.0f) {
@@ -204,7 +206,6 @@ void Ship::move(float forward, float turn, Size size) {
         _ang += 360;
     
     _vel = _vel.normalize();
-    
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
     wrapPosition(size);
@@ -215,7 +216,7 @@ void Ship::move(float forward, float turn, Size size) {
     }
     
     // changing direction
-    if (forward != 0 or turn != 0){
+    if (forward != 0 || turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){
                 _animations.resetAnimation(1);

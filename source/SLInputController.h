@@ -35,13 +35,21 @@ private:
 
     /** Did we press the reset button? */
     bool _didReset;
+    
+    cugl::Vec2 _Vel;
+    
+    bool _UseKeyboard;
+    
+    bool _UseJoystick;
 
 public:
 
     std::shared_ptr<cugl::GameController> _gameContrl;
     std::vector<cugl::Vec2> directions;
+    /* Initialize the InputController*/
     bool init();
 
+    
     //GameController _gamecontr;
     /**
      * Returns the amount of forward movement.
@@ -106,6 +114,23 @@ public:
      * are more appropriate for menus and buttons (like the loading screen).
      */
     void readInput();
+
+    /**
+    * Reads the Controllerinput for this player and converts the result into game logic.
+    */
+    void readInput_joystick();
+    
+    cugl::Vec2 getVelocity() const{
+        return _Vel;
+    }
+
+    bool getControllerState() {
+        return _UseJoystick;
+    }
+
+    bool getKeyboardState() {
+        return _UseKeyboard;
+    }
 };
 
 #endif /* __GL_INPUT_CONTROLLER_H__ */
