@@ -168,13 +168,17 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  * @param forward    Amount to move forward
  * @param turn        Amount to turn the ship
  */
+<<<<<<< HEAD
 void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool _Usekeyboard, Size size) {
+
+>>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
     // Process the ship turning.
 //    processTurn(turn);
     
     if (forward == 0.0f){
         _vel = Vec2(0, 0);
     }
+<<<<<<< HEAD
     if (_Usekeyboard) {
         _vel = Vec2(turn, forward);
     }
@@ -183,6 +187,9 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
     if (_UseJoystick) {
         _vel = Vel;
     }
+=======
+    
+>>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
     
     // Process the ship thrust.
 //    if (forward != 0.0f) {

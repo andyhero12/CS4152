@@ -29,8 +29,12 @@ _forward(0),
 _turning(0),
 _didFire(false),
 _Vel(0,0),
+<<<<<<< HEAD
 _UseJoystick(false),
 _UseKeyboard(false){
+=======
+{
+>>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
 }
 /* */
 bool InputController::init() {
@@ -71,10 +75,14 @@ void InputController::readInput() {
     
     // Convert keyboard state into game commands
     _forward = _turning = 0;
+<<<<<<< HEAD
     _UseKeyboard = false;
 
     Keyboard* keys = Input::get<Keyboard>();
 
+=======
+    
+>>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
     // Movement left/right
     if (keys->keyDown(left) && !keys->keyDown(right)) {
         _turning = -1;
@@ -103,6 +111,10 @@ void InputController::readInput() {
         _forward = -1;
         _UseKeyboard = true;
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
 
 }
 

@@ -293,7 +293,9 @@ public:
      * @param turn      Amount to turn the ship
      * @param size      The size of the window (for wrap around)
      */
+<<<<<<< HEAD
     void move(float forward, float turn, cugl::Vec2 Vel, bool _UseJoystick, bool _Usekeyboard, cugl::Size size);
+>>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
     
 private:
     /**
