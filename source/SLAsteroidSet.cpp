@@ -144,9 +144,13 @@ void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Te
 }
 
 int convertToQuadrant(double radian) {
-    radian = radian + (M_PI / 16);
-    int quadrant = (int)((radian + 2 * M_PI) / (M_PI / 2)) % 8;  // Determine the quadrant
-    return (quadrant + 4) % 8;  // Return the quadrant number (0 to 7)
+//    radian = radian + (M_PI / 16);
+//    int quadrant = (radian + 2 * M_PI) / (M_PI / 2);  // Determine the quadrant
+    double angleInDegrees = radian * (180 / M_PI);
+    // Calculate the "quadrant" in an 8-part division
+    int quadrant = static_cast<int>(std::floor(angleInDegrees / 45.0)) % 8;
+//    std::cout<< angle << " " << (quadrant + 4 ) % 8 << std::endl;
+    return ( quadrant + 8 ) % 8;  // Return the quadrant number (0 to 7)
 }
 
 /**
@@ -293,6 +297,7 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
 {
 
     int index = generateRandomValuelowToHigh(0,(int) _target.size());
+    index = 0;
     // Determine direction and velocity of the photon.
     std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
     if (_texture.size() > 0)
