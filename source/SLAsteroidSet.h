@@ -22,7 +22,7 @@
 #include <unordered_set>
 #include "Base.h"
 #include "SLShip.h"
-
+#include "Animation.h"
 /**
  * Model class representing a collection of asteroids.
  *
@@ -68,8 +68,10 @@ public:
         float _scale;
         int _attackCooldown;
         int _damage;
+        /** The amount of health this ship has */
+        int _health;
         /** The sprite sheet for animating the asteroid */
-        std::shared_ptr<cugl::SpriteSheet> _sprite;
+        Animation _animations;
     public:
         int getTargetIndex() const{
             return _targetIndex;
@@ -142,7 +144,7 @@ public:
          * @return the sprite sheet for the ship
          */
         const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-            return _sprite;
+            return _animations.getSprite();
         }
 
         /**
@@ -156,6 +158,24 @@ public:
          * @param texture   The sprite sheet for this asteroid.
          */
         void setSprite(const std::shared_ptr<cugl::SpriteSheet>& sprite);
+        
+        /**
+         * Returns the current ship health.
+         *
+         * When the health of the ship is 0, it is "dead"
+         *
+         * @return the current ship health.
+         */
+        int getHealth() const { return _health; }
+
+        /**
+         * Sets the current ship health.
+         *
+         * When the health of the ship is 0, it is "dead"
+         *
+         * @param value The current ship health.
+         */
+        void setHealth(int value);
         
         /**
          * Moves the asteroid one animation frame
@@ -331,7 +351,7 @@ public:
      * @param batch     The sprite batch to draw to
      * @param size      The size of the window (for wrap around)
      */
-    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
+    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font);
 };
 
 #endif /* __SL_ASTEROID_SET_H__ */

@@ -10,7 +10,7 @@
 //  With that said, you will notice several elements that look like they are
 //  part of the view, namely the texture and sound.  But this is the texture
 //  and sound DATA.  The actual view are the sprite batch and audio engine,
-//  respectively, that use this data to provide feedback on the screen.
+//  respectively, that use this
 //
 //  Author: Walker White
 //  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
@@ -19,7 +19,8 @@
 #ifndef __GL_SHIP_H__
 #define __GL_SHIP_H__
 #include <cugl/cugl.h>
-
+#include "Animation.h"
+#include <vector>
 /** The number of frames until we can fire again */
 #define RELOAD_RATE 3
 
@@ -79,9 +80,11 @@ private:
     
     // Asset references. These should be set by GameScene
     /** Reference to the ships sprite sheet */
-    std::shared_ptr<cugl::SpriteSheet> _sprite;
+//    std::shared_ptr<cugl::SpriteSheet> _sprite;
     /** Radius of the ship in pixels (derived from sprite sheet) */
     float _radius;
+    
+    Animation _animations;
 
 public:
 #pragma mark Constructors
@@ -270,7 +273,7 @@ public:
      * @return the sprite sheet for the ship
      */
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        return _sprite;
+        return _animations.getSprite();
     }
 
     /**

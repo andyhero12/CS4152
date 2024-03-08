@@ -27,7 +27,7 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
-void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast){
+void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
     float distanceCutoff = 100.0;
     auto itA = ast.current.begin();
     while (itA != ast.current.end()){
@@ -40,7 +40,23 @@ void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, Aster
             ast.current.erase(curA);
         }
     }
+    
+    auto itS = spawners.begin();
+    while (itS != spawners.end()){
+        const std::shared_ptr<Spawner>& rock = *itS;
+        Vec2 norm = ship->getPosition() - rock->getPos();
+        float distance = norm.length();
+        if (distance < distanceCutoff){
+            itS = spawners.erase(itS);
+        }
+        else{
+            ++itS;
+        }
+    }
+    
+    
 }
+
 bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset, std::shared_ptr<Ship> ship){
     bool collision = false;
 //
@@ -77,7 +93,10 @@ bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset, 
                 hitSomething = true;
                 collision = true;
                 ship->addAbsorb((*curA)->getAbsorbValue());
-                aset.current.erase(curA);
+                rock->setHealth(rock->getHealth() - 1);
+                if(rock->getHealth() <= 0){
+                    aset.current.erase(curA);
+                }
             }
         }
         auto curP = itP++;
@@ -229,3 +248,5 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
     }
     return collision;
 }
+
+

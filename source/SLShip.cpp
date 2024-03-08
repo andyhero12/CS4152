@@ -17,6 +17,7 @@
 //  Version: 1/20/22
 //
 #include "SLShip.h"
+#include <cmath>
 
 using namespace cugl;
 
@@ -96,15 +97,20 @@ void Ship::subAbsorb(int value) {
  * @param texture   The texture for the sprite sheet
  */
 void Ship::setTexture(const std::shared_ptr<cugl::Texture>& texture) {
+    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
         if (_framesize % _framecols != 0) {
             rows++;
         }
-        _sprite = SpriteSheet::alloc(texture, rows, _framecols, _framesize);
-        _sprite->setFrame(_frameflat);
-        _radius = std::max(_sprite->getFrameSize().width, _sprite->getFrameSize().height)/2;
-        _sprite->setOrigin(_sprite->getFrameSize()/2);
+        std::shared_ptr<cugl::SpriteSheet> _sprite = SpriteSheet::alloc(texture, rows, _framecols, _framesize);
+        std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
+        anims.push_back(_sprite);
+        
+        _animations = Animation(1, anims, 10, _frameflat);
+        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
+        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
+
     }
 }
 
@@ -120,7 +126,7 @@ void Ship::setTexture(const std::shared_ptr<cugl::Texture>& texture) {
  */
 void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     // Don't draw if sprite not set
-    if (_sprite) {
+    if (_animations.getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
         shiptrans.scale(getScale());
@@ -131,8 +137,9 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         shadtrans.translate(_shadows,-_shadows);
         Color4f shadow(0,0,0,0.5f);
         
-        _sprite->draw(batch,shadow,shadtrans);
-        _sprite->draw(batch,shiptrans);
+        _animations.getSprite()->draw(batch,shadow,shadtrans);
+        _animations.getSprite()->draw(batch,shiptrans);
+
     }
 }
 
@@ -162,23 +169,32 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  */
 void Ship::move(float forward, float turn, Size size) {
     // Process the ship turning.
-    processTurn(turn);
+//    processTurn(turn);
     
     if (forward == 0.0f){
         _vel = Vec2(0, 0);
     }
     
+    _vel = Vec2(turn, forward);
+    
+
+    
+    
+    
     // Process the ship thrust.
-    if (forward != 0.0f) {
-        // Thrust key pressed; increase the ship velocity.
-        float rads = M_PI*_ang/180.0f+M_PI_2;
-        Vec2 dir(cosf(rads),sinf(rads));
-        _vel += dir * forward * _thrust;
-    }
+//    if (forward != 0.0f) {
+//        // Thrust key pressed; increase the ship velocity.
+//        float rads = M_PI*_ang/180.0f+M_PI_2;
+//        Vec2 dir(cosf(rads),sinf(rads));
+//        _vel += dir * forward * _thrust;
+//    }
 
     // Move the ship, updating it.
     // Adjust the angle by the change in angle
-    setAngle(_ang+_dang);
+    if (!(forward==0 && turn==0)) {
+        _ang = atan2(forward, turn) * (180/M_PI) - 90;
+        setAngle(_ang);
+    }
     
     // INVARIANT: 0 <= ang < 360
     if (_ang > 360)
@@ -200,6 +216,16 @@ void Ship::move(float forward, float turn, Size size) {
     if (_modeTimer <= _modeCooldown){
         _modeTimer++;
     }
+
+    if (forward != 0 or turn != 0){
+        _animations.updateAnimTime();
+        if (_animations.frameUpdateReady()){
+            _animations.stepAnimation();
+        }
+    }
+    else{
+        _animations.resetAnimation(0);
+    }
 }
 
 /**
@@ -211,8 +237,8 @@ void Ship::move(float forward, float turn, Size size) {
  * @param turn Amount to turn the ship
  */
 void Ship::processTurn(float turn) {
-    int frame = (_sprite == nullptr ? 0 : _sprite->getFrame());
-    int fsize = (_sprite == nullptr ? 0 : _sprite->getSize());
+    int frame = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getFrame());
+    int fsize = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getSize());
     if (turn != 0.0f) {
         // The turning factor is cumulative.
         // The longer it is held down, the harder we bank.
@@ -241,8 +267,8 @@ void Ship::processTurn(float turn) {
         }
     }
     
-    if (_sprite) {
-        _sprite->setFrame(frame);
+    if (_animations.getSprite()) {
+        _animations.getSprite()->setFrame(frame);
     }
 }
 

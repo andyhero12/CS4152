@@ -52,7 +52,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     
     // Start up the input handler
     _assets = assets;
-    
+    _input.init();
+
     // Get the background image and constant values
     _background = assets->get<Texture>("background");
     _constants = assets->get<JsonValue>("constants");
@@ -158,7 +159,7 @@ void GameScene::update(float timestep) {
         //        _ship->subAbsorb(2);
     }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
         _ship->setAbsorbValue(0);
-        _collisions.resolveBlowup(_ship, _asteroids);
+        _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
     }
     
     // Move the ships and photons forward (ignoring collisions)
@@ -233,7 +234,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
         }
     }
     
-    _asteroids.draw(batch,getSize());
+    _asteroids.draw(batch,getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
     _photons.draw(batch, getSize());

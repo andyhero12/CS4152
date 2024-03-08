@@ -71,6 +71,7 @@ AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type
     _targetIndex = target;
     setType(type);
     _attackCooldown = 15;
+    _health = type;
 }
 
 
@@ -104,6 +105,22 @@ void AsteroidSet::Asteroid::setType(int type)
 }
 
 /**
+ * Sets the current ship health.
+ *
+ * When the health of the ship is 0, it is "dead"
+ *
+ * @param value The current ship health.
+ */
+void AsteroidSet::Asteroid::setHealth(int value) {
+    if (value >= 0) {
+        // Do not allow health to go negative
+        _health = value;
+    } else {
+        _health = 0;
+    }
+}
+
+/**
  * Sets the sprite sheet for this asteroid.
  *
  * Note the parameter type. The const is applied to the pointer,
@@ -115,7 +132,9 @@ void AsteroidSet::Asteroid::setType(int type)
  */
 void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &sprite)
 {
-    _sprite = sprite;
+    std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
+    anims.push_back(sprite);
+    _animations = Animation(1, anims, 10, 0);
 }
 
 /**
@@ -128,6 +147,10 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &
  */
 void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
 {
+    _animations.updateAnimTime();
+    if (_animations.frameUpdateReady()){
+        _animations.stepAnimation();
+    }
 
     if (_attackCooldown < 60){
         _attackCooldown += 1;
@@ -364,7 +387,7 @@ void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
  * @param batch     The sprite batch to draw to
  * @param size      The size of the window (for wrap around)
  */
-void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size)
+void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size, std::shared_ptr<Font> font)
 {
     if (_texture)
     {
@@ -373,36 +396,46 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size)
             float scale = (*it)->getScale();
             Vec2 pos = (*it)->position;
             Vec2 origin(_radius, _radius);
+            
+            std::string hpMsg = strtool::format(std::to_string((*it)->getHealth()));
+            std::shared_ptr<cugl::TextLayout> hptext = TextLayout::allocWithText(hpMsg, font);
+            hptext->layout();
 
             Affine2 trans;
             trans.scale(scale);
             trans.translate(pos);
             auto sprite = (*it)->getSprite();
-
+            
             float r = _radius * scale;
             sprite->draw(batch, trans);
+            batch->drawText(hptext,trans);
+            
             if (pos.x + r > size.width)
             {
                 trans.translate(-size.width, 0);
                 sprite->draw(batch, trans);
+                batch->drawText(hptext,trans);
                 trans.translate(size.width, 0);
             }
             else if (pos.x - r < 0)
             {
                 trans.translate(size.width, 0);
                 sprite->draw(batch, trans);
+                batch->drawText(hptext,Vec2(10,10));
                 trans.translate(-size.width, 0);
             }
             if (pos.y + r > size.height)
             {
                 trans.translate(0, -size.height);
                 sprite->draw(batch, trans);
+                batch->drawText(hptext,Vec2(10,10));
                 trans.translate(0, size.height);
             }
             else if (pos.y - r < 0)
             {
                 trans.translate(0, size.height);
                 sprite->draw(batch, trans);
+                batch->drawText(hptext,Vec2(10,10));
                 trans.translate(0, -size.height);
             }
         }
