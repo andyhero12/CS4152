@@ -130,11 +130,23 @@ void AsteroidSet::Asteroid::setHealth(int value) {
  *
  * @param texture   The sprite sheet for this asteroid.
  */
-void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &sprite)
-{
+void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize){
+
     std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
-    anims.push_back(sprite);
+    for(auto& text : value) {
+
+        std::shared_ptr<cugl::SpriteSheet> _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
+        anims.push_back(_sprite);
+//
+    }
+
     _animations = Animation(1, anims, 10, 0);
+}
+
+int convertToQuadrant(double radian) {
+    radian = radian + (M_PI / 16);
+    int quadrant = (int)((radian + 2 * M_PI) / (M_PI / 2)) % 8;  // Determine the quadrant
+    return (quadrant + 4) % 8;  // Return the quadrant number (0 to 7)
 }
 
 /**
@@ -147,19 +159,26 @@ void AsteroidSet::Asteroid::setSprite(const std::shared_ptr<cugl::SpriteSheet> &
  */
 void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
 {
-    _animations.updateAnimTime();
-    if (_animations.frameUpdateReady()){
-        _animations.stepAnimation();
-    }
+
 
     if (_attackCooldown < 60){
         _attackCooldown += 1;
     }
   
+//    _animations.resetAnimation();
     
     cugl::Vec2 target_pos = _targetIndex == 0 ? ship->getPosition() : bases[_targetIndex-1] ;
     cugl::Vec2 direction = target_pos- position;
-    
+    int dir_quad = convertToQuadrant(direction.getAngle());
+    if (_prevDir != dir_quad)
+    {
+        _animations.resetAnimation(dir_quad);
+    }
+    _prevDir = dir_quad;
+    _animations.updateAnimTime();
+    if (_animations.frameUpdateReady()){
+        _animations.stepAnimation();
+    }
 //    CULog("x %f, y %f", direction.x, direction.y);
     position += direction.normalize();
 //    position = destination;
@@ -276,15 +295,16 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
     int index = generateRandomValuelowToHigh(0,(int) _target.size());
     // Determine direction and velocity of the photon.
     std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
-    if (_texture)
+    if (_texture.size() > 0)
     {
         int rows = _framesize / _framecols;
         if (_framesize % _framecols != 0)
         {
             rows++;
         }
-        rock->setSprite(SpriteSheet::alloc(_texture, rows, _framecols, _framesize));
-        rock->getSprite()->setOrigin(Vec2(_radius, _radius));
+        rock->setSprite(_texture, rows,_framecols, _framesize);
+//        rock->setSprite(SpriteSheet::alloc(_texture, rows, _framecols, _framesize));
+//        rock->getSprite()->setOrigin(Vec2(_radius, _radius));
     }
     _pending.emplace(rock);
 }
@@ -338,16 +358,16 @@ void AsteroidSet::update(Size size)
  *
  * @param value the image for a single asteroid; reused by all asteroids.
  */
-void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
+void AsteroidSet::setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& value)
 {
-    if (value && _framecols > 0)
+    if (_framecols > 0 && value.size() > 0)
     {
         int rows = _framesize / _framecols;
         if (_framesize % _framecols != 0)
         {
             rows++;
         }
-        Size size = value->getSize();
+        Size size = value[0]->getSize();
         size.width /= _framecols;
         size.height /= rows;
 
@@ -358,20 +378,22 @@ void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
         for (auto it = current.begin(); it != current.end(); ++it)
         {
             std::shared_ptr<Asteroid> rock = (*it);
-            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
+            rock->setSprite(_texture, rows,_framecols, _framesize);
+//            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
+//            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
         for (auto it = _pending.begin(); it != _pending.end(); ++it)
         {
             std::shared_ptr<Asteroid> rock = (*it);
-            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
+            rock->setSprite(_texture, rows,_framecols, _framesize);
+//            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
+//            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
     }
     else
     {
         _radius = 0;
-        _texture = nullptr;
+//        _texture = nullptr;
     }
 }
 
@@ -389,8 +411,8 @@ void AsteroidSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
  */
 void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size)
 {
-    if (_texture)
-    {
+//    if (_texture)
+    
         for (auto it = current.begin(); it != current.end(); ++it)
         {
             float scale = (*it)->getScale();
@@ -428,6 +450,6 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size)
                 sprite->draw(batch, trans);
                 trans.translate(0, -size.height);
             }
-        }
+        
     }
 }
