@@ -158,8 +158,8 @@ $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
         <Command>if not exist "$(SolutionDir)output" md "$(SolutionDir)output"
   if not exist "$(SolutionDir)output\licenses" md "$(SolutionDir)output\licenses"
   copy "$(TargetPath)" "$(SolutionDir)output"
-  xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x86\*.dll" "$(SolutionDir)output"
-  xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x86\*.txt" "$(SolutionDir)output\licenses"
+  xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x64\*.dll" "$(SolutionDir)output"
+  xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x64\*.txt" "$(SolutionDir)output\licenses"
   xcopy /y /d  "$(CUGLDir)licenses\*.txt" "$(SolutionDir)output\licenses"
   xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
     </PostBuildEvent>
@@ -222,8 +222,8 @@ $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
         <Command>if not exist "$(SolutionDir)output" md "$(SolutionDir)output"
     if not exist "$(SolutionDir)output\licenses" md "$(SolutionDir)output\licenses"
     copy "$(TargetPath)" "$(SolutionDir)output"
-    xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x86\*.dll" "$(SolutionDir)output"
-    xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x86\*.txt" "$(SolutionDir)output\licenses"
+    xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x64\*.dll" "$(SolutionDir)output"
+    xcopy /y /d  "$(CUGLDir)sdlapp\buildfiles\windows\dlls\x64\*.txt" "$(SolutionDir)output\licenses"
     xcopy /y /d  "$(CUGLDir)licenses\*.txt" "$(SolutionDir)output\licenses"
     xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
     </PostBuildEvent>
@@ -298,7 +298,7 @@ $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <Image Include="icon1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\cugl\\buildfiles\windows\cugl\cugl.vcxproj">
+    <ProjectReference Include="..\..\..\..\cugl\\buildfiles\windows\cugl\cugl.vcxproj">
       <Project>{60c028a4-977f-44e9-a709-d79a153d6f69}</Project>
     </ProjectReference>
   </ItemGroup>
