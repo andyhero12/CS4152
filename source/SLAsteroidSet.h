@@ -351,7 +351,7 @@ public:
      * @param batch     The sprite batch to draw to
      * @param size      The size of the window (for wrap around)
      */
-    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
+    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font);
 };
 
 #endif /* __SL_ASTEROID_SET_H__ */

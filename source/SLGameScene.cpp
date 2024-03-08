@@ -230,7 +230,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
         }
     }
     
-    _asteroids.draw(batch,getSize());
+    _asteroids.draw(batch,getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
     _photons.draw(batch, getSize());
