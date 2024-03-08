@@ -102,8 +102,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		120AAB692B9AB79200DEB644 /* SLCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCollisionController.h; sourceTree = "<group>"; };
 		126D5DE32B9AA161002FBEA5 /* SLCollisionController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SLCollisionController.cpp; sourceTree = "<group>"; };
-		126D5DE42B9AA161002FBEA5 /* SLCollisionController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SLCollisionController.hpp; sourceTree = "<group>"; };
 		AA051FCD35EC67DB8C9CBC71 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		AA259BFAAEFDFD1998A32E0B /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
 		AA9A54AD20F1FDD4B0473EE5 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
@@ -277,7 +277,7 @@
 				BADCDAD3E6EA9DA0FAE1425B /* SLLoadingScene.h */,
 				BACE0CAEFCAA45454D3C73D9 /* Base.h */,
 				126D5DE32B9AA161002FBEA5 /* SLCollisionController.cpp */,
-				126D5DE42B9AA161002FBEA5 /* SLCollisionController.hpp */,
+				120AAB692B9AB79200DEB644 /* SLCollisionController.h */,
 			);
 			name = Source;
 			path = ../../source;
