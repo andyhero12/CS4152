@@ -38,25 +38,19 @@ private:
     
     cugl::Vec2 _Vel;
     
-<<<<<<< HEAD
     bool _UseKeyboard;
-=======
->>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
-    
+
     bool _UseJoystick;
 
 public:
 
     std::shared_ptr<cugl::GameController> _gameContrl;
     std::vector<cugl::Vec2> directions;
-<<<<<<< HEAD
 
-=======
-    bool Keyboard_use;
-    bool Controller_use;
+
     /* Initialize the InputController*/
     bool init();
->>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
+
     
     //GameController _gamecontr;
     /**
@@ -122,19 +116,17 @@ public:
      * are more appropriate for menus and buttons (like the loading screen).
      */
     void readInput();
-<<<<<<< HEAD
+
 
     /**
     * Reads the Controllerinput for this player and converts the result into game logic.
     */
     void readInput_joystick();
-=======
->>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
+
     
     cugl::Vec2 getVelocity() const{
         return _Vel;
     }
-<<<<<<< HEAD
 
     bool getControllerState() {
         return _UseJoystick;
@@ -143,8 +135,7 @@ public:
     bool getKeyboardState() {
         return _UseKeyboard;
     }
-=======
->>>>>>> ebce9d91d0ec332a348b0e1463884dc7cb4e640c
+
 };
 
 #endif /* __GL_INPUT_CONTROLLER_H__ */
