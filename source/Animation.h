@@ -38,6 +38,7 @@ public:
     ~Animation() {}
     
     void setFrame(int frame);
+    const int getFrame() const {return frame;}
 
     /**
     Returns true if enough time has passed since the last animation frame update
@@ -62,5 +63,7 @@ public:
     Returns the spritesheet of the Animation
      */
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const;
+    
+    void setOrigin(cugl::Vec2 &origin);
 };
 #endif /* Animation_hpp */

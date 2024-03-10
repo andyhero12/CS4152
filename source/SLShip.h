@@ -104,7 +104,7 @@ public:
     }
     void addAbsorb(int value);
     void subAbsorb(int value);
-    int getAbsorb() const{ return _absorbValue;}
+    const int getAbsorb() const{ return _absorbValue;}
     void setAbsorbValue(int x){_absorbValue = x;}
     /**
      * Returns the position of this ship.

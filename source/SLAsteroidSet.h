@@ -158,7 +158,7 @@ public:
          *
          * @param texture   The sprite sheet for this asteroid.
          */
-        void setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize);
+        void setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize, cugl::Vec2 origin );
                        
 //                       const std::shared_ptr<cugl::SpriteSheet>& sprite);
         

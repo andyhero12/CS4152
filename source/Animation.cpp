@@ -51,3 +51,9 @@ const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
     currentAnimSprite->setFrame(frame);
     return currentAnimSprite;
 }
+
+void Animation::setOrigin(cugl::Vec2 &origin){
+    for(auto& spriteSheet : animSprite) {
+        spriteSheet->setOrigin(origin);
+    }
+}

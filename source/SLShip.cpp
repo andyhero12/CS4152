@@ -109,6 +109,9 @@ void Ship::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> & textur
 //
         }
         _animations = Animation(1, anims, 10, _frameflat);
+        Vec2 origin(_animations.getSprite()->getFrameSize()/2);
+        _animations.setOrigin(origin);
+        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
 //        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
 //        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
     

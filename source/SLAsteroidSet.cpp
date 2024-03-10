@@ -130,7 +130,7 @@ void AsteroidSet::Asteroid::setHealth(int value) {
  *
  * @param texture   The sprite sheet for this asteroid.
  */
-void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize){
+void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize, cugl::Vec2 origin ){
 
     std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
     for(auto& text : value) {
@@ -139,7 +139,7 @@ void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Te
         anims.push_back(_sprite);
 //
     }
-
+    _animations.setOrigin(origin);
     _animations = Animation(1, anims, 10, 0);
 }
 
@@ -307,7 +307,7 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
         {
             rows++;
         }
-        rock->setSprite(_texture, rows,_framecols, _framesize);
+        rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
 //        rock->setSprite(SpriteSheet::alloc(_texture, rows, _framecols, _framesize));
 //        rock->getSprite()->setOrigin(Vec2(_radius, _radius));
     }
@@ -383,14 +383,14 @@ void AsteroidSet::setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& 
         for (auto it = current.begin(); it != current.end(); ++it)
         {
             std::shared_ptr<Asteroid> rock = (*it);
-            rock->setSprite(_texture, rows,_framecols, _framesize);
+            rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
 //            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
 //            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
         for (auto it = _pending.begin(); it != _pending.end(); ++it)
         {
             std::shared_ptr<Asteroid> rock = (*it);
-            rock->setSprite(_texture, rows,_framecols, _framesize);
+            rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
 //            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
 //            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
