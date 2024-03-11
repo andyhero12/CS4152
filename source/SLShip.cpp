@@ -37,6 +37,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _refire = 0;
     _radius = 0;
     _absorbValue = 0;
+    _modeTimer = 0;
     
     // Physics
     _mass = data->getFloat("mass",1.0);
@@ -54,6 +55,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _frameflat = data->getInt("sprite frame",0);
     
     _health = data->getInt("health",0);
+    _modeCooldown = data->getInt("mode cooldown",0);
 }
 
 /**
@@ -217,7 +219,10 @@ void Ship::move(float forward, float turn, Size size) {
         _refire++;
     }
     
-    // changing direction
+    if (_modeTimer <= _modeCooldown){
+        _modeTimer++;
+    }
+
     if (forward != 0 or turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){

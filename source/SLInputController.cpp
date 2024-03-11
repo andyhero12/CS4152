@@ -65,11 +65,13 @@ void InputController::readInput() {
     KeyCode right = KeyCode::ARROW_RIGHT;
     KeyCode shoot = KeyCode::SPACE;
     KeyCode reset = KeyCode::R;
-    
+    KeyCode mode = KeyCode::F;
+
     // Convert keyboard state into game commands
     _forward = _turning = 0;
     _didFire = false;
     _didReset = false;
+    _didChangeMode = false;
     
     // Movement forward/backward
    // std::cout << LR << " " << UD << std::endl;
@@ -96,6 +98,10 @@ void InputController::readInput() {
     // Reset the game
     if (keys->keyDown(reset)) {
         _didReset = true;
+    }
+    
+    if (keys->keyDown(mode)){
+        _didChangeMode = true;
     }
 
     if (keys->keyDown(up) && !keys->keyDown(down)) {
