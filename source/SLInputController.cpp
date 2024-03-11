@@ -111,13 +111,13 @@ void InputController::readInput() {
         _forward = -1;
     }
     if (_gameContrl){
-        float LR = _gameContrl->getAxisPosition(0);
-        float UD = _gameContrl->getAxisPosition(1);
-        if(_gameContrl->isButtonDown(0)){
+        float LR = _gameContrl->getAxisPosition(cugl::GameController::Axis::LEFT_X);
+        float UD = _gameContrl->getAxisPosition(cugl::GameController::Axis::LEFT_Y);
+        if(_gameContrl->isButtonDown(cugl::GameController::Button::A)){
             _didFire = true;
         }
 
-        if(_gameContrl->isButtonDown(1)){
+        if(_gameContrl->isButtonDown(cugl::GameController::Button::B)){
             _didReset = true;
         }
         // Controller
@@ -175,11 +175,11 @@ void InputController::readInput() {
             
         }
         
-        std::cout << "printhere" << std::endl;
-        std::cout << _gameContrl->numberButtons() << std::endl;
+        /*std::cout << "printhere" << std::endl;
+        std::cout << _gameContrl->numberAxes() << std::endl;
         std::cout << _gameContrl->numberHats() << std::endl;
         std::cout << _gameContrl->numberAxes() << std::endl;
-        for (int i = 0; i < 128; i++)
+        for (uint8_t i = 0; i < 128; i++)
         {
             if (_gameContrl->isButtonDown(i))
             {
@@ -187,7 +187,7 @@ void InputController::readInput() {
             }
             
             
-        }
+        }*/
     }
    /* if (LR <= -0.2 && LR < UD) {
         _turning = -1;

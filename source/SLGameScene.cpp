@@ -60,12 +60,31 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
 
     // Make a ship and set its texture
     _ship = std::make_shared<Ship>(getSize()/2, _constants->get("ship"));
-    _ship->setTexture(assets->get<Texture>("ship"));
+    
+    std::vector<std::shared_ptr<cugl::Texture>> textures;
+    textures.push_back(assets->get<Texture>("shipfront"));
+    textures.push_back(assets->get<Texture>("shipleft"));
+    textures.push_back(assets->get<Texture>("shipright"));
+    _ship->setTexture(textures);
+    
+//    _ship->setTexture(assets->get<Texture>("ship"));
 
     // Initialize the asteroid set
     _asteroids.init(_constants->get("asteroids"),_ship);
-    _asteroids.setTexture(assets->get<Texture>("asteroid1"));
+    textures.clear();
+//    textures.push_back(assets->get<Texture>("asteroid1"));
+    textures.push_back(assets->get<Texture>("monkey0"));
+    textures.push_back(assets->get<Texture>("monkey1"));
+    textures.push_back(assets->get<Texture>("monkey2"));
+    textures.push_back(assets->get<Texture>("monkey3"));
+    textures.push_back(assets->get<Texture>("monkey4"));
+    textures.push_back(assets->get<Texture>("monkey5"));
+    textures.push_back(assets->get<Texture>("monkey6"));
+    textures.push_back(assets->get<Texture>("monkey7"));
 
+    
+//    _asteroids.setTexture(assets->get<Texture>("asteroid1"));
+    _asteroids.setTexture(textures);
     
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
