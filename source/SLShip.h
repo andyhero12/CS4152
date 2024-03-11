@@ -30,7 +30,7 @@
 class Ship {
 private:
     
-    std::array<std::string, 3> modes = {"1", "2", "3"};
+    std::array<std::string, 3> modes = {"SHOOT", "BUILD", "NOTHING"};
     
     /** Position of the ship */
     cugl::Vec2 _pos;
@@ -173,7 +173,7 @@ public:
      */
     float getAngle() const { return _ang; }
     
-    float getScale() const { return (1 + getAbsorb()/15.0f);}
+    float getScale() const { return (1 + getAbsorb()/30.0f);}
     /**
      * Sets the angle that this ship is facing.
      *
