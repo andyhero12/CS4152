@@ -38,6 +38,8 @@ private:
     
     /** Did press the change mode button */
     bool _didChangeMode;
+    /** Did we press the special button? */
+    bool _didSpecial;
 
 public:
 
@@ -75,6 +77,15 @@ public:
      */
     bool didPressFire() const {
         return _didFire;
+    }
+    
+    /**
+     * Returns whether the fire button was pressed.
+     *
+     * @return whether the Special button was pressed.
+     */
+    bool didPressSpecial() const {
+        return _didSpecial;
     }
     
     /**
