@@ -9,9 +9,9 @@
         "angular damp": 0.0,
         "fire rate": 25,
         "shadow": 10,
-        "sprite cols": 10,
-        "sprite size": 10,
-        "sprite frame": 5,
+        "sprite cols": 4,
+        "sprite size": 4,
+        "sprite frame": 1,
         "mode cooldown": 10
     },
     "photons": {
