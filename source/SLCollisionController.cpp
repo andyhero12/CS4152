@@ -27,7 +27,23 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
-
+void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
+    for (const std::shared_ptr<ActionPolygon>& action: attacks.currentAttacks){
+        switch (action->getAction()){
+            case (Action::SHOOT):
+                hugeBlastCollision(action->getPolygon(), aset); // Play blast sound
+                break;
+            case (Action::EXPLODE):
+                resolveBlowup(action->getPolygon(),aset, spawners); // play boom sound
+                break;
+            case (Action::BITE):
+                break;
+            default:
+                CULog("Action not used in Collisions\n");
+        };
+    }
+    
+}
 bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship){
     if (!ship->canHeal()|| ship->getHealth() >= ship->getMaxHealth()){
         return false;
@@ -47,7 +63,7 @@ bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<S
     }
     return false;
 }
-void CollisionController::hugeBlastCollision(cugl::Poly2& blastRectangle, AsteroidSet& ast){
+void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast){
     auto itA = ast.current.begin();
     while (itA != ast.current.end()){
         const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
@@ -58,30 +74,24 @@ void CollisionController::hugeBlastCollision(cugl::Poly2& blastRectangle, Astero
         }
     }
 }
-void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
-    float distanceCutoff = 100.0;
+void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
+    CULog("in resolve Blowup\n");
     auto itA = ast.current.begin();
     while (itA != ast.current.end()){
         const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
-        Vec2 norm = ship->getPosition() - rock->position;
-        float distance = norm.length();
         auto curA = itA++;
-//        CULog("distance %f\n", distance);
-        if (distance < distanceCutoff){
+        if (blastCircle.contains(rock->position)){
+            CULog("blast contains monkey\n");
             ast.current.erase(curA);
         }
     }
     
     auto itS = spawners.begin();
     while (itS != spawners.end()){
-        const std::shared_ptr<Spawner>& rock = *itS;
-        Vec2 norm = ship->getPosition() - rock->getPos();
-        float distance = norm.length();
-        if (distance < distanceCutoff){
-            itS = spawners.erase(itS);
-        }
-        else{
-            ++itS;
+        const std::shared_ptr<Spawner>& spawn = *itS;
+        auto curS = itS++;
+        if (blastCircle.contains(spawn->getPos())){
+            spawners.erase(curS);
         }
     }
     

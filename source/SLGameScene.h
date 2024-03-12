@@ -22,7 +22,7 @@
 #include "SLCollisionController.h"
 #include "SpawnerController.h"
 #include "BaseSet.h"
-
+#include "AttackPolygons.hpp"
 
 
 /**
@@ -55,7 +55,7 @@ protected:
     PhotonSet   _photons;
     
     BaseSet     _bases;
-    
+    AttackPolygons _attackPolygonSet;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */
@@ -73,7 +73,6 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     
     bool _gameEnded;
-    cugl::Poly2 blastRec;
     
 
     

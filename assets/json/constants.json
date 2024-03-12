@@ -10,6 +10,7 @@
         "fire rate": 25,
         "heal rate": 50,
         "shadow": 10,
+        "explosionRadius": 90.0,
         "sprite cols": 4,
         "sprite size": 4,
         "sprite frame": 1,

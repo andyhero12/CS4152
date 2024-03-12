@@ -71,6 +71,7 @@ private:
     int _frameflat;
     /** The shadow offset in pixels */
     float _shadows;
+    float _explosionRadius;
     
     int _modeCooldown;
     
@@ -250,6 +251,10 @@ public:
      */
     float getMass() const {
         return _mass;
+    }
+    
+    float getExplosionRadius() const{
+        return _explosionRadius;
     }
 
     /**

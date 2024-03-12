@@ -180,13 +180,13 @@ void GameScene::update(float timestep) {
         _ship->reloadWeapon();
         if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
             _ship->subAbsorb(5);
-            blastRec = _ship->getBlastRec();
-            _collisions.hugeBlastCollision(blastRec, _asteroids);
+            _attackPolygonSet.addShoot(_ship);
+//            _collisions.hugeBlastCollision(blastRec, _asteroids);
         }else if (_ship->getMode() == "BUILD"){
             
         }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
             _ship->subAbsorb(10);
-            _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
+            _attackPolygonSet.addExplode(_ship);
         }else {
             CULog("NOTHING\n");
         }
@@ -201,7 +201,8 @@ void GameScene::update(float timestep) {
     _photons.update(getSize());
     _spawnerController.update(_asteroids);
     _bases.update(_asteroids);
-    
+    _attackPolygonSet.update(getSize());
+    _collisions.resolveAttacks(_attackPolygonSet, _asteroids,_spawnerController._spawners);
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
@@ -270,12 +271,10 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
     _photons.draw(batch, getSize() * WORLD_SIZE);
+    _attackPolygonSet.draw(batch,getSize());
     _ship->draw(batch,getSize());
-
-
-    batch->setTexture(nullptr);
-    batch->setColor(Color4::RED);
-    batch->fill(blastRec);
+    // draw actions
+    
     // shift camera to draw for absolute positioning
     getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
     getCamera()->update();
