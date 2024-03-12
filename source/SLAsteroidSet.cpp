@@ -187,21 +187,17 @@ void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bas
     position += direction.normalize();
 //    position = destination;
     //    position += velocity;
-    while (position.x > size.width)
-    {
-        position.x -= size.width;
+    while (position.x > size.width) {
+        position.x = size.width;
     }
-    while (position.x < 0)
-    {
-        position.x += size.width;
+    while (position.x < 0) {
+        position.x = 0;
     }
-    while (position.y > size.height)
-    {
-        position.y -= size.height;
+    while (position.y > size.height) {
+        position.y = size.height;
     }
-    while (position.y < 0)
-    {
-        position.y += size.height;
+    while (position.y < 0) {
+        position.y = 0;
     }
 }
 
@@ -297,7 +293,7 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
 {
 
     int index = generateRandomValuelowToHigh(0,(int) _target.size());
-    index = 0;
+//    index = 0;
     // Determine direction and velocity of the photon.
     std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
     if (_texture.size() > 0)
@@ -384,21 +380,16 @@ void AsteroidSet::setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& 
         {
             std::shared_ptr<Asteroid> rock = (*it);
             rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
-//            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-//            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
         for (auto it = _pending.begin(); it != _pending.end(); ++it)
         {
             std::shared_ptr<Asteroid> rock = (*it);
             rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
-//            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-//            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
     }
     else
     {
         _radius = 0;
-//        _texture = nullptr;
     }
 }
 
@@ -433,38 +424,7 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size, std
             trans.translate(pos);
             auto sprite = (*it)->getSprite();
             
-            float r = _radius * scale;
             sprite->draw(batch, trans);
-            batch->drawText(hptext,trans);
-            
-            if (pos.x + r > size.width)
-            {
-                trans.translate(-size.width, 0);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,trans);
-                trans.translate(size.width, 0);
-            }
-            else if (pos.x - r < 0)
-            {
-                trans.translate(size.width, 0);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,Vec2(10,10));
-                trans.translate(-size.width, 0);
-            }
-            if (pos.y + r > size.height)
-            {
-                trans.translate(0, -size.height);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,Vec2(10,10));
-                trans.translate(0, size.height);
-            }
-            else if (pos.y - r < 0)
-            {
-                trans.translate(0, size.height);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,Vec2(10,10));
-                trans.translate(0, -size.height);
-            }
-        
+            batch->drawText(hptext,trans);           
     }
 }

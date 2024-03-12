@@ -28,6 +28,7 @@
 #include "SLAsteroidSet.h"
 #include "BaseSet.h"
 #include "Spawner.h"
+#include "AttackPolygons.hpp"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -111,11 +112,16 @@ public:
      *
      * @return true if there is a ship-asteroid collision
      */
-    bool resolveCollision(PhotonSet& pset, AsteroidSet& ast, std::shared_ptr<Ship> ship);
+    bool resolveCollision( BaseSet& bset, AsteroidSet& aset);
     
-    bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
+    void resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
     
-    void resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
+    void hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast);
+    
+    bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship);
+    
+    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship);
+    void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Ship> ship);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

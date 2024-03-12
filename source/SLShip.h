@@ -25,6 +25,7 @@
 #include <string>
 /** The number of frames until we can fire again */
 #define RELOAD_RATE 3
+#define MAX_ABSORB 30
 
 /**
  * Model class representing an alien ship.
@@ -32,7 +33,7 @@
 class Ship {
 private:
     
-    std::array<std::string, 3> modes = {"SHOOT", "BUILD", "NOTHING"};
+    std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
     
     /** Position of the ship */
     cugl::Vec2 _pos;
@@ -45,19 +46,23 @@ private:
     // The following are protected, because they have no accessors
     /** Current angle of the ship */
     float _ang;
-    /** Accumulator variable to turn faster as key is held down */
-    float _dang;
     /** Countdown to limit refire rate */
     int _refire;
+    // heal timer
+    int _healCooldown;
     /** The amount of health this ship has */
     int _health;
+    int _maxHealth;
     int _prevTurn;
+    
 
     // JSON DEFINED ATTRIBUTES
     /** Mass/weight of the ship. Used in collisions. */
     float _mass;
     /** The number of frames until we can fire again */
     int _firerate;
+    /** The number of frames until we can fire again */
+    int _healRate;
     /** The number of columns in the sprite sheet */
     int _framecols;
     /** The number of frames in the sprite sheet */
@@ -66,16 +71,8 @@ private:
     int _frameflat;
     /** The shadow offset in pixels */
     float _shadows;
-    /** Amount to adjust forward movement from input */
-    float _thrust;
-    /** The maximum allowable velocity */
-    float _maxvel;
-    /** The banking factor */
-    float _banking;
-    /** The maximum banking amount */
-    float _maxbank;
-    /** Amount to dampedn angular movement over time */
-    float _angdamp;
+    float _explosionRadius;
+    float _biteRadius;
     
     int _modeCooldown;
     
@@ -116,7 +113,10 @@ public:
     void addAbsorb(int value);
     void subAbsorb(int value);
     const int getAbsorb() const{ return _absorbValue;}
-    void setAbsorbValue(int x){_absorbValue = x;}
+    void setAbsorbValue(int x){
+        _absorbValue = x;
+        _absorbValue = fmin(_absorbValue, MAX_ABSORB);
+    }
     /**
      * Returns the position of this ship.
      *
@@ -193,7 +193,7 @@ public:
      * @return the current ship health.
      */
     int getHealth() const { return _health; }
-
+    int getMaxHealth() const { return _maxHealth; }
     /**
      * Sets the current ship health.
      * 
@@ -203,6 +203,8 @@ public:
      */
     void setHealth(int value);
     
+    
+    cugl::Poly2 getBlastRec();
     /**
      * Returns true if the ship can fire its weapon
      *
@@ -229,6 +231,13 @@ public:
         _refire = 0;
     }
     
+    bool canHeal() const {
+        return (_healCooldown > _healRate);
+    }
+    
+    void resetHeal() {
+        _healCooldown = 0;
+    }
     void reloadMode(){
         _modeTimer = 0;
     }
@@ -243,6 +252,14 @@ public:
      */
     float getMass() const {
         return _mass;
+    }
+    
+    float getExplosionRadius() const{
+        return _explosionRadius;
+    }
+    
+    float getBiteRadius() const{
+        return _biteRadius;
     }
 
     /**
@@ -326,25 +343,6 @@ public:
 
     
 private:
-    /**
-     * Update the animation of the ship to process a turn
-     *
-     * Turning changes the frame of the filmstrip, as we change from a level ship
-     * to a hard bank. This method also updates the field dang cumulatively.
-     *
-     * @param turn Amount to turn the ship
-     */
-    void processTurn(float turn);
-    
-    /**
-     * Applies "wrap around"
-     *
-     * If the ship goes off one edge of the screen, then it appears across the edge
-     * on the opposite side.
-     *
-     * @param size      The size of the window (for wrap around)
-     */
-    void wrapPosition(cugl::Size size);
 
 };
 
