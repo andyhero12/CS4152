@@ -175,12 +175,23 @@ void GameScene::update(float timestep) {
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-        //        _ship->subAbsorb(2);
     }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
         _ship->setAbsorbValue(0);
         _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
     }
-    
+    if (_input.didPressSpecial() && _ship->canFireWeapon()){
+        _ship->reloadWeapon();
+        if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
+//        if (_ship->getMode() == "SHOOT"){
+            _ship->subAbsorb(5);
+            blastRec = _ship->getBlastRec();
+            _collisions.hugeBlastCollision(blastRec, _asteroids);
+        }else if (_ship->getMode() == "BUILD"){
+            
+        }else{
+            
+        }
+    }
     // Move the ships and photons forward (ignoring collisions)
     _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
     
@@ -236,7 +247,6 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     getCamera()->setPosition(pos);
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
-    
     //draw bg
     int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
     int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
@@ -260,6 +270,9 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     _ship->draw(batch,getSize());
 
 
+    batch->setTexture(nullptr);
+    batch->setColor(Color4::RED);
+    batch->fill(blastRec);
     // shift camera to draw for absolute positioning
     getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
     getCamera()->update();

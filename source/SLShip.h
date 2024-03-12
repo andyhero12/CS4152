@@ -203,6 +203,8 @@ public:
      */
     void setHealth(int value);
     
+    
+    cugl::Poly2 getBlastRec();
     /**
      * Returns true if the ship can fire its weapon
      *

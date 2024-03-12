@@ -116,6 +116,9 @@ public:
     bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
     
     void resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
+    
+    void hugeBlastCollision(cugl::Poly2& blastRectangle, AsteroidSet& ast);
+    
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

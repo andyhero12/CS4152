@@ -73,6 +73,7 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     
     bool _gameEnded;
+    cugl::Poly2 blastRec;
     
 
     

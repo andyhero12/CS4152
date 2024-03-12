@@ -207,7 +207,6 @@ void Ship::move(float forward, float turn, Size size) {
         _ang -= 360;
     if (_ang < 0)
         _ang += 360;
-    
     _vel = _vel.normalize();
     
     // Move the ship position by the ship velocity
@@ -313,3 +312,22 @@ void Ship::wrapPosition(cugl::Size size) {
         _pos.y = 0;
     }
 }
+
+Poly2 Ship::getBlastRec(){
+    Vec2 center = getPosition();
+    float longSide = 400;
+    float shortSide = 50;
+    Rect org;
+    if (_ang < 85){ // up
+        org.set(center.x-20, center.y-20, shortSide, longSide);
+    }else if (_ang < 175){ // left
+        org.set(center.x - longSide, center.y-20, longSide, shortSide);
+    }else if (_ang < 265){
+        org.set(center.x-20, center.y- longSide-20, shortSide, longSide);
+    }else{
+        org.set(center.x, center.y-20, longSide, shortSide);
+    }
+    Poly2 resultingRect(org);
+    return resultingRect;
+}
+

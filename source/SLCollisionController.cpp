@@ -27,6 +27,18 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
+
+void CollisionController::hugeBlastCollision(cugl::Poly2& blastRectangle, AsteroidSet& ast){
+    auto itA = ast.current.begin();
+    while (itA != ast.current.end()){
+        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+        Vec2 enemyPos = rock->position;
+        auto curA = itA++;
+        if (blastRectangle.contains(enemyPos)){
+            ast.current.erase(curA);
+        }
+    }
+}
 void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
     float distanceCutoff = 100.0;
     auto itA = ast.current.begin();
@@ -170,19 +182,6 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
         float impactDistance = (ship->getRadius() + aset.getRadius()*rock->getScale());
         
         // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
-        for(int ii = -1; ii <= 1; ii++) {
-            for(int jj = -1; jj <= 1; jj++) {
-                Vec2 pos = rock->position;
-                pos.x += (ii)*_size.width;
-                pos.y += (jj)*_size.height;
-                pos = ship->getPosition()-pos;
-                float dist = pos.length();
-                if (dist < distance) {
-                    distance = dist;
-                    norm = pos;
-                }
-            }
-        }
         
         // If this normal is too small, there was a collision
         auto curA = it++;
