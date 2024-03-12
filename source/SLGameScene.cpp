@@ -185,7 +185,7 @@ void GameScene::update(float timestep) {
     _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
     
     // Move the asteroids
-    _asteroids.update(getSize());
+    _asteroids.update(getSize() * WORLD_SIZE);
     
     // Move the photons
     _photons.update(getSize());
@@ -253,10 +253,10 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
         }
     }
     
-    _asteroids.draw(batch,getSize(), _assets->get<Font>("pixel32"));
+    _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
-    _photons.draw(batch, getSize());
+    _photons.draw(batch, getSize() * WORLD_SIZE);
     _ship->draw(batch,getSize());
 
 

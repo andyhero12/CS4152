@@ -223,7 +223,7 @@ void Ship::move(float forward, float turn, Size size) {
         _modeTimer++;
     }
 
-    if (forward != 0 or turn != 0){
+    if (forward != 0 || turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){
                 _animations.resetAnimation(1);

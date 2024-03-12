@@ -21,6 +21,8 @@
 #include <cugl/cugl.h>
 #include "Animation.h"
 #include <vector>
+#include <array>
+#include <string>
 /** The number of frames until we can fire again */
 #define RELOAD_RATE 3
 
@@ -30,7 +32,7 @@
 class Ship {
 private:
     
-    std::array<std::string, 3> modes = {"SHOOT", "BUILD", "NOTHING"};
+    std::array<std::string,3> modes = {"SHOOT", "BUILD", "NOTHING"};
     
     /** Position of the ship */
     cugl::Vec2 _pos;

@@ -27,18 +27,6 @@ PhotonSet::Photon::Photon(const cugl::Vec2 p, const cugl::Vec2 v, int mx)
 
 void PhotonSet::Photon::update(cugl::Size size){
     position += velocity;
-    while (position.x > size.width) {
-        position.x -= size.width;
-    }
-    while (position.x < 0) {
-        position.x += size.width;
-    }
-    while (position.y > size.height) {
-        position.y -= size.height;
-    }
-    while (position.y < 0) {
-        position.y += size.height;
-    }
     _age++;
     _scale = 1.5f - 1.5*_age/_maxage;
 }
@@ -133,25 +121,6 @@ void PhotonSet::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size
             trans.scale(scale);
             trans.translate(pos);
             batch->draw(_texture, origin, trans);
-            float r = getRadius() * scale;
-            if (pos.x+r > size.width) {
-                trans.translate(-size.width,0);
-                batch->draw(_texture, origin, trans);
-                trans.translate(size.width,0);
-            } else if (pos.x-r < 0) {
-                trans.translate(size.width,0);
-                batch->draw(_texture, origin, trans);
-                trans.translate(-size.width,0);
-            }
-            if (pos.y+r > size.height) {
-                trans.translate(0,-size.height);
-                batch->draw(_texture, origin, trans);
-                trans.translate(0,size.height);
-            } else if (pos.y-r < 0) {
-                trans.translate(0,size.height);
-                batch->draw(_texture, origin, trans);
-                trans.translate(0,-size.height);
-            }
         }
     }
 }

@@ -187,21 +187,17 @@ void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bas
     position += direction.normalize();
 //    position = destination;
     //    position += velocity;
-    while (position.x > size.width)
-    {
-        position.x -= size.width;
+    while (position.x > size.width) {
+        position.x = size.width;
     }
-    while (position.x < 0)
-    {
-        position.x += size.width;
+    while (position.x < 0) {
+        position.x = 0;
     }
-    while (position.y > size.height)
-    {
-        position.y -= size.height;
+    while (position.y > size.height) {
+        position.y = size.height;
     }
-    while (position.y < 0)
-    {
-        position.y += size.height;
+    while (position.y < 0) {
+        position.y = 0;
     }
 }
 
@@ -435,36 +431,6 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size, std
             
             float r = _radius * scale;
             sprite->draw(batch, trans);
-            batch->drawText(hptext,trans);
-            
-            if (pos.x + r > size.width)
-            {
-                trans.translate(-size.width, 0);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,trans);
-                trans.translate(size.width, 0);
-            }
-            else if (pos.x - r < 0)
-            {
-                trans.translate(size.width, 0);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,Vec2(10,10));
-                trans.translate(-size.width, 0);
-            }
-            if (pos.y + r > size.height)
-            {
-                trans.translate(0, -size.height);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,Vec2(10,10));
-                trans.translate(0, size.height);
-            }
-            else if (pos.y - r < 0)
-            {
-                trans.translate(0, size.height);
-                sprite->draw(batch, trans);
-                batch->drawText(hptext,Vec2(10,10));
-                trans.translate(0, -size.height);
-            }
-        
+            batch->drawText(hptext,trans);           
     }
 }
