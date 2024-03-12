@@ -75,13 +75,11 @@ void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, 
     }
 }
 void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
-    CULog("in resolve Blowup\n");
     auto itA = ast.current.begin();
     while (itA != ast.current.end()){
         const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
         auto curA = itA++;
         if (blastCircle.contains(rock->position)){
-            CULog("blast contains monkey\n");
             ast.current.erase(curA);
         }
     }
