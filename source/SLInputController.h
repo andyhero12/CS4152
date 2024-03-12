@@ -35,12 +35,18 @@ private:
 
     /** Did we press the reset button? */
     bool _didReset;
-    
+
     cugl::Vec2 _Vel;
     
     bool _UseKeyboard;
 
     bool _UseJoystick;
+
+    /** Did press the change mode button */
+    bool _didChangeMode;
+    /** Did we press the special button? */
+    bool _didSpecial;
+
 
 public:
 
@@ -85,12 +91,25 @@ public:
     }
     
     /**
+     * Returns whether the fire button was pressed.
+     *
+     * @return whether the Special button was pressed.
+     */
+    bool didPressSpecial() const {
+        return _didSpecial;
+    }
+    
+    /**
      * Returns whether the reset button was pressed.
      *
      * @return whether the reset button was pressed.
      */
     bool didPressReset() const {
         return _didReset;
+    }
+    
+    bool didChangeMode() const {
+        return _didChangeMode;
     }
 
     /**

@@ -158,7 +158,7 @@ public:
          *
          * @param texture   The sprite sheet for this asteroid.
          */
-        void setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize);
+        void setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize, cugl::Vec2 origin );
                        
 //                       const std::shared_ptr<cugl::SpriteSheet>& sprite);
         
@@ -355,7 +355,7 @@ public:
      * @param batch     The sprite batch to draw to
      * @param size      The size of the window (for wrap around)
      */
-    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
+    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font);
 };
 
 #endif /* __SL_ASTEROID_SET_H__ */

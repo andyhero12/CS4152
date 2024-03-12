@@ -37,6 +37,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _refire = 0;
     _radius = 0;
     _absorbValue = 0;
+    _modeTimer = 0;
     
     // Physics
     _mass = data->getFloat("mass",1.0);
@@ -54,6 +55,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _frameflat = data->getInt("sprite frame",0);
     
     _health = data->getInt("health",0);
+    _modeCooldown = data->getInt("mode cooldown",0);
 }
 
 /**
@@ -109,6 +111,9 @@ void Ship::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> & textur
 //
         }
         _animations = Animation(1, anims, 10, _frameflat);
+        Vec2 origin(_animations.getSprite()->getFrameSize()/2);
+        _animations.setOrigin(origin);
+        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
 //        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
 //        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
     
@@ -220,8 +225,11 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
         _refire++;
     }
     
-    // changing direction
-    if (forward != 0 || turn != 0){
+    if (_modeTimer <= _modeCooldown){
+        _modeTimer++;
+    }
+
+    if (forward != 0 or turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){
                 _animations.resetAnimation(1);

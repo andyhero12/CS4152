@@ -72,29 +72,15 @@ bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset, 
             float impactDistance =
             pset.getRadius() * shot->getScale() + aset.getRadius()*rock->getScale();
             
-            // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
-            for(int ii = -1; ii <= 1; ii++) {
-                for(int jj = -1; jj <= 1; jj++) {
-                    Vec2 pos = rock->position;
-                    pos.x += (ii)*_size.width;
-                    pos.y += (jj)*_size.height;
-                    pos = shot->position - pos;
-                    float dist = pos.length();
-                    if (dist < distance) {
-                        distance = dist;
-                        norm = pos;
-                    }
-                }
-            }
-            
             // If this normal is too small, there was a collision
             auto curA = itA++;
-            if (distance < impactDistance && ship->getAbsorb()+10 > rock->getType()*8) {
+//            if (distance < impactDistance && ship->getAbsorb()+10 > rock->getType()*8) {
+            if (distance < impactDistance) {
                 hitSomething = true;
                 collision = true;
-                ship->addAbsorb((*curA)->getAbsorbValue());
                 rock->setHealth(rock->getHealth() - 1);
                 if(rock->getHealth() <= 0){
+                    ship->addAbsorb((*curA)->getAbsorbValue());
                     aset.current.erase(curA);
                 }
             }
