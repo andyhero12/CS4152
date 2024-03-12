@@ -45,8 +45,6 @@ private:
     // The following are protected, because they have no accessors
     /** Current angle of the ship */
     float _ang;
-    /** Accumulator variable to turn faster as key is held down */
-    float _dang;
     /** Countdown to limit refire rate */
     int _refire;
     // heal timer
@@ -71,16 +69,6 @@ private:
     int _frameflat;
     /** The shadow offset in pixels */
     float _shadows;
-    /** Amount to adjust forward movement from input */
-    float _thrust;
-    /** The maximum allowable velocity */
-    float _maxvel;
-    /** The banking factor */
-    float _banking;
-    /** The maximum banking amount */
-    float _maxbank;
-    /** Amount to dampedn angular movement over time */
-    float _angdamp;
     
     int _modeCooldown;
     

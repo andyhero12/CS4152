@@ -33,7 +33,6 @@ using namespace cugl;
 Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _pos = pos;
     _ang  = 0;
-    _dang = 0;
     _refire = 0;
     _radius = 0;
     _absorbValue = 0;
@@ -45,11 +44,6 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _firerate = data->getInt("fire rate",0);
     _healRate = data->getInt("heal rate",0);
     _shadows  = data->getFloat("shadow",0.0);
-    _thrust   = data->getFloat("thrust factor",0.0);
-    _maxvel   = data->getFloat("max velocity",0.0);
-    _banking  = data->getFloat("bank factor",0.0);
-    _maxbank  = data->getFloat("max bank",0.0);
-    _angdamp  = data->getFloat("angular damp",0.0);
     
     // Sprite sheet information
     _framecols = data->getInt("sprite cols",0);
@@ -184,18 +178,6 @@ void Ship::move(float forward, float turn, Size size) {
     
     _vel = Vec2(turn, forward);
     
-
-    
-    
-    
-    // Process the ship thrust.
-//    if (forward != 0.0f) {
-//        // Thrust key pressed; increase the ship velocity.
-//        float rads = M_PI*_ang/180.0f+M_PI_2;
-//        Vec2 dir(cosf(rads),sinf(rads));
-//        _vel += dir * forward * _thrust;
-//    }
-
     // Move the ship, updating it.
     // Adjust the angle by the change in angle
     if (!(forward==0 && turn==0)) {

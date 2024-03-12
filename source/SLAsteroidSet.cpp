@@ -380,21 +380,16 @@ void AsteroidSet::setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& 
         {
             std::shared_ptr<Asteroid> rock = (*it);
             rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
-//            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-//            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
         for (auto it = _pending.begin(); it != _pending.end(); ++it)
         {
             std::shared_ptr<Asteroid> rock = (*it);
             rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
-//            rock->setSprite(SpriteSheet::alloc(value, rows, _framecols, _framesize));
-//            rock->getSprite()->setOrigin(Vec2(_radius, _radius));
         }
     }
     else
     {
         _radius = 0;
-//        _texture = nullptr;
     }
 }
 
@@ -429,7 +424,6 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size, std
             trans.translate(pos);
             auto sprite = (*it)->getSprite();
             
-            float r = _radius * scale;
             sprite->draw(batch, trans);
             batch->drawText(hptext,trans);           
     }
