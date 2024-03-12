@@ -72,6 +72,7 @@ private:
     /** The shadow offset in pixels */
     float _shadows;
     float _explosionRadius;
+    float _biteRadius;
     
     int _modeCooldown;
     
@@ -255,6 +256,10 @@ public:
     
     float getExplosionRadius() const{
         return _explosionRadius;
+    }
+    
+    float getBiteRadius() const{
+        return _biteRadius;
     }
 
     /**

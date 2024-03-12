@@ -112,8 +112,6 @@ public:
      *
      * @return true if there is a ship-asteroid collision
      */
-    bool resolveCollision(PhotonSet& pset, AsteroidSet& ast, std::shared_ptr<Ship> ship);
-    
     bool resolveCollision( BaseSet& bset, AsteroidSet& aset);
     
     void resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
@@ -122,8 +120,8 @@ public:
     
     bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship);
     
-    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
-    
+    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship);
+    void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Ship> ship);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

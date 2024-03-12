@@ -6,7 +6,7 @@
 //
 
 #include "AttackPolygons.hpp"
-
+#define BITE_AGE 2
 void ActionPolygon::update(cugl::Size size){
     _age++;
     // update animation when needed
@@ -31,10 +31,15 @@ void ActionPolygon::drawExplode(const std::shared_ptr<cugl::SpriteBatch>& batch,
     batch->setColor(Color4::BLUE);
     batch->fill(internalPolygon);
 }
+void ActionPolygon::drawBite(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
+    batch->setTexture(nullptr);
+    batch->setColor(Color4::GREEN);
+    batch->fill(internalPolygon);
+}
 void ActionPolygon::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
     switch (polygonAction){
         case Action::BITE:
-            CULog("BITE TODO\n");
+            drawBite(batch,size);
             break;
         case Action::SHOOT:
             drawShoot(batch,size);
@@ -103,3 +108,10 @@ void AttackPolygons::addExplode(const std::shared_ptr<Ship>& ship){
     currentAttacks.insert(curPtr);
 }
 
+void AttackPolygons::addBite(const std::shared_ptr<Ship>& ship){
+    Vec2 center = ship->getPosition();
+    PolyFactory curFactory;
+    Poly2 resultingPolygon = curFactory.makeArc(center, ship->getBiteRadius(),ship->getAngle()+45, 90);
+    std::shared_ptr<ActionPolygon> curPtr = std::make_shared<ActionPolygon>(Action::BITE, resultingPolygon,BITE_AGE);
+    currentAttacks.insert(curPtr);
+}

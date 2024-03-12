@@ -45,7 +45,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _healRate = data->getInt("heal rate",0);
     _shadows  = data->getFloat("shadow",0.0);
     _explosionRadius = data->getFloat("explosionRadius",100.0);
-    
+    _biteRadius = data->getFloat("biteRadius",150.0);
     // Sprite sheet information
     _framecols = data->getInt("sprite cols",0);
     _framesize = data->getInt("sprite size",0);

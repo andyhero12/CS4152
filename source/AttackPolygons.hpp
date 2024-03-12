@@ -42,6 +42,7 @@ public:
 private:
     void drawShoot(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
     void drawExplode(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
+    void drawBite(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
 };
 
 class AttackPolygons{
@@ -56,6 +57,7 @@ public:
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
     void addShoot(const std::shared_ptr<Ship>& ship);
     void addExplode(const std::shared_ptr<Ship>& ship);
+    void addBite(const std::shared_ptr<Ship>& ship);
 private:
     
 };
