@@ -21,6 +21,8 @@
 #include <cugl/cugl.h>
 #include "Animation.h"
 #include <vector>
+#include <array>
+#include <string>
 /** The number of frames until we can fire again */
 #define RELOAD_RATE 3
 

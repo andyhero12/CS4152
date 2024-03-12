@@ -183,12 +183,11 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
     if (forward == 0.0f){
         _vel = Vec2(0, 0);
     }
-
+    // Use the Keyboard input 
     if (_Usekeyboard) {
         _vel = Vec2(turn, forward);
     }
-    //std::cout << Vel.x << std::endl;
-    //std::cout << "state is "<<_UseJoystick << std::endl;
+    // Use the Joystick input 
     if (_UseJoystick) {
         _vel = Vel;
     }
@@ -204,8 +203,12 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
 
     // Move the ship, updating it.
     // Adjust the angle by the change in angle
-    if (!(forward==0 && turn==0)) {
+    if (!(forward==0 && turn==0)&& _Usekeyboard) {
         _ang = atan2(forward, turn) * (180/M_PI) - 90;
+        setAngle(_ang);
+    }
+    else if (!(Vel.x < abs(0.2) && Vel.y < abs(0.2)) && _UseJoystick) {
+        _ang = atan2(Vel.x, Vel.y) * (180 / M_PI);
         setAngle(_ang);
     }
     
@@ -229,7 +232,7 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
         _modeTimer++;
     }
 
-    if (forward != 0 or turn != 0){
+    if (forward != 0 || turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){
                 _animations.resetAnimation(1);

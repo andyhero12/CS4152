@@ -75,10 +75,6 @@ void InputController::readInput() {
     _forward = _turning = 0;
     _UseKeyboard = false;
 
-    _didFire = false;
-    _didReset = false;
-    _didChangeMode = false;
-    _didSpecial = false;
     // Movement forward/backward
    // std::cout << LR << " " << UD << std::endl;
 
@@ -108,10 +104,12 @@ void InputController::readInput() {
     
     if (keys->keyDown(mode)){
         _didChangeMode = true;
+        _UseKeyboard = true;
     }
     
     if (keys->keyDown(special)){
         _didSpecial = true;
+        _UseKeyboard = true;
     }
 
     if (keys->keyDown(up) && !keys->keyDown(down)) {
@@ -126,21 +124,41 @@ void InputController::readInput() {
 }
 
 void InputController::readInput_joystick() {
+    cugl::GameController::Axis X_left = cugl::GameController::Axis::LEFT_X;
+    cugl::GameController::Axis Y_left = cugl::GameController::Axis::LEFT_Y;
+    cugl::GameController::Button A = cugl::GameController::Button::A;
+    cugl::GameController::Button X = cugl::GameController::Button::X;
+    cugl::GameController::Button B = cugl::GameController::Button::B;
+    cugl::GameController::Button Y = cugl::GameController::Button::Y;
 
     _didFire = false;
     _didReset = false;
+    _didChangeMode = false;
+    _didSpecial = false;
     _Vel = cugl::Vec2(0, 0);
     _UseJoystick = false;
     /* Movement using controller*/
     if (_gameContrl) {
-        float LR = _gameContrl->getAxisPosition(cugl::GameController::Axis::LEFT_X);
-        float UD = _gameContrl->getAxisPosition(cugl::GameController::Axis::LEFT_Y);
-        if (_gameContrl->isButtonDown(cugl::GameController::Button::A)) {
+        float LR = _gameContrl->getAxisPosition(X_left);
+        float UD = _gameContrl->getAxisPosition(Y_left);
+
+        if (_gameContrl->isButtonDown(A)){
             _didFire = true;
             _UseJoystick = true;
         }
 
-        if (_gameContrl->isButtonDown(cugl::GameController::Button::B)) {
+        if (_gameContrl->isButtonDown(B)) {
+            _didSpecial = true;
+            _UseJoystick = true;
+            std::cout << "didspecial" << std::endl;
+        }
+
+        if (_gameContrl->isButtonDown(X)) {
+            _didChangeMode = true;
+            _UseJoystick = true;
+        }
+
+        if (_gameContrl->isButtonDown(Y)) {
             _didReset = true;
             _UseJoystick = true;
         }
