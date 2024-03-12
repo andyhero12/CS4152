@@ -22,12 +22,15 @@ private:
     int _spawnRate;
     int _respawnCnt;
     int _health;
+    double _scale;
+    double _timeElapsed;
+    
     cugl::Vec2 _position;
     
 public:
     
     Spawner(int rate, cugl::Vec2 pos, int health);
-    void update();
+    void update(float timestep);
 //    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
 //    void setTexture(const std::shared_ptr<cugl::Texture>& value);
     
@@ -35,7 +38,9 @@ public:
         return _texture;
     }
     
-    
+    double getTimeElapsed() const{
+        return _timeElapsed;
+    }
     bool canSpawn() const {
         return (_respawnCnt > _spawnRate);
     }

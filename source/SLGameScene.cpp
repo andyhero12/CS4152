@@ -140,6 +140,7 @@ void GameScene::reset() {
     _asteroids.init(_constants->get("asteroids"),_ship);
     _spawnerController.init(_constants->get("spawner"));
     _bases.init(_constants->get("base"));
+    _attackPolygonSet.init();
 }
 
 /**
@@ -187,7 +188,7 @@ void GameScene::update(float timestep) {
     // Move the asteroids
     _asteroids.update(getSize() * WORLD_SIZE);
     
-    _spawnerController.update(_asteroids);
+    _spawnerController.update(_asteroids,timestep);
     _bases.update(_asteroids);
     _attackPolygonSet.update(getSize());
     _collisions.resolveAttacks(_attackPolygonSet, _asteroids,_spawnerController._spawners,_ship);

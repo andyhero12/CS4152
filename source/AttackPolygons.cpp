@@ -61,6 +61,7 @@ AttackPolygons::AttackPolygons()
 }
 
 bool AttackPolygons::init(){
+    currentAttacks.clear();
     return true;
 }
 void AttackPolygons::update(cugl::Size size){
@@ -111,7 +112,7 @@ void AttackPolygons::addExplode(const std::shared_ptr<Ship>& ship){
 void AttackPolygons::addBite(const std::shared_ptr<Ship>& ship){
     Vec2 center = ship->getPosition();
     PolyFactory curFactory;
-    Poly2 resultingPolygon = curFactory.makeArc(center, ship->getBiteRadius(),ship->getAngle()+45, 90);
+    Poly2 resultingPolygon = curFactory.makeArc(center, ship->getBiteRadius(),ship->getAngle(), 180);
     std::shared_ptr<ActionPolygon> curPtr = std::make_shared<ActionPolygon>(Action::BITE, resultingPolygon,BITE_AGE);
     currentAttacks.insert(curPtr);
 }

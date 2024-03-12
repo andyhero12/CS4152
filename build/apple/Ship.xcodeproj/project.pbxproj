@@ -231,6 +231,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4CF6EA8B2BA0FDD500423B98 /* Enemies */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Enemies;
+			sourceTree = "<group>";
+		};
 		EB0F3C8D27FB9DCB0037CC66 = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +262,7 @@
 		EB0F3C9827FB9DCB0037CC66 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4CF6EA8B2BA0FDD500423B98 /* Enemies */,
 				BA9540AEA1A66120EEC87741 /* SLShip.cpp */,
 				BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */,
 				BAA296BFACC0BB8521C099CD /* Monster.cpp */,
