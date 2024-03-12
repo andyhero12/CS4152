@@ -203,7 +203,8 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
         // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
         
         // If this normal is too small, there was a collision
-        auto curA = it++;
+//        auto curA = it++;
+        it++;
         if (distance < impactDistance) {
             // "Roll back" time so that the ships are barely touching (e.g. point of impact).
             norm.normalize();

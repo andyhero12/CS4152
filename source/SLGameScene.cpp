@@ -166,7 +166,7 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    if (_input.didPressFire() && _ship->canFireWeapon() && !_ship->tooBig()){
+    if (_input.didPressFire() && _ship->canFireWeapon()){
         Vec2 p(_ship->getPosition().x,
                _ship->getPosition().y);
         float rads = M_PI*_ship->getAngle()/180.0f + M_PI_2;
@@ -175,21 +175,20 @@ void GameScene::update(float timestep) {
         _ship->reloadWeapon();
         _photons.spawnPhoton(p,v);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-    }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
-        _ship->setAbsorbValue(0);
-        _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
     }
     if (_input.didPressSpecial() && _ship->canFireWeapon()){
         _ship->reloadWeapon();
         if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
-//        if (_ship->getMode() == "SHOOT"){
             _ship->subAbsorb(5);
             blastRec = _ship->getBlastRec();
             _collisions.hugeBlastCollision(blastRec, _asteroids);
         }else if (_ship->getMode() == "BUILD"){
             
-        }else{
-            
+        }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
+            _ship->subAbsorb(10);
+            _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
+        }else {
+            CULog("NOTHING\n");
         }
     }
     // Move the ships and photons forward (ignoring collisions)

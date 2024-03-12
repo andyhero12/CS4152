@@ -73,6 +73,7 @@ void Ship::setHealth(int value) {
 
 void Ship::addAbsorb(int value) {
     _absorbValue += value;
+    _absorbValue = fmin(_absorbValue, MAX_ABSORB);
 }
 
 void Ship::subAbsorb(int value) {

@@ -25,6 +25,7 @@
 #include <string>
 /** The number of frames until we can fire again */
 #define RELOAD_RATE 3
+#define MAX_ABSORB 30
 
 /**
  * Model class representing an alien ship.
@@ -32,7 +33,7 @@
 class Ship {
 private:
     
-    std::array<std::string,3> modes = {"SHOOT", "BUILD", "NOTHING"};
+    std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
     
     /** Position of the ship */
     cugl::Vec2 _pos;
@@ -53,6 +54,7 @@ private:
     int _health;
     int _maxHealth;
     int _prevTurn;
+    
 
     // JSON DEFINED ATTRIBUTES
     /** Mass/weight of the ship. Used in collisions. */
@@ -109,7 +111,10 @@ public:
     void addAbsorb(int value);
     void subAbsorb(int value);
     const int getAbsorb() const{ return _absorbValue;}
-    void setAbsorbValue(int x){_absorbValue = x;}
+    void setAbsorbValue(int x){
+        _absorbValue = x;
+        _absorbValue = fmin(_absorbValue, MAX_ABSORB);
+    }
     /**
      * Returns the position of this ship.
      *
