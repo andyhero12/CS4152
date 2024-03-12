@@ -20,6 +20,7 @@ private:
     std::shared_ptr<cugl::Texture> _texture;
     
     int _health;
+    int _healVal;
     cugl::Vec2 _position;
     
 public:
@@ -40,6 +41,9 @@ public:
     }
     const int getHealth() const{
         return _health;
+    }
+    const int getHealValue() const{
+        return _healVal;
     }
 };
 

@@ -28,6 +28,25 @@
 
 using namespace cugl;
 
+bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship){
+    if (!ship->canHeal()|| ship->getHealth() >= ship->getMaxHealth()){
+        return false;
+    }
+    auto itP = bset._bases.begin();
+    float healDistanceCutoff = 50.0;
+    while (itP != bset._bases.end()){
+        std::shared_ptr<Base> base = *itP;
+        Vec2 norm = base->getPos() - ship->getPosition();
+        float distance = norm.length();
+        itP++;
+        if (distance < healDistanceCutoff){
+            ship->resetHeal();
+            ship->setHealth(ship->getHealth()+base->getHealValue());
+            return true;
+        }
+    }
+    return false;
+}
 void CollisionController::hugeBlastCollision(cugl::Poly2& blastRectangle, AsteroidSet& ast){
     auto itA = ast.current.begin();
     while (itA != ast.current.end()){

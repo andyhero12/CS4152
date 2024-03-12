@@ -8,6 +8,7 @@
         "max velocity": 10.0,
         "angular damp": 0.0,
         "fire rate": 25,
+        "heal rate": 50,
         "shadow": 10,
         "sprite cols": 4,
         "sprite size": 4,

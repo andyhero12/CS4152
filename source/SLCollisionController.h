@@ -113,11 +113,13 @@ public:
      */
     bool resolveCollision(PhotonSet& pset, AsteroidSet& ast, std::shared_ptr<Ship> ship);
     
-    bool resolveCollision( BaseSet& pset, AsteroidSet& aset);
+    bool resolveCollision( BaseSet& bset, AsteroidSet& aset);
     
     void resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
     
     void hugeBlastCollision(cugl::Poly2& blastRectangle, AsteroidSet& ast);
+    
+    bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship);
     
 };
 

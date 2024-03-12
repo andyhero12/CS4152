@@ -38,23 +38,26 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _radius = 0;
     _absorbValue = 0;
     _modeTimer = 0;
+    _healCooldown = 0;
     
     // Physics
     _mass = data->getFloat("mass",1.0);
     _firerate = data->getInt("fire rate",0);
+    _healRate = data->getInt("heal rate",0);
     _shadows  = data->getFloat("shadow",0.0);
     _thrust   = data->getFloat("thrust factor",0.0);
     _maxvel   = data->getFloat("max velocity",0.0);
     _banking  = data->getFloat("bank factor",0.0);
     _maxbank  = data->getFloat("max bank",0.0);
     _angdamp  = data->getFloat("angular damp",0.0);
-
+    
     // Sprite sheet information
     _framecols = data->getInt("sprite cols",0);
     _framesize = data->getInt("sprite size",0);
     _frameflat = data->getInt("sprite frame",0);
     
     _health = data->getInt("health",0);
+    _maxHealth = _health;
     _modeCooldown = data->getInt("mode cooldown",0);
 }
 
@@ -160,7 +163,6 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  */
 void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
-    wrapPosition(size);
 }
 
 /**
@@ -175,7 +177,6 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  */
 void Ship::move(float forward, float turn, Size size) {
     // Process the ship turning.
-//    processTurn(turn);
     
     if (forward == 0.0f){
         _vel = Vec2(0, 0);
@@ -211,11 +212,13 @@ void Ship::move(float forward, float turn, Size size) {
     
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
-    wrapPosition(size);
 
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
+    }
+    if (_healCooldown <= _healRate) {
+        _healCooldown++;
     }
     
     if (_modeTimer <= _modeCooldown){
@@ -246,72 +249,6 @@ void Ship::move(float forward, float turn, Size size) {
 //    }
 }
 
-/**
- * Update the animation of the ship to process a turn
- *
- * Turning changes the frame of the filmstrip, as we change from a level ship to
- * a hard bank.  This method also updates the field dang cumulatively.
- *
- * @param turn Amount to turn the ship
- */
-void Ship::processTurn(float turn) {
-    int frame = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getFrame());
-    int fsize = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getSize());
-    if (turn != 0.0f) {
-        // The turning factor is cumulative.
-        // The longer it is held down, the harder we bank.
-        _dang -= turn/_banking;
-        if (_dang < -_maxbank) {
-            _dang = -_maxbank;
-        } else if (_dang > _maxbank) {
-            _dang = _maxbank;
-        }
-
-        // SHIP_IMG_RIGHT represents the hardest bank possible.
-        if (turn < 0 && frame < fsize-1) {
-            frame++;
-        } else if (turn > 0 && frame > 0) {
-            frame--;
-        }
-    } else {
-        // If neither key is pressed, slowly flatten out ship.
-        if (_dang != 0) {
-            _dang *= _angdamp;   // Damping factor.
-        }
-        if (frame < _frameflat) {
-            frame++;
-        } else if (frame > _frameflat) {
-            frame--;
-        }
-    }
-    
-    if (_animations.getSprite()) {
-        _animations.getSprite()->setFrame(frame);
-    }
-}
-
-/**
- * Applies "wrap around"
- *
- * If the ship goes off one edge of the screen, then it appears across the edge
- * on the opposite side.
- *
- * @param size      The size of the window (for wrap around)
- */
-void Ship::wrapPosition(cugl::Size size) {
-    while (_pos.x > size.width) {
-        _pos.x = size.width;
-    }
-    while (_pos.x < 0) {
-        _pos.x = 0;
-    }
-    while (_pos.y > size.height) {
-        _pos.y = size.height;
-    }
-    while (_pos.y < 0) {
-        _pos.y = 0;
-    }
-}
 
 Poly2 Ship::getBlastRec(){
     Vec2 center = getPosition();

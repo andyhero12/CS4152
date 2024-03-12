@@ -10,6 +10,7 @@
 Base::Base(int health, cugl::Vec2 pos)
 :_health{health}
 ,_position{pos}
+,_healVal{5}
 {
     
 }

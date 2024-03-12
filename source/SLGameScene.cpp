@@ -214,6 +214,10 @@ void GameScene::update(float timestep) {
     if (_collisions.resolveCollision(_photons, _asteroids,_ship)){
         AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
     }
+    // check for heals from base
+    if (_collisions.healFromBaseCollsion(_bases, _ship)){
+        
+    }
     // Update the health meter
     _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth(), _ship->getMode().c_str()));
     _text->layout();

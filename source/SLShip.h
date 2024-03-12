@@ -49,8 +49,11 @@ private:
     float _dang;
     /** Countdown to limit refire rate */
     int _refire;
+    // heal timer
+    int _healCooldown;
     /** The amount of health this ship has */
     int _health;
+    int _maxHealth;
     int _prevTurn;
 
     // JSON DEFINED ATTRIBUTES
@@ -58,6 +61,8 @@ private:
     float _mass;
     /** The number of frames until we can fire again */
     int _firerate;
+    /** The number of frames until we can fire again */
+    int _healRate;
     /** The number of columns in the sprite sheet */
     int _framecols;
     /** The number of frames in the sprite sheet */
@@ -193,7 +198,7 @@ public:
      * @return the current ship health.
      */
     int getHealth() const { return _health; }
-
+    int getMaxHealth() const { return _maxHealth; }
     /**
      * Sets the current ship health.
      * 
@@ -231,6 +236,13 @@ public:
         _refire = 0;
     }
     
+    bool canHeal() const {
+        return (_healCooldown > _healRate);
+    }
+    
+    void resetHeal() {
+        _healCooldown = 0;
+    }
     void reloadMode(){
         _modeTimer = 0;
     }
@@ -326,25 +338,6 @@ public:
     void move(float forward, float turn, cugl::Size size);
     
 private:
-    /**
-     * Update the animation of the ship to process a turn
-     *
-     * Turning changes the frame of the filmstrip, as we change from a level ship
-     * to a hard bank. This method also updates the field dang cumulatively.
-     *
-     * @param turn Amount to turn the ship
-     */
-    void processTurn(float turn);
-    
-    /**
-     * Applies "wrap around"
-     *
-     * If the ship goes off one edge of the screen, then it appears across the edge
-     * on the opposite side.
-     *
-     * @param size      The size of the window (for wrap around)
-     */
-    void wrapPosition(cugl::Size size);
 
 };
 
