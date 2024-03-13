@@ -62,9 +62,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _ship = std::make_shared<Ship>(getSize()/2, _constants->get("ship"));
     
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(assets->get<Texture>("shipfront"));
-    textures.push_back(assets->get<Texture>("shipleft"));
-    textures.push_back(assets->get<Texture>("shipright"));
+    textures.push_back(assets->get<Texture>("shipleftidle"));
+    textures.push_back(assets->get<Texture>("shiprightidle"));
     _ship->setTexture(textures);
     
 //    _ship->setTexture(assets->get<Texture>("ship"));

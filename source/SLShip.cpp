@@ -212,13 +212,10 @@ void Ship::move(float forward, float turn, Size size) {
     if (forward != 0 || turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){
-                _animations.resetAnimation(1);
+                _animations.resetAnimation(0);
             }
             else if (turn == 1){
-                _animations.resetAnimation(2);
-            }
-            else{
-                _animations.resetAnimation(0);
+                _animations.resetAnimation(1);
             }
         }
         _prevTurn = turn;
