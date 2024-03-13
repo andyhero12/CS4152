@@ -27,6 +27,19 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
+
+void CollisionController::resolveDecoyDamage(AsteroidSet& aset){
+    for (std::shared_ptr<Decoy> curDecoy : aset._currentDecoys){
+        for (std::shared_ptr<AsteroidSet::Asteroid> asteroid: aset.current){
+            Vec2 norm = curDecoy->getPos() - asteroid->position;
+            float distance = norm.length();
+            float impactDistance = aset.getRadius()*asteroid->getScale();
+            if (distance < impactDistance){ // need noise
+                curDecoy->subHealth(asteroid->getDamage());
+            }
+        }
+    }
+}
 void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship){
     for (const std::shared_ptr<ActionPolygon>& action: attacks.currentAttacks){
         switch (action->getAction()){

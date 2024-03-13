@@ -339,7 +339,15 @@ public:
      * @param size      The size of the window (for wrap around)
      */
     void move(float forward, float turn, cugl::Size size);
-    
+    /**
+     * Applies "wrap around"
+     *
+     * If the ship goes off one edge of the screen, then it appears across the edge
+     * on the opposite side.
+     *
+     * @param size      The size of the window (for wrap around)
+     */
+    void wrapPosition(cugl::Size size);
 private:
 
 };

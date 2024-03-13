@@ -161,7 +161,7 @@ int convertToQuadrant(double radian) {
  * edge on the opposite side. However, this method performs no
  * collision detection. Collisions are resolved afterwards.
  */
-void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship)
+void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship, std::vector<std::shared_ptr<Decoy>>& decoys)
 {
 
 
@@ -171,7 +171,14 @@ void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bas
   
 //    _animations.resetAnimation();
     
-    cugl::Vec2 target_pos = _targetIndex == 0 ? ship->getPosition() : bases[_targetIndex-1] ;
+    cugl::Vec2 target_pos;
+    if (_targetIndex == 0){
+        target_pos = ship->getPosition();
+    }else if (_targetIndex <= bases.size()){
+        target_pos = bases[_targetIndex-1];
+    }else{
+        target_pos = decoys[_targetIndex-1-bases.size()]->getPos();
+    }
     cugl::Vec2 direction = target_pos- position;
     int dir_quad = convertToQuadrant(direction.getAngle());
     if (_prevDir != dir_quad)
@@ -236,6 +243,8 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Shi
         // Reset all data
         current.clear();
         _pending.clear();
+        _currentDecoys.clear();
+        _pendingDecoys.clear();
         _target.clear();
 
         _mass = data->getFloat("mass", 0);
@@ -292,8 +301,7 @@ bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Shi
 void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
 {
 
-    int index = generateRandomValuelowToHigh(0,(int) _target.size());
-//    index = 0;
+    int index = generateRandomValuelowToHigh(0,getTotalTargets()-1);
     // Determine direction and velocity of the photon.
     std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
     if (_texture.size() > 0)
@@ -321,12 +329,12 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
  * side. However, this method performs no collision detection. Collisions
  * are resolved afterwards.
  */
-void AsteroidSet::update(Size size)
+void AsteroidSet::update(Size size,float timestep)
 {
     // Move asteroids, updating the animation frame
     for (auto it = current.begin(); it != current.end(); ++it)
     {
-        (*it)->update(size,_target, _ship);
+        (*it)->update(size,_target, _ship,_currentDecoys);
         auto sprite = (*it)->getSprite();
         int frame = sprite->getFrame() + 1;
         if (frame >= sprite->getSize())
@@ -335,13 +343,33 @@ void AsteroidSet::update(Size size)
         }
         sprite->setFrame(frame);
     }
-
+    auto itD = _currentDecoys.begin();
+    bool decoyGone = false;
+    while (itD != _currentDecoys.end()){
+        std::shared_ptr<Decoy> curDecoy = *itD;
+        curDecoy->update(timestep);
+        if (curDecoy->destroyed()){
+            decoyGone = true;
+            itD = _currentDecoys.erase(itD);
+        }else {
+            ++itD;
+        }
+    }
+    if (decoyGone){
+        targetAllToCloset();
+    }
     // Move from pending to current
     for (auto it = _pending.begin(); it != _pending.end(); ++it)
     {
         current.emplace(*it);
     }
     _pending.clear();
+    
+    for ( auto it =  _pendingDecoys.begin(); it != _pendingDecoys.end(); it++){
+        _currentDecoys.emplace_back(*it);
+        retargetNewDecoy(*it);
+    }
+    _pendingDecoys.clear();
 }
 
 /**
@@ -392,7 +420,9 @@ void AsteroidSet::setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& 
         _radius = 0;
     }
 }
-
+void AsteroidSet::setDecoyTexture(const std::shared_ptr<cugl::Texture>& incomingDecoyTexture){
+    _decoyTexture = incomingDecoyTexture;
+}
 /**
  * Draws all active asteroids to the sprite batch within the given bounds.
  *
@@ -409,7 +439,7 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size, std
 {
 //    if (_texture)
     
-        for (auto it = current.begin(); it != current.end(); ++it)
+    for (auto it = current.begin(); it != current.end(); ++it)
         {
             float scale = (*it)->getScale();
             Vec2 pos = (*it)->position;
@@ -426,5 +456,77 @@ void AsteroidSet::draw(const std::shared_ptr<SpriteBatch> &batch, Size size, std
             
             sprite->draw(batch, trans);
             batch->drawText(hptext,trans);           
+        }
+    for (std::shared_ptr<Decoy> decoy: _currentDecoys){
+        cugl::Vec2 pos = decoy->getPos();
+        cugl::Vec2 origin(0, 0);
+        cugl::Affine2 trans;
+        float scale = 1;
+        trans.scale(scale);
+        trans.translate(pos);
+        batch->draw(_decoyTexture, origin, trans);
     }
+}
+
+
+void AsteroidSet::createDecoy(){
+    Vec2 curPos = _ship->getPosition();
+    _pendingDecoys.emplace_back(std::make_shared<Decoy>(curPos));
+}
+
+void AsteroidSet::targetAllToCloset(){
+    Vec2 shipPos = _ship->getPosition();
+    for (std::shared_ptr<Asteroid> enemy : current){
+        Vec2 enemyPos = enemy->position;
+        int index = 0;
+        float dist = (enemyPos - shipPos).length();
+        int sizeBases = (int) _target.size();
+        for (int i = 0 ;i < sizeBases;i++){
+            Vec2 basePos = _target[i];
+            float curDist = (enemyPos -  basePos).length();
+            if (curDist < dist){
+                dist = curDist;
+                index = i + 1;
+            }
+        }
+        int sizeDecoys = (int)_currentDecoys.size();
+        for (int i = 0 ;i < sizeDecoys; i++){
+            Vec2 decoyPos = _currentDecoys[i]->getPos();
+            float curDist = (enemyPos -  decoyPos).length();
+            if (curDist < dist){
+                dist = curDist;
+                index = i + 1 + sizeBases;
+            }
+        }
+        enemy->setTargetIndex(index);
+    }
+}
+void AsteroidSet::retargetNewDecoy(const std::shared_ptr<Decoy>& curDecoy){
+    CULog("retargeting Decoy \n");
+    float retargetCutoff = 400.0;
+    for (std::shared_ptr<Asteroid> enemy : current){
+        Vec2 enemyPos = enemy->position;
+        Vec2 norm = curDecoy->getPos() - enemyPos;
+        float distance = norm.length();
+        Vec2 curVec = indexToVector(enemy->getTargetIndex());
+        Vec2 normCur = curVec - enemyPos;
+        float curDist = normCur.length();
+        if (distance < retargetCutoff && distance < curDist + 50.0){ // if within radius of targeting and new distance less than current target + epsilon
+//            CULog("total Targets %d\n", getTotalTargets()-1);
+            enemy->setTargetIndex(getTotalTargets()-1); // newest one is always last
+        }
+    }
+}
+
+
+Vec2 AsteroidSet::indexToVector(int _targetIndex){
+    Vec2 target_pos;
+    if (_targetIndex == 0){
+        target_pos = _ship->getPosition();
+    }else if (_targetIndex <= _target.size()){
+        target_pos = _target[_targetIndex-1];
+    }else{
+        target_pos = _currentDecoys[_targetIndex-1-_target.size()]->getPos();
+    }
+    return target_pos;
 }

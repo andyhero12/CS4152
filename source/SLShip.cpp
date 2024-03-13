@@ -160,6 +160,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  */
 void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
+    wrapPosition(size);
 }
 
 /**
@@ -197,7 +198,7 @@ void Ship::move(float forward, float turn, Size size) {
     
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
-
+    wrapPosition(size);
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
@@ -226,9 +227,6 @@ void Ship::move(float forward, float turn, Size size) {
             _animations.stepAnimation();
         }
     }
-//    else{
-//        _animations.resetAnimation(0);
-//    }
 }
 
 
@@ -250,3 +248,25 @@ Poly2 Ship::getBlastRec(){
     return resultingRect;
 }
 
+/**
+ * Applies "wrap around"
+ *
+ * If the ship goes off one edge of the screen, then it appears across the edge
+ * on the opposite side.
+ *
+ * @param size      The size of the window (for wrap around)
+ */
+void Ship::wrapPosition(cugl::Size size) {
+    while (_pos.x > size.width) {
+        _pos.x = size.width;
+    }
+    while (_pos.x < 0) {
+        _pos.x = 0;
+    }
+    while (_pos.y > size.height) {
+        _pos.y = size.height;
+    }
+    while (_pos.y < 0) {
+        _pos.y = 0;
+    }
+}
