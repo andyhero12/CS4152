@@ -232,63 +232,67 @@ $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\..\source\Animation.h"/>
 
-    <ClInclude Include="..\..\..\source\SpawnerController.h"/>
+    <ClInclude Include="..\..\..\source\Base.h"/>
 
-    <ClInclude Include="..\..\..\source\SLInputController.h"/>
+    <ClInclude Include="..\..\..\source\BaseSet.h"/>
 
     <ClInclude Include="..\..\..\source\Monster.h"/>
-
-    <ClInclude Include="..\..\..\source\Spawner.h"/>
-
-    <ClInclude Include="..\..\..\source\SLPhotonSet.h"/>
-
-    <ClInclude Include="..\..\..\source\SLShip.h"/>
 
     <ClInclude Include="..\..\..\source\SLApp.h"/>
 
     <ClInclude Include="..\..\..\source\SLAsteroidSet.h"/>
 
+    <ClInclude Include="..\..\..\source\SLCollisionController.h"/>
+
     <ClInclude Include="..\..\..\source\SLGameScene.h"/>
 
-    <ClInclude Include="..\..\..\source\BaseSet.h"/>
+    <ClInclude Include="..\..\..\source\SLInputController.h"/>
 
     <ClInclude Include="..\..\..\source\SLLoadingScene.h"/>
 
-    <ClInclude Include="..\..\..\source\SLCollisionController.h"/>
+    <ClInclude Include="..\..\..\source\SLPhotonSet.h"/>
 
-    <ClInclude Include="..\..\..\source\Base.h"/>
+    <ClInclude Include="..\..\..\source\SLShip.h"/>
+
+    <ClInclude Include="..\..\..\source\Spawner.h"/>
+
+    <ClInclude Include="..\..\..\source\SpawnerController.h"/>
 
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\SLShip.cpp"/>
+    <ClCompile Include="..\..\..\source\Animation.cpp"/>
 
-    <ClCompile Include="..\..\..\source\SLAsteroidSet.cpp"/>
+    <ClCompile Include="..\..\..\source\AttackPolygons.cpp"/>
 
-    <ClCompile Include="..\..\..\source\Monster.cpp"/>
+    <ClCompile Include="..\..\..\source\Base.cpp"/>
 
     <ClCompile Include="..\..\..\source\BaseSet.cpp"/>
 
-    <ClCompile Include="..\..\..\source\SLPhotonSet.cpp"/>
+    <ClCompile Include="..\..\..\source\Decoy.cpp"/>
 
-    <ClCompile Include="..\..\..\source\SpawnerController.cpp"/>
+    <ClCompile Include="..\..\..\source\main.cpp"/>
 
-    <ClCompile Include="..\..\..\source\Base.cpp"/>
+    <ClCompile Include="..\..\..\source\Monster.cpp"/>
+
+    <ClCompile Include="..\..\..\source\SLApp.cpp"/>
+
+    <ClCompile Include="..\..\..\source\SLAsteroidSet.cpp"/>
+
+    <ClCompile Include="..\..\..\source\SLCollisionController.cpp"/>
 
     <ClCompile Include="..\..\..\source\SLGameScene.cpp"/>
 
     <ClCompile Include="..\..\..\source\SLInputController.cpp"/>
 
-    <ClCompile Include="..\..\..\source\Animation.cpp"/>
+    <ClCompile Include="..\..\..\source\SLLoadingScene.cpp"/>
+
+    <ClCompile Include="..\..\..\source\SLPhotonSet.cpp"/>
+
+    <ClCompile Include="..\..\..\source\SLShip.cpp"/>
 
     <ClCompile Include="..\..\..\source\Spawner.cpp"/>
 
-    <ClCompile Include="..\..\..\source\SLLoadingScene.cpp"/>
-
-    <ClCompile Include="..\..\..\source\SLApp.cpp"/>
-
-    <ClCompile Include="..\..\..\source\SLCollisionController.cpp"/>
-
-    <ClCompile Include="..\..\..\source\main.cpp"/>
+    <ClCompile Include="..\..\..\source\SpawnerController.cpp"/>
 
   </ItemGroup>
   <ItemGroup>
@@ -298,7 +302,7 @@ $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <Image Include="icon1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\cugl\\buildfiles\windows\cugl\cugl.vcxproj">
+    <ProjectReference Include="..\..\..\..\cugl\\buildfiles\windows\cugl\cugl.vcxproj">
       <Project>{60c028a4-977f-44e9-a709-d79a153d6f69}</Project>
     </ProjectReference>
   </ItemGroup>

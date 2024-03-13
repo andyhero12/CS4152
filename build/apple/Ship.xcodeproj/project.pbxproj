@@ -7,48 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CF6EA872BA0BA8800423B98 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */; };
-		4CF6EA882BA0BA8800423B98 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */; };
-		4CF6EAA22BA107A800423B98 /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EAA02BA107A800423B98 /* Decoy.cpp */; };
-		4CF6EAA32BA107A800423B98 /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EAA02BA107A800423B98 /* Decoy.cpp */; };
-		AB4FAACEAE24C0FFDD3358D5 /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
-		AB8733AC6D19D4CADC473D2A /* json in Resources */ = {isa = PBXBuildFile; fileRef = AA9A54AD20F1FDD4B0473EE5 /* json */; };
-		ABCEE9218F3D4271D7FB3AFF /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
-		ABEAE5B65AE53E76AF84C6A9 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = AA051FCD35EC67DB8C9CBC71 /* sounds */; };
-		AC14EE384E6A1FA5E4A10B9F /* json in Resources */ = {isa = PBXBuildFile; fileRef = AA9A54AD20F1FDD4B0473EE5 /* json */; };
-		ACBA1DE4B2DFC58A39F3E1CD /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
-		ACC9DFBF349FD39DA1DA5BBC /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = AA051FCD35EC67DB8C9CBC71 /* sounds */; };
-		ACFDF906562C051CAB803FBE /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
-		BB1DEEADCC28C1963F9E0FFE /* SLLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */; };
-		BB55A3470F1E0680E7C56BD4 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
-		BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */; };
-		BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */; };
-		BB69CD2BB2819E62DC9CF51F /* SLGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */; };
-		BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */; };
-		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
-		BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
-		BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
-		BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* SLShip.cpp */; };
-		BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
-		BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
-		BBECCC314A16C79BFFBE15AE /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
-		BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
-		BBEF1ECBC9FD774610C4EE6E /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
-		BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
-		BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* SLShip.cpp */; };
-		BC14796BB0CF5FEDD45D5FED /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
-		BC307EA86D464CAA63671A6A /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
-		BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
-		BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */; };
-		BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
-		BCA4191ACC25AC7CA3C656BC /* SLLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */; };
-		BCBF9F2FD2AA0DED5D9C50BC /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
-		BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */; };
-		BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */; };
-		BCDBE19EDB1861AD6BE3A566 /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
-		BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
-		BCF4DD023FCDCC2FAF2DBE2B /* SLGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */; };
-		BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
 		EB0F3CB827FB9FD40037CC66 /* Mac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB0F3CB327FB9FD40037CC66 /* Mac.xcassets */; };
 		EB0F3CD527FBA2190037CC66 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC727FBA2180037CC66 /* ForceFeedback.framework */; };
 		EB0F3CD627FBA2190037CC66 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC827FBA2180037CC66 /* CoreHaptics.framework */; };
@@ -86,6 +44,48 @@
 		EBDD8151293CE9F9000BED3C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDD8144293CE9F9000BED3C /* CoreMotion.framework */; };
 		EBDD8154293CEA45000BED3C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDD8152293CEA45000BED3C /* AudioToolbox.framework */; };
 		EBDD8155293CEA45000BED3C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDD8153293CEA45000BED3C /* AVFoundation.framework */; };
+		ABCEE9218F3D4271D7FB3AFF /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
+		ACFDF906562C051CAB803FBE /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
+		AB8733AC6D19D4CADC473D2A /* json in Resources */ = {isa = PBXBuildFile; fileRef = AA9A54AD20F1FDD4B0473EE5 /* json */; };
+		AC14EE384E6A1FA5E4A10B9F /* json in Resources */ = {isa = PBXBuildFile; fileRef = AA9A54AD20F1FDD4B0473EE5 /* json */; };
+		ABEAE5B65AE53E76AF84C6A9 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = AA051FCD35EC67DB8C9CBC71 /* sounds */; };
+		ACC9DFBF349FD39DA1DA5BBC /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = AA051FCD35EC67DB8C9CBC71 /* sounds */; };
+		AB4FAACEAE24C0FFDD3358D5 /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
+		ACBA1DE4B2DFC58A39F3E1CD /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
+		BB55A3470F1E0680E7C56BD4 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
+		BC14796BB0CF5FEDD45D5FED /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
+		BB8FB2BB1D1EB6F8F926C463 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */; };
+		BC8DD1D4DC11F7EF9D4ECE13 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */; };
+		BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
+		BC307EA86D464CAA63671A6A /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
+		BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
+		BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
+		BBFBE2EEBFABCBD7EA77F2EC /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1BEEDE8870BB3A7338883B /* Decoy.cpp */; };
+		BCC0F80ABC6EB9E7D45F6AC3 /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1BEEDE8870BB3A7338883B /* Decoy.cpp */; };
+		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
+		BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
+		BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
+		BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
+		BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
+		BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
+		BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
+		BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
+		BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */; };
+		BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */; };
+		BB69CD2BB2819E62DC9CF51F /* SLGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */; };
+		BCF4DD023FCDCC2FAF2DBE2B /* SLGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */; };
+		BBECCC314A16C79BFFBE15AE /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
+		BCBF9F2FD2AA0DED5D9C50BC /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
+		BB1DEEADCC28C1963F9E0FFE /* SLLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */; };
+		BCA4191ACC25AC7CA3C656BC /* SLLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */; };
+		BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */; };
+		BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */; };
+		BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* SLShip.cpp */; };
+		BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* SLShip.cpp */; };
+		BBEF1ECBC9FD774610C4EE6E /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
+		BCDBE19EDB1861AD6BE3A566 /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
+		BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */; };
+		BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,43 +106,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AttackPolygons.cpp; sourceTree = "<group>"; };
-		4CF6EA862BA0BA8800423B98 /* AttackPolygons.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AttackPolygons.hpp; sourceTree = "<group>"; };
-		4CF6EAA02BA107A800423B98 /* Decoy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Decoy.cpp; sourceTree = "<group>"; };
-		4CF6EAA12BA107A800423B98 /* Decoy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Decoy.hpp; sourceTree = "<group>"; };
-		AA051FCD35EC67DB8C9CBC71 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
-		AA259BFAAEFDFD1998A32E0B /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
-		AA9A54AD20F1FDD4B0473EE5 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
-		AAA1D9FC9F3ED19A1DDAAC56 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spawner.cpp; sourceTree = "<group>"; };
-		BA1026CCF8EFE84337CD97AC /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
-		BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
-		BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLCollisionController.cpp; sourceTree = "<group>"; };
-		BA6B0ADF5445AAA0091E2EFD /* SLApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLApp.h; sourceTree = "<group>"; };
-		BA6FACEFFEB8CCD974BC8EED /* SLCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCollisionController.h; sourceTree = "<group>"; };
-		BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLAsteroidSet.cpp; sourceTree = "<group>"; };
-		BA9540AEA1A66120EEC87741 /* SLShip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLShip.cpp; sourceTree = "<group>"; };
-		BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpawnerController.cpp; sourceTree = "<group>"; };
-		BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLGameScene.cpp; sourceTree = "<group>"; };
-		BAA296BFACC0BB8521C099CD /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
-		BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLPhotonSet.cpp; sourceTree = "<group>"; };
-		BAABB01FB408EBED961E6036 /* SLApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLApp.cpp; sourceTree = "<group>"; };
-		BAAFD6521F931674C53C53FD /* SLGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLGameScene.h; sourceTree = "<group>"; };
-		BAC30EA1D03A3629CBFCFDCA /* SLInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLInputController.h; sourceTree = "<group>"; };
-		BACABDE04E303D83ABBDA6AA /* Spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spawner.h; sourceTree = "<group>"; };
-		BACD06FACAC591B8BB025B8C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		BACE0CAEFCAA45454D3C73D9 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
-		BAD4EA6DD75AFA82BBDA8D0A /* SpawnerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpawnerController.h; sourceTree = "<group>"; };
-		BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLLoadingScene.cpp; sourceTree = "<group>"; };
-		BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLInputController.cpp; sourceTree = "<group>"; };
-		BADCDAD3E6EA9DA0FAE1425B /* SLLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoadingScene.h; sourceTree = "<group>"; };
-		BADD0AFB37CF20E35FABECCE /* SLPhotonSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPhotonSet.h; sourceTree = "<group>"; };
-		BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base.cpp; sourceTree = "<group>"; };
-		BAEACE1B7D5A72CFC71995CF /* SLAsteroidSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAsteroidSet.h; sourceTree = "<group>"; };
-		BAF4BF90C373CDD162B4CBBD /* SLShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShip.h; sourceTree = "<group>"; };
-		BAF9258FBCBDD4D6AD7EDFC7 /* BaseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSet.h; sourceTree = "<group>"; };
-		BAFE6F1F4ACC43B4C61D2FAD /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
-		BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseSet.cpp; sourceTree = "<group>"; };
 		EB0F3C9627FB9DCB0037CC66 /* Ship Lab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ship Lab.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB0F3CB027FB9FD40037CC66 /* Landscape.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Landscape.storyboard; sourceTree = "<group>"; };
 		EB0F3CB127FB9FD40037CC66 /* iOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = iOS.xcassets; sourceTree = "<group>"; };
@@ -163,8 +126,8 @@
 		EB0F3CD227FBA2190037CC66 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EB0F3CD327FBA2190037CC66 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		EB0F3CD427FBA2190037CC66 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		EB163904295693D90090F7D4 /* cugl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cugl.xcodeproj; path = ../../cugl/buildfiles/apple/cugl.xcodeproj; sourceTree = "<group>"; };
-		EB6E0E5D298C1A3300704E87 /* licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = licenses; path = ../../../cugl/licenses; sourceTree = "<group>"; };
+		EB163904295693D90090F7D4 /* cugl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cugl.xcodeproj; path = ../../../cugl/buildfiles/apple/cugl.xcodeproj; sourceTree = "<group>"; };
+		EB6E0E5D298C1A3300704E87 /* licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = licenses; path = "../../../../cugl/licenses"; sourceTree = "<group>"; };
 		EBC7AEC227FBB41F001F1467 /* Ship Lab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ship Lab.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC7AEF027FBBEF5001F1467 /* ios.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ios.plist; sourceTree = "<group>"; };
 		EBDD8138293CE9F8000BED3C /* CoreHaptics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreHaptics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreHaptics.framework; sourceTree = DEVELOPER_DIR; };
@@ -184,6 +147,41 @@
 		EBDD8153293CEA45000BED3C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		EBE2E0132B794B930091FF11 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
 		EBE2E0172B794BED0091FF11 /* CoreAudioTypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioTypes.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreAudioTypes.framework; sourceTree = DEVELOPER_DIR; };
+		AAA1D9FC9F3ED19A1DDAAC56 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		AA9A54AD20F1FDD4B0473EE5 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
+		AA051FCD35EC67DB8C9CBC71 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
+		AA259BFAAEFDFD1998A32E0B /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
+		BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = Animation.cpp; sourceTree = "<group>"; };
+		BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = AttackPolygons.cpp; sourceTree = "<group>"; };
+		BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = Base.cpp; sourceTree = "<group>"; };
+		BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = BaseSet.cpp; sourceTree = "<group>"; };
+		BA1BEEDE8870BB3A7338883B /* Decoy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = Decoy.cpp; sourceTree = "<group>"; };
+		BACD06FACAC591B8BB025B8C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = main.cpp; sourceTree = "<group>"; };
+		BAA296BFACC0BB8521C099CD /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = Monster.cpp; sourceTree = "<group>"; };
+		BAABB01FB408EBED961E6036 /* SLApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLApp.cpp; sourceTree = "<group>"; };
+		BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLAsteroidSet.cpp; sourceTree = "<group>"; };
+		BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLCollisionController.cpp; sourceTree = "<group>"; };
+		BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLGameScene.cpp; sourceTree = "<group>"; };
+		BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLInputController.cpp; sourceTree = "<group>"; };
+		BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLLoadingScene.cpp; sourceTree = "<group>"; };
+		BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLPhotonSet.cpp; sourceTree = "<group>"; };
+		BA9540AEA1A66120EEC87741 /* SLShip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SLShip.cpp; sourceTree = "<group>"; };
+		BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = Spawner.cpp; sourceTree = "<group>"; };
+		BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = SpawnerController.cpp; sourceTree = "<group>"; };
+		BAFE6F1F4ACC43B4C61D2FAD /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Animation.h; sourceTree = "<group>"; };
+		BACE0CAEFCAA45454D3C73D9 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Base.h; sourceTree = "<group>"; };
+		BAF9258FBCBDD4D6AD7EDFC7 /* BaseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BaseSet.h; sourceTree = "<group>"; };
+		BA1026CCF8EFE84337CD97AC /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Monster.h; sourceTree = "<group>"; };
+		BA6B0ADF5445AAA0091E2EFD /* SLApp.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLApp.h; sourceTree = "<group>"; };
+		BAEACE1B7D5A72CFC71995CF /* SLAsteroidSet.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLAsteroidSet.h; sourceTree = "<group>"; };
+		BA6FACEFFEB8CCD974BC8EED /* SLCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLCollisionController.h; sourceTree = "<group>"; };
+		BAAFD6521F931674C53C53FD /* SLGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLGameScene.h; sourceTree = "<group>"; };
+		BAC30EA1D03A3629CBFCFDCA /* SLInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLInputController.h; sourceTree = "<group>"; };
+		BADCDAD3E6EA9DA0FAE1425B /* SLLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLLoadingScene.h; sourceTree = "<group>"; };
+		BADD0AFB37CF20E35FABECCE /* SLPhotonSet.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLPhotonSet.h; sourceTree = "<group>"; };
+		BAF4BF90C373CDD162B4CBBD /* SLShip.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SLShip.h; sourceTree = "<group>"; };
+		BACABDE04E303D83ABBDA6AA /* Spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Spawner.h; sourceTree = "<group>"; };
+		BAD4EA6DD75AFA82BBDA8D0A /* SpawnerController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SpawnerController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,8 +213,10 @@
 			files = (
 				EB163914295693FD0090F7D4 /* libcugl-ios.a in Frameworks */,
 				EBDD8154293CEA45000BED3C /* AudioToolbox.framework in Frameworks */,
+				EBE2E0162B794B930091FF11 /* AudioUnit.framework in Frameworks */,
 				EBDD8155293CEA45000BED3C /* AVFoundation.framework in Frameworks */,
 				EBDD814B293CE9F9000BED3C /* CoreAudio.framework in Frameworks */,
+				EBE2E0182B794BED0091FF11 /* CoreAudioTypes.framework in Frameworks */,
 				EBDD814A293CE9F9000BED3C /* CoreBluetooth.framework in Frameworks */,
 				EBDD8146293CE9F9000BED3C /* CoreGraphics.framework in Frameworks */,
 				EBDD8145293CE9F9000BED3C /* CoreHaptics.framework in Frameworks */,
@@ -235,22 +235,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4CF6EA8B2BA0FDD500423B98 /* Enemies */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Enemies;
-			sourceTree = "<group>";
-		};
-		4CF6EA992BA1078200423B98 /* Decoys */ = {
-			isa = PBXGroup;
-			children = (
-				4CF6EAA02BA107A800423B98 /* Decoy.cpp */,
-				4CF6EAA12BA107A800423B98 /* Decoy.hpp */,
-			);
-			path = Decoys;
-			sourceTree = "<group>";
-		};
 		EB0F3C8D27FB9DCB0037CC66 = {
 			isa = PBXGroup;
 			children = (
@@ -275,16 +259,11 @@
 		EB0F3C9827FB9DCB0037CC66 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4CF6EA992BA1078200423B98 /* Decoys */,
-				4CF6EA8B2BA0FDD500423B98 /* Enemies */,
-				BA9540AEA1A66120EEC87741 /* SLShip.cpp */,
-				BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */,
-				BAA296BFACC0BB8521C099CD /* Monster.cpp */,
-				BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */,
-				BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */,
-				BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */,
+				BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */,
+				BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */,
 				BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */,
 				BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */,
+				BA1BEEDE8870BB3A7338883B /* Decoy.cpp */,
 				BACD06FACAC591B8BB025B8C /* main.cpp */,
 				BAA296BFACC0BB8521C099CD /* Monster.cpp */,
 				BAABB01FB408EBED961E6036 /* SLApp.cpp */,
@@ -307,13 +286,13 @@
 				BAAFD6521F931674C53C53FD /* SLGameScene.h */,
 				BAC30EA1D03A3629CBFCFDCA /* SLInputController.h */,
 				BADCDAD3E6EA9DA0FAE1425B /* SLLoadingScene.h */,
-				BA6FACEFFEB8CCD974BC8EED /* SLCollisionController.h */,
-				BACE0CAEFCAA45454D3C73D9 /* Base.h */,
-				4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */,
-				4CF6EA862BA0BA8800423B98 /* AttackPolygons.hpp */,
+				BADD0AFB37CF20E35FABECCE /* SLPhotonSet.h */,
+				BAF4BF90C373CDD162B4CBBD /* SLShip.h */,
+				BACABDE04E303D83ABBDA6AA /* Spawner.h */,
+				BAD4EA6DD75AFA82BBDA8D0A /* SpawnerController.h */,
 			);
 			name = Source;
-			path = ../../source;
+			path = "../../source";
 			sourceTree = "<group>";
 		};
 		EB0F3CAE27FB9F700037CC66 /* Resources */ = {
@@ -378,7 +357,7 @@
 				AA259BFAAEFDFD1998A32E0B /* textures */,
 			);
 			name = Assets;
-			path = ../../assets;
+			path = "../../assets";
 			sourceTree = "<group>";
 		};
 		EBC7AEB927FBB280001F1467 /* ios */ = {
@@ -459,7 +438,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "Ship" */;
+			buildConfigurationList = EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "app" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -537,15 +516,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */,
-				BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */,
-				BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */,
-				BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */,
-				BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */,
-				BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */,
-				4CF6EA872BA0BA8800423B98 /* AttackPolygons.cpp in Sources */,
+				BB55A3470F1E0680E7C56BD4 /* Animation.cpp in Sources */,
+				BB8FB2BB1D1EB6F8F926C463 /* AttackPolygons.cpp in Sources */,
 				BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */,
 				BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */,
+				BBFBE2EEBFABCBD7EA77F2EC /* Decoy.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 				BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */,
 				BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */,
@@ -557,11 +532,7 @@
 				BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */,
 				BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */,
 				BBEF1ECBC9FD774610C4EE6E /* Spawner.cpp in Sources */,
-				BB1DEEADCC28C1963F9E0FFE /* SLLoadingScene.cpp in Sources */,
-				BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */,
-				4CF6EAA22BA107A800423B98 /* Decoy.cpp in Sources */,
-				BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */,
-				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
+				BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,15 +540,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */,
-				BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */,
-				BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */,
-				BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */,
-				BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */,
-				BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */,
-				4CF6EA882BA0BA8800423B98 /* AttackPolygons.cpp in Sources */,
+				BC14796BB0CF5FEDD45D5FED /* Animation.cpp in Sources */,
+				BC8DD1D4DC11F7EF9D4ECE13 /* AttackPolygons.cpp in Sources */,
 				BC307EA86D464CAA63671A6A /* Base.cpp in Sources */,
 				BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */,
+				BCC0F80ABC6EB9E7D45F6AC3 /* Decoy.cpp in Sources */,
 				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
 				BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */,
 				BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */,
@@ -589,11 +556,7 @@
 				BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */,
 				BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */,
 				BCDBE19EDB1861AD6BE3A566 /* Spawner.cpp in Sources */,
-				BCA4191ACC25AC7CA3C656BC /* SLLoadingScene.cpp in Sources */,
-				BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */,
-				4CF6EAA32BA107A800423B98 /* Decoy.cpp in Sources */,
-				BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */,
-				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
+				BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +616,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				POLY2_INCLUDES = "$(SRCROOT)/../../../cugl/external/poly2tri";
 				HEADER_SEARCH_PATHS = (
 					"$(SDL_INCLUDES)",
 					"$(POLY2_INCLUDES)",
@@ -665,7 +629,6 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				POLY2_INCLUDES = "$(SRCROOT)/../../cugl/external/poly2tri";
 				SDKROOT = macosx;
 				SDL_INCLUDES = "$(SRCROOT)/../../../cugl/sdlapp/include";
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = "OpenGL OpenGLES";
@@ -719,6 +682,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				POLY2_INCLUDES = "$(SRCROOT)/../../../cugl/external/poly2tri";
 				HEADER_SEARCH_PATHS = (
 					"$(SDL_INCLUDES)",
 					"$(POLY2_INCLUDES)",
@@ -730,7 +694,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				POLY2_INCLUDES = "$(SRCROOT)/../../cugl/external/poly2tri";
 				SDKROOT = macosx;
 				SDL_INCLUDES = "$(SRCROOT)/../../../cugl/sdlapp/include";
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = "OpenGL OpenGLES";
@@ -833,6 +796,8 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -872,6 +837,8 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -889,7 +856,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "Ship" */ = {
+		EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EB0F3CA727FB9DCC0037CC66 /* Debug */,
@@ -917,6 +884,7 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
 	};
 	rootObject = EB0F3C8E27FB9DCB0037CC66 /* Project object */;
 }
