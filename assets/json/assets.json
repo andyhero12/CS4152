@@ -8,14 +8,11 @@
         "photon": {
             "file": "textures/photon.png"
         },
-        "shipfront": {
-            "file": "textures/grape-front-walk.png"
+        "shipleftidle": {
+            "file": "textures/medium-left-run.png"
         },
-        "shipleft": {
-            "file": "textures/grape-left-walk.png"
-        },
-        "shipright": {
-            "file": "textures/grape-right-walk.png"
+        "shiprightidle": {
+            "file": "textures/medium-right-run.png"
         },
         "monkey0":{
             "file": "textures/monkey-walk-0.png"
