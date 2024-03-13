@@ -134,7 +134,8 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if (_animations.getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
-        shiptrans.scale(getScale());
+        // super duper magic number
+        shiptrans.scale(getScale() * 0.75f);
 //        shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(_pos);
         // Transform to place the shadow, and its color
