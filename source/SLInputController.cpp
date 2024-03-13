@@ -72,7 +72,7 @@ void InputController::readInput() {
     KeyCode special = KeyCode::G;
 
     // Convert keyboard state into game commands
-    _forward = _turning = 0;
+    //_forward = _turning = 0;
     _UseKeyboard = false;
 
     // Movement forward/backward
@@ -137,6 +137,8 @@ void InputController::readInput_joystick() {
     _didSpecial = false;
     _Vel = cugl::Vec2(0, 0);
     _UseJoystick = false;
+    // Need for this sprint
+    _forward = _turning = 0;
     /* Movement using controller*/
     if (_gameContrl) {
         float LR = _gameContrl->getAxisPosition(X_left);
@@ -169,39 +171,39 @@ void InputController::readInput_joystick() {
         // Movement 360 degrees
         if (abs(LR) >= 0.2 || abs(UD) >= 0.2) {
 
-            _Vel = cugl::Vec2(LR, -UD);
+            //_Vel = cugl::Vec2(LR, -UD);
             _UseJoystick = true;
 
-            //int index = 0;
-            //cugl::Vec2 curLoc(LR, UD);
-            //float dist = curLoc.distance(directions[0]);
-            ////std::cout << dist << std::endl;
-            //for (int i = 1; i < directions.size(); i++) {
-            //    cugl::Vec2& direction = directions[i];
-            //    if (curLoc.distance(direction) < dist) {
-            //        index = i;
-            //        dist = curLoc.distance(direction);
-            //    }
-            //}
-            //std::cout << index << std::endl;
-            //if (index == 0) {
-            //    _turning = -1;
-            //}
-            //else if (index == 1) {
-            //    
-            //    _forward = 1;
-            //}
-            //else if (index == 2) {
-            //    
-            //    _turning = 1;
-            //}
-            //else if (index == 3) {
-            //    
-            //    _forward = -1;
-            //}
-            //else {
-            //    
-            //}
+            int index = 0;
+            cugl::Vec2 curLoc(LR, UD);
+            float dist = curLoc.distance(directions[0]);
+            //std::cout << dist << std::endl;
+            for (int i = 1; i < directions.size(); i++) {
+                cugl::Vec2& direction = directions[i];
+                if (curLoc.distance(direction) < dist) {
+                    index = i;
+                    dist = curLoc.distance(direction);
+                }
+            }
+            std::cout << index << std::endl;
+            if (index == 0) {
+                _turning = -1;
+            }
+            else if (index == 1) {
+                
+                _forward = 1;
+            }
+            else if (index == 2) {
+                
+                _turning = 1;
+            }
+            else if (index == 3) {
+                
+                _forward = -1;
+            }
+            else {
+                
+            }
         }
     }
 
