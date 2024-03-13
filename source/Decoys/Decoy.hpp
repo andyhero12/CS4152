@@ -45,6 +45,10 @@ public:
     const float getTime() const{
         return _time_duration;
     }
+    void subHealth(int amt) {
+        _health -= amt;
+        _health = fmax(_health, 0);
+    }
 
 };
 

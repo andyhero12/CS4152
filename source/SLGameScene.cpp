@@ -173,7 +173,6 @@ void GameScene::update(float timestep) {
         if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
             _ship->subAbsorb(5);
             _attackPolygonSet.addShoot(_ship);
-//            _collisions.hugeBlastCollision(blastRec, _asteroids);
         }else if (_ship->getMode() == "BUILD" && _ship->getAbsorb() > 5 ){
             _ship->subAbsorb(5);
             _asteroids.createDecoy();
@@ -193,10 +192,12 @@ void GameScene::update(float timestep) {
     _bases.update(_asteroids);
     _attackPolygonSet.update(getSize());
     _collisions.resolveAttacks(_attackPolygonSet, _asteroids,_spawnerController._spawners,_ship);
+    _collisions.resolveDecoyDamage(_asteroids);
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
     }
+    
     if (_collisions.resolveCollision(_bases, _asteroids)){
 //        CULog("asteroid hit base\n");
     }
