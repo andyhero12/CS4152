@@ -72,7 +72,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     // Initialize the asteroid set
     _asteroids.init(_constants->get("asteroids"),_ship);
     textures.clear();
-//    textures.push_back(assets->get<Texture>("asteroid1"));
     textures.push_back(assets->get<Texture>("monkey0"));
     textures.push_back(assets->get<Texture>("monkey1"));
     textures.push_back(assets->get<Texture>("monkey2"));
@@ -82,14 +81,13 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     textures.push_back(assets->get<Texture>("monkey6"));
     textures.push_back(assets->get<Texture>("monkey7"));
 
-    
-//    _asteroids.setTexture(assets->get<Texture>("asteroid1"));
     _asteroids.setTexture(textures);
+    _asteroids.setDecoyTexture(assets->get<Texture>("base"));
     
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
-
+    
     _bases.init(_constants->get("base"));
     _bases.setTexture(assets->get<Texture>("base"));
 
@@ -176,8 +174,9 @@ void GameScene::update(float timestep) {
             _ship->subAbsorb(5);
             _attackPolygonSet.addShoot(_ship);
 //            _collisions.hugeBlastCollision(blastRec, _asteroids);
-        }else if (_ship->getMode() == "BUILD"){
-            
+        }else if (_ship->getMode() == "BUILD" && _ship->getAbsorb() > 5 ){
+            _ship->subAbsorb(5);
+            _asteroids.createDecoy();
         }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
             _ship->subAbsorb(10);
             _attackPolygonSet.addExplode(_ship);
@@ -188,7 +187,7 @@ void GameScene::update(float timestep) {
     _ship->move( _input.getForward(),  _input.getTurn(),_input.getVelocity(),_input.getControllerState(),_input.getKeyboardState() ,getSize() * WORLD_SIZE);
 
     // Move the asteroids
-    _asteroids.update(getSize() * WORLD_SIZE);
+    _asteroids.update(getSize() * WORLD_SIZE, timestep);
     
     _spawnerController.update(_asteroids,timestep);
     _bases.update(_asteroids);

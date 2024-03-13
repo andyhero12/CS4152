@@ -159,6 +159,7 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  */
 void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
+    wrapPosition(size);
 }
 
 /**
@@ -218,7 +219,7 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
     _vel = _vel.normalize();
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
-    
+    wrapPosition(size);
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
@@ -232,28 +233,23 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
     }
     
     if (forward != 0 || turn != 0){
-        if (forward != 0 || turn != 0){
-            if (_prevTurn != turn){
-                if (turn == -1){
-                    _animations.resetAnimation(1);
-                }
-                else if (turn == 1){
-                    _animations.resetAnimation(2);
-                }
-                else{
-                    _animations.resetAnimation(0);
-                }
+        if (_prevTurn != turn){
+            if (turn == -1){
+                _animations.resetAnimation(1);
             }
-            _prevTurn = turn;
-            
-            _animations.updateAnimTime();
-            if (_animations.frameUpdateReady()){
-                _animations.stepAnimation();
+            else if (turn == 1){
+                _animations.resetAnimation(2);
+            }
+            else{
+                _animations.resetAnimation(0);
             }
         }
-        //    else{
-        //        _animations.resetAnimation(0);
-        //    }
+        _prevTurn = turn;
+        
+        _animations.updateAnimTime();
+        if (_animations.frameUpdateReady()){
+            _animations.stepAnimation();
+        }
     }
 }
 
@@ -273,4 +269,27 @@ Poly2 Ship::getBlastRec(){
     }
     Poly2 resultingRect(org);
     return resultingRect;
+}
+
+/**
+ * Applies "wrap around"
+ *
+ * If the ship goes off one edge of the screen, then it appears across the edge
+ * on the opposite side.
+ *
+ * @param size      The size of the window (for wrap around)
+ */
+void Ship::wrapPosition(cugl::Size size) {
+    while (_pos.x > size.width) {
+        _pos.x = size.width;
+    }
+    while (_pos.x < 0) {
+        _pos.x = 0;
+    }
+    while (_pos.y > size.height) {
+        _pos.y = size.height;
+    }
+    while (_pos.y < 0) {
+        _pos.y = 0;
+    }
 }

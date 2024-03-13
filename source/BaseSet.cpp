@@ -67,9 +67,6 @@ void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch> &batch, cugl::Size s
         trans.scale(scale);
         trans.translate(pos);
         batch->draw(_texture, origin, trans);
-
-        //        std::cout << spawner->getTexture()<< std::endl;
-        //        spawner->draw(batch, size);
     }
 }
 bool BaseSet::baseLost()

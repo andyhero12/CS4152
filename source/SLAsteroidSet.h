@@ -23,6 +23,7 @@
 #include "Base.h"
 #include "SLShip.h"
 #include "Animation.h"
+#include "Decoys/Decoy.hpp"
 /**
  * Model class representing a collection of asteroids.
  *
@@ -79,6 +80,9 @@ public:
         }
         int getAbsorbValue() const {
             return _type*4;
+        }
+        void setTargetIndex(int newIndex){
+            _targetIndex = newIndex;
         }
         /**
          * Allocates an asteroid by setting its position and velocity.
@@ -188,15 +192,17 @@ public:
          * edge on the opposite side. However, this method performs no
          * collision detection. Collisions are resolved afterwards.
          */
-        void update(cugl::Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship);
+        void update(cugl::Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship, std::vector<std::shared_ptr<Decoy>>& decoys);
         
     };
 
 private:
     std::vector<cugl::Vec2> _target;
+    std::vector<std::shared_ptr<Decoy>> _currentDecoys;
+    std::vector<std::shared_ptr<Decoy>> _pendingDecoys;
     /** The texture for the asteroid sprite sheet. */
     std::vector<std::shared_ptr<cugl::Texture>> _texture;
-//    std::shared_ptr<cugl::Texture> _texture;
+    std::shared_ptr<cugl::Texture> _decoyTexture;
 
     /** The collection of all pending asteroids (for next frame). */
     std::unordered_set<std::shared_ptr<Asteroid>> _pending;
@@ -264,6 +270,7 @@ public:
      */
     int getDamage() const { return _damage; }
 
+    int getTotalTargets() const {return 1 + _target.size() + _currentDecoys.size();}
     /**
      * Returns the default mass of a photon
      *
@@ -281,25 +288,6 @@ public:
      */
     float getRadius() const { return _radius*_hitratio; }
     
-    /**
-     * Returns the image for a single asteroid; reused by all asteroid.
-     *
-     * This value should be loaded by the GameScene and set there. However,
-     * we have to be prepared for this to be null at all times.  This
-     * texture will be used to generate the sprite sheet for each
-     * asteroid. Asteroids must have different sprite sheets because,
-     * while they share a texture, they do not share the same animation
-     * frame.
-     *
-     * The sprite sheet information (size, number of columns) should have
-     * been set in the initial JSON. If not, this texture will be ignored.
-     *
-     * @return the image for a single asteroid; reused by all asteroids.
-//     */
-//    const std::shared_ptr<cugl::Texture>& getTexture() const {
-//        return _texture;
-//    }
-
     /**
      * Sets the image for a single photon; reused by all photons.
      *
@@ -341,7 +329,7 @@ public:
      * side. However, this method performs no collision detection. Collisions
      * are resolved afterwards.
      */
-    void update(cugl::Size size);
+    void update(cugl::Size size, float timestep);
 
     /**
 	 * Draws all active asteroids to the sprite batch within the given bounds.
@@ -356,6 +344,15 @@ public:
      * @param size      The size of the window (for wrap around)
      */
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font);
+    
+    
+    void createDecoy();
+    
+    // Retargets the nearby enemies
+    void retargetNewDecoy(const std::shared_ptr<Decoy>& curDecoy);
+    
+    void targetAllToCloset();
+    void setDecoyTexture(const std::shared_ptr<cugl::Texture>& incomingDecoyTexture);
 };
 
 #endif /* __SL_ASTEROID_SET_H__ */
