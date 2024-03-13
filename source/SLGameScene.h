@@ -16,13 +16,12 @@
 #include <vector>
 #include <unordered_set>
 #include "SLShip.h"
-#include "SLPhotonSet.h"
 #include "SLAsteroidSet.h"
 #include "SLInputController.h"
 #include "SLCollisionController.h"
 #include "SpawnerController.h"
 #include "BaseSet.h"
-
+#include "AttackPolygons.hpp"
 
 
 /**
@@ -51,11 +50,9 @@ protected:
     std::shared_ptr<Ship> _ship;
     /** The location of all of the active asteroids */
     AsteroidSet _asteroids;
-    /** The location of all of the active asteroids */
-    PhotonSet   _photons;
     
     BaseSet     _bases;
-    
+    AttackPolygons _attackPolygonSet;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */
@@ -68,7 +65,6 @@ protected:
     std::shared_ptr<cugl::TextLayout> _text;
     /** The sound of a ship-asteroid collision */
     std::shared_ptr<cugl::Sound> _bang;
-    /** The sound of a Photon firing*/
     std::shared_ptr<cugl::Sound> _laser;
     std::shared_ptr<cugl::Sound> _blast;
     

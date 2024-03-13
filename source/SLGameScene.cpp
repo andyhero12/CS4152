@@ -92,9 +92,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
 
     _bases.init(_constants->get("base"));
     _bases.setTexture(assets->get<Texture>("base"));
-    // Initialize the Photon set
-    _photons.init(_constants->get("photons"));
-    _photons.setTexture(assets->get<Texture>("photon"));
 
     // Get the bang sound
     _bang = assets->get<Sound>("bang");
@@ -141,9 +138,9 @@ void GameScene::reset() {
     _ship->setVelocity(Vec2::ZERO);
     _ship->setHealth(_constants->get("ship")->getInt("health",0));
     _asteroids.init(_constants->get("asteroids"),_ship);
-    _photons.init(_constants->get("photons"));
     _spawnerController.init(_constants->get("spawner"));
     _bases.init(_constants->get("base"));
+    _attackPolygonSet.init();
 }
 
 /**
@@ -168,33 +165,35 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    if (_input.didPressFire() && _ship->canFireWeapon() && !_ship->tooBig()){
-        Vec2 p(_ship->getPosition().x,
-               _ship->getPosition().y);
-        float rads = M_PI*_ship->getAngle()/180.0f + M_PI_2;
-        Vec2 v =
-        _photons._speed * Vec2::forAngle(rads) +_ship->getVelocity();
+    if (_input.didPressFire() && _ship->canFireWeapon()){
         _ship->reloadWeapon();
-        _photons.spawnPhoton(p,v);
+        _attackPolygonSet.addBite(_ship);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-        //        _ship->subAbsorb(2);
-    }else if (_input.didPressFire() && _ship->canFireWeapon() && _ship->tooBig()){
-        _ship->setAbsorbValue(0);
-        _collisions.resolveBlowup(_ship, _asteroids, _spawnerController._spawners);
     }
-    
-    // Move the ships and photons forward (ignoring collisions)
-
-    _ship->move( _input.getForward(),  _input.getTurn(), _input.getVelocity(),_input.getControllerState(),_input.getKeyboardState(), getSize() * WORLD_SIZE);
+    if (_input.didPressSpecial() && _ship->canFireWeapon()){
+        _ship->reloadWeapon();
+        if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
+            _ship->subAbsorb(5);
+            _attackPolygonSet.addShoot(_ship);
+//            _collisions.hugeBlastCollision(blastRec, _asteroids);
+        }else if (_ship->getMode() == "BUILD"){
+            
+        }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
+            _ship->subAbsorb(10);
+            _attackPolygonSet.addExplode(_ship);
+        }else {
+            CULog("NOTHING\n");
+        }
+    }
+    _ship->move( _input.getForward(),  _input.getTurn(),_input.getVelocity(),_input.getControllerState(),_input.getKeyboardState() ,getSize() * WORLD_SIZE);
 
     // Move the asteroids
-    _asteroids.update(getSize());
+    _asteroids.update(getSize() * WORLD_SIZE);
     
-    // Move the photons
-    _photons.update(getSize());
-    _spawnerController.update(_asteroids);
+    _spawnerController.update(_asteroids,timestep);
     _bases.update(_asteroids);
-    
+    _attackPolygonSet.update(getSize());
+    _collisions.resolveAttacks(_attackPolygonSet, _asteroids,_spawnerController._spawners,_ship);
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
@@ -202,9 +201,9 @@ void GameScene::update(float timestep) {
     if (_collisions.resolveCollision(_bases, _asteroids)){
 //        CULog("asteroid hit base\n");
     }
-    // Check for collisions later for photons
-    if (_collisions.resolveCollision(_photons, _asteroids,_ship)){
-        AudioEngine::get()->play("blast", _blast, false, _blast->getVolume(), true);
+    // check for heals from base
+    if (_collisions.healFromBaseCollsion(_bases, _ship)){
+        
     }
     // Update the health meter
     _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth(), _ship->getMode().c_str()));
@@ -239,7 +238,6 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     getCamera()->setPosition(pos);
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
-    
     //draw bg
     int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
     int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
@@ -255,14 +253,13 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
             batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
         }
     }
-    
-    _asteroids.draw(batch,getSize(), _assets->get<Font>("pixel32"));
+    _attackPolygonSet.draw(batch,getSize());
+    _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
-    _photons.draw(batch, getSize());
     _ship->draw(batch,getSize());
-
-
+    // draw actions
+    
     // shift camera to draw for absolute positioning
     getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
     getCamera()->update();

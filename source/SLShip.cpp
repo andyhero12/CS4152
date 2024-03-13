@@ -33,28 +33,26 @@ using namespace cugl;
 Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _pos = pos;
     _ang  = 0;
-    _dang = 0;
     _refire = 0;
     _radius = 0;
     _absorbValue = 0;
     _modeTimer = 0;
+    _healCooldown = 0;
     
     // Physics
     _mass = data->getFloat("mass",1.0);
     _firerate = data->getInt("fire rate",0);
+    _healRate = data->getInt("heal rate",0);
     _shadows  = data->getFloat("shadow",0.0);
-    _thrust   = data->getFloat("thrust factor",0.0);
-    _maxvel   = data->getFloat("max velocity",0.0);
-    _banking  = data->getFloat("bank factor",0.0);
-    _maxbank  = data->getFloat("max bank",0.0);
-    _angdamp  = data->getFloat("angular damp",0.0);
-
+    _explosionRadius = data->getFloat("explosionRadius",100.0);
+    _biteRadius = data->getFloat("biteRadius",150.0);
     // Sprite sheet information
     _framecols = data->getInt("sprite cols",0);
     _framesize = data->getInt("sprite size",0);
     _frameflat = data->getInt("sprite frame",0);
     
     _health = data->getInt("health",0);
+    _maxHealth = _health;
     _modeCooldown = data->getInt("mode cooldown",0);
 }
 
@@ -76,6 +74,7 @@ void Ship::setHealth(int value) {
 
 void Ship::addAbsorb(int value) {
     _absorbValue += value;
+    _absorbValue = fmin(_absorbValue, MAX_ABSORB);
 }
 
 void Ship::subAbsorb(int value) {
@@ -160,7 +159,6 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  */
 void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
-    wrapPosition(size);
 }
 
 /**
@@ -175,32 +173,31 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  */
 
 void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool _Usekeyboard, Size size) {
-
-
+    
+    
     // Process the ship turning.
-//    processTurn(turn);
     
     if (forward == 0.0f){
         _vel = Vec2(0, 0);
     }
-    // Use the Keyboard input 
+    // Use the Keyboard input
     if (_Usekeyboard) {
         _vel = Vec2(turn, forward);
     }
-    // Use the Joystick input 
+    // Use the Joystick input
     if (_UseJoystick) {
         _vel = Vel;
     }
-
+    
     
     // Process the ship thrust.
-//    if (forward != 0.0f) {
-//        // Thrust key pressed; increase the ship velocity.
-//        float rads = M_PI*_ang/180.0f+M_PI_2;
-//        Vec2 dir(cosf(rads),sinf(rads));
-//        _vel += dir * forward * _thrust;
-//    }
-
+    //    if (forward != 0.0f) {
+    //        // Thrust key pressed; increase the ship velocity.
+    //        float rads = M_PI*_ang/180.0f+M_PI_2;
+    //        Vec2 dir(cosf(rads),sinf(rads));
+    //        _vel += dir * forward * _thrust;
+    //    }
+    
     // Move the ship, updating it.
     // Adjust the angle by the change in angle
     if (!(forward==0 && turn==0)&& _Usekeyboard) {
@@ -217,108 +214,62 @@ void Ship::move(float forward, float turn,cugl::Vec2 Vel,bool _UseJoystick, bool
         _ang -= 360;
     if (_ang < 0)
         _ang += 360;
-    
     _vel = _vel.normalize();
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
-    wrapPosition(size);
-
+    
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
+    }
+    if (_healCooldown <= _healRate) {
+        _healCooldown++;
     }
     
     if (_modeTimer <= _modeCooldown){
         _modeTimer++;
     }
-
-    if (forward != 0 || turn != 0){
-        if (_prevTurn != turn){
-            if (turn == -1){
-                _animations.resetAnimation(1);
-            }
-            else if (turn == 1){
-                _animations.resetAnimation(2);
-            }
-            else{
-                _animations.resetAnimation(0);
-            }
-        }
-        _prevTurn = turn;
-        
-        _animations.updateAnimTime();
-        if (_animations.frameUpdateReady()){
-            _animations.stepAnimation();
-        }
-    }
-//    else{
-//        _animations.resetAnimation(0);
-//    }
-}
-
-/**
- * Update the animation of the ship to process a turn
- *
- * Turning changes the frame of the filmstrip, as we change from a level ship to
- * a hard bank.  This method also updates the field dang cumulatively.
- *
- * @param turn Amount to turn the ship
- */
-void Ship::processTurn(float turn) {
-    int frame = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getFrame());
-    int fsize = (_animations.getSprite() == nullptr ? 0 : _animations.getSprite()->getSize());
-    if (turn != 0.0f) {
-        // The turning factor is cumulative.
-        // The longer it is held down, the harder we bank.
-        _dang -= turn/_banking;
-        if (_dang < -_maxbank) {
-            _dang = -_maxbank;
-        } else if (_dang > _maxbank) {
-            _dang = _maxbank;
-        }
-
-        // SHIP_IMG_RIGHT represents the hardest bank possible.
-        if (turn < 0 && frame < fsize-1) {
-            frame++;
-        } else if (turn > 0 && frame > 0) {
-            frame--;
-        }
-    } else {
-        // If neither key is pressed, slowly flatten out ship.
-        if (_dang != 0) {
-            _dang *= _angdamp;   // Damping factor.
-        }
-        if (frame < _frameflat) {
-            frame++;
-        } else if (frame > _frameflat) {
-            frame--;
-        }
-    }
     
-    if (_animations.getSprite()) {
-        _animations.getSprite()->setFrame(frame);
+    if (forward != 0 || turn != 0){
+        if (forward != 0 || turn != 0){
+            if (_prevTurn != turn){
+                if (turn == -1){
+                    _animations.resetAnimation(1);
+                }
+                else if (turn == 1){
+                    _animations.resetAnimation(2);
+                }
+                else{
+                    _animations.resetAnimation(0);
+                }
+            }
+            _prevTurn = turn;
+            
+            _animations.updateAnimTime();
+            if (_animations.frameUpdateReady()){
+                _animations.stepAnimation();
+            }
+        }
+        //    else{
+        //        _animations.resetAnimation(0);
+        //    }
     }
 }
 
-/**
- * Applies "wrap around"
- *
- * If the ship goes off one edge of the screen, then it appears across the edge
- * on the opposite side.
- *
- * @param size      The size of the window (for wrap around)
- */
-void Ship::wrapPosition(cugl::Size size) {
-    while (_pos.x > size.width) {
-        _pos.x = size.width;
+Poly2 Ship::getBlastRec(){
+    Vec2 center = getPosition();
+    float longSide = 400;
+    float shortSide = 50;
+    Rect org;
+    if (_ang < 85){ // up
+        org.set(center.x-20, center.y-20, shortSide, longSide);
+    }else if (_ang < 175){ // left
+        org.set(center.x - longSide, center.y-20, longSide, shortSide);
+    }else if (_ang < 265){
+        org.set(center.x-20, center.y- longSide-20, shortSide, longSide);
+    }else{
+        org.set(center.x, center.y-20, longSide, shortSide);
     }
-    while (_pos.x < 0) {
-        _pos.x = 0;
-    }
-    while (_pos.y > size.height) {
-        _pos.y = size.height;
-    }
-    while (_pos.y < 0) {
-        _pos.y = 0;
-    }
+    Poly2 resultingRect(org);
+    return resultingRect;
 }

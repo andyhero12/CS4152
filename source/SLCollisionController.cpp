@@ -27,71 +27,91 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
-void CollisionController::resolveBlowup(const std::shared_ptr<Ship>& ship, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
-    float distanceCutoff = 100.0;
+void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship){
+    for (const std::shared_ptr<ActionPolygon>& action: attacks.currentAttacks){
+        switch (action->getAction()){
+            case (Action::SHOOT):
+                hugeBlastCollision(action->getPolygon(), aset); // Play blast sound
+                break;
+            case (Action::EXPLODE):
+                resolveBlowup(action->getPolygon(),aset, spawners); // play boom sound
+                break;
+            case (Action::BITE):
+                resolveBiteAttack(action->getPolygon(),aset, ship);
+                break;
+            default:
+                CULog("Action not used in Collisions\n");
+        };
+    }
+    
+}
+
+void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& aset, std::shared_ptr<Ship> ship){
+    auto itA = aset.current.begin();
+    bool hitSomething = false;
+    while ( itA != aset.current.end()){
+        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+        auto curA = itA++;
+        if (bitePolygon.contains(rock->position)){
+            hitSomething = true;
+            rock->setHealth(rock->getHealth() - 1);
+            if(rock->getHealth() <= 0){
+                ship->addAbsorb((*curA)->getAbsorbValue());
+                aset.current.erase(curA);
+            }
+        }
+    }
+}
+bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship){
+    if (!ship->canHeal()|| ship->getHealth() >= ship->getMaxHealth()){
+        return false;
+    }
+    auto itP = bset._bases.begin();
+    float healDistanceCutoff = 50.0;
+    while (itP != bset._bases.end()){
+        std::shared_ptr<Base> base = *itP;
+        Vec2 norm = base->getPos() - ship->getPosition();
+        float distance = norm.length();
+        itP++;
+        if (distance < healDistanceCutoff){
+            ship->resetHeal();
+            ship->setHealth(ship->getHealth()+base->getHealValue());
+            return true;
+        }
+    }
+    return false;
+}
+void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast){
     auto itA = ast.current.begin();
     while (itA != ast.current.end()){
         const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
-        Vec2 norm = ship->getPosition() - rock->position;
-        float distance = norm.length();
+        Vec2 enemyPos = rock->position;
         auto curA = itA++;
-//        CULog("distance %f\n", distance);
-        if (distance < distanceCutoff){
+        if (blastRectangle.contains(enemyPos)){
+            ast.current.erase(curA);
+        }
+    }
+}
+void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
+    auto itA = ast.current.begin();
+    while (itA != ast.current.end()){
+        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+        auto curA = itA++;
+        if (blastCircle.contains(rock->position)){
             ast.current.erase(curA);
         }
     }
     
     auto itS = spawners.begin();
     while (itS != spawners.end()){
-        const std::shared_ptr<Spawner>& rock = *itS;
-        Vec2 norm = ship->getPosition() - rock->getPos();
-        float distance = norm.length();
-        if (distance < distanceCutoff){
-            itS = spawners.erase(itS);
-        }
-        else{
-            ++itS;
+        const std::shared_ptr<Spawner>& spawn = *itS;
+        auto curS = itS++;
+        if (blastCircle.contains(spawn->getPos())){
+            spawners.erase(curS);
         }
     }
     
     
-}
-
-bool CollisionController::resolveCollision( PhotonSet& pset, AsteroidSet& aset, std::shared_ptr<Ship> ship){
-    bool collision = false;
-//
-    auto itP = pset.current.begin();
-    while (itP != pset.current.end()){
-        std::shared_ptr<PhotonSet::Photon> shot = *itP;
-        auto itA = aset.current.begin();
-        bool hitSomething = false;
-        while ( itA != aset.current.end()){
-            const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
-            Vec2 norm = shot->position - rock->position;
-            float distance = norm.length();
-            float impactDistance =
-            pset.getRadius() * shot->getScale() + aset.getRadius()*rock->getScale();
-            
-            // If this normal is too small, there was a collision
-            auto curA = itA++;
-//            if (distance < impactDistance && ship->getAbsorb()+10 > rock->getType()*8) {
-            if (distance < impactDistance) {
-                hitSomething = true;
-                collision = true;
-                rock->setHealth(rock->getHealth() - 1);
-                if(rock->getHealth() <= 0){
-                    ship->addAbsorb((*curA)->getAbsorbValue());
-                    aset.current.erase(curA);
-                }
-            }
-        }
-        auto curP = itP++;
-        if (hitSomething){
-            pset.current.erase(curP);
-        }
-    }
-//    collision = true;
-    return collision;
 }
 
 bool CollisionController::resolveCollision( BaseSet& bset, AsteroidSet& aset){
@@ -107,21 +127,7 @@ bool CollisionController::resolveCollision( BaseSet& bset, AsteroidSet& aset){
             Vec2 norm = base->getPos() - rock->position;
             float distance = norm.length();
             float impactDistance = aset.getRadius()*rock->getScale();
-            
-            // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
-            for(int ii = -1; ii <= 1; ii++) {
-                for(int jj = -1; jj <= 1; jj++) {
-                    Vec2 pos = rock->position;
-                    pos.x += (ii)*_size.width;
-                    pos.y += (jj)*_size.height;
-                    pos = base->getPos() - pos;
-                    float dist = pos.length();
-                    if (dist < distance) {
-                        distance = dist;
-                        norm = pos;
-                    }
-                }
-            }
+
             
             // If this normal is too small, there was a collision
             auto curA = itA++;
@@ -168,24 +174,7 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
         Vec2 norm = ship->getPosition()-rock->position;
         float distance = norm.length();
         float impactDistance = (ship->getRadius() + aset.getRadius()*rock->getScale());
-        
-        // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
-        for(int ii = -1; ii <= 1; ii++) {
-            for(int jj = -1; jj <= 1; jj++) {
-                Vec2 pos = rock->position;
-                pos.x += (ii)*_size.width;
-                pos.y += (jj)*_size.height;
-                pos = ship->getPosition()-pos;
-                float dist = pos.length();
-                if (dist < distance) {
-                    distance = dist;
-                    norm = pos;
-                }
-            }
-        }
-        
-        // If this normal is too small, there was a collision
-        auto curA = it++;
+        it++;
         if (distance < impactDistance) {
             // "Roll back" time so that the ships are barely touching (e.g. point of impact).
             norm.normalize();
@@ -212,24 +201,7 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, As
             temp = norm * (impulse/(ship->getMass()*rock->getScale()));
             rock->velocity = rock->velocity - temp;
             
-            // Damage the ship as the last step
-//            ship->setHealth(ship->getHealth()-aset.getDamage());
-//            if(rock->getType() == 1 ){
-////                ship->addAbsorb(rock->getAbsorbValue());
-//                ship->addAbsorb(5);
-//                aset.current.erase(curA);
-//            }else if (rock->getType() == 2 && ship->getAbsorb() > 10){
-//                ship->addAbsorb(5);
-////                ship->addAbsorb(rock->getAbsorbValue());
-//                aset.current.erase(curA);
-//            }else if (rock->getType() == 3 && ship->getAbsorb() > 20){
-////                ship->addAbsorb(rock->getAbsorbValue());
-//                ship->addAbsorb(5);
-//                aset.current.erase(curA);
-//            }else{
-                ship->setHealth(ship->getHealth()-rock->getDamage());
-//            }
-                      
+            ship->setHealth(ship->getHealth()-rock->getDamage());
         }
     }
     return collision;

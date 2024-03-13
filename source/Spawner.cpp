@@ -11,14 +11,17 @@ Spawner::Spawner(int rate, cugl::Vec2 pos, int health )
 : _spawnRate(rate)
 , _position(pos)
 , _health(health)
+, _scale(1.0)
+, _timeElapsed(0.0)
 {
     
 }
 
-void Spawner::update(){
+void Spawner::update(float timestep){
     if (_respawnCnt <= _spawnRate) {
         _respawnCnt++;
     }
+    _timeElapsed += timestep;
 }
 
 void Spawner::subHealth(const int val){
