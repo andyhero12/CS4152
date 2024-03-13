@@ -53,6 +53,7 @@ public:
      * Asteroids come in three different sizes, represented by their types.
      */
     std::shared_ptr<Ship> _ship;
+    std::vector<std::shared_ptr<Decoy>> _currentDecoys;
     class Asteroid {
     // It is okay for the user to access these directly
     public:
@@ -198,7 +199,6 @@ public:
 
 private:
     std::vector<cugl::Vec2> _target;
-    std::vector<std::shared_ptr<Decoy>> _currentDecoys;
     std::vector<std::shared_ptr<Decoy>> _pendingDecoys;
     /** The texture for the asteroid sprite sheet. */
     std::vector<std::shared_ptr<cugl::Texture>> _texture;
@@ -353,6 +353,7 @@ public:
     
     void targetAllToCloset();
     void setDecoyTexture(const std::shared_ptr<cugl::Texture>& incomingDecoyTexture);
+    cugl::Vec2 indexToVector(int _targetIndex);
 };
 
 #endif /* __SL_ASTEROID_SET_H__ */

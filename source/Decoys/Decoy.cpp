@@ -6,7 +6,7 @@
 //
 
 #include "Decoy.hpp"
-#define DECOY_DURATION 3
+#define DECOY_DURATION 6
 Decoy::Decoy(cugl::Vec2 pos)
 : _position{pos}
 , _health{15}

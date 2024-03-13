@@ -348,7 +348,6 @@ void AsteroidSet::update(Size size,float timestep)
     while (itD != _currentDecoys.end()){
         std::shared_ptr<Decoy> curDecoy = *itD;
         curDecoy->update(timestep);
-        CULog("time left %f", curDecoy->getTime());
         if (curDecoy->destroyed()){
             decoyGone = true;
             itD = _currentDecoys.erase(itD);
@@ -476,7 +475,6 @@ void AsteroidSet::createDecoy(){
 }
 
 void AsteroidSet::targetAllToCloset(){
-    CULog("target all to Closet\n");
     Vec2 shipPos = _ship->getPosition();
     for (std::shared_ptr<Asteroid> enemy : current){
         Vec2 enemyPos = enemy->position;
@@ -510,10 +508,25 @@ void AsteroidSet::retargetNewDecoy(const std::shared_ptr<Decoy>& curDecoy){
         Vec2 enemyPos = enemy->position;
         Vec2 norm = curDecoy->getPos() - enemyPos;
         float distance = norm.length();
-        
-        if (distance < retargetCutoff){
-            CULog("total Targets %d\n", getTotalTargets()-1);
+        Vec2 curVec = indexToVector(enemy->getTargetIndex());
+        Vec2 normCur = curVec - enemyPos;
+        float curDist = normCur.length();
+        if (distance < retargetCutoff && distance < curDist + 50.0){ // if within radius of targeting and new distance less than current target + epsilon
+//            CULog("total Targets %d\n", getTotalTargets()-1);
             enemy->setTargetIndex(getTotalTargets()-1); // newest one is always last
         }
     }
+}
+
+
+Vec2 AsteroidSet::indexToVector(int _targetIndex){
+    Vec2 target_pos;
+    if (_targetIndex == 0){
+        target_pos = _ship->getPosition();
+    }else if (_targetIndex <= _target.size()){
+        target_pos = _target[_targetIndex-1];
+    }else{
+        target_pos = _currentDecoys[_targetIndex-1-_target.size()]->getPos();
+    }
+    return target_pos;
 }

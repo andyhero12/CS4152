@@ -122,6 +122,7 @@ public:
     
     void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship);
     void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Ship> ship);
+    void resolveDecoyDamage(AsteroidSet& aset);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */
