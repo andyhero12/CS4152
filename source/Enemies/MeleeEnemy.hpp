@@ -11,3 +11,29 @@
 #include <stdio.h>
 
 #endif /* MeleeEnemy_hpp */
+
+
+class MeleeEnemy : public AbstractEnemy {
+public:
+    virtual void draw() override;
+    
+    virtual void update(float dt, const OverWorld& overWorld) override;
+    
+    virtual void getDamage() override{
+        return contactDamage;
+    }
+    // Virtual destructor
+    virtual ~AbstractShape() {}
+    
+    
+    cugl::Vec2 getPos() const {
+        return position;
+    }
+    int getHealth() const {
+        return _health;
+    }
+    
+private:
+    
+    int contactDamage;
+};

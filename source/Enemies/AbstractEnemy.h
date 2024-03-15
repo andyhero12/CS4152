@@ -8,7 +8,7 @@
 #ifndef AbstractEnemy_h
 #define AbstractEnemy_h
 #include <cugl/cugl.h>
-#include "../OverWorld.h"
+#include "../OverWorld.hpp"
 class AbstractEnemy {
 public:
     
@@ -18,7 +18,7 @@ public:
     
     virtual void getDamage() = 0;
     // Virtual destructor
-    virtual ~AbstractShape() {}
+    virtual ~AbstractEnemy() {}
     
     
     cugl::Vec2 getPos() const {

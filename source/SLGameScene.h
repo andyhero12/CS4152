@@ -22,7 +22,7 @@
 #include "SpawnerController.h"
 #include "BaseSet.h"
 #include "AttackPolygons.hpp"
-
+#include "OverWorld.hpp"
 
 /**
  * This class is the primary gameplay constroller for the demo.
@@ -35,7 +35,7 @@ class GameScene : public cugl::Scene2 {
 protected:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
-    
+    OverWorld overWorld;
     // CONTROLLERS are attached directly to the scene (no pointers)
     /** The controller to manage the ship */
     InputController _input;
