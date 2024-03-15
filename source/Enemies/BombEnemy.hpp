@@ -1,19 +1,15 @@
 //
-//  MeleeEnemy.hpp
+//  BombEnemy.hpp
 //  Ship
 //
 //  Created by Andrew Cheng on 3/14/24.
 //
 
-#ifndef MeleeEnemy_hpp
-#define MeleeEnemy_hpp
+#ifndef BombEnemy_hpp
+#define BombEnemy_hpp
 
-#include <cugl/cugl.h>
 #include "AbstractEnemy.h"
-
-
-
-class MeleeEnemy : public AbstractEnemy {
+class BombEnemy : public AbstractEnemy {
 public:
     virtual void draw() override;
     
@@ -22,7 +18,7 @@ public:
     virtual int getDamage() override{
         return contactDamage;
     }
-    virtual ~MeleeEnemy() {
+    virtual ~BombEnemy() {
         
     }
     
@@ -30,4 +26,4 @@ private:
     
     int contactDamage;
 };
-#endif /* MeleeEnemy_hpp */
+#endif /* BombEnemy_hpp */

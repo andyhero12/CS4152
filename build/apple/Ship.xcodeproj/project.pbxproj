@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CE9389F2BA3D82E00E543C6 /* RangedEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9389D2BA3D82E00E543C6 /* RangedEnemy.cpp */; };
+		4CE938A02BA3D82E00E543C6 /* RangedEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE9389D2BA3D82E00E543C6 /* RangedEnemy.cpp */; };
+		4CE938A32BA3D90B00E543C6 /* BombEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE938A12BA3D90B00E543C6 /* BombEnemy.cpp */; };
+		4CE938A42BA3D90B00E543C6 /* BombEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CE938A12BA3D90B00E543C6 /* BombEnemy.cpp */; };
 		4CF6EA872BA0BA8800423B98 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */; };
 		4CF6EA882BA0BA8800423B98 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */; };
 		4CF6EAA22BA107A800423B98 /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF6EAA02BA107A800423B98 /* Decoy.cpp */; };
@@ -111,6 +115,10 @@
 		4CE938982BA3CE9E00E543C6 /* MeleeEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeleeEnemy.cpp; sourceTree = "<group>"; };
 		4CE938992BA3CE9E00E543C6 /* MeleeEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeleeEnemy.hpp; sourceTree = "<group>"; };
 		4CE9389A2BA3D6A200E543C6 /* AbstractEnemy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AbstractEnemy.h; sourceTree = "<group>"; };
+		4CE9389D2BA3D82E00E543C6 /* RangedEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RangedEnemy.cpp; sourceTree = "<group>"; };
+		4CE9389E2BA3D82E00E543C6 /* RangedEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RangedEnemy.hpp; sourceTree = "<group>"; };
+		4CE938A12BA3D90B00E543C6 /* BombEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BombEnemy.cpp; sourceTree = "<group>"; };
+		4CE938A22BA3D90B00E543C6 /* BombEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BombEnemy.hpp; sourceTree = "<group>"; };
 		4CF6EA852BA0BA8800423B98 /* AttackPolygons.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AttackPolygons.cpp; sourceTree = "<group>"; };
 		4CF6EA862BA0BA8800423B98 /* AttackPolygons.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AttackPolygons.hpp; sourceTree = "<group>"; };
 		4CF6EAA02BA107A800423B98 /* Decoy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Decoy.cpp; sourceTree = "<group>"; };
@@ -246,6 +254,10 @@
 				4CE938982BA3CE9E00E543C6 /* MeleeEnemy.cpp */,
 				4CE938992BA3CE9E00E543C6 /* MeleeEnemy.hpp */,
 				4CE9389A2BA3D6A200E543C6 /* AbstractEnemy.h */,
+				4CE9389D2BA3D82E00E543C6 /* RangedEnemy.cpp */,
+				4CE9389E2BA3D82E00E543C6 /* RangedEnemy.hpp */,
+				4CE938A12BA3D90B00E543C6 /* BombEnemy.cpp */,
+				4CE938A22BA3D90B00E543C6 /* BombEnemy.hpp */,
 			);
 			path = Enemies;
 			sourceTree = "<group>";
@@ -547,6 +559,7 @@
 				BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */,
 				BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */,
 				BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */,
+				4CE9389F2BA3D82E00E543C6 /* RangedEnemy.cpp in Sources */,
 				BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */,
 				BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */,
 				BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */,
@@ -559,6 +572,7 @@
 				BB1DEEADCC28C1963F9E0FFE /* SLLoadingScene.cpp in Sources */,
 				BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */,
 				4CF6EAA22BA107A800423B98 /* Decoy.cpp in Sources */,
+				4CE938A32BA3D90B00E543C6 /* BombEnemy.cpp in Sources */,
 				BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 			);
@@ -571,6 +585,7 @@
 				BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */,
 				BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */,
 				BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */,
+				4CE938A02BA3D82E00E543C6 /* RangedEnemy.cpp in Sources */,
 				BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */,
 				BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */,
 				BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */,
@@ -583,6 +598,7 @@
 				BCA4191ACC25AC7CA3C656BC /* SLLoadingScene.cpp in Sources */,
 				BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */,
 				4CF6EAA32BA107A800423B98 /* Decoy.cpp in Sources */,
+				4CE938A42BA3D90B00E543C6 /* BombEnemy.cpp in Sources */,
 				BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */,
 				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
 			);

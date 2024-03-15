@@ -16,7 +16,7 @@ public:
     
     virtual void update(float dt, const OverWorld& overWorld) = 0;
     
-    virtual void getDamage() = 0;
+    virtual int getDamage() = 0;
     // Virtual destructor
     virtual ~AbstractEnemy() {}
     
