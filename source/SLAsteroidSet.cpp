@@ -140,7 +140,7 @@ void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Te
 //
     }
     _animations.setOrigin(origin);
-    _animations = Animation(1, anims, 10, 0);
+    _animations = Animation(anims, 10, 0);
 }
 
 int convertToQuadrant(double radian) {

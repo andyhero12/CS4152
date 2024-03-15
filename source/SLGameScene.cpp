@@ -64,7 +64,12 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(assets->get<Texture>("shipleftidle"));
     textures.push_back(assets->get<Texture>("shiprightidle"));
-    _ship->setTexture(textures);
+    _ship->setRunTexture(textures);
+    
+    textures.clear();
+    textures.push_back(assets->get<Texture>("shipleftbite"));
+    textures.push_back(assets->get<Texture>("shiprightbite"));
+    _ship->setBiteTexture(textures);
     
 //    _ship->setTexture(assets->get<Texture>("ship"));
 
@@ -161,12 +166,12 @@ void GameScene::update(float timestep) {
         return;
     }
     if (_input.didPressFire() && _ship->canFireWeapon()){
-        _ship->reloadWeapon();
-        _attackPolygonSet.addBite(_ship);
+        _ship->setAttack();
+//        _attackPolygonSet.addBite(_ship);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
     }
     if (_input.didPressSpecial() && _ship->canFireWeapon()){
-        _ship->reloadWeapon();
+//        _ship->reloadWeapon();
         if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
             _ship->subAbsorb(5);
             _attackPolygonSet.addShoot(_ship);
