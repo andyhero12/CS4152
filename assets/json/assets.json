@@ -14,6 +14,12 @@
         "shiprightidle": {
             "file": "textures/dog/run/medium-right-run.png"
         },
+        "shipleftbite": {
+            "file": "textures/dog/run/medium-left-bite.png"
+        },
+        "shiprightbite": {
+            "file": "textures/dog/run/medium-right-bite.png"
+        },
         "monkey0":{
             "file": "textures/monkey/monkey-walk-0.png"
         },
