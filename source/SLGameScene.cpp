@@ -167,7 +167,7 @@ void GameScene::update(float timestep) {
     }
     if (_input.didPressFire() && _ship->canFireWeapon()){
         _ship->setAttack();
-//        _attackPolygonSet.addBite(_ship);
+        _attackPolygonSet.addBite(_ship);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
     }
     if (_input.didPressSpecial() && _ship->canFireWeapon()){
