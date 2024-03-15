@@ -9,7 +9,7 @@
 #define AbstractEnemy_h
 #include <cugl/cugl.h>
 #include "../OverWorld.h"
-class AbstractShape {
+class AbstractEnemy {
 public:
     
     virtual void draw() = 0;
