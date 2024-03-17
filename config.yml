@@ -1,7 +1,7 @@
 ---
-name:   Ship Lab                    # The application display name
-short:  Ship                        # A shortened name for reference
-appid:  edu.cornell.gdiac.code1     # Application identifier for Mac, iOS, Android
+name:   Heavens Devils                    # The application display name
+short:  Heavan                        # A shortened name for reference
+appid:  edu.cornell.gdiac.code14152Group     # Application identifier for Mac, iOS, Android
 suffix: G0C251FB
 
 build:  build                       # The build directory (targets are each a subdirectory)

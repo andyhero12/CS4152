@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # set the project name and version
-project(Ship VERSION 1.0)
+project(Heavan VERSION 1.0)
 
 # Need all this for Linux
 if (UNIX AND NOT APPLE)
@@ -95,16 +95,16 @@ file(GLOB SOURCE_FILES
     ../../source/*.h)
 
 # Build and link
-add_executable(Ship ${SOURCE_FILES})
+add_executable(Heavan ${SOURCE_FILES})
 set_target_properties(
-    Ship
+    Heavan
     PROPERTIES
-        OUTPUT_NAME "Ship Lab"
+        OUTPUT_NAME "Heavens Devils"
         SUFFIX ".exe"
 )
 
-target_link_libraries(Ship PUBLIC ${EXTRA_LIBS})
-target_include_directories(Ship PUBLIC
+target_link_libraries(Heavan PUBLIC ${EXTRA_LIBS})
+target_include_directories(Heavan PUBLIC
                            "${PROJECT_BINARY_DIR}"
                             ${EXTRA_INCLUDES}
                            )
