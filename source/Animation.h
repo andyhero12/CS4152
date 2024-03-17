@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <vector>
 #include <cugl/cugl.h>
+#include <cassert>
 
 class Animation {
 private:
@@ -18,9 +19,6 @@ private:
     std::shared_ptr<cugl::SpriteSheet> currentAnimSprite;
     /** Array of texture that represent the sprites for each walking direction */
     std::vector<std::shared_ptr<cugl::SpriteSheet>> animSprite;
-    /** stores integers representing the current frame for each direction */
-    std::vector<int> animSpriteFrames;
-
 public:
     /** Current frame number*/
     int frame;
@@ -34,7 +32,7 @@ public:
     int numAnimDirections;
     
     Animation(){}
-    Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame);
+    Animation(std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame);
     ~Animation() {}
     
     void setFrame(int frame);

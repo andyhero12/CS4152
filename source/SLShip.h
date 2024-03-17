@@ -84,7 +84,9 @@ private:
     /** Radius of the ship in pixels (derived from sprite sheet) */
     float _radius;
     
-    Animation _animations;
+    Animation runAnimation;
+    Animation biteAnimation;
+    bool attack;
 
 public:
 #pragma mark Constructors
@@ -213,23 +215,17 @@ public:
      *
      * @return true if the ship can fire
      */
-    bool canFireWeapon() const {
-        return (_refire > _firerate);
+    bool canFireWeapon() const{
+        return !attack;
+//        return _refire > _firerate;
     }
     
     bool canChangeMode() const {
         return (_modeCooldown < _modeTimer);
     }
     
-    /**
-     * Resets the reload counter so the ship cannot fire again immediately.
-     *
-     * The ship must wait a number of frames before it can fire. This
-     * value is set by "fire rate" in the JSON file
-     */
-    void reloadWeapon() {
-        _refire = 0;
-    }
+    
+    void setAttack();
     
     bool canHeal() const {
         return (_healCooldown > _healRate);
@@ -293,7 +289,7 @@ public:
      * @return the sprite sheet for the ship
      */
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        return _animations.getSprite();
+        return runAnimation.getSprite();
     }
 
     /**
@@ -306,7 +302,8 @@ public:
      *
      * @param texture   The texture for the sprite sheet
      */
-    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
     
     /**
      * Draws this ship to the sprite batch within the given bounds.
@@ -339,17 +336,8 @@ public:
      * @param size      The size of the window (for wrap around)
      */
     void move(float forward, float turn, cugl::Size size);
-    /**
-     * Applies "wrap around"
-     *
-     * If the ship goes off one edge of the screen, then it appears across the edge
-     * on the opposite side.
-     *
-     * @param size      The size of the window (for wrap around)
-     */
-    void wrapPosition(cugl::Size size);
 private:
-
+    int direction(int dir);
 };
 
 #endif /* __SL_SHIP_H__ */

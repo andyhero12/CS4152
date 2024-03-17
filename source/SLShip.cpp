@@ -95,7 +95,7 @@ void Ship::subAbsorb(int value) {
  *
  * @param texture   The texture for the sprite sheet
  */
-void Ship::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+void Ship::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
 //    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
@@ -109,15 +109,40 @@ void Ship::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> & textur
             anims.push_back(_sprite);
 //
         }
-        _animations = Animation(1, anims, 10, _frameflat);
-        Vec2 origin(_animations.getSprite()->getFrameSize()/2);
-        _animations.setOrigin(origin);
-        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
-//        _sprite->setOrigin(_animations.getSprite()->getFrameSize()/2);
-//        _radius = std::max(_animations.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
-    
+        runAnimation = Animation( anims, 10, _frameflat);
+        Vec2 origin(runAnimation.getSprite()->getFrameSize()/2);
+        runAnimation.setOrigin(origin);
+        _radius = std::max(runAnimation.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
     }
 }
+
+
+void Ship::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+//    std::cout << texture << std::endl;
+    if (_framecols > 0) {
+        int rows = _framesize/_framecols;
+        if (_framesize % _framecols != 0) {
+            rows++;
+        }
+        std::shared_ptr<cugl::SpriteSheet> _sprite ;
+        std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
+        for(auto& text : texture) {
+            _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
+            anims.push_back(_sprite);
+        }
+        
+        std::cout<< anims.size() << "\n";
+        biteAnimation = Animation(anims, 5, _frameflat);
+        std::cout<< biteAnimation.numAnimDirections;
+        
+        
+        
+        Vec2 origin(biteAnimation.getSprite()->getFrameSize()/2);
+        biteAnimation.setOrigin(origin);
+//        _radius = std::max(biteAnimation.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
+    }
+}
+
 
 /**
  * Draws this ship on the screen within the given bounds.
@@ -130,8 +155,18 @@ void Ship::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> & textur
  * @param size      The size of the window (for wrap around)
  */
 void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
+    if(attack){
+        biteAnimation.updateAnimTime();
+        if (biteAnimation.frameUpdateReady()){
+            biteAnimation.stepAnimation();
+        }
+        
+        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1 ){
+            attack = false;
+        }
+    }
     // Don't draw if sprite not set
-    if (_animations.getSprite()) {
+    if (runAnimation.getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
         // super duper magic number
@@ -143,8 +178,15 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         shadtrans.translate(_shadows,-_shadows);
         Color4f shadow(0,0,0,0.5f);
         
-        _animations.getSprite()->draw(batch,shadow,shadtrans);
-        _animations.getSprite()->draw(batch,shiptrans);
+        
+        if (!attack){
+            runAnimation.getSprite()->draw(batch,shadow,shadtrans);
+            runAnimation.getSprite()->draw(batch,shiptrans);
+        }
+        else{
+            biteAnimation.getSprite()->draw(batch,shadow,shadtrans);
+            biteAnimation.getSprite()->draw(batch,shiptrans);
+        }
 
     }
 }
@@ -160,7 +202,15 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  */
 void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
-    wrapPosition(size);
+}
+
+int Ship::direction(int dir){
+    return _prevTurn == 1 ? 1 : 0;
+}
+
+void Ship::setAttack(){
+    attack = true;
+    biteAnimation.resetAnimation(direction(_prevTurn));
 }
 
 /**
@@ -174,6 +224,10 @@ void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
  * @param turn        Amount to turn the ship
  */
 void Ship::move(float forward, float turn, Size size) {
+    
+    if (attack){
+        return;
+    }
     // Process the ship turning.
     
     if (forward == 0.0f){
@@ -198,7 +252,6 @@ void Ship::move(float forward, float turn, Size size) {
     
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
-    wrapPosition(size);
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
@@ -210,22 +263,24 @@ void Ship::move(float forward, float turn, Size size) {
     if (_modeTimer <= _modeCooldown){
         _modeTimer++;
     }
-
+    
     if (forward != 0 || turn != 0){
         if (_prevTurn != turn){
             if (turn == -1){
-                _animations.resetAnimation(0);
+                runAnimation.resetAnimation(0);
             }
             else if (turn == 1){
-                _animations.resetAnimation(1);
+                runAnimation.resetAnimation(1);
             }
         }
         _prevTurn = turn;
         
-        _animations.updateAnimTime();
-        if (_animations.frameUpdateReady()){
-            _animations.stepAnimation();
+
+        runAnimation.updateAnimTime();
+        if (runAnimation.frameUpdateReady()){
+            runAnimation.stepAnimation();
         }
+    
     }
 }
 
@@ -246,27 +301,4 @@ Poly2 Ship::getBlastRec(){
     }
     Poly2 resultingRect(org);
     return resultingRect;
-}
-
-/**
- * Applies "wrap around"
- *
- * If the ship goes off one edge of the screen, then it appears across the edge
- * on the opposite side.
- *
- * @param size      The size of the window (for wrap around)
- */
-void Ship::wrapPosition(cugl::Size size) {
-    while (_pos.x > size.width) {
-        _pos.x = size.width;
-    }
-    while (_pos.x < 0) {
-        _pos.x = 0;
-    }
-    while (_pos.y > size.height) {
-        _pos.y = size.height;
-    }
-    while (_pos.y < 0) {
-        _pos.y = 0;
-    }
 }

@@ -7,16 +7,12 @@
 
 #include "Animation.h"
 
-Animation::Animation(int numDirections, std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame) :
-    numAnimDirections(numDirections),
+Animation::Animation( std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame) :
     animFreq(freq),
-    animSprite(animTextures),
-    animSpriteFrames(animTextures.size())
+    animSprite(animTextures)
 {
-    std::fill(animSpriteFrames.begin(), animSpriteFrames.end(), 0);
     currentAnimationDirection = 0;
     currentAnimSprite = animSprite[currentAnimationDirection];
-    std::fill(animSpriteFrames.begin(), animSpriteFrames.end(), startFrame);
     frame = startFrame;
 }
 
@@ -30,9 +26,8 @@ bool Animation::frameUpdateReady() {
 }
 
 void Animation::resetAnimation(int aimingDir){
-    std::fill(animSpriteFrames.begin(), animSpriteFrames.end(), 0);
     currentAnimationDirection = aimingDir;
-    currentAnimSprite = animSprite[currentAnimationDirection];
+    currentAnimSprite = animSprite[aimingDir];
     frame = 0;
 }
 
@@ -43,8 +38,7 @@ void Animation::updateAnimTime(){
 
 
 void Animation::stepAnimation(){
-    animSpriteFrames[currentAnimationDirection] = (animSpriteFrames[currentAnimationDirection] + 1) % currentAnimSprite->getSize();
-    frame = animSpriteFrames[currentAnimationDirection];
+    frame = (frame + 1)% currentAnimSprite->getSize();
 }
 
 const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
