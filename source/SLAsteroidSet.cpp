@@ -13,7 +13,7 @@
 //  class.  And that is what we are doing here.
 //
 //  Author: Walker White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 2/21/21
 //
 #include "SLAsteroidSet.h"
@@ -302,7 +302,6 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
 {
 
     int index = generateRandomValuelowToHigh(0,getTotalTargets()-1);
-    // Determine direction and velocity of the photon.
     std::shared_ptr<Asteroid> rock = std::make_shared<Asteroid>(p, v, t, index, _damage);
     if (_texture.size() > 0)
     {
@@ -312,8 +311,6 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
             rows++;
         }
         rock->setSprite(_texture, rows,_framecols, _framesize, Vec2(_radius, _radius));
-//        rock->setSprite(SpriteSheet::alloc(_texture, rows, _framecols, _framesize));
-//        rock->getSprite()->setOrigin(Vec2(_radius, _radius));
     }
     _pending.emplace(rock);
 }
@@ -324,7 +321,7 @@ void AsteroidSet::spawnAsteroid(Vec2 p, Vec2 v, int t)
  * In addition, if any asteroids are in the pending set, they will appear
  * (unmoved) in the current set. The pending set will be cleared.
  *
- * This movement code supports "wrap around".  If the photon goes off one
+ * This movement code supports "wrap around".  If the Dog goes off one
  * edge of the screen, then it appears across the edge on the opposite
  * side. However, this method performs no collision detection. Collisions
  * are resolved afterwards.
@@ -373,7 +370,7 @@ void AsteroidSet::update(Size size,float timestep)
 }
 
 /**
- * Sets the image for a single photon; reused by all photons.
+ * Sets the image for a single Dog; reused by all Dogs.
  *
  * This value should be loaded by the GameScene and set there. However,
  * we have to be prepared for this to be null at all times.  This
@@ -426,7 +423,7 @@ void AsteroidSet::setDecoyTexture(const std::shared_ptr<cugl::Texture>& incoming
 /**
  * Draws all active asteroids to the sprite batch within the given bounds.
  *
- * This drawing code supports "wrap around". If a photon is partly off of
+ * This drawing code supports "wrap around". If a Dog is partly off of
  * one edge, then it will also be drawn across the edge on the opposite
  * side.
  *

@@ -16,14 +16,13 @@
 //  BEFORE we know the window size.
 //
 //  Author: Walker M. White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #ifndef __SL_COLLISION_CONTROLLER_H__
 #define __SL_COLLISION_CONTROLLER_H__
 #include <cugl/cugl.h>
 #include "Dog.h"
-#include "SLPhotonSet.h"
 #include "SLAsteroidSet.h"
 #include "BaseSet.h"
 #include "Spawner.h"

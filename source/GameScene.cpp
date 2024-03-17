@@ -1,21 +1,20 @@
 //
 //  SLGameScene.cpp
-//  Dog Lab
 //
 //  This is the primary class file for running the game.  You should study this file
 //  for ideas on how to structure your own root class. This class is a reimagining of
 //  the first game lab from 3152 in CUGL.
 //
 //  Author: Walker White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #include <cugl/cugl.h>
 #include <iostream>
 #include <sstream>
 
-#include "SLGameScene.h"
-//#include "GLCollisionController.h"
+#include "GameScene.h"
+#include "CollisionController.h"
 
 using namespace cugl;
 using namespace std;

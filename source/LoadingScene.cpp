@@ -1,6 +1,5 @@
 //
 //  GLLoadingScene.cpp
-//  Dog Lab
 //
 //  This module provides a very barebones loading screen.  Most of the time you
 //  will not need a loading screen, because the assets will load so fast.  But
@@ -14,7 +13,7 @@
 //  Author: Walker White
 //  Version: 1/20/22
 //
-#include "SLLoadingScene.h"
+#include "LoadingScene.h"
 
 using namespace cugl;
 

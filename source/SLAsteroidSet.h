@@ -13,7 +13,7 @@
 //  class.  And that is what we are doing here.
 //
 //  Author: Walker White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 2/21/21
 //
 #ifndef __SL_ASTERIOD_SET_H__
@@ -57,9 +57,9 @@ public:
     class Asteroid {
     // It is okay for the user to access these directly
     public:
-        /** Photon position */
+        /** Dog position */
         cugl::Vec2 position;
-        /** Photon velocity */
+        /** Dog velocity */
         cugl::Vec2 velocity;
         int _targetIndex;
         int _prevDir;
@@ -110,7 +110,7 @@ public:
         /**
          * Returns the scale of this asteroid.
          *
-         * Multiply this scale by the standard photon radius
+         * Multiply this scale by the standard Dog radius
          * ({@link AsteroidSet#getRadius}) to get the "true" radius
          * of an asteroid.
          *
@@ -222,7 +222,7 @@ private:
     
 #pragma mark The Set
 public:
-    /** The collection of all ACTIVE photons. Allow the user direct access */
+    /** The collection of all ACTIVE Dogs. Allow the user direct access */
     std::unordered_set<std::shared_ptr<Asteroid>> current;
     
     /**
@@ -272,24 +272,24 @@ public:
 
     int getTotalTargets() const {return 1 + _target.size() + _currentDecoys.size();}
     /**
-     * Returns the default mass of a photon
+     * Returns the default mass of a Dog
      *
-     * This value should be multiplied by the photon scale to get the
+     * This value should be multiplied by the Dog scale to get the
      * true mass.
      */
     float getMass() const { return _mass; }
 
     /**
-     * Returns the default radius of a photon
+     * Returns the default radius of a Dog
      *
-     * This value should be multiplied by the photon scale to get the
+     * This value should be multiplied by the Dog scale to get the
      * true radius. This value is computed from the texture.  If there
-     * is no active photon texture, this value is 0.
+     * is no active Dog texture, this value is 0.
      */
     float getRadius() const { return _radius*_hitratio; }
     
     /**
-     * Sets the image for a single photon; reused by all photons.
+     * Sets the image for a single Dog; reused by all Dogs.
      *
      * This value should be loaded by the GameScene and set there. However,
      * we have to be prepared for this to be null at all times.  This
@@ -324,7 +324,7 @@ public:
      * In addition, if any asteroids are in the pending set, they will appear
      * (unmoved) in the current set. The pending set will be cleared.
      *
-     * This movement code supports "wrap around".  If the photon goes off one
+     * This movement code supports "wrap around".  If the Dog goes off one
      * edge of the screen, then it appears across the edge on the opposite
      * side. However, this method performs no collision detection. Collisions
      * are resolved afterwards.
@@ -334,7 +334,7 @@ public:
     /**
 	 * Draws all active asteroids to the sprite batch within the given bounds.
 	 *
-	 * This drawing code supports "wrap around". If a photon is partly off of
+	 * This drawing code supports "wrap around". If a Dog is partly off of
 	 * one edge, then it will also be drawn across the edge on the opposite
 	 * side.
 	 *

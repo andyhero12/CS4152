@@ -23,21 +23,19 @@
 		ACBA1DE4B2DFC58A39F3E1CD /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
 		ACC9DFBF349FD39DA1DA5BBC /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = AA051FCD35EC67DB8C9CBC71 /* sounds */; };
 		ACFDF906562C051CAB803FBE /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
-		BB1DEEADCC28C1963F9E0FFE /* SLLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */; };
+		BB1DEEADCC28C1963F9E0FFE /* LoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* LoadingScene.cpp */; };
 		BB55A3470F1E0680E7C56BD4 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
-		BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */; };
-		BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */; };
-		BB69CD2BB2819E62DC9CF51F /* SLGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */; };
+		BB6795E7E443AACDECBA1024 /* CollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* CollisionController.cpp */; };
+		BB69CD2BB2819E62DC9CF51F /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* GameScene.cpp */; };
 		BB86DE0DD18F06F90913FDCC /* OverWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */; };
 		BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */; };
 		BB8FB2BB1D1EB6F8F926C463 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */; };
 		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
 		BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
-		BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
+		BBB4EAEACADCC0A6339A49E0 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* App.cpp */; };
 		BBCDFEB695CEDAE28B2FC46D /* Dog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* Dog.cpp */; };
 		BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
-		BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
-		BBECCC314A16C79BFFBE15AE /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
+		BBECCC314A16C79BFFBE15AE /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* InputController.cpp */; };
 		BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
 		BBEF1ECBC9FD774610C4EE6E /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
 		BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
@@ -45,18 +43,16 @@
 		BC14796BB0CF5FEDD45D5FED /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
 		BC307EA86D464CAA63671A6A /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
 		BC42C99ECEFCEAC2F5D32815 /* OverWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */; };
-		BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
+		BC769A70DDE522CDB8FAB2F4 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* App.cpp */; };
 		BC8DD1D4DC11F7EF9D4ECE13 /* AttackPolygons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */; };
 		BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */; };
 		BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
-		BCA4191ACC25AC7CA3C656BC /* SLLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */; };
-		BCBF9F2FD2AA0DED5D9C50BC /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
-		BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */; };
-		BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */; };
+		BCA4191ACC25AC7CA3C656BC /* LoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD9A3B75AE10A4FC2DDCE8B /* LoadingScene.cpp */; };
+		BCBF9F2FD2AA0DED5D9C50BC /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* InputController.cpp */; };
+		BCC888BAF2E29BACCBBD8777 /* CollisionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4BCFB3AAAF163DD83AAE16 /* CollisionController.cpp */; };
 		BCDBE19EDB1861AD6BE3A566 /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
 		BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
-		BCF4DD023FCDCC2FAF2DBE2B /* SLGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */; };
-		BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
+		BCF4DD023FCDCC2FAF2DBE2B /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9C7EBB30CFEBEC13BDD0A5 /* GameScene.cpp */; };
 		EB0F3CB827FB9FD40037CC66 /* Mac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB0F3CB327FB9FD40037CC66 /* Mac.xcassets */; };
 		EB0F3CD527FBA2190037CC66 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC727FBA2180037CC66 /* ForceFeedback.framework */; };
 		EB0F3CD627FBA2190037CC66 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC827FBA2180037CC66 /* CoreHaptics.framework */; };
@@ -129,29 +125,25 @@
 		AA9A54AD20F1FDD4B0473EE5 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
 		AAA1D9FC9F3ED19A1DDAAC56 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spawner.cpp; sourceTree = "<group>"; };
-		BA1026CCF8EFE84337CD97AC /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
 		BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
 		BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttackPolygons.cpp; sourceTree = "<group>"; };
-		BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLCollisionController.cpp; sourceTree = "<group>"; };
-		BA6B0ADF5445AAA0091E2EFD /* SLApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLApp.h; sourceTree = "<group>"; };
-		BA6FACEFFEB8CCD974BC8EED /* SLCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCollisionController.h; sourceTree = "<group>"; };
+		BA4BCFB3AAAF163DD83AAE16 /* CollisionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollisionController.cpp; sourceTree = "<group>"; };
+		BA6B0ADF5445AAA0091E2EFD /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
+		BA6FACEFFEB8CCD974BC8EED /* CollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollisionController.h; sourceTree = "<group>"; };
 		BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLAsteroidSet.cpp; sourceTree = "<group>"; };
 		BA9540AEA1A66120EEC87741 /* Dog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dog.cpp; sourceTree = "<group>"; };
 		BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpawnerController.cpp; sourceTree = "<group>"; };
-		BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLGameScene.cpp; sourceTree = "<group>"; };
-		BAA296BFACC0BB8521C099CD /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
-		BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLPhotonSet.cpp; sourceTree = "<group>"; };
-		BAABB01FB408EBED961E6036 /* SLApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLApp.cpp; sourceTree = "<group>"; };
-		BAAFD6521F931674C53C53FD /* SLGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLGameScene.h; sourceTree = "<group>"; };
-		BAC30EA1D03A3629CBFCFDCA /* SLInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLInputController.h; sourceTree = "<group>"; };
+		BA9C7EBB30CFEBEC13BDD0A5 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
+		BAABB01FB408EBED961E6036 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
+		BAAFD6521F931674C53C53FD /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		BAC30EA1D03A3629CBFCFDCA /* InputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputController.h; sourceTree = "<group>"; };
 		BACABDE04E303D83ABBDA6AA /* Spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spawner.h; sourceTree = "<group>"; };
 		BACD06FACAC591B8BB025B8C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		BACE0CAEFCAA45454D3C73D9 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		BAD4EA6DD75AFA82BBDA8D0A /* SpawnerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpawnerController.h; sourceTree = "<group>"; };
-		BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLLoadingScene.cpp; sourceTree = "<group>"; };
-		BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLInputController.cpp; sourceTree = "<group>"; };
-		BADCDAD3E6EA9DA0FAE1425B /* SLLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoadingScene.h; sourceTree = "<group>"; };
-		BADD0AFB37CF20E35FABECCE /* SLPhotonSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPhotonSet.h; sourceTree = "<group>"; };
+		BAD9A3B75AE10A4FC2DDCE8B /* LoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingScene.cpp; sourceTree = "<group>"; };
+		BADCB3DD2A8B37BE691EFDDC /* InputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputController.cpp; sourceTree = "<group>"; };
+		BADCDAD3E6EA9DA0FAE1425B /* LoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingScene.h; sourceTree = "<group>"; };
 		BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OverWorld.cpp; sourceTree = "<group>"; };
 		BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base.cpp; sourceTree = "<group>"; };
 		BAEACE1B7D5A72CFC71995CF /* SLAsteroidSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAsteroidSet.h; sourceTree = "<group>"; };
@@ -304,33 +296,29 @@
 				BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */,
 				BA9540AEA1A66120EEC87741 /* Dog.cpp */,
 				BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */,
-				BAA296BFACC0BB8521C099CD /* Monster.cpp */,
 				BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */,
-				BAA77BC0EE57A0E9CCD4DCE2 /* SLPhotonSet.cpp */,
 				BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */,
 				BA3ACCBB7E419CAFB72EBB65 /* AttackPolygons.cpp */,
 				BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */,
-				BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */,
-				BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */,
+				BA9C7EBB30CFEBEC13BDD0A5 /* GameScene.cpp */,
+				BADCB3DD2A8B37BE691EFDDC /* InputController.cpp */,
 				BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */,
 				BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */,
-				BAD9A3B75AE10A4FC2DDCE8B /* SLLoadingScene.cpp */,
-				BAABB01FB408EBED961E6036 /* SLApp.cpp */,
-				BA4BCFB3AAAF163DD83AAE16 /* SLCollisionController.cpp */,
+				BAD9A3B75AE10A4FC2DDCE8B /* LoadingScene.cpp */,
+				BAABB01FB408EBED961E6036 /* App.cpp */,
+				BA4BCFB3AAAF163DD83AAE16 /* CollisionController.cpp */,
 				BACD06FACAC591B8BB025B8C /* main.cpp */,
 				BAFE6F1F4ACC43B4C61D2FAD /* Animation.h */,
 				BAD4EA6DD75AFA82BBDA8D0A /* SpawnerController.h */,
-				BAC30EA1D03A3629CBFCFDCA /* SLInputController.h */,
-				BA1026CCF8EFE84337CD97AC /* Monster.h */,
+				BAC30EA1D03A3629CBFCFDCA /* InputController.h */,
 				BACABDE04E303D83ABBDA6AA /* Spawner.h */,
-				BADD0AFB37CF20E35FABECCE /* SLPhotonSet.h */,
 				BAF4BF90C373CDD162B4CBBD /* Dog.h */,
-				BA6B0ADF5445AAA0091E2EFD /* SLApp.h */,
+				BA6B0ADF5445AAA0091E2EFD /* App.h */,
 				BAEACE1B7D5A72CFC71995CF /* SLAsteroidSet.h */,
-				BAAFD6521F931674C53C53FD /* SLGameScene.h */,
+				BAAFD6521F931674C53C53FD /* GameScene.h */,
 				BAF9258FBCBDD4D6AD7EDFC7 /* BaseSet.h */,
-				BADCDAD3E6EA9DA0FAE1425B /* SLLoadingScene.h */,
-				BA6FACEFFEB8CCD974BC8EED /* SLCollisionController.h */,
+				BADCDAD3E6EA9DA0FAE1425B /* LoadingScene.h */,
+				BA6FACEFFEB8CCD974BC8EED /* CollisionController.h */,
 				BACE0CAEFCAA45454D3C73D9 /* Base.h */,
 			);
 			name = Source;
@@ -561,22 +549,20 @@
 				BB86DE0DD18F06F90913FDCC /* OverWorld.cpp in Sources */,
 				BBCDFEB695CEDAE28B2FC46D /* Dog.cpp in Sources */,
 				BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */,
-				BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */,
 				BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */,
-				BB5F9543AE5FED9A80AEB7DB /* SLPhotonSet.cpp in Sources */,
 				4CAAABAF2BA6911700EA42F9 /* BombEnemy.cpp in Sources */,
 				BB88E0CFCB1EACA7DA2C92BD /* SpawnerController.cpp in Sources */,
 				BB8FB2BB1D1EB6F8F926C463 /* AttackPolygons.cpp in Sources */,
 				BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */,
 				4CAAABAD2BA6911700EA42F9 /* MeleeEnemy.cpp in Sources */,
-				BB69CD2BB2819E62DC9CF51F /* SLGameScene.cpp in Sources */,
-				BBECCC314A16C79BFFBE15AE /* SLInputController.cpp in Sources */,
+				BB69CD2BB2819E62DC9CF51F /* GameScene.cpp in Sources */,
+				BBECCC314A16C79BFFBE15AE /* InputController.cpp in Sources */,
 				BB55A3470F1E0680E7C56BD4 /* Animation.cpp in Sources */,
 				BBEF1ECBC9FD774610C4EE6E /* Spawner.cpp in Sources */,
-				BB1DEEADCC28C1963F9E0FFE /* SLLoadingScene.cpp in Sources */,
+				BB1DEEADCC28C1963F9E0FFE /* LoadingScene.cpp in Sources */,
 				4CAAABA12BA6911200EA42F9 /* Decoy.cpp in Sources */,
-				BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */,
-				BB6795E7E443AACDECBA1024 /* SLCollisionController.cpp in Sources */,
+				BBB4EAEACADCC0A6339A49E0 /* App.cpp in Sources */,
+				BB6795E7E443AACDECBA1024 /* CollisionController.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 				4CAAABAB2BA6911700EA42F9 /* RangedEnemy.cpp in Sources */,
 			);
@@ -589,22 +575,20 @@
 				BC42C99ECEFCEAC2F5D32815 /* OverWorld.cpp in Sources */,
 				BC0CE0FECEAB5DB09CBBE2A8 /* Dog.cpp in Sources */,
 				BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */,
-				BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */,
 				BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */,
-				BCCE2D4EB12482EECF3DFC0C /* SLPhotonSet.cpp in Sources */,
 				4CAAABB02BA6911700EA42F9 /* BombEnemy.cpp in Sources */,
 				BCA1AD16ED8CF79FDE1AB99D /* SpawnerController.cpp in Sources */,
 				BC8DD1D4DC11F7EF9D4ECE13 /* AttackPolygons.cpp in Sources */,
 				BC307EA86D464CAA63671A6A /* Base.cpp in Sources */,
 				4CAAABAE2BA6911700EA42F9 /* MeleeEnemy.cpp in Sources */,
-				BCF4DD023FCDCC2FAF2DBE2B /* SLGameScene.cpp in Sources */,
-				BCBF9F2FD2AA0DED5D9C50BC /* SLInputController.cpp in Sources */,
+				BCF4DD023FCDCC2FAF2DBE2B /* GameScene.cpp in Sources */,
+				BCBF9F2FD2AA0DED5D9C50BC /* InputController.cpp in Sources */,
 				BC14796BB0CF5FEDD45D5FED /* Animation.cpp in Sources */,
 				BCDBE19EDB1861AD6BE3A566 /* Spawner.cpp in Sources */,
-				BCA4191ACC25AC7CA3C656BC /* SLLoadingScene.cpp in Sources */,
+				BCA4191ACC25AC7CA3C656BC /* LoadingScene.cpp in Sources */,
 				4CAAABA22BA6911200EA42F9 /* Decoy.cpp in Sources */,
-				BC769A70DDE522CDB8FAB2F4 /* SLApp.cpp in Sources */,
-				BCC888BAF2E29BACCBBD8777 /* SLCollisionController.cpp in Sources */,
+				BC769A70DDE522CDB8FAB2F4 /* App.cpp in Sources */,
+				BCC888BAF2E29BACCBBD8777 /* CollisionController.cpp in Sources */,
 				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
 				4CAAABAC2BA6911700EA42F9 /* RangedEnemy.cpp in Sources */,
 			);

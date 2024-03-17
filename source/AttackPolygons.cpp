@@ -1,6 +1,5 @@
 //
 //  AttackPolygons.cpp
-//  Dog
 //
 //  Created by Andrew Cheng on 3/12/24.
 //

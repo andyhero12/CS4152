@@ -1,6 +1,5 @@
 //
 //  Animation.cpp
-//  Dog
 //
 //  Created by Henry Gao on 2/29/24.
 //

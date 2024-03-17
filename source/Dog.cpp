@@ -1,6 +1,5 @@
 //
-//  SLDog.cpp
-//  Dog Lab
+//  Dog.cpp
 //
 //  This class tracks all of the state (position, velocity, rotation) of a
 //  single ship. In order to obey the separation of the model-view-controller
@@ -13,7 +12,7 @@
 //  respectively, that use this data to provide feedback on the screen.
 //
 //  Author: Walker White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #include "Dog.h"

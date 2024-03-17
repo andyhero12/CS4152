@@ -18,10 +18,10 @@
 //  you put the functions together in a namespace, like we have done here.
 //
 //  Author: Walker M. White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 2/21/21
 //
-#include "SLCollisionController.h"
+#include "CollisionController.h"
 
 /** Impulse for giving collisions a slight bounce. */
 #define COLLISION_COEFF     0.1f

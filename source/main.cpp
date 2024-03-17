@@ -27,7 +27,7 @@
 //  Version: 1/20/22
 
 // Include your application class
-#include "SLApp.h"
+#include "App.h"
 
 using namespace cugl;
 
@@ -42,7 +42,7 @@ using namespace cugl;
  */
 int main(int argc, char * argv[]) {
     // Change this to your application class
-    ShipApp app;
+    HeavanApp app;
     
     // Set the properties of your application
     app.setName("Heaven");

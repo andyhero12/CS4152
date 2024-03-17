@@ -9,11 +9,11 @@
 //  key mapping.
 //
 //  Author: Walker M. White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #include <cugl/cugl.h>
-#include "SLInputController.h"
+#include "InputController.h"
 
 using namespace cugl;
 

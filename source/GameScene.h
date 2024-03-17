@@ -6,7 +6,7 @@
 //  the first game lab from 3152 in CUGL.
 //
 //  Author: Walker White
-//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #ifndef __SL_GAME_SCENE_H__
@@ -16,8 +16,8 @@
 #include <unordered_set>
 #include "Dog.h"
 #include "SLAsteroidSet.h"
-#include "SLInputController.h"
-#include "SLCollisionController.h"
+#include "InputController.h"
+#include "CollisionController.h"
 #include "SpawnerController.h"
 #include "BaseSet.h"
 #include "AttackPolygons.hpp"
