@@ -225,9 +225,9 @@ void Ship::setAttack(){
  */
 void Ship::move(float forward, float turn, Size size) {
     
-    if (attack){
-        return;
-    }
+//    if (attack){
+//        return;
+//    }
     // Process the ship turning.
     
     if (forward == 0.0f){
