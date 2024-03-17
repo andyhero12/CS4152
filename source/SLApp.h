@@ -1,6 +1,5 @@
 //
 //  SLApp.h
-//  Ship Lab
 //
 //  This is the root class for your game.  The file main.cpp accesses this class
 //  to run the application.  While you could put most of your game logic in

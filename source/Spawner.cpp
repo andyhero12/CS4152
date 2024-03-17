@@ -1,6 +1,6 @@
 //
 //  Spawner.cpp
-//  Ship
+//  Dog
 //
 //  Created by Henry Gao on 2/23/24.
 //

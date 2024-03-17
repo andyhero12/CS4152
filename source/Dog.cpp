@@ -1,6 +1,6 @@
 //
-//  SLShip.cpp
-//  Ship Lab
+//  SLDog.cpp
+//  Dog Lab
 //
 //  This class tracks all of the state (position, velocity, rotation) of a
 //  single ship. In order to obey the separation of the model-view-controller
@@ -13,10 +13,10 @@
 //  respectively, that use this data to provide feedback on the screen.
 //
 //  Author: Walker White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
-#include "SLShip.h"
+#include "Dog.h"
 #include <cmath>
 
 using namespace cugl;
@@ -30,7 +30,7 @@ using namespace cugl;
  * @param pos   The ship position
  * @param data  The data defining the physics constants
  */
-Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
+Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _pos = pos;
     _ang  = 0;
     _refire = 0;
@@ -63,7 +63,7 @@ Ship::Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
  *
  * @param value The current ship health.
  */
-void Ship::setHealth(int value) {
+void Dog::setHealth(int value) {
     if (value >= 0) {
         // Do not allow health to go negative
         _health = value;
@@ -72,12 +72,12 @@ void Ship::setHealth(int value) {
     }
 }
 
-void Ship::addAbsorb(int value) {
+void Dog::addAbsorb(int value) {
     _absorbValue += value;
     _absorbValue = fmin(_absorbValue, MAX_ABSORB);
 }
 
-void Ship::subAbsorb(int value) {
+void Dog::subAbsorb(int value) {
     _absorbValue -= value;
     if (_absorbValue < 0){
         _absorbValue = 0;
@@ -95,7 +95,7 @@ void Ship::subAbsorb(int value) {
  *
  * @param texture   The texture for the sprite sheet
  */
-void Ship::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+void Dog::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
 //    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
@@ -117,7 +117,7 @@ void Ship::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
 }
 
 
-void Ship::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
 //    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
@@ -154,7 +154,7 @@ void Ship::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & te
  * @param batch     The sprite batch to draw to
  * @param size      The size of the window (for wrap around)
  */
-void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
+void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if(attack){
         biteAnimation.updateAnimTime();
         if (biteAnimation.frameUpdateReady()){
@@ -200,15 +200,15 @@ void Ship::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  * @param value     The position of this ship
  * @param size      The size of the window (for wrap around)
  */
-void Ship::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
+void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
 }
 
-int Ship::direction(int dir){
+int Dog::direction(int dir){
     return _prevTurn == 1 ? 1 : 0;
 }
 
-void Ship::setAttack(){
+void Dog::setAttack(){
     attack = true;
     biteAnimation.resetAnimation(direction(_prevTurn));
 }
@@ -223,7 +223,7 @@ void Ship::setAttack(){
  * @param forward    Amount to move forward
  * @param turn        Amount to turn the ship
  */
-void Ship::move(float forward, float turn, Size size) {
+void Dog::move(float forward, float turn, Size size) {
     
 //    if (attack){
 //        return;
@@ -285,7 +285,7 @@ void Ship::move(float forward, float turn, Size size) {
 }
 
 
-Poly2 Ship::getBlastRec(){
+Poly2 Dog::getBlastRec(){
     Vec2 center = getPosition();
     float longSide = 400;
     float shortSide = 50;

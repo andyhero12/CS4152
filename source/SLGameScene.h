@@ -1,13 +1,12 @@
 //
 //  SLGameScene.h
-//  Ship Lab
 //
 //  This is the primary class file for running the game.  You should study this file
 //  for ideas on how to structure your own root class. This class is a reimagining of
 //  the first game lab from 3152 in CUGL.
 //
 //  Author: Walker White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #ifndef __SL_GAME_SCENE_H__
@@ -15,7 +14,7 @@
 #include <cugl/cugl.h>
 #include <vector>
 #include <unordered_set>
-#include "SLShip.h"
+#include "Dog.h"
 #include "SLAsteroidSet.h"
 #include "SLInputController.h"
 #include "SLCollisionController.h"
@@ -47,7 +46,7 @@ protected:
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;
     /** Location and animation information for the ship */
-    std::shared_ptr<Ship> _ship;
+    std::shared_ptr<Dog> _ship;
     /** The location of all of the active asteroids */
     AsteroidSet _asteroids;
     

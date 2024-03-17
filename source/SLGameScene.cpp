@@ -1,13 +1,13 @@
 //
 //  SLGameScene.cpp
-//  Ship Lab
+//  Dog Lab
 //
 //  This is the primary class file for running the game.  You should study this file
 //  for ideas on how to structure your own root class. This class is a reimagining of
 //  the first game lab from 3152 in CUGL.
 //
 //  Author: Walker White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #include <cugl/cugl.h>
@@ -59,7 +59,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _constants = assets->get<JsonValue>("constants");
 
     // Make a ship and set its texture
-    _ship = std::make_shared<Ship>(getSize()/2, _constants->get("ship"));
+    _ship = std::make_shared<Dog>(getSize()/2, _constants->get("ship"));
     
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(assets->get<Texture>("shipleftidle"));

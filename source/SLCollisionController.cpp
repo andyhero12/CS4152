@@ -18,7 +18,7 @@
 //  you put the functions together in a namespace, like we have done here.
 //
 //  Author: Walker M. White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 2/21/21
 //
 #include "SLCollisionController.h"
@@ -40,7 +40,7 @@ void CollisionController::resolveDecoyDamage(AsteroidSet& aset){
         }
     }
 }
-void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship){
+void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Dog> ship){
     for (const std::shared_ptr<ActionPolygon>& action: attacks.currentAttacks){
         switch (action->getAction()){
             case (Action::SHOOT):
@@ -59,7 +59,7 @@ void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& as
     
 }
 
-void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& aset, std::shared_ptr<Ship> ship){
+void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& aset, std::shared_ptr<Dog> ship){
     auto itA = aset.current.begin();
     bool hitSomething = false;
     while ( itA != aset.current.end()){
@@ -75,7 +75,7 @@ void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, Aste
         }
     }
 }
-bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship){
+bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Dog> ship){
     if (!ship->canHeal()|| ship->getHealth() >= ship->getMaxHealth()){
         return false;
     }
@@ -175,7 +175,7 @@ bool CollisionController::resolveCollision( BaseSet& bset, AsteroidSet& aset){
  *
  * @return true if there is a ship-asteroid collision
  */
-bool CollisionController::resolveCollision(const std::shared_ptr<Ship>& ship, AsteroidSet& aset) {
+bool CollisionController::resolveCollision(const std::shared_ptr<Dog>& ship, AsteroidSet& aset) {
     bool collision = false;
     auto it = aset.current.begin();
     while (it != aset.current.end()){

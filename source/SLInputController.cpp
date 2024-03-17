@@ -1,6 +1,6 @@
 //
 //  GLInputController.cpp
-//  Ship Lab
+//  Dog Lab
 //
 //  This class buffers in input from the devices and converts it into its
 //  semantic meaning. If your game had an option that allows the player to
@@ -9,7 +9,7 @@
 //  key mapping.
 //
 //  Author: Walker M. White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #include <cugl/cugl.h>

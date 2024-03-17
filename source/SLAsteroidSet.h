@@ -13,7 +13,7 @@
 //  class.  And that is what we are doing here.
 //
 //  Author: Walker White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 2/21/21
 //
 #ifndef __SL_ASTERIOD_SET_H__
@@ -21,7 +21,7 @@
 #include <cugl/cugl.h>
 #include <unordered_set>
 #include "Base.h"
-#include "SLShip.h"
+#include "Dog.h"
 #include "Animation.h"
 #include "Decoys/Decoy.hpp"
 /**
@@ -52,7 +52,7 @@ public:
      *
      * Asteroids come in three different sizes, represented by their types.
      */
-    std::shared_ptr<Ship> _ship;
+    std::shared_ptr<Dog> _ship;
     std::vector<std::shared_ptr<Decoy>> _currentDecoys;
     class Asteroid {
     // It is okay for the user to access these directly
@@ -193,7 +193,7 @@ public:
          * edge on the opposite side. However, this method performs no
          * collision detection. Collisions are resolved afterwards.
          */
-        void update(cugl::Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship, std::vector<std::shared_ptr<Decoy>>& decoys);
+        void update(cugl::Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Dog>& ship, std::vector<std::shared_ptr<Decoy>>& decoys);
         
     };
 
@@ -249,7 +249,7 @@ public:
      *
      * @return true if initialization was successful
      */
-    bool init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Ship> shipParam);
+    bool init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Dog> shipParam);
     
     /**
      * Returns true if the asteroid set is empty.

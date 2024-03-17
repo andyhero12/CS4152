@@ -1,6 +1,5 @@
 //
-//  SLShip.h
-//  Ship Lab
+//  Dog.h
 //
 //  This class tracks all of the state (position, velocity, rotation) of a
 //  single ship. In order to obey the separation of the model-view-controller
@@ -13,7 +12,7 @@
 //  respectively, that use this
 //
 //  Author: Walker White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #ifndef __GL_SHIP_H__
@@ -30,7 +29,7 @@
 /**
  * Model class representing an alien ship.
  */
-class Ship {
+class Dog {
 private:
     
     std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
@@ -99,12 +98,12 @@ public:
      * @param pos   The ship position
      * @param data  The data defining the physics constants
      */
-    Ship(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data);
+    Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data);
     
     /**
      * Disposes the ship, releasing all resources.
      */
-    ~Ship() {}
+    ~Dog() {}
 
     
 #pragma mark Properties

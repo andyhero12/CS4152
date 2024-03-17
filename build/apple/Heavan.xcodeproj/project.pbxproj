@@ -34,14 +34,14 @@
 		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
 		BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
 		BBB4EAEACADCC0A6339A49E0 /* SLApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAABB01FB408EBED961E6036 /* SLApp.cpp */; };
-		BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* SLShip.cpp */; };
+		BBCDFEB695CEDAE28B2FC46D /* Dog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* Dog.cpp */; };
 		BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
 		BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA296BFACC0BB8521C099CD /* Monster.cpp */; };
 		BBECCC314A16C79BFFBE15AE /* SLInputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BADCB3DD2A8B37BE691EFDDC /* SLInputController.cpp */; };
 		BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */; };
 		BBEF1ECBC9FD774610C4EE6E /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA077AA1DFF69B90EA1F4CAF /* Spawner.cpp */; };
 		BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */; };
-		BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* SLShip.cpp */; };
+		BC0CE0FECEAB5DB09CBBE2A8 /* Dog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9540AEA1A66120EEC87741 /* Dog.cpp */; };
 		BC14796BB0CF5FEDD45D5FED /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA1A1F4DB8F0A9D2AED4D3F8 /* Animation.cpp */; };
 		BC307EA86D464CAA63671A6A /* Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */; };
 		BC42C99ECEFCEAC2F5D32815 /* OverWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */; };
@@ -136,7 +136,7 @@
 		BA6B0ADF5445AAA0091E2EFD /* SLApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLApp.h; sourceTree = "<group>"; };
 		BA6FACEFFEB8CCD974BC8EED /* SLCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCollisionController.h; sourceTree = "<group>"; };
 		BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLAsteroidSet.cpp; sourceTree = "<group>"; };
-		BA9540AEA1A66120EEC87741 /* SLShip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLShip.cpp; sourceTree = "<group>"; };
+		BA9540AEA1A66120EEC87741 /* Dog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dog.cpp; sourceTree = "<group>"; };
 		BA9AFAE93F6A20C373105CE9 /* SpawnerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpawnerController.cpp; sourceTree = "<group>"; };
 		BA9C7EBB30CFEBEC13BDD0A5 /* SLGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SLGameScene.cpp; sourceTree = "<group>"; };
 		BAA296BFACC0BB8521C099CD /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OverWorld.cpp; sourceTree = "<group>"; };
 		BAEAA50DB8D01FAE88BE8CEE /* Base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base.cpp; sourceTree = "<group>"; };
 		BAEACE1B7D5A72CFC71995CF /* SLAsteroidSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAsteroidSet.h; sourceTree = "<group>"; };
-		BAF4BF90C373CDD162B4CBBD /* SLShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShip.h; sourceTree = "<group>"; };
+		BAF4BF90C373CDD162B4CBBD /* Dog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dog.h; sourceTree = "<group>"; };
 		BAF9258FBCBDD4D6AD7EDFC7 /* BaseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSet.h; sourceTree = "<group>"; };
 		BAFE6F1F4ACC43B4C61D2FAD /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseSet.cpp; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 				4CAAABA32BA6911700EA42F9 /* Enemies */,
 				4CAAAB9E2BA6911200EA42F9 /* Decoys */,
 				BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */,
-				BA9540AEA1A66120EEC87741 /* SLShip.cpp */,
+				BA9540AEA1A66120EEC87741 /* Dog.cpp */,
 				BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */,
 				BAA296BFACC0BB8521C099CD /* Monster.cpp */,
 				BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */,
@@ -324,7 +324,7 @@
 				BA1026CCF8EFE84337CD97AC /* Monster.h */,
 				BACABDE04E303D83ABBDA6AA /* Spawner.h */,
 				BADD0AFB37CF20E35FABECCE /* SLPhotonSet.h */,
-				BAF4BF90C373CDD162B4CBBD /* SLShip.h */,
+				BAF4BF90C373CDD162B4CBBD /* Dog.h */,
 				BA6B0ADF5445AAA0091E2EFD /* SLApp.h */,
 				BAEACE1B7D5A72CFC71995CF /* SLAsteroidSet.h */,
 				BAAFD6521F931674C53C53FD /* SLGameScene.h */,
@@ -559,7 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB86DE0DD18F06F90913FDCC /* OverWorld.cpp in Sources */,
-				BBCDFEB695CEDAE28B2FC46D /* SLShip.cpp in Sources */,
+				BBCDFEB695CEDAE28B2FC46D /* Dog.cpp in Sources */,
 				BBDFD3B55B2AD1EE5E36DF4E /* SLAsteroidSet.cpp in Sources */,
 				BBE7D5B69B0AF0D0CDEA56BF /* Monster.cpp in Sources */,
 				BBEDEBA17EA3D7A5C450FDDE /* BaseSet.cpp in Sources */,
@@ -587,7 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC42C99ECEFCEAC2F5D32815 /* OverWorld.cpp in Sources */,
-				BC0CE0FECEAB5DB09CBBE2A8 /* SLShip.cpp in Sources */,
+				BC0CE0FECEAB5DB09CBBE2A8 /* Dog.cpp in Sources */,
 				BC0BF1954DEC7E658FAC243C /* SLAsteroidSet.cpp in Sources */,
 				BCFB58FA66BA75DCACB7B472 /* Monster.cpp in Sources */,
 				BCEA4CA0B67D9688C8FDC4B7 /* BaseSet.cpp in Sources */,

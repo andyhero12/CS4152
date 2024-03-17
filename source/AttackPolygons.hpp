@@ -1,6 +1,6 @@
 //
 //  AttackPolygons.hpp
-//  Ship
+//  Dog
 //
 //  Created by Andrew Cheng on 3/12/24.
 //
@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <cugl/cugl.h>
 #include <unordered_set>
-#include "SLShip.h"
+#include "Dog.h"
 using namespace cugl;
 enum class Action : unsigned int {
     BITE = 0,
@@ -55,9 +55,9 @@ public:
     bool isEmpty() const { return currentAttacks.empty(); }
     void update(cugl::Size size);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
-    void addShoot(const std::shared_ptr<Ship>& ship);
-    void addExplode(const std::shared_ptr<Ship>& ship);
-    void addBite(const std::shared_ptr<Ship>& ship);
+    void addShoot(const std::shared_ptr<Dog>& ship);
+    void addExplode(const std::shared_ptr<Dog>& ship);
+    void addBite(const std::shared_ptr<Dog>& ship);
 private:
     
 };

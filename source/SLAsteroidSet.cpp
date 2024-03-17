@@ -13,7 +13,7 @@
 //  class.  And that is what we are doing here.
 //
 //  Author: Walker White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 2/21/21
 //
 #include "SLAsteroidSet.h"
@@ -161,7 +161,7 @@ int convertToQuadrant(double radian) {
  * edge on the opposite side. However, this method performs no
  * collision detection. Collisions are resolved afterwards.
  */
-void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Ship>& ship, std::vector<std::shared_ptr<Decoy>>& decoys)
+void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bases, const std::shared_ptr<Dog>& ship, std::vector<std::shared_ptr<Decoy>>& decoys)
 {
 
 
@@ -236,7 +236,7 @@ AsteroidSet::AsteroidSet() : _mass(0),
  *
  * @return true if initialization was successful
  */
-bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Ship> shipParam)
+bool AsteroidSet::init(std::shared_ptr<cugl::JsonValue> data,std::shared_ptr<Dog> shipParam)
 {
     if (data)
     {

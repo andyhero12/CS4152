@@ -1,6 +1,5 @@
 //
 //  main.cpp
-//  Ship Lab
 //
 //  This is the main entry class for your application.  You may need to modify
 //  it slightly for your application class or platform.
@@ -46,7 +45,7 @@ int main(int argc, char * argv[]) {
     ShipApp app;
     
     // Set the properties of your application
-    app.setName("Ship Lab");
+    app.setName("Heaven");
     app.setOrganization("GDIAC");
     app.setHighDPI(true);
     app.setFPS(60.0f);

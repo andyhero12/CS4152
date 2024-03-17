@@ -1,6 +1,5 @@
 //
 //  SLCollisionController.h
-//  Programming Lab
 //
 //  Unless you are making a point-and-click adventure game, every single
 //  game is going to need some sort of collision detection.  In a later
@@ -17,13 +16,13 @@
 //  BEFORE we know the window size.
 //
 //  Author: Walker M. White
-//  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
+//  Based on original GameX Dog Demo by Rama C. Hoetzlein, 2002
 //  Version: 1/20/22
 //
 #ifndef __SL_COLLISION_CONTROLLER_H__
 #define __SL_COLLISION_CONTROLLER_H__
 #include <cugl/cugl.h>
-#include "SLShip.h"
+#include "Dog.h"
 #include "SLPhotonSet.h"
 #include "SLAsteroidSet.h"
 #include "BaseSet.h"
@@ -47,7 +46,7 @@ public:
      *
      * You will notice this constructor does nothing.  That is because the
      * object is constructed the instance the game starts (main.cpp immediately
-     * constructs ShipApp, which immediately constructs GameScene, which then
+     * constructs DogApp, which immediately constructs GameScene, which then
      * immediately constructs this class), before we know the window size.
      */
     CollisionController() {}
@@ -94,7 +93,7 @@ public:
      *
      * @return true if there is a ship-asteroid collision
      */
-    bool resolveCollision(const std::shared_ptr<Ship>& ship, AsteroidSet& ast);
+    bool resolveCollision(const std::shared_ptr<Dog>& ship, AsteroidSet& ast);
 
     /**
      * Returns true if there is a photon-asteroid collision
@@ -118,10 +117,10 @@ public:
     
     void hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast);
     
-    bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Ship> ship);
+    bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Dog> ship);
     
-    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Ship> ship);
-    void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Ship> ship);
+    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Dog> ship);
+    void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Dog> ship);
     void resolveDecoyDamage(AsteroidSet& aset);
 };
 
