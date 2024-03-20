@@ -41,7 +41,7 @@ void Devil::move(cugl::Size size){
     if (direction.length() < 50){
         return;
     }
-    _pos += direction.normalize();
+    _pos += direction.normalize()*3;
     while (_pos.x > size.width) {
         _pos.x = size.width;
     }
