@@ -59,11 +59,13 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
 
     // Make a ship and set its texture
     _ship = std::make_shared<Dog>(getSize()/2, _constants->get("ship"));
+    _devil = std::make_shared<Devil>(_ship, getSize()/2, _constants->get("ship"));
     
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(assets->get<Texture>("shipleftidle"));
     textures.push_back(assets->get<Texture>("shiprightidle"));
     _ship->setRunTexture(textures);
+    _devil->setRunTexture(textures);
     
     textures.clear();
     textures.push_back(assets->get<Texture>("shipleftbite"));
@@ -134,6 +136,7 @@ void GameScene::dispose() {
 void GameScene::reset() {
     _gameEnded = false;
     _ship->setPosition(getSize()/2);
+    _devil->setPosition(getSize()/2);
     _ship->setAbsorbValue(0);
     _ship->setAngle(0);
     _ship->setVelocity(Vec2::ZERO);
@@ -185,6 +188,8 @@ void GameScene::update(float timestep) {
         }
     }
     _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
+    
+    _devil->move(getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize() * WORLD_SIZE, timestep);
@@ -259,6 +264,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
     _ship->draw(batch,getSize());
+    _devil->draw(batch,getSize());
     // draw actions
     
     // shift camera to draw for absolute positioning
