@@ -8,7 +8,7 @@
 #ifndef AbstractEnemy_h
 #define AbstractEnemy_h
 #include <cugl/cugl.h>
-#include "../OverWorld.hpp"
+#include "OverWorld.hpp"
 class AbstractEnemy {
 public:
     
@@ -17,6 +17,7 @@ public:
     virtual void update(float dt, const OverWorld& overWorld) = 0;
     
     virtual int getDamage() = 0;
+//    virtual bool canAttack() = 0;
     // Virtual destructor
     virtual ~AbstractEnemy() {}
     
@@ -27,6 +28,7 @@ public:
     int getHealth() const {
         return _health;
     }
+    
 private:
     
     int _health;

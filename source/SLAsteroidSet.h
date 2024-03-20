@@ -23,7 +23,7 @@
 #include "Base.h"
 #include "Dog.h"
 #include "Animation.h"
-#include "Decoys/Decoy.hpp"
+#include "Decoy.hpp"
 /**
  * Model class representing a collection of asteroids.
  *
