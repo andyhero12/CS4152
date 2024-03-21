@@ -54,6 +54,7 @@ public:
      */
     std::shared_ptr<Dog> _ship;
     std::vector<std::shared_ptr<Decoy>> _currentDecoys;
+    
     class Asteroid {
     // It is okay for the user to access these directly
     public:
