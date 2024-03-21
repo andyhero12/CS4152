@@ -47,6 +47,12 @@ bool OverWorld::initDevil(){
     return true;
 }
 
+bool OverWorld::initBases(){
+    _bases = std::make_shared<BaseSet>();
+    _bases->init(_constants->get("base"));
+    _bases->setTexture(_assets->get<Texture>("base"));
+    return true;
+}
 bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize){
     _assets = assets;
     // Get the background image and constant values
@@ -54,6 +60,7 @@ bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Si
     _totalSize = totalSize;
     initDog();
     initDevil();
+    initBases();
     return true;
 }
 
@@ -92,11 +99,13 @@ void OverWorld::update(InputController& _input, cugl::Size totalSize){
     dogUpdate(_input,totalSize);
     devilUpdate(_input, totalSize);
     _attackPolygonSet.update(totalSize);
+    _bases->update();
 }
 
 void OverWorld::draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size totalSize){
     _attackPolygonSet.draw(batch,totalSize);
-    
+    _bases->draw(batch,totalSize);
     _dog->draw(batch, totalSize);
     _devil->draw(batch, totalSize);
+    
 }

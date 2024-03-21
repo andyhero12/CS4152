@@ -12,7 +12,7 @@ BaseSet::~BaseSet()
 {
 }
 
-void BaseSet::update(AsteroidSet &aset)
+void BaseSet::update()
 {
     for (auto &base : _bases)
     {

@@ -81,9 +81,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
-    
-    _bases.init(_constants->get("base"));
-    _bases.setTexture(assets->get<Texture>("base"));
 
     // Get the bang sound
     _bang = assets->get<Sound>("bang");
@@ -124,14 +121,8 @@ void GameScene::dispose() {
  */
 void GameScene::reset() {
     _gameEnded = false;
-//    _ship->setPosition(getSize()/2);
-//    _ship->setAbsorbValue(0);
-//    _ship->setAngle(0);
-//    _ship->setVelocity(Vec2::ZERO);
-//    _ship->setHealth(_constants->get("ship")->getInt("health",0));
     _asteroids.init(_constants->get("asteroids"),_ship);
     _spawnerController.init(_constants->get("spawner"));
-    _bases.init(_constants->get("base"));
 }
 
 /**
@@ -148,10 +139,10 @@ void GameScene::update(float timestep) {
         reset();
         overWorld.reset(getSize());
     }
-    overWorld.update(_input, getSize());
     if (_gameEnded){
         return;
     }
+    overWorld.update(_input, getSize());
     if (_input.didPressFire() && _ship->canFireWeapon()){
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
     }
@@ -170,7 +161,6 @@ void GameScene::update(float timestep) {
     _asteroids.update(getSize() * WORLD_SIZE, timestep);
     
     _spawnerController.update(_asteroids,timestep);
-    _bases.update(_asteroids);
     _collisions.resolveAttacks(overWorld.getAttackPolygons() , _asteroids,_spawnerController._spawners,_ship);
     _collisions.resolveDecoyDamage(_asteroids);
     // Check for collisions and play sound
@@ -178,15 +168,16 @@ void GameScene::update(float timestep) {
         AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
     }
     
-    if (_collisions.resolveCollision(_bases, _asteroids)){
+    std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
+    if (_collisions.resolveCollision(*baseSet, _asteroids)){
 //        CULog("asteroid hit base\n");
     }
     // check for heals from base
-    if (_collisions.healFromBaseCollsion(_bases, _ship)){
+    if (_collisions.healFromBaseCollsion(*baseSet, _ship)){
         
     }
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth(), _ship->getMode().c_str()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), baseSet->getFirstHealth(), _ship->getMode().c_str()));
     _text->layout();
     
     // Check if game ended
@@ -194,7 +185,7 @@ void GameScene::update(float timestep) {
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
-    }else if (_bases.baseLost()){
+    }else if (baseSet->baseLost()){
         _gameEnded = true;
     }
 }
@@ -235,7 +226,6 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     }
     _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
-    _bases.draw(batch,getSize());
     overWorld.draw(batch, getSize());
     // draw actions
     
@@ -252,12 +242,13 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
+    std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     if (_asteroids.isEmpty() && _spawnerController.win()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);
         batch->setColor(Color4::WHITE);
-    }else if (_ship->getHealth() == 0 || _bases.baseLost()){
+    }else if (_ship->getHealth() == 0 || baseSet->baseLost()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textLose->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::RED);
         batch->drawText(_textLose, trans);

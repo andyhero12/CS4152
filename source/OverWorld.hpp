@@ -46,6 +46,7 @@ public:
     bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize);
     bool initDog();
     bool initDevil();
+    bool initBases();
     
     void dogUpdate(InputController& _input,cugl::Size totalSize);
     void devilUpdate(InputController& _input,cugl::Size totalSize);
@@ -64,6 +65,9 @@ public:
     }
     std::vector<std::shared_ptr<Decoy>> getDecoys(){
         return _decoys;
+    }
+    std::shared_ptr<BaseSet> getBaseSet(){
+        return _bases;
     }
     AttackPolygons& getAttackPolygons(){
         return _attackPolygonSet;

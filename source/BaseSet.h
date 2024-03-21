@@ -29,7 +29,7 @@ public:
 
     void setTexture(const std::shared_ptr<cugl::Texture>& value);
     
-    void update(AsteroidSet &aset);
+    void update();
     
     bool init(std::shared_ptr<cugl::JsonValue> data);
     
