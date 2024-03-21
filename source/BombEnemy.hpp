@@ -11,6 +11,10 @@
 #include "AbstractEnemy.h"
 class BombEnemy : public AbstractEnemy {
 public:
+    
+    virtual ~BombEnemy() {
+        
+    }
     virtual void draw() override;
     
     virtual void update(float dt, const OverWorld& overWorld) override;
@@ -18,9 +22,7 @@ public:
     virtual int getDamage() override{
         return contactDamage;
     }
-    virtual ~BombEnemy() {
-        
-    }
+    
     
 private:
     

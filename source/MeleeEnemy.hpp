@@ -22,6 +22,9 @@ public:
     virtual int getDamage() override{
         return contactDamage;
     }
+//    virtual bool canAttack() override{
+//        return
+//    }
     virtual ~MeleeEnemy() {
         
     }
@@ -29,5 +32,6 @@ public:
 private:
     
     int contactDamage;
+//    int
 };
 #endif /* MeleeEnemy_hpp */
