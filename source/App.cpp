@@ -45,7 +45,7 @@ void HeavanApp::onStartup() {
     // Create a "loading" screen
     _loaded = false;
     _loading.init(_assets);
-    
+    currentScene = &_loading;
     // Queue up the other assets
     _assets->loadDirectoryAsync("json/assets.json",nullptr);
     
@@ -119,15 +119,18 @@ void HeavanApp::onResume() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void HeavanApp::update(float timestep) {
-    if (!_loaded && _loading.isActive()) {
-        _loading.update(0.01f);
-    } else if (!_loaded) {
-        _loading.dispose(); // Disables the input listeners in this mode
-        _gameplay.init(_assets);
-        _loaded = true;
-    } else {
-        _gameplay.update(timestep);
-    }
+    currentScene->update(timestep);
+    
+    
+//    if (!_loaded && _loading.isActive()) {
+//        _loading.update(timestep);
+//    } else if (!_loaded) {
+//        _loading.dispose(); // Disables the input listeners in this mode
+//        _gameplay.init(_assets);
+//        _loaded = true;
+//    } else {
+//        _gameplay.update(timestep);
+//    }
 }
 
 /**
@@ -140,11 +143,12 @@ void HeavanApp::update(float timestep) {
  * at all. The default implmentation does nothing.
  */
 void HeavanApp::draw() {
-    if (!_loaded) {
-        _loading.render(_batch);
-    } else {
-        _gameplay.render(_batch);
-    }
+    currentScene->render(_batch);
+//    if (!_loaded) {
+//        _loading.render(_batch);
+//    } else {
+//        _gameplay.render(_batch);
+//    }
 }
 
 

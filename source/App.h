@@ -30,6 +30,8 @@ protected:
     GameScene _gameplay;
     /** The controller for the loading screen */
     LoadingScene _loading;
+    
+    Scene2 * currentScene;
 
     /** Whether or not we have finished loading all assets */
     bool _loaded;
