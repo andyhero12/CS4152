@@ -247,29 +247,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4CAAAB9E2BA6911200EA42F9 /* Decoys */ = {
-			isa = PBXGroup;
-			children = (
-				4CAAAB9F2BA6911200EA42F9 /* Decoy.hpp */,
-				4CAAABA02BA6911200EA42F9 /* Decoy.cpp */,
-			);
-			path = Decoys;
-			sourceTree = "<group>";
-		};
-		4CAAABA32BA6911700EA42F9 /* Enemies */ = {
-			isa = PBXGroup;
-			children = (
-				4CAAABA42BA6911700EA42F9 /* AbstractEnemy.h */,
-				4CAAABA52BA6911700EA42F9 /* MeleeEnemy.hpp */,
-				4CAAABA62BA6911700EA42F9 /* BombEnemy.hpp */,
-				4CAAABA72BA6911700EA42F9 /* RangedEnemy.cpp */,
-				4CAAABA82BA6911700EA42F9 /* MeleeEnemy.cpp */,
-				4CAAABA92BA6911700EA42F9 /* BombEnemy.cpp */,
-				4CAAABAA2BA6911700EA42F9 /* RangedEnemy.hpp */,
-			);
-			path = Enemies;
-			sourceTree = "<group>";
-		};
 		EB0F3C8D27FB9DCB0037CC66 = {
 			isa = PBXGroup;
 			children = (
@@ -294,9 +271,16 @@
 		EB0F3C9827FB9DCB0037CC66 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4CAAAB9F2BA6911200EA42F9 /* Decoy.hpp */,
+				4CAAABA02BA6911200EA42F9 /* Decoy.cpp */,
+				4CAAABA42BA6911700EA42F9 /* AbstractEnemy.h */,
+				4CAAABA52BA6911700EA42F9 /* MeleeEnemy.hpp */,
+				4CAAABA62BA6911700EA42F9 /* BombEnemy.hpp */,
+				4CAAABA72BA6911700EA42F9 /* RangedEnemy.cpp */,
+				4CAAABA82BA6911700EA42F9 /* MeleeEnemy.cpp */,
+				4CAAABA92BA6911700EA42F9 /* BombEnemy.cpp */,
+				4CAAABAA2BA6911700EA42F9 /* RangedEnemy.hpp */,
 				4CAAABB12BA6911C00EA42F9 /* OverWorld.hpp */,
-				4CAAABA32BA6911700EA42F9 /* Enemies */,
-				4CAAAB9E2BA6911200EA42F9 /* Decoys */,
 				BAE9A0807C4B91008DED18C3 /* OverWorld.cpp */,
 				BA9540AEA1A66120EEC87741 /* Dog.cpp */,
 				BA796A0A5AAE2FC5981AB29A /* SLAsteroidSet.cpp */,
