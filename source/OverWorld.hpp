@@ -17,6 +17,7 @@
 #include "Spawner.h"
 #include "BaseSet.h"
 #include "InputController.h"
+#include "AttackPolygons.hpp"
 
 #endif /* OverWorld_hpp */
 
@@ -31,6 +32,7 @@ private:
         std::shared_ptr<cugl::JsonValue> _constants;
         std::shared_ptr<cugl::AssetManager> _assets;
         cugl::Size _totalSize;
+        AttackPolygons _attackPolygonSet;
 public:
     
     OverWorld(){
@@ -63,7 +65,9 @@ public:
     std::vector<std::shared_ptr<Decoy>> getDecoys(){
         return _decoys;
     }
-    
+    AttackPolygons& getAttackPolygons(){
+        return _attackPolygonSet;
+    }
     void setDog(std::shared_ptr<Dog> m_dog){
         _dog = m_dog;
     }

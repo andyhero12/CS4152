@@ -20,7 +20,6 @@
 #include "CollisionController.h"
 #include "SpawnerController.h"
 #include "BaseSet.h"
-#include "AttackPolygons.hpp"
 #include "OverWorld.hpp"
 
 /**
@@ -51,7 +50,6 @@ protected:
     AsteroidSet _asteroids;
     
     BaseSet     _bases;
-    AttackPolygons _attackPolygonSet;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */

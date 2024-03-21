@@ -62,7 +62,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
 
-//    _ship->setTexture(assets->get<Texture>("ship"));
 
     // Initialize the asteroid set
     _asteroids.init(_constants->get("asteroids"),_ship);
@@ -133,7 +132,6 @@ void GameScene::reset() {
     _asteroids.init(_constants->get("asteroids"),_ship);
     _spawnerController.init(_constants->get("spawner"));
     _bases.init(_constants->get("base"));
-    _attackPolygonSet.init();
 }
 
 /**
@@ -155,23 +153,16 @@ void GameScene::update(float timestep) {
         return;
     }
     if (_input.didPressFire() && _ship->canFireWeapon()){
-        _ship->setAttack();
-        _attackPolygonSet.addBite(_ship);
         AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
     }
     if (_input.didPressSpecial() && _ship->canFireWeapon()){
-//        _ship->reloadWeapon();
         if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
-            _ship->subAbsorb(5);
-            _attackPolygonSet.addShoot(_ship);
         }else if (_ship->getMode() == "BUILD" && _ship->getAbsorb() > 5 ){
-            _ship->subAbsorb(5);
             _asteroids.createDecoy();
         }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
-            _ship->subAbsorb(10);
-            _attackPolygonSet.addExplode(_ship);
+//            _ship->subAbsorb(10);
         }else {
-            CULog("NOTHING\n");
+//            CULog("NOTHING\n");
         }
     }
     
@@ -180,8 +171,7 @@ void GameScene::update(float timestep) {
     
     _spawnerController.update(_asteroids,timestep);
     _bases.update(_asteroids);
-    _attackPolygonSet.update(getSize());
-    _collisions.resolveAttacks(_attackPolygonSet, _asteroids,_spawnerController._spawners,_ship);
+    _collisions.resolveAttacks(overWorld.getAttackPolygons() , _asteroids,_spawnerController._spawners,_ship);
     _collisions.resolveDecoyDamage(_asteroids);
     // Check for collisions and play sound
     if (_collisions.resolveCollision(_ship, _asteroids)) {
@@ -243,7 +233,6 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
             batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
         }
     }
-    _attackPolygonSet.draw(batch,getSize());
     _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());

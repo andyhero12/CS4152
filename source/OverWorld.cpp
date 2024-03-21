@@ -20,7 +20,7 @@ void OverWorld::reset(cugl::Size resetSize) {
 //    _asteroids.init(_constants->get("asteroids"),_ship);
 //    _spawnerController.init(_constants->get("spawner"));
 //    _bases.init(_constants->get("base"));
-//    _attackPolygonSet.init();
+    _attackPolygonSet.init();
 }
 
 bool OverWorld::initDog(){
@@ -56,31 +56,31 @@ bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Si
     initDevil();
     return true;
 }
+
 void OverWorld::dogUpdate(InputController& _input, cugl::Size totalSize){
     if(_input.didChangeMode() && _dog->canChangeMode()){
         _dog->toggleMode();
         _dog->reloadMode();
     }
-//    if (_input.didPressFire() && _ship->canFireWeapon()){
-//        _ship->setAttack();
-//        _attackPolygonSet.addBite(_ship);
+    if (_input.didPressFire() && _dog->canFireWeapon()){
+        _dog->setAttack();
+        _attackPolygonSet.addBite(_dog);
 //        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-//    }
-//    if (_input.didPressSpecial() && _ship->canFireWeapon()){
-////        _ship->reloadWeapon();
-//        if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
-//            _ship->subAbsorb(5);
-//            _attackPolygonSet.addShoot(_ship);
-//        }else if (_ship->getMode() == "BUILD" && _ship->getAbsorb() > 5 ){
-//            _ship->subAbsorb(5);
+    }
+    if (_input.didPressSpecial() && _dog->canFireWeapon()){
+        if (_dog->getMode() == "SHOOT" && _dog->getAbsorb() > 5){
+            _dog->subAbsorb(5);
+            _attackPolygonSet.addShoot(_dog);
+        }else if (_dog->getMode() == "BUILD" && _dog->getAbsorb() > 5 ){
+            _dog->subAbsorb(5);
 //            _asteroids.createDecoy();
-//        }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
-//            _ship->subAbsorb(10);
-//            _attackPolygonSet.addExplode(_ship);
-//        }else {
-//            CULog("NOTHING\n");
-//        }
-//    }
+        }else if (_dog->getMode() == "EXPLODE" && _dog->getAbsorb() > 10){
+            _dog->subAbsorb(10);
+            _attackPolygonSet.addExplode(_dog);
+        }else {
+            CULog("NOTHING\n");
+        }
+    }
     
     _dog->move( _input.getForward(),  _input.getTurn(), totalSize * WORLD_SIZE);
 }
@@ -91,9 +91,12 @@ void OverWorld::devilUpdate(InputController& _input,cugl::Size totalSize){
 void OverWorld::update(InputController& _input, cugl::Size totalSize){
     dogUpdate(_input,totalSize);
     devilUpdate(_input, totalSize);
+    _attackPolygonSet.update(totalSize);
 }
 
 void OverWorld::draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size totalSize){
+    _attackPolygonSet.draw(batch,totalSize);
+    
     _dog->draw(batch, totalSize);
     _devil->draw(batch, totalSize);
 }
