@@ -15,7 +15,6 @@
 #include <vector>
 #include <unordered_set>
 #include "Dog.h"
-#include "Devil.h"
 #include "SLAsteroidSet.h"
 #include "InputController.h"
 #include "CollisionController.h"
@@ -48,7 +47,6 @@ protected:
     std::shared_ptr<cugl::JsonValue> _constants;
     /** Location and animation information for the ship */
     std::shared_ptr<Dog> _ship;
-    std::shared_ptr<Devil> _devil;
     /** The location of all of the active asteroids */
     AsteroidSet _asteroids;
     

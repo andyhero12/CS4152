@@ -9,20 +9,40 @@
 
 #define WORLD_SIZE 3
 
-void OverWorld::reset(std::shared_ptr<cugl::JsonValue> _constants,
-                      cugl::Size resetSize) {
+void OverWorld::reset(cugl::Size resetSize) {
     _dog->setPosition(resetSize/2);
     _dog->setAbsorbValue(0);
     _dog->setAngle(0);
     _dog->setVelocity(cugl::Vec2::ZERO);
     _dog->setHealth(_constants->get("ship")->getInt("health",0));
-//    _devil->setPosition(getSize()/2);
+    _devil->setPosition(resetSize/2);
+    
 //    _asteroids.init(_constants->get("asteroids"),_ship);
 //    _spawnerController.init(_constants->get("spawner"));
 //    _bases.init(_constants->get("base"));
 //    _attackPolygonSet.init();
 }
 
+bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize){
+    _assets = assets;
+    // Get the background image and constant values
+    _constants = assets->get<cugl::JsonValue>("constants");
+    _dog = std::make_shared<Dog>(totalSize/2, _constants->get("ship"));
+    _devil = std::make_shared<Devil>(_dog, totalSize/2, _constants->get("ship"));
+    _totalSize = totalSize;
+    std::vector<std::shared_ptr<cugl::Texture>> textures;
+    textures.push_back(assets->get<cugl::Texture>("shipleftidle"));
+    textures.push_back(assets->get<cugl::Texture>("shiprightidle"));
+    _dog->setRunTexture(textures);
+    _devil->setRunTexture(textures);
+    
+    textures.clear();
+    textures.push_back(assets->get<cugl::Texture>("shipleftbite"));
+    textures.push_back(assets->get<cugl::Texture>("shiprightbite"));
+    _dog->setBiteTexture(textures);
+    
+    return true;
+}
 void OverWorld::dogUpdate(InputController& _input, cugl::Size totalSize){
     if(_input.didChangeMode() && _dog->canChangeMode()){
         _dog->toggleMode();
@@ -51,6 +71,16 @@ void OverWorld::dogUpdate(InputController& _input, cugl::Size totalSize){
     
     _dog->move( _input.getForward(),  _input.getTurn(), totalSize * WORLD_SIZE);
 }
+
+void OverWorld::devilUpdate(InputController& _input,cugl::Size totalSize){
+    _devil->move(totalSize * WORLD_SIZE);
+}
 void OverWorld::update(InputController& _input, cugl::Size totalSize){
     dogUpdate(_input,totalSize);
+    devilUpdate(_input, totalSize);
+}
+
+void OverWorld::draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size totalSize){
+    _dog->draw(batch, totalSize);
+    _devil->draw(batch, totalSize);
 }

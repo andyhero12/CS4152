@@ -57,23 +57,11 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _background = assets->get<Texture>("background");
     _constants = assets->get<JsonValue>("constants");
 
+    overWorld.init(assets, getSize());
     // Make a ship and set its texture
-    _ship = std::make_shared<Dog>(getSize()/2, _constants->get("ship"));
-    overWorld.setDog(_ship);
-    
-    _devil = std::make_shared<Devil>(_ship, getSize()/2, _constants->get("ship"));
-    
+    _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(assets->get<Texture>("shipleftidle"));
-    textures.push_back(assets->get<Texture>("shiprightidle"));
-    _ship->setRunTexture(textures);
-    _devil->setRunTexture(textures);
-    
-    textures.clear();
-    textures.push_back(assets->get<Texture>("shipleftbite"));
-    textures.push_back(assets->get<Texture>("shiprightbite"));
-    _ship->setBiteTexture(textures);
-    
+
 //    _ship->setTexture(assets->get<Texture>("ship"));
 
     // Initialize the asteroid set
@@ -142,7 +130,6 @@ void GameScene::reset() {
 //    _ship->setAngle(0);
 //    _ship->setVelocity(Vec2::ZERO);
 //    _ship->setHealth(_constants->get("ship")->getInt("health",0));
-    _devil->setPosition(getSize()/2);
     _asteroids.init(_constants->get("asteroids"),_ship);
     _spawnerController.init(_constants->get("spawner"));
     _bases.init(_constants->get("base"));
@@ -161,9 +148,9 @@ void GameScene::update(float timestep) {
     _input.readInput();
     if (_input.didPressReset()) {
         reset();
-        overWorld.reset(_constants, getSize());
+        overWorld.reset(getSize());
     }
-    overWorld.dogUpdate(_input, getSize());
+    overWorld.update(_input, getSize());
     if (_gameEnded){
         return;
     }
@@ -187,8 +174,6 @@ void GameScene::update(float timestep) {
             CULog("NOTHING\n");
         }
     }
-    
-    _devil->move(getSize() * WORLD_SIZE);
     
     // Move the asteroids
     _asteroids.update(getSize() * WORLD_SIZE, timestep);
@@ -262,8 +247,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _bases.draw(batch,getSize());
-    _ship->draw(batch,getSize());
-    _devil->draw(batch,getSize());
+    overWorld.draw(batch, getSize());
     // draw actions
     
     // shift camera to draw for absolute positioning

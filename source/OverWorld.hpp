@@ -11,12 +11,12 @@
 #include <unordered_set>
 #include "Base.h"
 #include "Dog.h"
+#include "Devil.h"
 #include "Animation.h"
 #include "Decoy.hpp"
 #include "Spawner.h"
 #include "BaseSet.h"
 #include "InputController.h"
-#include <stdio.h>
 
 #endif /* OverWorld_hpp */
 
@@ -24,11 +24,13 @@
 class OverWorld{
 private:
         std::shared_ptr<Dog> _dog;
+        std::shared_ptr<Devil> _devil;
         std::vector<std::shared_ptr<Decoy>> _decoys;
         std::vector<std::shared_ptr<Spawner>> _spawners;
         std::shared_ptr<BaseSet> _bases;
-        
-    
+        std::shared_ptr<cugl::JsonValue> _constants;
+        std::shared_ptr<cugl::AssetManager> _assets;
+        cugl::Size _totalSize;
 public:
     
     OverWorld(){
@@ -37,13 +39,23 @@ public:
     ~OverWorld(){
         
     }
+    
+    void reset(cugl::Size resetSize);
+    bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize);
     void dogUpdate(InputController& _input,cugl::Size totalSize);
+    void devilUpdate(InputController& _input,cugl::Size totalSize);
     void update(InputController& input, cugl::Size totalSize);
-    void reset(std::shared_ptr<cugl::JsonValue> _constants,
-                          cugl::Size resetSize);
+    
+    
+    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size totalSize);
+    
+    
     
     std::shared_ptr<Dog> getDog(){
         return _dog;
+    }
+    std::shared_ptr<Devil> getDevil(){
+        return _devil;
     }
     std::vector<std::shared_ptr<Decoy>> getDecoys(){
         return _decoys;
@@ -51,5 +63,8 @@ public:
     
     void setDog(std::shared_ptr<Dog> m_dog){
         _dog = m_dog;
+    }
+    void setDevil(std::shared_ptr<Devil> m_devil){
+        _devil = m_devil;
     }
 };
