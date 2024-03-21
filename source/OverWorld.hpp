@@ -42,6 +42,9 @@ public:
     
     void reset(cugl::Size resetSize);
     bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize);
+    bool initDog();
+    bool initDevil();
+    
     void dogUpdate(InputController& _input,cugl::Size totalSize);
     void devilUpdate(InputController& _input,cugl::Size totalSize);
     void update(InputController& input, cugl::Size totalSize);

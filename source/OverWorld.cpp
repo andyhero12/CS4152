@@ -23,24 +23,37 @@ void OverWorld::reset(cugl::Size resetSize) {
 //    _attackPolygonSet.init();
 }
 
+bool OverWorld::initDog(){
+    _dog = std::make_shared<Dog>(_totalSize/2, _constants->get("ship"));
+    std::vector<std::shared_ptr<cugl::Texture>> textures;
+    textures.push_back(_assets->get<cugl::Texture>("shipleftidle"));
+    textures.push_back(_assets->get<cugl::Texture>("shiprightidle"));
+    _dog->setRunTexture(textures);
+    
+    textures.clear();
+    textures.push_back(_assets->get<cugl::Texture>("shipleftbite"));
+    textures.push_back(_assets->get<cugl::Texture>("shiprightbite"));
+    _dog->setBiteTexture(textures);
+    return true;
+}
+
+bool OverWorld::initDevil(){
+    _devil = std::make_shared<Devil>(_dog, _totalSize/2, _constants->get("ship"));
+    std::vector<std::shared_ptr<cugl::Texture>> textures;
+    textures.push_back(_assets->get<cugl::Texture>("shipleftidle"));
+    textures.push_back(_assets->get<cugl::Texture>("shiprightidle"));
+    _dog->setRunTexture(textures);
+    _devil->setRunTexture(textures);
+    return true;
+}
+
 bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize){
     _assets = assets;
     // Get the background image and constant values
     _constants = assets->get<cugl::JsonValue>("constants");
-    _dog = std::make_shared<Dog>(totalSize/2, _constants->get("ship"));
-    _devil = std::make_shared<Devil>(_dog, totalSize/2, _constants->get("ship"));
     _totalSize = totalSize;
-    std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(assets->get<cugl::Texture>("shipleftidle"));
-    textures.push_back(assets->get<cugl::Texture>("shiprightidle"));
-    _dog->setRunTexture(textures);
-    _devil->setRunTexture(textures);
-    
-    textures.clear();
-    textures.push_back(assets->get<cugl::Texture>("shipleftbite"));
-    textures.push_back(assets->get<cugl::Texture>("shiprightbite"));
-    _dog->setBiteTexture(textures);
-    
+    initDog();
+    initDevil();
     return true;
 }
 void OverWorld::dogUpdate(InputController& _input, cugl::Size totalSize){
