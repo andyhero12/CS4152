@@ -26,6 +26,8 @@ private:
     /** Radius of the ship in pixels (derived from sprite sheet) */
     float _radius;
     
+    int prevDirection;
+    
     Animation runAnimation;
     
 public:

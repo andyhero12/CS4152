@@ -55,6 +55,12 @@
         },
         "base": {
             "file": "textures/target.png"
+        },
+        "player0":{
+            "file": "textures/player/player_fly_left_1.png"
+        },
+        "player1":{
+            "file": "textures/player/player_fly_right_1.png"
         }
     },
     "fonts": {

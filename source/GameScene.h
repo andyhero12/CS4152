@@ -20,6 +20,7 @@
 #include "CollisionController.h"
 #include "SpawnerController.h"
 #include "OverWorld.hpp"
+#include "GlobalConstants.h"
 
 /**
  * This class is the primary gameplay constroller for the demo.
@@ -63,6 +64,8 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     
     bool _gameEnded;
+    
+    ScreenEnums transition;
     
 
     
@@ -114,6 +117,8 @@ public:
      * @param timestep  The amount of time (in seconds) since the last frame
      */
     void update(float timestep) override;
+    
+    ScreenEnums getTransition() override;
 
     /**
      * Draws all this scene to the given SpriteBatch.
@@ -125,6 +130,8 @@ public:
      * @param batch     The SpriteBatch to draw with.
      */
     void render(const std::shared_ptr<cugl::SpriteBatch>& batch) override;
+    
+    void resetTransition() override;
 
     /**
      * Resets the status of the game so that we can play again.

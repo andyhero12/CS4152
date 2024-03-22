@@ -40,6 +40,7 @@ using namespace std;
  * @return true if the controller is initialized properly, false otherwise.
  */
 bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
+    transition = ScreenEnums::GAMEPLAY;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_HEIGHT/dimen.height;
@@ -257,3 +258,9 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     batch->end();
 }
 
+ScreenEnums GameScene::getTransition(){return transition;}
+
+
+void GameScene::resetTransition(){
+    transition = ScreenEnums::GAMEPLAY;
+}
