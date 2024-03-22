@@ -9,34 +9,40 @@
             "file": "textures/photon.png"
         },
         "shipleftidle": {
-            "file": "textures/medium-left-run.png"
+            "file": "textures/dog/run/medium-left-run.png"
         },
         "shiprightidle": {
-            "file": "textures/medium-right-run.png"
+            "file": "textures/dog/run/medium-right-run.png"
+        },
+        "shipleftbite": {
+            "file": "textures/dog/bite/medium-left-bite.png"
+        },
+        "shiprightbite": {
+            "file": "textures/dog/bite/medium-right-bite.png"
         },
         "monkey0":{
-            "file": "textures/monkey-walk-0.png"
+            "file": "textures/monkey/monkey-walk-0.png"
         },
         "monkey1":{
-            "file": "textures/monkey-walk-1.png"
+            "file": "textures/monkey/monkey-walk-1.png"
         },
         "monkey2":{
-            "file": "textures/monkey-walk-2.png"
+            "file": "textures/monkey/monkey-walk-2.png"
         },
         "monkey3":{
-            "file": "textures/monkey-walk-3.png"
+            "file": "textures/monkey/monkey-walk-3.png"
         },
         "monkey4":{
-            "file": "textures/monkey-walk-4.png"
+            "file": "textures/monkey/monkey-walk-4.png"
         },
         "monkey5":{
-            "file": "textures/monkey-walk-5.png"
+            "file": "textures/monkey/monkey-walk-5.png"
         },
         "monkey6":{
-            "file": "textures/monkey-walk-6.png"
+            "file": "textures/monkey/monkey-walk-6.png"
         },
         "monkey7":{
-            "file": "textures/monkey-walk-7.png"
+            "file": "textures/monkey/monkey-walk-7.png"
         },
         "asteroid1": {
             "file": "textures/monkeys.png"

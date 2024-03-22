@@ -1,6 +1,5 @@
 //
 //  BaseSet.h
-//  Ship
 //
 //  Created by Andrew Cheng on 2/26/24.
 //

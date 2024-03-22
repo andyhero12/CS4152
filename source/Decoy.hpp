@@ -8,7 +8,7 @@
 #ifndef Decoy_h
 #define Decoy_h
 
-#include "SLShip.h"
+#include "Dog.h"
 #include <stdio.h>
 #include <cugl/cugl.h>
 #include <unordered_set>

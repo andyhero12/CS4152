@@ -1,6 +1,5 @@
 //
 //  main.cpp
-//  Ship Lab
 //
 //  This is the main entry class for your application.  You may need to modify
 //  it slightly for your application class or platform.
@@ -28,7 +27,7 @@
 //  Version: 1/20/22
 
 // Include your application class
-#include "SLApp.h"
+#include "App.h"
 
 using namespace cugl;
 
@@ -43,10 +42,10 @@ using namespace cugl;
  */
 int main(int argc, char * argv[]) {
     // Change this to your application class
-    ShipApp app;
+    HeavanApp app;
     
     // Set the properties of your application
-    app.setName("Ship Lab");
+    app.setName("Heaven");
     app.setOrganization("GDIAC");
     app.setHighDPI(true);
     app.setFPS(60.0f);

@@ -1,6 +1,5 @@
 //
 //  AttackPolygons.cpp
-//  Ship
 //
 //  Created by Andrew Cheng on 3/12/24.
 //
@@ -82,7 +81,7 @@ void AttackPolygons::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl:
     }
 }
 
-void AttackPolygons::addShoot(const std::shared_ptr<Ship>& ship){
+void AttackPolygons::addShoot(const std::shared_ptr<Dog>& ship){
     Vec2 center = ship->getPosition();
     float _ang = ship->getAngle();
     float longSide = 400;
@@ -101,7 +100,7 @@ void AttackPolygons::addShoot(const std::shared_ptr<Ship>& ship){
     std::shared_ptr<ActionPolygon> curPtr = std::make_shared<ActionPolygon>(Action::SHOOT, resultingRect,max_age);
     currentAttacks.insert(curPtr);
 }
-void AttackPolygons::addExplode(const std::shared_ptr<Ship>& ship){
+void AttackPolygons::addExplode(const std::shared_ptr<Dog>& ship){
     Vec2 center = ship->getPosition();
     PolyFactory curFactory;
     Poly2 resultingPolygon = curFactory.makeCircle(center, ship->getExplosionRadius());
@@ -109,7 +108,7 @@ void AttackPolygons::addExplode(const std::shared_ptr<Ship>& ship){
     currentAttacks.insert(curPtr);
 }
 
-void AttackPolygons::addBite(const std::shared_ptr<Ship>& ship){
+void AttackPolygons::addBite(const std::shared_ptr<Dog>& ship){
     Vec2 center = ship->getPosition();
     PolyFactory curFactory;
     Poly2 resultingPolygon = curFactory.makeArc(center, ship->getBiteRadius(),ship->getAngle(), 180);

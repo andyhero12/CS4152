@@ -19,24 +19,24 @@ clean() {
 
 # Create the flatpak installation
 build() {
-    echo "Building edu.cornell.gdiac.code1.flatpak"
+    echo "Building edu.cornell.gdiac.code14152Group.flatpak"
 
     # Create the flatpak
-    flatpak-builder --repo=repo --force-clean cache ${BASEDIR}/edu.cornell.gdiac.code1.yml
-    flatpak build-bundle repo ${BASEDIR}/edu.cornell.gdiac.code1.flatpak edu.cornell.gdiac.code1
+    flatpak-builder --repo=repo --force-clean cache ${BASEDIR}/edu.cornell.gdiac.code14152Group.yml
+    flatpak build-bundle repo ${BASEDIR}/edu.cornell.gdiac.code14152Group.flatpak edu.cornell.gdiac.code14152Group
     rm -rf ${INSTDIR}
     mkdir ${INSTDIR}
-    mv ${BASEDIR}/edu.cornell.gdiac.code1.flatpak ${INSTDIR}/
+    mv ${BASEDIR}/edu.cornell.gdiac.code14152Group.flatpak ${INSTDIR}/
 
     # Create the Steam shortcut
-    echo "#!/bin/sh" >> "${INSTDIR}/ShipLab.exe"
-    echo "flatpak run edu.cornell.gdiac.code1" >> "${INSTDIR}/ShipLab.exe"
-    chmod a+x "${INSTDIR}/ShipLab.exe"
+    echo "#!/bin/sh" >> "${INSTDIR}/HeavensDevils.exe"
+    echo "flatpak run edu.cornell.gdiac.code14152Group" >> "${INSTDIR}/HeavensDevils.exe"
+    chmod a+x "${INSTDIR}/HeavensDevils.exe"
 
     # Create the flatpak installer
     echo "#!/bin/sh" >> ${INSTDIR}/install.sh
     echo "BASEDIR=\$(dirname \$0)" >> ${INSTDIR}/install.sh
-    echo "flatpak install \${BASEDIR}/edu.cornell.gdiac.code1.flatpak " >> ${INSTDIR}/install.sh
+    echo "flatpak install \${BASEDIR}/edu.cornell.gdiac.code14152Group.flatpak " >> ${INSTDIR}/install.sh
     chmod a+x ${INSTDIR}/install.sh
 
     # Create the flatpak uninstaller
