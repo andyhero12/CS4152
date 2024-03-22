@@ -21,14 +21,14 @@ public:
     virtual void update(float dt, const OverWorld& overWorld) override;
     
     virtual int getDamage() override{
-        if (canAttack()){
-            _attackCooldown = 0;
-            return _contactDamage;
-        }
-        return 0;
+        return _contactDamage;
     }
-    bool canAttack() const {
+    bool canAttack() const override{
         return _attackCooldown == 60;
+    }
+    
+    virtual void resetAttack() override{
+        _attackCooldown = 0;
     }
     virtual int getAbsorbValue() const override{
         CULog("TODO ABSORB MELEE\n");

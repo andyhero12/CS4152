@@ -27,7 +27,8 @@ public:
     virtual void update(float dt, const OverWorld& overWorld) = 0;
     
     virtual int getDamage() = 0;
-    
+    virtual bool canAttack() const = 0;
+    virtual void resetAttack() = 0;
     virtual int getAbsorbValue() const = 0;
     // Virtual destructor
     virtual ~AbstractEnemy() {}
