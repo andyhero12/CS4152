@@ -60,12 +60,16 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
 
     // Make a ship and set its texture
     _ship = std::make_shared<Dog>(getSize()/2, _constants->get("ship"));
-    _devil = std::make_shared<Devil>(_ship, getSize()/2, _constants->get("ship"));
+    _devil = std::make_shared<Devil>(_ship, getSize()/2, _constants->get("devil"));
     
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(assets->get<Texture>("shipleftidle"));
     textures.push_back(assets->get<Texture>("shiprightidle"));
     _ship->setRunTexture(textures);
+    
+    textures.clear();
+    textures.push_back(assets->get<Texture>("player0"));
+    textures.push_back(assets->get<Texture>("player1"));
     _devil->setRunTexture(textures);
     
     textures.clear();

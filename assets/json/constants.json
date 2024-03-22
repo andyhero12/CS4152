@@ -17,6 +17,11 @@
         "sprite frame": 1,
         "mode cooldown": 10
     },
+    "devil": {
+        "sprite cols": 7,
+        "sprite size": 5,
+        "sprite frame": 1
+    },
     "photons": {
         "speed": 5,
         "mass": 5,

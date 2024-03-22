@@ -7,6 +7,12 @@
 
 #include "Devil.h"
 
+int convertToHalves(double radian) {
+    double angleInDegrees = (radian-90) * (180.0 / M_PI);
+    int half = static_cast<int>(std::floor(angleInDegrees / 180.0)) % 2;
+    return (half+2) % 2;
+}
+
 Devil::Devil(std::shared_ptr<Dog> inc_dog, const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _pos = pos;
     _radius = 0;
@@ -15,7 +21,9 @@ Devil::Devil(std::shared_ptr<Dog> inc_dog, const cugl::Vec2& pos, std::shared_pt
     _framecols = data->getInt("sprite cols",0);
     _framesize = data->getInt("sprite size",0);
     _frameflat = data->getInt("sprite frame",0);
+    prevDirection = 0;
 }
+
 void Devil::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture){
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
@@ -54,21 +62,26 @@ void Devil::move(cugl::Size size){
     while (_pos.y < 0) {
         _pos.y = 0;
     }
+    
+    if(prevDirection != convertToHalves(direction.getAngle())){
+        prevDirection = convertToHalves(direction.getAngle());
+        runAnimation.resetAnimation(prevDirection);
+    }
+        
+
+    runAnimation.updateAnimTime();
+    if (runAnimation.frameUpdateReady()){
+        runAnimation.stepAnimation();
+    }
+    
 }
 
 void Devil::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size bounds){
     // Don't draw if sprite not set
     if (runAnimation.getSprite()) {
-        // Transform to place the ship
         cugl::Affine2 shiptrans;
-        // super duper magic number
-        shiptrans.scale(1.0 * 0.75f);
-//        shiptrans.rotate(_ang*M_PI/180);
+        shiptrans.scale(1.5);
         shiptrans.translate(_pos);
-        // Transform to place the shadow, and its color
-//        Affine2 shadtrans = shiptrans;
-//        shadtrans.translate(_shadows,-_shadows);
-//        Color4f shadow(0,0,0,0.5f);
         
         runAnimation.getSprite()->draw(batch,shiptrans);
     }

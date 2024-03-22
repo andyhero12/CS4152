@@ -122,7 +122,7 @@ void HeavanApp::onResume() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void HeavanApp::update(float timestep) {
-    CULog("%d , %d", transitionScene, currentScene->getTransition());
+//    CULog("%d , %d", transitionScene, currentScene->getTransition());
     
     if(transitionScene != currentScene->getTransition()){
         currentScene->resetTransition();
