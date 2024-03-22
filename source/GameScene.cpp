@@ -161,7 +161,9 @@ void GameScene::reset() {
  */
 void GameScene::update(float timestep) {
     // Read the keyboard for each controller.
+    _input.readInput_joystick();
     _input.readInput();
+
     if (_input.didPressReset()) {
         reset();
     }
@@ -192,7 +194,7 @@ void GameScene::update(float timestep) {
             CULog("NOTHING\n");
         }
     }
-    _ship->move( _input.getForward(),  _input.getTurn(), getSize() * WORLD_SIZE);
+    _ship->move(_input.getForward(), _input.getTurn(), _input.getVelocity(), _input.getControllerState(), _input.getKeyboardState(), getSize() * WORLD_SIZE);
     
     _devil->move(getSize() * WORLD_SIZE);
     

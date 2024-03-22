@@ -84,21 +84,26 @@ void AttackPolygons::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl:
 void AttackPolygons::addShoot(const std::shared_ptr<Dog>& ship){
     Vec2 center = ship->getPosition();
     float _ang = ship->getAngle();
-    float longSide = 400;
-    float shortSide = 50;
-    Rect org;
-    if (_ang < 85){ // up
-        org.set(center.x-20, center.y-20, shortSide, longSide);
-    }else if (_ang < 175){ // left
-        org.set(center.x - longSide, center.y-20, longSide, shortSide);
-    }else if (_ang < 265){
-        org.set(center.x-20, center.y- longSide-20, shortSide, longSide);
-    }else{
-        org.set(center.x, center.y-20, longSide, shortSide);
-    }
-    Poly2 resultingRect(org);
-    std::shared_ptr<ActionPolygon> curPtr = std::make_shared<ActionPolygon>(Action::SHOOT, resultingRect,max_age);
+    float degree = 60;
+    PolyFactory curFactory;
+    Poly2 resultingPolygon_shoot = curFactory.makeArc(center, ship->getShootRadius(), ship->getAngle() + degree, degree);
+    std::shared_ptr<ActionPolygon> curPtr = std::make_shared<ActionPolygon>(Action::SHOOT, resultingPolygon_shoot, max_age);
     currentAttacks.insert(curPtr);
+    //float longSide = 400;
+    //float shortSide = 50;
+    //Rect org;
+    //if (_ang < 85){ // up
+    //    org.set(center.x-20, center.y-20, shortSide, longSide);
+    //}else if (_ang < 175){ // left
+    //    org.set(center.x - longSide, center.y-20, longSide, shortSide);
+    //}else if (_ang < 265){
+    //    org.set(center.x-20, center.y- longSide-20, shortSide, longSide);
+    //}else{
+    //    org.set(center.x, center.y-20, longSide, shortSide);
+    //}
+    //Poly2 resultingRect(org);
+    //std::shared_ptr<ActionPolygon> curPtr = std::make_shared<ActionPolygon>(Action::SHOOT, resultingRect,max_age);
+    //currentAttacks.insert(curPtr);
 }
 void AttackPolygons::addExplode(const std::shared_ptr<Dog>& ship){
     Vec2 center = ship->getPosition();
