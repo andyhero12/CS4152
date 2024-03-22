@@ -80,7 +80,7 @@ void Devil::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size bou
     // Don't draw if sprite not set
     if (runAnimation.getSprite()) {
         cugl::Affine2 shiptrans;
-        shiptrans.scale(1.5);
+        shiptrans.scale(1);
         shiptrans.translate(_pos);
         
         runAnimation.getSprite()->draw(batch,shiptrans);
