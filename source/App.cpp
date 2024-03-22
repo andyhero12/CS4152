@@ -51,6 +51,8 @@ void HeavanApp::onStartup() {
     
     AudioEngine::start();
     Application::onStartup(); // YOU MUST END with call to parent
+    
+    transitionScene = ScreenEnums::LOADING;
 }
 
 /**
@@ -69,6 +71,7 @@ void HeavanApp::onShutdown() {
     _gameplay.dispose();
     _assets = nullptr;
     _batch = nullptr;
+    
 
     // Shutdown input
     Input::deactivate<Keyboard>();
@@ -119,8 +122,17 @@ void HeavanApp::onResume() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void HeavanApp::update(float timestep) {
-    currentScene->update(timestep);
+    CULog("%d , %d", transitionScene, currentScene->getTransition());
     
+    if(transitionScene != currentScene->getTransition()){
+        currentScene->resetTransition();
+        currentScene->dispose();
+        _gameplay.init(_assets);
+        transitionScene = currentScene->getTransition();
+        currentScene = &_gameplay;
+    }
+//    
+    currentScene->update(timestep);
     
 //    if (!_loaded && _loading.isActive()) {
 //        _loading.update(timestep);

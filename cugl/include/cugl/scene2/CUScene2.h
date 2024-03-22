@@ -120,6 +120,8 @@ public:
         return ScreenEnums::LOADING;
     }
     
+    virtual void resetTransition(){};
+    
     /**
      * Initializes a Scene2 with the given viewport.
      *

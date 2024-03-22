@@ -137,6 +137,8 @@ public:
      * @param batch     The SpriteBatch to draw with.
      */
     void render(const std::shared_ptr<cugl::SpriteBatch>& batch) override;
+    
+    void resetTransition() override;
 
     /**
      * Resets the status of the game so that we can play again.

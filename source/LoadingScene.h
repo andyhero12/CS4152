@@ -104,7 +104,7 @@ public:
     
     ScreenEnums getTransition() override;
     
-    void setTransition();
+    void resetTransition() override;
 
     /**
      * Returns true if loading is complete, but the player has not pressed play

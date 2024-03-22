@@ -123,6 +123,6 @@ ScreenEnums LoadingScene::getTransition(){
     return transition;
 }
 
-void LoadingScene::setTransition(){
+void LoadingScene::resetTransition(){
     transition = ScreenEnums::LOADING;
 }
