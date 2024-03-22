@@ -68,13 +68,13 @@ public:
     // Matrix with information about the overworld
     std::vector<std::vector<TileInfo>> overworld;
     
-    std::shared_ptr<Dog> getDog(){
+    std::shared_ptr<Dog> getDog() const {
         return _dog;
     }
-    std::shared_ptr<Devil> getDevil(){
+    std::shared_ptr<Devil> getDevil()const {
         return _devil;
     }
-    std::vector<std::shared_ptr<Decoy>> getDecoys(){
+    std::vector<std::shared_ptr<Decoy>> getDecoys() const{
         return _decoys;
     }
     std::shared_ptr<BaseSet> getBaseSet(){
@@ -88,6 +88,10 @@ public:
     }
     void setDevil(std::shared_ptr<Devil> m_devil){
         _devil = m_devil;
+    }
+    
+    cugl::Size getTotalSize() const {
+        return _totalSize;
     }
     
     /**

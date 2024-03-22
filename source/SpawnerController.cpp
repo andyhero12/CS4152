@@ -22,7 +22,29 @@ int generateRandomValue(int left, int right) {
     return dis(gen);
 }
 
-
+void SpawnerController::update(MonsterController& monsterController, const OverWorld& overWorld, float timestep){
+    for(auto& spawner : _spawners) {
+        spawner->update(timestep);
+        if (spawner->canSpawn()){
+            spawner->reloadSpawner();
+            monsterController.spawnBasicEnemy(spawner->getPos(),overWorld);
+        }
+    }
+    
+    
+    auto it = _spawners.begin();
+    while (it != _spawners.end()){
+        std::shared_ptr<Spawner> spawner = *it;
+        
+        if (spawner->dead()){
+            it = _spawners.erase(it);
+        }
+        else{
+            ++it;
+        }
+    }
+    
+}
 void SpawnerController::update(AsteroidSet &aset, float timestep){
     for(auto& spawner : _spawners) {
         spawner->update(timestep);

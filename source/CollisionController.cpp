@@ -27,6 +27,40 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
+void CollisionController::intraOverWorldCollisions(OverWorld& overWorld){
+    if (healFromBaseCollsion(*overWorld.getBaseSet(), overWorld.getDog())){
+        CULog("HEAL DETECTED\n");
+    }
+}
+
+void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController){
+    if (monsterDogCollision(overWorld.getDog(), monsterController.getEnemies())){
+        CULog("MONSTER DOG COLLISION DETECTED\n");
+    }
+}
+bool CollisionController::monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies){
+    bool collision = false;
+    auto it = curEnemies.begin();
+    while (it != curEnemies.end()){
+        std::shared_ptr<AbstractEnemy> enemy = *it;
+        Vec2 norm = curDog->getPosition() - enemy->getPos();
+        float distance = norm.length();
+        float impactDistance = curDog->getRadius() + enemy->getRadius();
+        it++;
+        if (distance < impactDistance) {
+            norm.normalize();
+            Vec2 temp = norm * ((impactDistance - distance) / 2);
+            curDog->setPosition(curDog->getPosition()+temp);
+            enemy->setPos(enemy->getPos() - temp);
+            if (enemy)
+            curDog->setHealth(curDog->getHealth()-enemy->getDamage());
+        }
+    }
+    return collision;
+    
+    
+    return false;
+}
 
 void CollisionController::resolveDecoyDamage(AsteroidSet& aset){
     for (std::shared_ptr<Decoy> curDecoy : aset._currentDecoys){

@@ -20,6 +20,7 @@
 #include "CollisionController.h"
 #include "SpawnerController.h"
 #include "OverWorld.hpp"
+#include "MonsterController.h"
 #include "GlobalConstants.h"
 
 /**
@@ -41,6 +42,7 @@ protected:
     CollisionController _collisions;
 
     SpawnerController _spawnerController;
+    MonsterController _monsterController;
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;

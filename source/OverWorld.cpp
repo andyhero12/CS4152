@@ -19,7 +19,7 @@ void OverWorld::reset(cugl::Size resetSize) {
     
 //    _asteroids.init(_constants->get("asteroids"),_ship);
 //    _spawnerController.init(_constants->get("spawner"));
-//    _bases.init(_constants->get("base"));
+    _bases->init(_constants->get("base"));
     _attackPolygonSet.init();
 }
 

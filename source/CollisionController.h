@@ -27,6 +27,8 @@
 #include "BaseSet.h"
 #include "Spawner.h"
 #include "AttackPolygons.hpp"
+#include "OverWorld.hpp"
+#include "MonsterController.h"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -121,6 +123,14 @@ public:
     void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Dog> ship);
     void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Dog> ship);
     void resolveDecoyDamage(AsteroidSet& aset);
+    
+    // Post Update Functions
+    void intraOverWorldCollisions( OverWorld& overWorld);
+    
+    
+    void overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController);
+    
+    bool monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */
