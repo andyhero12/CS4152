@@ -16,7 +16,7 @@
 #ifndef __SL_LOADING_SCENE_H__
 #define __SL_LOADING_SCENE_H__
 #include <cugl/cugl.h>
-
+#include "GlobalConstants.h"
 
 /**
  * This class is a simple loading screen for asychronous asset loading.
@@ -49,6 +49,8 @@ protected:
     float _progress;
     /** Whether or not the player has pressed play to continue */
     bool  _completed;
+    
+    ScreenEnums transition;
 
     
 public:
@@ -73,7 +75,7 @@ public:
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      */
-    void dispose();
+    void dispose() override;
     
     /**
      * Initializes the controller contents, making it ready for loading
@@ -98,7 +100,11 @@ public:
      *
      * @param timestep  The amount of time (in seconds) since the last frame
      */
-    void update(float timestep);
+    void update(float timestep) override;
+    
+    ScreenEnums getTransition() override;
+    
+    void setTransition();
 
     /**
      * Returns true if loading is complete, but the player has not pressed play

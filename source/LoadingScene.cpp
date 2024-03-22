@@ -35,6 +35,7 @@ using namespace cugl;
  * @return true if the controller is initialized properly, false otherwise.
  */
 bool LoadingScene::init(const std::shared_ptr<AssetManager>& assets) {
+    transition = ScreenEnums::LOADING;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     // Lock the scene to a reasonable resolution
@@ -60,7 +61,8 @@ bool LoadingScene::init(const std::shared_ptr<AssetManager>& assets) {
     _brand = assets->get<scene2::SceneNode>("load_name");
     _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("load_play"));
     _button->addListener([=](const std::string& name, bool down) {
-        this->_active = down;
+//        this->_active = down;
+        transition = ScreenEnums::GAMEPLAY;
     });
     
     Application::get()->setClearColor(Color4(192,192,192,255));
@@ -116,3 +118,11 @@ bool LoadingScene::isPending( ) const {
     return _button != nullptr && _button->isVisible();
 }
 
+
+ScreenEnums LoadingScene::getTransition(){
+    return transition;
+}
+
+void LoadingScene::setTransition(){
+    transition = ScreenEnums::LOADING;
+}

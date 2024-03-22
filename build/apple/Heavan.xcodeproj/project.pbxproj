@@ -155,6 +155,7 @@
 		BAF9258FBCBDD4D6AD7EDFC7 /* BaseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSet.h; sourceTree = "<group>"; };
 		BAFE6F1F4ACC43B4C61D2FAD /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		BAFECF24EBFFFCBFC9DCBE1D /* BaseSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseSet.cpp; sourceTree = "<group>"; };
+		C6F23C352BAD062200712F57 /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
 		EB0F3C9627FB9DCB0037CC66 /* Heavens Devils.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heavens Devils.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB0F3CB027FB9FD40037CC66 /* Landscape.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Landscape.storyboard; sourceTree = "<group>"; };
 		EB0F3CB127FB9FD40037CC66 /* iOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = iOS.xcassets; sourceTree = "<group>"; };
@@ -310,6 +311,7 @@
 				BACE0CAEFCAA45454D3C73D9 /* Base.h */,
 				4C175A3E2BAB1CAB00F60123 /* Devil.h */,
 				4C175A412BAB1CBF00F60123 /* Devil.cpp */,
+				C6F23C352BAD062200712F57 /* GlobalConstants.h */,
 			);
 			name = Source;
 			path = ../../source;

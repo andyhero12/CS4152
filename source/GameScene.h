@@ -23,6 +23,7 @@
 #include "BaseSet.h"
 #include "AttackPolygons.hpp"
 #include "OverWorld.hpp"
+#include "GlobalConstants.h"
 
 /**
  * This class is the primary gameplay constroller for the demo.
@@ -70,6 +71,8 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     
     bool _gameEnded;
+    
+    ScreenEnums transition;
     
 
     
@@ -121,6 +124,8 @@ public:
      * @param timestep  The amount of time (in seconds) since the last frame
      */
     void update(float timestep) override;
+    
+    ScreenEnums getTransition() override;
 
     /**
      * Draws all this scene to the given SpriteBatch.

@@ -19,6 +19,13 @@
  * This class represents the application root for the ship demo.
  */
 class HeavanApp : public cugl::Application {
+public :
+    /** Represents the different screens */
+    static const int Loading = 0;
+    static const int LevelSelect = 1;
+    static const int Mainmenu = 2;
+    static const int Gameplay = 3;
+    static const int Settings = 4;
 protected:
     /** The global sprite batch for drawing (only want one of these) */
     std::shared_ptr<cugl::SpriteBatch> _batch;

@@ -294,3 +294,4 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     batch->end();
 }
 
+ScreenEnums GameScene::getTransition(){return transition;}
