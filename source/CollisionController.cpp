@@ -194,26 +194,6 @@ bool CollisionController::resolveCollision(const std::shared_ptr<Dog>& ship, Ast
             Vec2 temp = norm * ((impactDistance - distance) / 2);
             ship->setPosition(ship->getPosition()+temp);
             rock->position = rock->position-temp;
-
-            // Now it is time for Newton's Law of Impact.
-            // Convert the two velocities into a single reference frame
-            Vec2 vel = ship->getVelocity()-rock->velocity;
-
-            // Compute the impulse (see Essential Math for Game Programmers)
-            float impulse = (-(1 + COLLISION_COEFF) * norm.dot(vel)) /
-                            (norm.dot(norm) * (1.0f / ship->getMass() + 1.0f / (ship->getMass()*rock->getScale())));
-            if (norm.dot(norm) == 0) {
-                // Just use the coefficient if the impulse is degenerate.
-                impulse = COLLISION_COEFF;
-            }
-
-            // Change velocity of the two ships using this impulse
-            temp = norm * (impulse/ship->getMass());
-            ship->setVelocity(ship->getVelocity()+temp);
-
-            temp = norm * (impulse/(ship->getMass()*rock->getScale()));
-            rock->velocity = rock->velocity - temp;
-            
             ship->setHealth(ship->getHealth()-rock->getDamage());
         }
     }

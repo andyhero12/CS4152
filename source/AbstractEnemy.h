@@ -9,6 +9,8 @@
 #define AbstractEnemy_h
 #include <cugl/cugl.h>
 #include "OverWorld.hpp"
+#include "Animation.h"
+
 class AbstractEnemy {
 public:
     
@@ -17,7 +19,7 @@ public:
     virtual void update(float dt, const OverWorld& overWorld) = 0;
     
     virtual int getDamage() = 0;
-//    virtual bool canAttack() = 0;
+    
     // Virtual destructor
     virtual ~AbstractEnemy() {}
     
@@ -29,9 +31,13 @@ public:
         return _health;
     }
     
+    void setAnimation(){
+        
+    }
 private:
     
     int _health;
     cugl::Vec2 position;
+    Animation _animations;
 };
 #endif /* AbstractEnemy_h */

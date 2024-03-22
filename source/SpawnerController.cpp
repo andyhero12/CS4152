@@ -24,11 +24,9 @@ int generateRandomValue(int left, int right) {
 
 
 void SpawnerController::update(AsteroidSet &aset, float timestep){
-//    CULog("num Spawns %zu\n", _spawners.size());
     for(auto& spawner : _spawners) {
         spawner->update(timestep);
         if (spawner->canSpawn()){
-//            spawner->subHealth(1);
             spawner->reloadSpawner();
             aset.spawnAsteroid(spawner->getPos(), cugl::Vec2(generateRandomValue(-2,2), generateRandomValue(-2,2)), fmin(spawner->getTimeElapsed()/10.0,2.0) + 1);
         }

@@ -12,7 +12,6 @@
 #include "AbstractEnemy.h"
 
 
-
 class MeleeEnemy : public AbstractEnemy {
 public:
     virtual void draw() override;

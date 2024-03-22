@@ -67,7 +67,6 @@ int AsteroidSet::Asteroid::getDamage() {
 AsteroidSet::Asteroid::Asteroid(const cugl::Vec2 p, const cugl::Vec2 v, int type, int target, int damage): _damage(damage)
 {
     position = p;
-    velocity = v;
     _targetIndex = target;
     setType(type);
     _attackCooldown = 15;
@@ -137,19 +136,15 @@ void AsteroidSet::Asteroid::setSprite(const std::vector<std::shared_ptr<cugl::Te
 
         std::shared_ptr<cugl::SpriteSheet> _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
         anims.push_back(_sprite);
-//
     }
     _animations.setOrigin(origin);
     _animations = Animation(anims, 10, 0);
 }
 
 int convertToQuadrant(double radian) {
-//    radian = radian + (M_PI / 16);
-//    int quadrant = (radian + 2 * M_PI) / (M_PI / 2);  // Determine the quadrant
     double angleInDegrees = radian * (180 / M_PI);
     // Calculate the "quadrant" in an 8-part division
     int quadrant = static_cast<int>(std::floor(angleInDegrees / 45.0)) % 8;
-//    std::cout<< angle << " " << (quadrant + 4 ) % 8 << std::endl;
     return ( quadrant + 8 ) % 8;  // Return the quadrant number (0 to 7)
 }
 
@@ -168,8 +163,6 @@ void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bas
     if (_attackCooldown < 60){
         _attackCooldown += 1;
     }
-  
-//    _animations.resetAnimation();
     
     cugl::Vec2 target_pos;
     if (_targetIndex == 0){
@@ -192,8 +185,6 @@ void AsteroidSet::Asteroid::update(Size size, const std::vector<cugl::Vec2>& bas
     }
 //    CULog("x %f, y %f", direction.x, direction.y);
     position += direction.normalize();
-//    position = destination;
-    //    position += velocity;
     while (position.x > size.width) {
         position.x = size.width;
     }

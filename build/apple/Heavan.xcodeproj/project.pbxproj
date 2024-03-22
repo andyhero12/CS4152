@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4C175A422BAB1CBF00F60123 /* Devil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C175A412BAB1CBF00F60123 /* Devil.cpp */; };
 		4C175A432BAB1CBF00F60123 /* Devil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C175A412BAB1CBF00F60123 /* Devil.cpp */; };
+		4C33F0352BAD0DBD00BDAEBF /* MonsterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C33F0342BAD0DBD00BDAEBF /* MonsterController.cpp */; };
+		4C33F0362BAD0DBD00BDAEBF /* MonsterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C33F0342BAD0DBD00BDAEBF /* MonsterController.cpp */; };
 		4CAAABA12BA6911200EA42F9 /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAABA02BA6911200EA42F9 /* Decoy.cpp */; };
 		4CAAABA22BA6911200EA42F9 /* Decoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAABA02BA6911200EA42F9 /* Decoy.cpp */; };
 		4CAAABAB2BA6911700EA42F9 /* RangedEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAABA72BA6911700EA42F9 /* RangedEnemy.cpp */; };
@@ -114,6 +116,8 @@
 /* Begin PBXFileReference section */
 		4C175A3E2BAB1CAB00F60123 /* Devil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Devil.h; sourceTree = "<group>"; };
 		4C175A412BAB1CBF00F60123 /* Devil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Devil.cpp; sourceTree = "<group>"; };
+		4C33F0332BAD0DAD00BDAEBF /* MonsterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonsterController.h; sourceTree = "<group>"; };
+		4C33F0342BAD0DBD00BDAEBF /* MonsterController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MonsterController.cpp; sourceTree = "<group>"; };
 		4CAAAB9F2BA6911200EA42F9 /* Decoy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Decoy.hpp; sourceTree = "<group>"; };
 		4CAAABA02BA6911200EA42F9 /* Decoy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Decoy.cpp; sourceTree = "<group>"; };
 		4CAAABA42BA6911700EA42F9 /* AbstractEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractEnemy.h; sourceTree = "<group>"; };
@@ -310,6 +314,8 @@
 				BACE0CAEFCAA45454D3C73D9 /* Base.h */,
 				4C175A3E2BAB1CAB00F60123 /* Devil.h */,
 				4C175A412BAB1CBF00F60123 /* Devil.cpp */,
+				4C33F0332BAD0DAD00BDAEBF /* MonsterController.h */,
+				4C33F0342BAD0DBD00BDAEBF /* MonsterController.cpp */,
 			);
 			name = Source;
 			path = ../../source;
@@ -545,6 +551,7 @@
 				4C175A422BAB1CBF00F60123 /* Devil.cpp in Sources */,
 				BB8FB2BB1D1EB6F8F926C463 /* AttackPolygons.cpp in Sources */,
 				BBB0CAD413CF2EF4C1CBAD62 /* Base.cpp in Sources */,
+				4C33F0352BAD0DBD00BDAEBF /* MonsterController.cpp in Sources */,
 				4CAAABAD2BA6911700EA42F9 /* MeleeEnemy.cpp in Sources */,
 				BB69CD2BB2819E62DC9CF51F /* GameScene.cpp in Sources */,
 				BBECCC314A16C79BFFBE15AE /* InputController.cpp in Sources */,
@@ -572,6 +579,7 @@
 				4C175A432BAB1CBF00F60123 /* Devil.cpp in Sources */,
 				BC8DD1D4DC11F7EF9D4ECE13 /* AttackPolygons.cpp in Sources */,
 				BC307EA86D464CAA63671A6A /* Base.cpp in Sources */,
+				4C33F0362BAD0DBD00BDAEBF /* MonsterController.cpp in Sources */,
 				4CAAABAE2BA6911700EA42F9 /* MeleeEnemy.cpp in Sources */,
 				BCF4DD023FCDCC2FAF2DBE2B /* GameScene.cpp in Sources */,
 				BCBF9F2FD2AA0DED5D9C50BC /* InputController.cpp in Sources */,

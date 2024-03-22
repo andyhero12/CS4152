@@ -60,8 +60,7 @@ public:
     public:
         /** Dog position */
         cugl::Vec2 position;
-        /** Dog velocity */
-        cugl::Vec2 velocity;
+        
         int _targetIndex;
         int _prevDir;
         // But these need to be protected for invariant reasons

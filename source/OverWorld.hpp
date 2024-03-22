@@ -19,9 +19,6 @@
 #include "InputController.h"
 #include "AttackPolygons.hpp"
 
-#endif /* OverWorld_hpp */
-
-
 class OverWorld{
 private:
     std::shared_ptr<Dog> _dog;
@@ -33,8 +30,6 @@ private:
     std::shared_ptr<cugl::AssetManager> _assets;
     cugl::Size _totalSize;
     AttackPolygons _attackPolygonSet;
-    
-        
 public:
     
     OverWorld(){
@@ -43,8 +38,6 @@ public:
     ~OverWorld(){
         
     }
-    
-    
     
     void reset(cugl::Size resetSize);
     bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize);
@@ -119,3 +112,4 @@ public:
     
     
 };
+#endif /* OverWorld_hpp */

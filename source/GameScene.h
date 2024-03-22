@@ -19,7 +19,6 @@
 #include "InputController.h"
 #include "CollisionController.h"
 #include "SpawnerController.h"
-#include "BaseSet.h"
 #include "OverWorld.hpp"
 
 /**
@@ -48,8 +47,6 @@ protected:
     std::shared_ptr<Dog> _ship;
     /** The location of all of the active asteroids */
     AsteroidSet _asteroids;
-    
-    BaseSet     _bases;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */

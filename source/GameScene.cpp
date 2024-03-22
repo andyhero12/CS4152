@@ -159,8 +159,8 @@ void GameScene::update(float timestep) {
     
     // Move the asteroids
     _asteroids.update(getSize() * WORLD_SIZE, timestep);
-    
     _spawnerController.update(_asteroids,timestep);
+    
     _collisions.resolveAttacks(overWorld.getAttackPolygons() , _asteroids,_spawnerController._spawners,_ship);
     _collisions.resolveDecoyDamage(_asteroids);
     // Check for collisions and play sound
