@@ -13,6 +13,7 @@
 #include "OverWorld.hpp"
 #include <unordered_set>
 #include <vector>
+#include <random>
 struct AnimationDataStruct{
     std::vector<std::shared_ptr<cugl::Texture>> _texture;
     int _framesize;
@@ -35,12 +36,14 @@ public:
     ~MonsterController(){
         
     }
-    bool init(std::shared_ptr<cugl::JsonValue> data, const OverWorld& overWorld);
+    bool init(std::shared_ptr<cugl::JsonValue> data, OverWorld& overWorld);
     
     bool isEmpty(){
         return _current.size() == 0 && _pending.size() == 0;
     }
-    void update(cugl::Size size, float timestep, const OverWorld& overWorld);
+    void retargetToDecoy( OverWorld& overWorld);
+    void retargetCloset( OverWorld& overWorld);
+    void update(cugl::Size size, float timestep, OverWorld& overWorld);
     
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font);
     
@@ -48,12 +51,13 @@ public:
         return _current;
     }
     
-    void spawnBasicEnemy(cugl::Vec2 pos, const OverWorld& overWorld);
+    void spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld);
     
     void postUpdate(cugl::Size size, float timestep);
     
     void setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> data,
                                const std::shared_ptr<cugl::AssetManager> _assets);
+    
 };
 
 #endif /* MonsterController_h */

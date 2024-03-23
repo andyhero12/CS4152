@@ -21,7 +21,7 @@ public:
 //
 //
 //    /* Set of bases */
-    std::unordered_set<std::shared_ptr<Base>> _bases;
+    std::vector<std::shared_ptr<Base>> _bases;
 //
     BaseSet();
     

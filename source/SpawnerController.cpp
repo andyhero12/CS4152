@@ -22,7 +22,7 @@ int generateRandomValue(int left, int right) {
     return dis(gen);
 }
 
-void SpawnerController::update(MonsterController& monsterController, const OverWorld& overWorld, float timestep){
+void SpawnerController::update(MonsterController& monsterController, OverWorld& overWorld, float timestep){
     for(auto& spawner : _spawners) {
         spawner->update(timestep);
         if (spawner->canSpawn()){

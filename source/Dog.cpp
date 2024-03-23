@@ -279,7 +279,6 @@ void Dog::move(float forward, float turn, Size size) {
         if (runAnimation.frameUpdateReady()){
             runAnimation.stepAnimation();
         }
-    
     }
 }
 

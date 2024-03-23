@@ -6,8 +6,8 @@
 //
 
 #include "MeleeEnemy.hpp"
-MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius)
-: AbstractEnemy(m_pos, m_health, m_radius)
+MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
+: AbstractEnemy(m_pos, m_health, m_radius, m_targetIndex)
 , _contactDamage(5)
 {
     
@@ -25,14 +25,12 @@ void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Siz
     batch->drawText(hptext, trans);
 }
 
-void MeleeEnemy::update(float dt, const OverWorld& overWorld){
+void MeleeEnemy::update(float dt, OverWorld& overWorld){
     if (_attackCooldown < 60){
         _attackCooldown++;
     }
     
-    cugl::Vec2 target_pos;
-    const std::shared_ptr<Dog>& curDog = overWorld.getDog();
-    target_pos = curDog->getPosition();
+    cugl::Vec2 target_pos = getTargetPositionFromIndex(overWorld);
     cugl::Vec2 direction = target_pos- position;
     // Animate
     position += direction.normalize();

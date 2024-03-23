@@ -7,9 +7,17 @@
 #include "MonsterController.h"
 
 
+int generateRandomInclusiveHighLow(int low, int high)
+{
+    // Static used for the seed to ensure it's only seeded once
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(low, high); // Range is 1 to 3, inclusive
+    return dis(gen);
+}
 
-bool MonsterController::init(std::shared_ptr<cugl::JsonValue> data, const OverWorld& overWorld){
-    if (data){
+bool MonsterController::init(std::shared_ptr<cugl::JsonValue> data, OverWorld& overWorld){
+    if (data){ 
         _current.clear();
         _pending.clear();
         if (data->get("start")){
@@ -32,12 +40,54 @@ void MonsterController::postUpdate(cugl::Size size, float timestep){
     _pending.clear();
 }
 
-void MonsterController::update(cugl::Size size, float timestep, const OverWorld& overWorld){
-    
+void MonsterController::retargetToDecoy( OverWorld& overWorld){
+    int totalTargets = overWorld.getTotalTargets(); // really brittle be careful
+    for (std::shared_ptr<AbstractEnemy> enemy : getEnemies()){
+        enemy->setTargetIndex(totalTargets); // will add the pending decoy to real next iteration
+    }
+}
+void MonsterController::retargetCloset( OverWorld& overWorld){
+    cugl::Vec2 dogPos = overWorld.getDog()->getPosition();
+    int baseSize = (int) overWorld.getBaseSet()->_bases.size();
+    int decoySize = (int) overWorld.getDecoys()->getCurrentDecoys().size();
+    for (std::shared_ptr<AbstractEnemy> enemy : getEnemies()){
+        Vec2 enemyPos = enemy->getPos();
+        int index = 0;
+        float dist = (enemyPos - dogPos).length();
+        int sizeBases = baseSize;
+        for (int i = 0 ;i < sizeBases;i++){
+            Vec2 basePos = overWorld.getBaseSet()->_bases[i]->getPos();
+            float curDist = (enemyPos -  basePos).length();
+            if (curDist < dist){
+                dist = curDist;
+                index = i + 1;
+            }
+        }
+        int sizeDecoys = decoySize;
+        for (int i = 0 ;i < sizeDecoys; i++){
+            Vec2 decoyPos = overWorld.getDecoys()->getCurrentDecoys()[i]->getPos();
+            float curDist = (enemyPos -  decoyPos).length();
+            if (curDist < dist){
+                dist = curDist;
+                index = i + 1 + sizeBases;
+            }
+        }
+        enemy->setTargetIndex(index);
+    }
+}
+void MonsterController::update(cugl::Size size, float timestep, OverWorld& overWorld){
+    std::shared_ptr<DecoySet> decoySet = overWorld.getDecoys();
+    if (decoySet->addedNewDecoy()){
+        retargetToDecoy(overWorld);
+        return;
+    }
+    if (decoySet->removedDecoy()){
+        retargetCloset(overWorld);
+        return;
+    }
     for (std::shared_ptr<AbstractEnemy> curEnemy: _current){
         curEnemy->update(timestep, overWorld);
     }
-    
 }
 void MonsterController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font){
     for (std::shared_ptr<AbstractEnemy> curEnemy: _current){
@@ -63,11 +113,13 @@ void MonsterController::setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> d
     meleeAnimationData._framecols = _framecols;
 }
 
-void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, const OverWorld& overWorld){
+void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
     
     std::vector<std::shared_ptr<cugl::Texture>> _texture = meleeAnimationData._texture;
     int _framesize = meleeAnimationData._framesize;
     int _framecols = meleeAnimationData._framecols;
+    int numTargets =  overWorld.getTotalTargets();
+    int chosenTarget = generateRandomInclusiveHighLow(0, numTargets-1);
     if (_texture.size() > 0)
     {
         int rows = _framesize / _framecols;
@@ -76,7 +128,7 @@ void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, const OverWorld& overWor
             rows++;
         }
         float _radius = std::max(_framecols, rows) / 2;
-        std::shared_ptr<MeleeEnemy> basic = std::make_shared<MeleeEnemy>(pos, 3, _radius);
+        std::shared_ptr<MeleeEnemy> basic = std::make_shared<MeleeEnemy>(pos, 3, _radius, chosenTarget);
         basic->setSprite(_texture, rows,_framecols, _framesize, Vec2(0, 0));
         _pending.emplace(basic);
     }

@@ -62,22 +62,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     // Make a ship and set its texture
     _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-
-
-    // Initialize the asteroid set
-//    _asteroids.init(_constants->get("asteroids"),_ship);
-//    textures.clear();
-//    textures.push_back(assets->get<Texture>("monkey0"));
-//    textures.push_back(assets->get<Texture>("monkey1"));
-//    textures.push_back(assets->get<Texture>("monkey2"));
-//    textures.push_back(assets->get<Texture>("monkey3"));
-//    textures.push_back(assets->get<Texture>("monkey4"));
-//    textures.push_back(assets->get<Texture>("monkey5"));
-//    textures.push_back(assets->get<Texture>("monkey6"));
-//    textures.push_back(assets->get<Texture>("monkey7"));
-//
-//    _asteroids.setTexture(textures);
-//    _asteroids.setDecoyTexture(assets->get<Texture>("base"));
     
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
@@ -124,7 +108,6 @@ void GameScene::dispose() {
  */
 void GameScene::reset() {
     _gameEnded = false;
-//    _asteroids.init(_constants->get("asteroids"),_ship);
     _spawnerController.init(_constants->get("spawner"));
     _monsterController.init(_constants->get("asteroids"),overWorld);
     
@@ -147,20 +130,12 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    overWorld.update(_input, getSize());
-    if (_input.didPressFire() && _ship->canFireWeapon()){
-        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-    }
-    if (_input.didPressSpecial() && _ship->canFireWeapon()){
-        if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
-        }else if (_ship->getMode() == "BUILD" && _ship->getAbsorb() > 5 ){
-//            _asteroids.createDecoy();
-        }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
-//            _ship->subAbsorb(10);
-        }else {
-//            CULog("NOTHING\n");
-        }
-    }
+    overWorld.update(_input, getSize(),timestep);
+    
+//    if (_input.didPressFire() && _ship->canFireWeapon()){
+//        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
+//    }
+//    
     _spawnerController.update(_monsterController,overWorld, timestep);
     _monsterController.update(getSize(), timestep, overWorld);
     
@@ -174,7 +149,7 @@ void GameScene::update(float timestep) {
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty() && _spawnerController.win()){
+    if (_monsterController.isEmpty() && _spawnerController.win()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
@@ -182,6 +157,7 @@ void GameScene::update(float timestep) {
         _gameEnded = true;
     }
     _monsterController.postUpdate(getSize(), timestep);
+    overWorld.postUpdate();
 }
 
 /**
@@ -218,7 +194,6 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
             batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
         }
     }
-//    _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
     _monsterController.draw(batch, getSize(),_assets->get<Font>("pixel32"));
     overWorld.draw(batch, getSize());

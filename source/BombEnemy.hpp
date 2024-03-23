@@ -17,7 +17,7 @@ public:
     }
     virtual void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font) override;
     
-    virtual void update(float dt, const OverWorld& overWorld) override;
+    virtual void update(float dt, OverWorld& overWorld) override;
     
     virtual int getDamage() override{
         return contactDamage;

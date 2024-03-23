@@ -13,23 +13,23 @@
 #include "Dog.h"
 #include "Devil.h"
 #include "Animation.h"
-#include "Decoy.hpp"
-#include "Spawner.h"
 #include "BaseSet.h"
 #include "InputController.h"
 #include "AttackPolygons.hpp"
+#include "DecoySet.hpp"
 
 class OverWorld{
 private:
     std::shared_ptr<Dog> _dog;
     std::shared_ptr<Devil> _devil;
-    std::vector<std::shared_ptr<Decoy>> _decoys;
-    std::vector<std::shared_ptr<Spawner>> _spawners;
+    std::shared_ptr<DecoySet> _decoys;
     std::shared_ptr<BaseSet> _bases;
     std::shared_ptr<cugl::JsonValue> _constants;
     std::shared_ptr<cugl::AssetManager> _assets;
     cugl::Size _totalSize;
     AttackPolygons _attackPolygonSet;
+    
+    void drawDecoy(const std::shared_ptr<cugl::SpriteBatch>& batch);
 public:
     
     OverWorld(){
@@ -44,11 +44,12 @@ public:
     bool initDog();
     bool initDevil();
     bool initBases();
+    bool initDecoys();
     
     void dogUpdate(InputController& _input,cugl::Size totalSize);
     void devilUpdate(InputController& _input,cugl::Size totalSize);
-    void update(InputController& input, cugl::Size totalSize);
-    
+    void update(InputController& input, cugl::Size totalSize, float timestep);
+    void postUpdate();
     
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size totalSize);
     
@@ -60,9 +61,9 @@ public:
     
     // Information for a tile, add to this later since idk what this will include
     class TileInfo {
-        public:
-        private:
-            Terrain type;
+    public:
+    private:
+        Terrain type;
     };
     
     // Matrix with information about the overworld
@@ -74,11 +75,14 @@ public:
     std::shared_ptr<Devil> getDevil()const {
         return _devil;
     }
-    std::vector<std::shared_ptr<Decoy>>& getDecoys(){
+    std::shared_ptr<DecoySet> getDecoys() const{
         return _decoys;
     }
     std::shared_ptr<BaseSet> getBaseSet(){
         return _bases;
+    }
+    int getTotalTargets() const {
+        return 1 + (int) _bases->_bases.size() + (int) _decoys->getCurrentDecoys().size();
     }
     AttackPolygons& getAttackPolygons(){
         return _attackPolygonSet;

@@ -215,10 +215,12 @@ public:
      * @return true if the ship can fire
      */
     bool canFireWeapon() const{
-        return !attack;
-//        return _refire > _firerate;
+        return !attack && _refire > _firerate;
     }
     
+    void reloadWeapon() {
+        _refire = 0;
+    }
     bool canChangeMode() const {
         return (_modeCooldown < _modeTimer);
     }

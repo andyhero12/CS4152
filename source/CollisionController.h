@@ -77,42 +77,6 @@ public:
         _size = size;
         return true;
     }
-        
-    /**
-     * Returns true if there is a ship-asteroid collision
-     *
-     * In addition to checking for the collision, this method also resolves it.
-     * That means it applies damage to the ship for EACH asteroid encountered.
-     * It does not, however, play the sound. That happens in the main controller
-     *
-     * Note that this method must take wrap into consideration as well. If the
-     * asteroid/ship can be drawn at multiple points on the screen, then it can
-     * collide at multiple places as well.
-     *
-     * @param ship  The players ship
-     * @param aset  The asteroid set
-     *
-     * @return true if there is a ship-asteroid collision
-     */
-    bool resolveCollision(const std::shared_ptr<Dog>& ship, AsteroidSet& ast);
-
-    /**
-     * Returns true if there is a photon-asteroid collision
-     *
-     * In addition to checking for the collision, this method also resolves it.
-     * That means it applies damage to the ship for EACH asteroid encountered.
-     * It does not, however, play the sound. That happens in the main controller
-     *
-     * Note that this method must take wrap into consideration as well. If the
-     * asteroid/photon can be drawn at multiple points on the screen, then it can
-     * collide at multiple places as well.
-     *
-     * @param pset  The photon set
-     * @param aset  The asteroid set
-     *
-     * @return true if there is a ship-asteroid collision
-     */
-    bool resolveCollision( BaseSet& bset, AsteroidSet& aset);
     
     void resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
     
@@ -122,7 +86,6 @@ public:
     
     void resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
                            std::shared_ptr<Dog> dog);
-    void resolveDecoyDamage(AsteroidSet& aset);
     
     // Post Update Functions
     void intraOverWorldCollisions( OverWorld& overWorld);
@@ -130,7 +93,7 @@ public:
     void overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController);
     
     bool monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
-    bool monsterDecoyCollision(std::vector<std::shared_ptr<Decoy>>& decoys, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    bool monsterDecoyCollision(std::shared_ptr<DecoySet> decoySet, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
     bool monsterBaseCollsion(std::shared_ptr<BaseSet> curBases, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
     
     
