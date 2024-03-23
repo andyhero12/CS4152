@@ -23,7 +23,6 @@
 #define __SL_COLLISION_CONTROLLER_H__
 #include <cugl/cugl.h>
 #include "Dog.h"
-#include "SLAsteroidSet.h"
 #include "BaseSet.h"
 #include "SpawnerController.h"
 #include "AttackPolygons.hpp"

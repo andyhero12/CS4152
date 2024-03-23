@@ -10,7 +10,6 @@
 #include <cugl/cugl.h>
 #include <unordered_set>
 #include <vector>
-#include "SLAsteroidSet.h"
 #include "Base.h"
 
 

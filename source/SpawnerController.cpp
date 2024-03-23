@@ -45,29 +45,6 @@ void SpawnerController::update(MonsterController& monsterController, OverWorld& 
     }
     
 }
-void SpawnerController::update(AsteroidSet &aset, float timestep){
-    for(auto& spawner : _spawners) {
-        spawner->update(timestep);
-        if (spawner->canSpawn()){
-            spawner->reloadSpawner();
-            aset.spawnAsteroid(spawner->getPos(), cugl::Vec2(generateRandomValue(-2,2), generateRandomValue(-2,2)), fmin(spawner->getTimeElapsed()/10.0,2.0) + 1);
-        }
-    }
-    
-    
-    auto it = _spawners.begin();
-    while (it != _spawners.end()){
-        std::shared_ptr<Spawner> spawner = *it;
-        
-        if (spawner->dead()){
-            it = _spawners.erase(it);
-        }
-        else{
-            ++it;
-        }
-    }
-    
-}
 
 bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data) {
     if (data) {

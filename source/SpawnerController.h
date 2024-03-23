@@ -15,7 +15,6 @@
 #include <vector>
 #include "MonsterController.h"
 #include "OverWorld.hpp"
-#include "SLAsteroidSet.h"
 
 
 class SpawnerController{
@@ -36,8 +35,6 @@ public:
     ~SpawnerController();
 
     void setTexture(const std::shared_ptr<cugl::Texture>& value);
-    
-    void update(AsteroidSet &aset, float timestep);
     void update(MonsterController& monsterController, OverWorld& overWorld, float timestep);
     
     bool init(std::shared_ptr<cugl::JsonValue> data);

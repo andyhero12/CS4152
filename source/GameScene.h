@@ -15,7 +15,6 @@
 #include <vector>
 #include <unordered_set>
 #include "Dog.h"
-#include "SLAsteroidSet.h"
 #include "InputController.h"
 #include "CollisionController.h"
 #include "SpawnerController.h"
@@ -48,8 +47,6 @@ protected:
     std::shared_ptr<cugl::JsonValue> _constants;
     /** Location and animation information for the ship */
     std::shared_ptr<Dog> _ship;
-    /** The location of all of the active asteroids */
-    AsteroidSet _asteroids;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */
@@ -60,7 +57,6 @@ protected:
     std::shared_ptr<cugl::TextLayout> _textLose;
     /** The text with the current health */
     std::shared_ptr<cugl::TextLayout> _text;
-    /** The sound of a ship-asteroid collision */
     std::shared_ptr<cugl::Sound> _bang;
     std::shared_ptr<cugl::Sound> _laser;
     std::shared_ptr<cugl::Sound> _blast;
