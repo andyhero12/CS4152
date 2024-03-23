@@ -71,20 +71,31 @@ public:
         }
         return target_pos;
     }
-    void setSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
-        _animations.setOrigin(origin);
-        _animations = Animation(anims, 10, 0);
+    void setWalkingSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
+        _walkingAnimations.setOrigin(origin);
+        _walkingAnimations = Animation(anims, 10, 0);
+    }
+    
+    void setAttackingSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
+        _attackingAnimations.setOrigin(origin);
+        _attackingAnimations = Animation(anims, 10, 0);
     }
     
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        return _animations.getSprite();
+        if(attacking){
+            _attackingAnimations.getSprite();
+        }
+        return _walkingAnimations.getSprite();
     }
     
 protected:
     int _health;
     int targetIndex;
     cugl::Vec2 position;
-    Animation _animations;
+    Animation _walkingAnimations;
+    Animation _attackingAnimations;
     float _radius;
+    int _prevDir;
+    bool attacking;
 };
 #endif /* AbstractEnemy_h */

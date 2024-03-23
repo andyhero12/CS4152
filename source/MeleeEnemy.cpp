@@ -43,13 +43,14 @@ void MeleeEnemy::update(float dt, OverWorld& overWorld){
     cugl::Size size = overWorld.getTotalSize();
     
     int dir_quad = convertToQuadrant(direction.getAngle());
+    
     if (_prevDir != dir_quad){
-        _animations.resetAnimation(dir_quad);
+        _walkingAnimations.resetAnimation(dir_quad);
     }
     _prevDir = dir_quad;
-    _animations.updateAnimTime();
-    if (_animations.frameUpdateReady()){
-        _animations.stepAnimation();
+    _walkingAnimations.updateAnimTime();
+    if (_walkingAnimations.frameUpdateReady()){
+        _walkingAnimations.stepAnimation();
     }
     
     while (position.x > size.width) {
