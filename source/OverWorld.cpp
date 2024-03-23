@@ -50,6 +50,7 @@ bool OverWorld::initBases(){
     _bases->setTexture(_assets->get<Texture>("base"));
     return true;
 }
+
 bool OverWorld::initDecoys(){
     _decoys = std::make_shared<DecoySet>();
     _decoys->setTexture(_assets->get<Texture>("base"));

@@ -71,14 +71,7 @@ public:
         }
         return target_pos;
     }
-    void setSprite(const std::vector<std::shared_ptr<cugl::Texture>>& value, int rows, int _framecols, int _framesize, cugl::Vec2 origin ){
-
-        std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
-        for(auto& text : value) {
-
-            std::shared_ptr<cugl::SpriteSheet> _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
-            anims.push_back(_sprite);
-        }
+    void setSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
         _animations.setOrigin(origin);
         _animations = Animation(anims, 10, 0);
     }

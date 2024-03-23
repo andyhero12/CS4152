@@ -108,14 +108,17 @@ void MonsterController::setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> d
     textures.push_back(_assets->get<Texture>("monkey5"));
     textures.push_back(_assets->get<Texture>("monkey6"));
     textures.push_back(_assets->get<Texture>("monkey7"));
-    meleeAnimationData._texture = textures;
+    int rows = _framesize / _framecols;
+    for(auto& text : textures) {
+        meleeAnimationData._sprite.push_back(cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize));
+    }
     meleeAnimationData._framesize = _framesize;
     meleeAnimationData._framecols = _framecols;
 }
 
 void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
     
-    std::vector<std::shared_ptr<cugl::Texture>> _texture = meleeAnimationData._texture;
+    std::vector<std::shared_ptr<cugl::SpriteSheet>>& _texture = meleeAnimationData._sprite;
     int _framesize = meleeAnimationData._framesize;
     int _framecols = meleeAnimationData._framecols;
     int numTargets =  overWorld.getTotalTargets();
@@ -129,8 +132,7 @@ void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
         }
         float _radius = std::max(_framecols, rows) / 2;
         std::shared_ptr<MeleeEnemy> basic = std::make_shared<MeleeEnemy>(pos, 3, _radius, chosenTarget);
-        basic->setSprite(_texture, rows,_framecols, _framesize, Vec2(0, 0));
+        basic->setSprite(_texture, Vec2(0, 0));
         _pending.emplace(basic);
     }
-    
 }

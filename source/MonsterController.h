@@ -15,7 +15,7 @@
 #include <vector>
 #include <random>
 struct AnimationDataStruct{
-    std::vector<std::shared_ptr<cugl::Texture>> _texture;
+    std::vector<std::shared_ptr<cugl::SpriteSheet>> _sprite;
     int _framesize;
     int _framecols;
 };

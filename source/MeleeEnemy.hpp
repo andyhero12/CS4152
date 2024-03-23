@@ -39,5 +39,6 @@ public:
 private:
     int _contactDamage;
     int _attackCooldown;
+    int _prevDir;
 };
 #endif /* MeleeEnemy_hpp */
