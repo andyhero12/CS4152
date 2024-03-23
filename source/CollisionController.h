@@ -25,7 +25,7 @@
 #include "Dog.h"
 #include "SLAsteroidSet.h"
 #include "BaseSet.h"
-#include "Spawner.h"
+#include "SpawnerController.h"
 #include "AttackPolygons.hpp"
 #include "OverWorld.hpp"
 #include "MonsterController.h"
@@ -114,23 +114,28 @@ public:
      */
     bool resolveCollision( BaseSet& bset, AsteroidSet& aset);
     
-    void resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
+    void resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
     
-    void hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast);
+    void hugeBlastCollision(const cugl::Poly2& blastRectangle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& enemies);
     
     bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Dog> ship);
     
-    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Dog> ship);
-    void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Dog> ship);
+    void resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
+                           std::shared_ptr<Dog> dog);
     void resolveDecoyDamage(AsteroidSet& aset);
     
     // Post Update Functions
     void intraOverWorldCollisions( OverWorld& overWorld);
     
-    
     void overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController);
     
     bool monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    bool monsterDecoyCollision(std::vector<std::shared_ptr<Decoy>>& decoys, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    bool monsterBaseCollsion(std::shared_ptr<BaseSet> curBases, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    
+    
+    void attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController);
+    
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

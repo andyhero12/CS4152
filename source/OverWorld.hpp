@@ -74,7 +74,7 @@ public:
     std::shared_ptr<Devil> getDevil()const {
         return _devil;
     }
-    std::vector<std::shared_ptr<Decoy>> getDecoys() const{
+    std::vector<std::shared_ptr<Decoy>>& getDecoys(){
         return _decoys;
     }
     std::shared_ptr<BaseSet> getBaseSet(){

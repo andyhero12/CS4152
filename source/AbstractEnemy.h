@@ -42,6 +42,9 @@ public:
     int getHealth() const {
         return _health;
     }
+    void setHealth(int m_health) {
+        _health = m_health;
+    }
     int getRadius() const{
         return _radius;
     }

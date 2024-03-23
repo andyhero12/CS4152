@@ -29,6 +29,7 @@ void MonsterController::postUpdate(cugl::Size size, float timestep){
     for (std::shared_ptr<AbstractEnemy> curEnemy: _pending){
         _current.insert(curEnemy);
     }
+    _pending.clear();
 }
 
 void MonsterController::update(cugl::Size size, float timestep, const OverWorld& overWorld){

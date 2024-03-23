@@ -161,29 +161,16 @@ void GameScene::update(float timestep) {
 //            CULog("NOTHING\n");
         }
     }
-    
-    // Move the asteroids
-//    _asteroids.update(getSize() * WORLD_SIZE, timestep);
-//    _spawnerController.update(_asteroids,timestep);
     _spawnerController.update(_monsterController,overWorld, timestep);
     _monsterController.update(getSize(), timestep, overWorld);
     
     _collisions.intraOverWorldCollisions(overWorld);
     _collisions.overWorldMonsterControllerCollisions(overWorld, _monsterController);
-    
-    _collisions.resolveAttacks(overWorld.getAttackPolygons() , _asteroids,_spawnerController._spawners,_ship);
-    _collisions.resolveDecoyDamage(_asteroids);
-    // Check for collisions and play sound
-//    if (_collisions.resolveCollision(_ship, _asteroids)) {
-//        AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
-//    }
+    _collisions.attackCollisions(overWorld, _monsterController, _spawnerController);
     
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
-    if (_collisions.resolveCollision(*baseSet, _asteroids)){
-//        CULog("asteroid hit base\n");
-    }
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), baseSet->getFirstHealth(), _ship->getMode().c_str()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), overWorld.getBaseSet()->getFirstHealth(), _ship->getMode().c_str()));
     _text->layout();
     
     // Check if game ended
