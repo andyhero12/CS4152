@@ -23,10 +23,11 @@
 #define __SL_COLLISION_CONTROLLER_H__
 #include <cugl/cugl.h>
 #include "Dog.h"
-#include "SLAsteroidSet.h"
 #include "BaseSet.h"
-#include "Spawner.h"
+#include "SpawnerController.h"
 #include "AttackPolygons.hpp"
+#include "OverWorld.hpp"
+#include "MonsterController.h"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -75,52 +76,28 @@ public:
         _size = size;
         return true;
     }
-        
-    /**
-     * Returns true if there is a ship-asteroid collision
-     *
-     * In addition to checking for the collision, this method also resolves it.
-     * That means it applies damage to the ship for EACH asteroid encountered.
-     * It does not, however, play the sound. That happens in the main controller
-     *
-     * Note that this method must take wrap into consideration as well. If the
-     * asteroid/ship can be drawn at multiple points on the screen, then it can
-     * collide at multiple places as well.
-     *
-     * @param ship  The players ship
-     * @param aset  The asteroid set
-     *
-     * @return true if there is a ship-asteroid collision
-     */
-    bool resolveCollision(const std::shared_ptr<Dog>& ship, AsteroidSet& ast);
-
-    /**
-     * Returns true if there is a photon-asteroid collision
-     *
-     * In addition to checking for the collision, this method also resolves it.
-     * That means it applies damage to the ship for EACH asteroid encountered.
-     * It does not, however, play the sound. That happens in the main controller
-     *
-     * Note that this method must take wrap into consideration as well. If the
-     * asteroid/photon can be drawn at multiple points on the screen, then it can
-     * collide at multiple places as well.
-     *
-     * @param pset  The photon set
-     * @param aset  The asteroid set
-     *
-     * @return true if there is a ship-asteroid collision
-     */
-    bool resolveCollision( BaseSet& bset, AsteroidSet& aset);
     
-    void resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
+    void resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
     
-    void hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast);
+    void hugeBlastCollision(const cugl::Poly2& blastRectangle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& enemies);
     
     bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Dog> ship);
     
-    void resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Dog> ship);
-    void resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& ast, std::shared_ptr<Dog> ship);
-    void resolveDecoyDamage(AsteroidSet& aset);
+    void resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
+                           std::shared_ptr<Dog> dog);
+    
+    // Post Update Functions
+    void intraOverWorldCollisions( OverWorld& overWorld);
+    
+    void overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController);
+    
+    bool monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    bool monsterDecoyCollision(std::shared_ptr<DecoySet> decoySet, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    bool monsterBaseCollsion(std::shared_ptr<BaseSet> curBases, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    
+    
+    void attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController);
+    
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

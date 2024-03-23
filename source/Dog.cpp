@@ -304,7 +304,6 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         if (runAnimation.frameUpdateReady()){
             runAnimation.stepAnimation();
         }
-    
     }
 }
 

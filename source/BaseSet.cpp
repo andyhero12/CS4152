@@ -12,7 +12,7 @@ BaseSet::~BaseSet()
 {
 }
 
-void BaseSet::update(AsteroidSet &aset)
+void BaseSet::update()
 {
     for (auto &base : _bases)
     {
@@ -38,7 +38,7 @@ bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data)
                 pos.x = entry->get(0)->get(0)->asFloat(0);
                 pos.y = entry->get(0)->get(1)->asFloat(0);
                 int health = entry->get(1)->asInt(0);
-                _bases.insert(std::make_shared<Base>(health, pos));
+                _bases.emplace_back(std::make_shared<Base>(health, pos));
             }
         }
         return true;
@@ -49,10 +49,6 @@ bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data)
 void BaseSet::setTexture(const std::shared_ptr<cugl::Texture> &value)
 {
     _texture = value;
-    //    for(auto& spawner : _spawners) {
-    //        spawner->setTexture(value);
-    //        std::cout << spawner->getTexture()<< std::endl;
-    //    }
 }
 
 void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch> &batch, cugl::Size size)

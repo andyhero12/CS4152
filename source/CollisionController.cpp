@@ -27,50 +27,133 @@
 #define COLLISION_COEFF     0.1f
 
 using namespace cugl;
-
-void CollisionController::resolveDecoyDamage(AsteroidSet& aset){
-    for (std::shared_ptr<Decoy> curDecoy : aset._currentDecoys){
-        for (std::shared_ptr<AsteroidSet::Asteroid> asteroid: aset.current){
-            Vec2 norm = curDecoy->getPos() - asteroid->position;
-            float distance = norm.length();
-            float impactDistance = aset.getRadius()*asteroid->getScale();
-            if (distance < impactDistance){ // need noise
-                curDecoy->subHealth(asteroid->getDamage());
-            }
-        }
+void CollisionController::intraOverWorldCollisions(OverWorld& overWorld){
+    if (healFromBaseCollsion(*overWorld.getBaseSet(), overWorld.getDog())){
+        CULog("HEAL DETECTED\n");
     }
 }
-void CollisionController::resolveAttacks(AttackPolygons& attacks,AsteroidSet& aset, std::unordered_set<std::shared_ptr<Spawner>>& spawners, std::shared_ptr<Dog> ship){
+
+void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController){
+    std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
+    
+    if (monsterDogCollision(overWorld.getDog(), monsterEnemies)){
+        CULog("MONSTER DOG COLLISION DETECTED\n");
+    }
+    if (monsterDecoyCollision(overWorld.getDecoys(), monsterEnemies)){
+        CULog("MONSTER DECOY COLLISION DETECTED\n");
+    }
+    if (monsterBaseCollsion(overWorld.getBaseSet(), monsterEnemies)){
+        CULog("Monster Base COLLISION DETECTED\n");
+    }
+
+}
+void CollisionController::attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController){
+    AttackPolygons& attacks = overWorld.getAttackPolygons();
+    std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
+    std::unordered_set<std::shared_ptr<Spawner>>& spawners = spawnerController._spawners;
+    std::shared_ptr<Dog> dog = overWorld.getDog();
     for (const std::shared_ptr<ActionPolygon>& action: attacks.currentAttacks){
         switch (action->getAction()){
             case (Action::SHOOT):
-                hugeBlastCollision(action->getPolygon(), aset); // Play blast sound
+                hugeBlastCollision(action->getPolygon(), monsterEnemies); // Play blast sound
                 break;
             case (Action::EXPLODE):
-                resolveBlowup(action->getPolygon(),aset, spawners); // play boom sound
+                resolveBlowup(action->getPolygon(),monsterEnemies, spawners); // play boom sound
                 break;
             case (Action::BITE):
-                resolveBiteAttack(action->getPolygon(),aset, ship);
+                resolveBiteAttack(action->getPolygon(),monsterEnemies, dog);
                 break;
             default:
                 CULog("Action not used in Collisions\n");
         };
     }
+}
+bool CollisionController::monsterBaseCollsion(std::shared_ptr<BaseSet> curBases, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies){
+    bool collision = false;
+    auto itP = curBases->_bases.begin();
+    while (itP != curBases->_bases.end()){
+        std::shared_ptr<Base> base = *itP;
+        auto itA = curEnemies.begin();
+        bool hitSomething = false;
+        while ( itA != curEnemies.end()){
+            const std::shared_ptr<AbstractEnemy>& enemy = *itA;
+            Vec2 norm = base->getPos() - enemy->getPos();
+            float distance = norm.length();
+            float impactDistance = enemy->getRadius()+ 10;
+            auto curA = itA++;
+            if (distance < impactDistance && enemy->canAttack()) {
+                enemy->resetAttack();
+                hitSomething = true;
+                collision = true;
+                curEnemies.erase(curA);
+            }
+        }
+        auto curP = itP++;
+        if (hitSomething){
+            (*curP)->reduceHealth(5);
+        }
+    }
+    return collision;
+}
+bool CollisionController::monsterDecoyCollision(std::shared_ptr<DecoySet> decoySet, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies){
+    bool collide = false;
+    std::vector<std::shared_ptr<Decoy>> decoys = decoySet->getCurrentDecoys();
+    for (std::shared_ptr<Decoy> curDecoy: decoys){
+        for (std::shared_ptr<AbstractEnemy> enemy: curEnemies){
+            Vec2 norm = curDecoy->getPos() - enemy->getPos();
+            float distance = norm.length();
+            float impactDistance = enemy->getRadius() +5;
+            if (distance < impactDistance){ // need noise
+                if (enemy->canAttack()){
+                    collide = true;
+                    enemy->resetAttack();
+                    curDecoy->subHealth(enemy->getDamage());
+                }
+            }
+        }
+    }
+    return collide;
+}
+bool CollisionController::monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies){
+    bool collision = false;
+    auto it = curEnemies.begin();
+    while (it != curEnemies.end()){
+        std::shared_ptr<AbstractEnemy> enemy = *it;
+        Vec2 norm = curDog->getPosition() - enemy->getPos();
+        float distance = norm.length();
+        float impactDistance = curDog->getRadius() + enemy->getRadius();
+        it++;
+        if (distance < impactDistance) {
+            norm.normalize();
+            Vec2 temp = norm * ((impactDistance - distance) / 2);
+            curDog->setPosition(curDog->getPosition()+temp);
+            enemy->setPos(enemy->getPos() - temp);
+            if (enemy->canAttack()){
+                collision = true;
+                enemy->resetAttack();
+                curDog->setHealth(curDog->getHealth()-enemy->getDamage());
+            }
+        }
+    }
+    return collision;
     
+    
+    return false;
 }
 
-void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, AsteroidSet& aset, std::shared_ptr<Dog> ship){
-    auto itA = aset.current.begin();
+void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
+                                            std::shared_ptr<Dog> dog){
+    auto itA = monsterEnemies.begin();
     bool hitSomething = false;
-    while ( itA != aset.current.end()){
-        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+    while ( itA != monsterEnemies.end()){
+        const std::shared_ptr<AbstractEnemy>& enemy = *itA;
         auto curA = itA++;
-        if (bitePolygon.contains(rock->position)){
+        if (bitePolygon.contains(enemy->getPos())){
             hitSomething = true;
-            rock->setHealth(rock->getHealth() - 1);
-            if(rock->getHealth() <= 0){
-                ship->addAbsorb((*curA)->getAbsorbValue());
-                aset.current.erase(curA);
+            enemy->setHealth(enemy->getHealth() - 1);
+            if(enemy->getHealth() <= 0){
+                dog->addAbsorb((*curA)->getAbsorbValue());
+                monsterEnemies.erase(curA);
             }
         }
     }
@@ -94,27 +177,26 @@ bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<D
     }
     return false;
 }
-void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, AsteroidSet& ast){
-    auto itA = ast.current.begin();
-    while (itA != ast.current.end()){
-        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
-        Vec2 enemyPos = rock->position;
+void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& enemies){
+    auto itA = enemies.begin();
+    while (itA != enemies.end()){
+        const std::shared_ptr<AbstractEnemy>& enemy = *itA;
+        Vec2 enemyPos = enemy->getPos();
         auto curA = itA++;
         if (blastRectangle.contains(enemyPos)){
-            ast.current.erase(curA);
+            enemies.erase(curA);
         }
     }
 }
-void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, AsteroidSet& ast, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
-    auto itA = ast.current.begin();
-    while (itA != ast.current.end()){
-        const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
+void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
+    auto itA = monsterEnemies.begin();
+    while (itA != monsterEnemies.end()){
+        const std::shared_ptr<AbstractEnemy>& enemy = *itA;
         auto curA = itA++;
-        if (blastCircle.contains(rock->position)){
-            ast.current.erase(curA);
+        if (blastCircle.contains(enemy->getPos())){
+            monsterEnemies.erase(curA);
         }
     }
-    
     auto itS = spawners.begin();
     while (itS != spawners.end()){
         const std::shared_ptr<Spawner>& spawn = *itS;
@@ -123,101 +205,4 @@ void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, Asteroid
             spawners.erase(curS);
         }
     }
-    
-    
 }
-
-bool CollisionController::resolveCollision( BaseSet& bset, AsteroidSet& aset){
-    bool collision = false;
-//
-    auto itP = bset._bases.begin();
-    while (itP != bset._bases.end()){
-        std::shared_ptr<Base> base = *itP;
-        auto itA = aset.current.begin();
-        bool hitSomething = false;
-        while ( itA != aset.current.end()){
-            const std::shared_ptr<AsteroidSet::Asteroid>& rock = *itA;
-            Vec2 norm = base->getPos() - rock->position;
-            float distance = norm.length();
-            float impactDistance = aset.getRadius()*rock->getScale();
-
-            
-            // If this normal is too small, there was a collision
-            auto curA = itA++;
-            if (distance < impactDistance) {
-                hitSomething = true;
-                collision = true;
-                aset.current.erase(curA);
-            }
-        }
-        auto curP = itP++;
-        if (hitSomething){
-            (*curP)->reduceHealth(5);
-        }
-    }
-//    collision = true;
-    return collision;
-}
-
-/**
- * Returns true if there is a ship-asteroid collision
- *
- * In addition to checking for the collision, this method also resolves it.
- * That means it applies damage to the ship for EACH asteroid encountered.
- * It does not, however, play the sound. That happens in the main controller
- *
- * Note that this method must take wrap into consideration as well. If the
- * asteroid/ship can be drawn at multiple points on the screen, then it can
- * collide at multiple places as well.
- *
- * @param ship  The players ship
- * @param aset  The asteroid set
- *
- * @return true if there is a ship-asteroid collision
- */
-bool CollisionController::resolveCollision(const std::shared_ptr<Dog>& ship, AsteroidSet& aset) {
-    bool collision = false;
-    auto it = aset.current.begin();
-    while (it != aset.current.end()){
-//    for(auto it = aset.current.begin(); it != aset.current.end(); ++it) {
-        // Calculate the normal of the (possible) point of collision
-        std::shared_ptr<AsteroidSet::Asteroid> rock = *it;
-        
-        // This loop finds the NEAREST collision if we include wrap for the asteroid/ship
-        Vec2 norm = ship->getPosition()-rock->position;
-        float distance = norm.length();
-        float impactDistance = (ship->getRadius() + aset.getRadius()*rock->getScale());
-        it++;
-        if (distance < impactDistance) {
-            // "Roll back" time so that the ships are barely touching (e.g. point of impact).
-            norm.normalize();
-            Vec2 temp = norm * ((impactDistance - distance) / 2);
-            ship->setPosition(ship->getPosition()+temp);
-            rock->position = rock->position-temp;
-
-            // Now it is time for Newton's Law of Impact.
-            // Convert the two velocities into a single reference frame
-            Vec2 vel = ship->getVelocity()-rock->velocity;
-
-            // Compute the impulse (see Essential Math for Game Programmers)
-            float impulse = (-(1 + COLLISION_COEFF) * norm.dot(vel)) /
-                            (norm.dot(norm) * (1.0f / ship->getMass() + 1.0f / (ship->getMass()*rock->getScale())));
-            if (norm.dot(norm) == 0) {
-                // Just use the coefficient if the impulse is degenerate.
-                impulse = COLLISION_COEFF;
-            }
-
-            // Change velocity of the two ships using this impulse
-            temp = norm * (impulse/ship->getMass());
-            ship->setVelocity(ship->getVelocity()+temp);
-
-            temp = norm * (impulse/(ship->getMass()*rock->getScale()));
-            rock->velocity = rock->velocity - temp;
-            
-            ship->setHealth(ship->getHealth()-rock->getDamage());
-        }
-    }
-    return collision;
-}
-
-

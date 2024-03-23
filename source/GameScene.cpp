@@ -58,49 +58,17 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _background = assets->get<Texture>("background");
     _constants = assets->get<JsonValue>("constants");
 
+    overWorld.init(assets, getSize());
     // Make a ship and set its texture
-    _ship = std::make_shared<Dog>(getSize()/2, _constants->get("ship"));
-    _devil = std::make_shared<Devil>(_ship, getSize()/2, _constants->get("devil"));
-    
+    _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(assets->get<Texture>("shipleftidle"));
-    textures.push_back(assets->get<Texture>("shiprightidle"));
-    _ship->setRunTexture(textures);
-    
-    textures.clear();
-    textures.push_back(assets->get<Texture>("player0"));
-    textures.push_back(assets->get<Texture>("player1"));
-    _devil->setRunTexture(textures);
-    
-    textures.clear();
-    textures.push_back(assets->get<Texture>("shipleftbite"));
-    textures.push_back(assets->get<Texture>("shiprightbite"));
-    _ship->setBiteTexture(textures);
-    
-//    _ship->setTexture(assets->get<Texture>("ship"));
-
-    // Initialize the asteroid set
-    _asteroids.init(_constants->get("asteroids"),_ship);
-    textures.clear();
-    textures.push_back(assets->get<Texture>("monkey0"));
-    textures.push_back(assets->get<Texture>("monkey1"));
-    textures.push_back(assets->get<Texture>("monkey2"));
-    textures.push_back(assets->get<Texture>("monkey3"));
-    textures.push_back(assets->get<Texture>("monkey4"));
-    textures.push_back(assets->get<Texture>("monkey5"));
-    textures.push_back(assets->get<Texture>("monkey6"));
-    textures.push_back(assets->get<Texture>("monkey7"));
-
-    _asteroids.setTexture(textures);
-    _asteroids.setDecoyTexture(assets->get<Texture>("base"));
     
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
-    
-    _bases.init(_constants->get("base"));
-    _bases.setTexture(assets->get<Texture>("base"));
 
+    _monsterController.setMeleeAnimationData(_constants->get("asteroids"), assets);
+    
     // Get the bang sound
     _bang = assets->get<Sound>("bang");
     _laser = assets->get<Sound>("laser");
@@ -140,16 +108,9 @@ void GameScene::dispose() {
  */
 void GameScene::reset() {
     _gameEnded = false;
-    _ship->setPosition(getSize()/2);
-    _devil->setPosition(getSize()/2);
-    _ship->setAbsorbValue(0);
-    _ship->setAngle(0);
-    _ship->setVelocity(Vec2::ZERO);
-    _ship->setHealth(_constants->get("ship")->getInt("health",0));
-    _asteroids.init(_constants->get("asteroids"),_ship);
     _spawnerController.init(_constants->get("spawner"));
-    _bases.init(_constants->get("base"));
-    _attackPolygonSet.init();
+    _monsterController.init(_constants->get("asteroids"),overWorld);
+    
 }
 
 /**
@@ -165,71 +126,40 @@ void GameScene::update(float timestep) {
     _input.readInput();
 
     if (_input.didPressReset()) {
+        overWorld.reset(getSize());
         reset();
-    }
-    if(_input.didChangeMode() && _ship->canChangeMode()){
-        _ship->toggleMode();
-        _ship->reloadMode();
     }
     if (_gameEnded){
         return;
     }
-    if (_input.didPressFire() && _ship->canFireWeapon()){
-        _ship->setAttack();
-        _attackPolygonSet.addBite(_ship);
-        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-    }
-    if (_input.didPressSpecial() && _ship->canFireWeapon()){
-//        _ship->reloadWeapon();
-        if (_ship->getMode() == "SHOOT" && _ship->getAbsorb() > 5){
-            _ship->subAbsorb(5);
-            _attackPolygonSet.addShoot(_ship);
-        }else if (_ship->getMode() == "BUILD" && _ship->getAbsorb() > 5 ){
-            _ship->subAbsorb(5);
-            _asteroids.createDecoy();
-        }else if (_ship->getMode() == "EXPLODE" && _ship->getAbsorb() > 10){
-            _ship->subAbsorb(10);
-            _attackPolygonSet.addExplode(_ship);
-        }else {
-            CULog("NOTHING\n");
-        }
-    }
-    _ship->move(_input.getForward(), _input.getTurn(), _input.getVelocity(), _input.getControllerState(), _input.getKeyboardState(), getSize() * WORLD_SIZE);
+    overWorld.update(_input, getSize(),timestep);
     
-    _devil->move(getSize() * WORLD_SIZE);
+//    if (_input.didPressFire() && _ship->canFireWeapon()){
+//        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
+//    }
+//    
+    _spawnerController.update(_monsterController,overWorld, timestep);
+    _monsterController.update(getSize(), timestep, overWorld);
     
-    // Move the asteroids
-    _asteroids.update(getSize() * WORLD_SIZE, timestep);
+    _collisions.intraOverWorldCollisions(overWorld);
+    _collisions.overWorldMonsterControllerCollisions(overWorld, _monsterController);
+    _collisions.attackCollisions(overWorld, _monsterController, _spawnerController);
     
-    _spawnerController.update(_asteroids,timestep);
-    _bases.update(_asteroids);
-    _attackPolygonSet.update(getSize());
-    _collisions.resolveAttacks(_attackPolygonSet, _asteroids,_spawnerController._spawners,_ship);
-    _collisions.resolveDecoyDamage(_asteroids);
-    // Check for collisions and play sound
-    if (_collisions.resolveCollision(_ship, _asteroids)) {
-        AudioEngine::get()->play("bang", _bang, false, _bang->getVolume(), true);
-    }
-    
-    if (_collisions.resolveCollision(_bases, _asteroids)){
-//        CULog("asteroid hit base\n");
-    }
-    // check for heals from base
-    if (_collisions.healFromBaseCollsion(_bases, _ship)){
-        
-    }
+    std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), _bases.getFirstHealth(), _ship->getMode().c_str()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), overWorld.getBaseSet()->getFirstHealth(), _ship->getMode().c_str()));
     _text->layout();
     
     // Check if game ended
-    if (_asteroids.isEmpty() && _spawnerController.win()){
+    if (_monsterController.isEmpty() && _spawnerController.win()){
         _gameEnded = true;
     }else if (_ship->getHealth() == 0){
         _gameEnded = true;
-    }else if (_bases.baseLost()){
+    }else if (baseSet->baseLost()){
         _gameEnded = true;
     }
+    _monsterController.postUpdate(getSize(), timestep);
+    overWorld.postUpdate();
 }
 
 /**
@@ -266,12 +196,9 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
             batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
         }
     }
-    _attackPolygonSet.draw(batch,getSize());
-    _asteroids.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     _spawnerController.draw(batch, getSize());
-    _bases.draw(batch,getSize());
-    _ship->draw(batch,getSize());
-    _devil->draw(batch,getSize());
+    _monsterController.draw(batch, getSize(),_assets->get<Font>("pixel32"));
+    overWorld.draw(batch, getSize());
     // draw actions
     
     // shift camera to draw for absolute positioning
@@ -287,12 +214,13 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
     
-    if (_asteroids.isEmpty() && _spawnerController.win()){
+    std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
+    if (_monsterController.isEmpty() && _spawnerController.win()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::GREEN);
         batch->drawText(_textWin,trans);
         batch->setColor(Color4::WHITE);
-    }else if (_ship->getHealth() == 0 || _bases.baseLost()){
+    }else if (_ship->getHealth() == 0 || baseSet->baseLost()){
         trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textLose->getBounds().size.width/2.0f, getSize().height/2.0f));
         batch->setColor(Color4::RED);
         batch->drawText(_textLose, trans);

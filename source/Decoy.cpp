@@ -9,7 +9,7 @@
 #define DECOY_DURATION 6
 Decoy::Decoy(cugl::Vec2 pos)
 : _position{pos}
-, _health{15}
+, _health{25}
 , _time_duration{DECOY_DURATION}
 {
     

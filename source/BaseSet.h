@@ -10,7 +10,6 @@
 #include <cugl/cugl.h>
 #include <unordered_set>
 #include <vector>
-#include "SLAsteroidSet.h"
 #include "Base.h"
 
 
@@ -21,7 +20,7 @@ public:
 //
 //
 //    /* Set of bases */
-    std::unordered_set<std::shared_ptr<Base>> _bases;
+    std::vector<std::shared_ptr<Base>> _bases;
 //
     BaseSet();
     
@@ -29,7 +28,7 @@ public:
 
     void setTexture(const std::shared_ptr<cugl::Texture>& value);
     
-    void update(AsteroidSet &aset);
+    void update();
     
     bool init(std::shared_ptr<cugl::JsonValue> data);
     

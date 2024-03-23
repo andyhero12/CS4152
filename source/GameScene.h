@@ -15,14 +15,11 @@
 #include <vector>
 #include <unordered_set>
 #include "Dog.h"
-#include "Devil.h"
-#include "SLAsteroidSet.h"
 #include "InputController.h"
 #include "CollisionController.h"
 #include "SpawnerController.h"
-#include "BaseSet.h"
-#include "AttackPolygons.hpp"
 #include "OverWorld.hpp"
+#include "MonsterController.h"
 #include "GlobalConstants.h"
 
 /**
@@ -44,17 +41,12 @@ protected:
     CollisionController _collisions;
 
     SpawnerController _spawnerController;
+    MonsterController _monsterController;
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;
     /** Location and animation information for the ship */
     std::shared_ptr<Dog> _ship;
-    std::shared_ptr<Devil> _devil;
-    /** The location of all of the active asteroids */
-    AsteroidSet _asteroids;
-    
-    BaseSet     _bases;
-    AttackPolygons _attackPolygonSet;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */
@@ -65,7 +57,6 @@ protected:
     std::shared_ptr<cugl::TextLayout> _textLose;
     /** The text with the current health */
     std::shared_ptr<cugl::TextLayout> _text;
-    /** The sound of a ship-asteroid collision */
     std::shared_ptr<cugl::Sound> _bang;
     std::shared_ptr<cugl::Sound> _laser;
     std::shared_ptr<cugl::Sound> _blast;

@@ -11,12 +11,16 @@
 #include "AbstractEnemy.h"
 class RangedEnemy : public AbstractEnemy {
 public:
-    virtual void draw() override;
+    virtual void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font) override;
     
-    virtual void update(float dt, const OverWorld& overWorld) override;
+    virtual void update(float dt, OverWorld& overWorld) override;
     
     virtual int getDamage() override{
         return rangedDamage;
+    }
+    virtual int getAbsorbValue() const override{
+        CULog("TODO ABSORB RANGE\n");
+        return 1;
     }
     virtual ~RangedEnemy() {
         
