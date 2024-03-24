@@ -14,6 +14,8 @@
 #include <unordered_set>
 #include <vector>
 #include "MonsterController.h"
+#include "AbstractSpawner.h"
+#include "MeleeSpawner.hpp"
 #include "OverWorld.hpp"
 
 
@@ -27,7 +29,7 @@ public:
     
     
     /* Set of spawners */
-    std::unordered_set<std::shared_ptr<Spawner>> _spawners;
+    std::unordered_set<std::shared_ptr<AbstractSpawner>> _spawners;
     
     /* Functions */
     SpawnerController();

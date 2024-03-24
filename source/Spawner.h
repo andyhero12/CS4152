@@ -31,11 +31,13 @@ public:
     
     Spawner(int rate, cugl::Vec2 pos, int health);
     void update(float timestep);
-//    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
-//    void setTexture(const std::shared_ptr<cugl::Texture>& value);
+    void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
     
     const std::shared_ptr<cugl::Texture>& getTexture() const {
         return _texture;
+    }
+    void setTexture(const std::shared_ptr<cugl::Texture>& value){
+        _texture = value;
     }
     
     double getTimeElapsed() const{
@@ -50,8 +52,9 @@ public:
     const int getCnt() const {
         return _respawnCnt;
     }
-    const cugl::Vec2& getPos() const {
-        return _position; }
+    cugl::Vec2 getPos() const {
+        return _position;
+    }
     void subHealth(const int val);
     bool dead(){return _health <= 0;}
 };

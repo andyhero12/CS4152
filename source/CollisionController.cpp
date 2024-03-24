@@ -50,7 +50,7 @@ void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWo
 void CollisionController::attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController){
     AttackPolygons& attacks = overWorld.getAttackPolygons();
     std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
-    std::unordered_set<std::shared_ptr<Spawner>>& spawners = spawnerController._spawners;
+    std::unordered_set<std::shared_ptr<AbstractSpawner>>& spawners = spawnerController._spawners;
     std::shared_ptr<Dog> dog = overWorld.getDog();
     for (const std::shared_ptr<ActionPolygon>& action: attacks.currentAttacks){
         switch (action->getAction()){
@@ -190,7 +190,7 @@ void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, 
         }
     }
 }
-void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<Spawner>>& spawners){
+void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<AbstractSpawner>>& spawners){
     auto itA = monsterEnemies.begin();
     while (itA != monsterEnemies.end()){
         const std::shared_ptr<AbstractEnemy>& enemy = *itA;
@@ -201,7 +201,7 @@ void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, std::uno
     }
     auto itS = spawners.begin();
     while (itS != spawners.end()){
-        const std::shared_ptr<Spawner>& spawn = *itS;
+        const std::shared_ptr<AbstractSpawner>& spawn = *itS;
         auto curS = itS++;
         if (blastCircle.contains(spawn->getPos())){
             spawners.erase(curS);
