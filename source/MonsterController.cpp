@@ -27,7 +27,7 @@ bool MonsterController::init(std::shared_ptr<cugl::JsonValue> data, OverWorld& o
                 Vec2 pos;
                 pos.x = entry->get(0)->get(0)->asFloat(0);
                 pos.y = entry->get(0)->get(1)->asFloat(0);
-                spawnBasicEnemy(pos, overWorld);
+                spawnStaticBasicEnemy(pos, overWorld);
             }
         }
     }
@@ -134,5 +134,23 @@ void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
         std::shared_ptr<MeleeEnemy> basic = std::make_shared<MeleeEnemy>(pos, 3, _radius, chosenTarget);
         basic->setWalkingSprite(_texture, Vec2(0, 0));
         _pending.emplace(basic);
+    }
+}
+void MonsterController::spawnStaticBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
+    
+    std::vector<std::shared_ptr<cugl::SpriteSheet>>& _texture = meleeAnimationData._sprite;
+    int _framesize = meleeAnimationData._framesize;
+    int _framecols = meleeAnimationData._framecols;
+    if (_texture.size() > 0)
+    {
+        int rows = _framesize / _framecols;
+        if (_framesize % _framecols != 0)
+        {
+            rows++;
+        }
+        float _radius = std::max(_framecols, rows) / 2;
+        std::shared_ptr<StaticMeleeEnemy> static_enemy = std::make_shared<StaticMeleeEnemy>(pos, 3, _radius, 0);
+        static_enemy->setWalkingSprite(_texture, Vec2(0, 0));
+        _pending.emplace(static_enemy);
     }
 }

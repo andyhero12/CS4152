@@ -10,6 +10,7 @@
 
 #include "AbstractEnemy.h"
 #include "MeleeEnemy.hpp"
+#include "StaticMeleeEnemy.hpp"
 #include "OverWorld.hpp"
 #include <unordered_set>
 #include <vector>
@@ -52,7 +53,7 @@ public:
     }
     
     void spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld);
-    
+    void spawnStaticBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld);
     void postUpdate(cugl::Size size, float timestep);
     
     void setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> data,

@@ -251,6 +251,18 @@ void Dog::move(float forward, float turn, Size size) {
     
     // Move the ship position by the ship velocity
     _pos += (_vel*3);
+    while (_pos.x > size.width) {
+        _pos.x = size.width;
+    }
+    while (_pos.x < 0) {
+        _pos.x = 0;
+    }
+    while (_pos.y > size.height) {
+        _pos.y = size.height;
+    }
+    while (_pos.y < 0) {
+        _pos.y = 0;
+    }
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
