@@ -12,6 +12,7 @@
 class BombEnemy : public AbstractEnemy {
 public:
     
+    BombEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex);
     virtual ~BombEnemy() {
         
     }
@@ -20,16 +21,29 @@ public:
     virtual void update(float dt, OverWorld& overWorld) override;
     
     virtual int getDamage() override{
-        return contactDamage;
+        return _contactDamage;
     }
+    int getExplosionDamage(){
+        return _baseExplosionDamage;
+    }
+    bool canAttack() const override{
+        return _attackCooldown == 60;
+    }
+    
+    virtual void resetAttack() override{
+        _attackCooldown = 0;
+    }
+    virtual void executeDeath(OverWorld& overWorld) override;
+    
     virtual int getAbsorbValue() const override{
         CULog("TODO ABSORB BOMB\n");
         return 1;
     }
     
     
-private:
-    
-    int contactDamage;
+protected:
+    int _contactDamage;
+    int _attackCooldown;
+    int _baseExplosionDamage;
 };
 #endif /* BombEnemy_hpp */

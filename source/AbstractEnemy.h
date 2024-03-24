@@ -31,6 +31,9 @@ public:
     virtual bool canAttack() const = 0;
     virtual void resetAttack() = 0;
     virtual int getAbsorbValue() const = 0;
+    virtual void executeDeath(OverWorld& overWorld) {
+        CULog("executing Death\n");
+    }
     // Virtual destructor
     virtual ~AbstractEnemy() {}
     

@@ -61,7 +61,8 @@ void CollisionController::attackCollisions(OverWorld& overWorld, MonsterControll
                 resolveBlowup(action->getPolygon(),monsterEnemies, spawners); // play boom sound
                 break;
             case (Action::BITE):
-                resolveBiteAttack(action->getPolygon(),monsterEnemies, dog);
+                resolveBiteAttack(action->getPolygon(), monsterEnemies, overWorld);
+//                resolveBiteAttack(action->getPolygon(),monsterEnemies, dog);
                 break;
             default:
                 CULog("Action not used in Collisions\n");
@@ -142,7 +143,7 @@ bool CollisionController::monsterDogCollision(std::shared_ptr<Dog> curDog, std::
 }
 
 void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
-                                            std::shared_ptr<Dog> dog){
+                                            OverWorld& overWorld){
     auto itA = monsterEnemies.begin();
     bool hitSomething = false;
     while ( itA != monsterEnemies.end()){
@@ -152,7 +153,8 @@ void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, std:
             hitSomething = true;
             enemy->setHealth(enemy->getHealth() - 1);
             if(enemy->getHealth() <= 0){
-                dog->addAbsorb((*curA)->getAbsorbValue());
+                enemy->executeDeath(overWorld);
+                overWorld.getDog()->addAbsorb((*curA)->getAbsorbValue());
                 monsterEnemies.erase(curA);
             }
         }

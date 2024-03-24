@@ -84,7 +84,7 @@ public:
     bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Dog> ship);
     
     void resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
-                           std::shared_ptr<Dog> dog);
+                           OverWorld& overWorld);
     
     // Post Update Functions
     void intraOverWorldCollisions( OverWorld& overWorld);
