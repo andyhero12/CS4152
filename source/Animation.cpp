@@ -41,7 +41,12 @@ void Animation::stepAnimation(){
 }
 
 const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
-    currentAnimSprite->setFrame(frame);
+    if (currentAnimSprite != nullptr) {
+        currentAnimSprite->setFrame(frame);
+    }
+    else {
+        // Handle the null pointer case, maybe log an error or throw a specific exception
+    }
     return currentAnimSprite;
 }
 
