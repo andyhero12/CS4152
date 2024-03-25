@@ -8,6 +8,7 @@ xcuserdata/
 *.xccheckout
 
 build/
+buildfiles/
 
 cugl/scripts
 cugl/__pycache__
