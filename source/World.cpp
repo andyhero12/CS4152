@@ -13,10 +13,10 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::sh
     for(int i = 0; i < map.size(); i++){
         for (int j = 0; j < map[0].size(); j++){
             if(map[i][j] == 0){
-                overworld.emplace_back(size, Terrain::PASSABLE, passable);
+                overworld[i].emplace_back(size, Terrain::PASSABLE, passable);
             }
             else{
-                overworld.emplace_back(size, Terrain::IMPASSIBLE, impassable);
+                overworld[i].emplace_back(size, Terrain::IMPASSIBLE, impassable);
             }
         }
     }

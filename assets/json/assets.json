@@ -1,7 +1,10 @@
 {
     "textures": {
-        "background": {
+        "sand": {
             "file": "textures/tile/sand.png"
+        },
+        "water": {
+            "file": "textures/tile/pool.png"
         },
         "photon": {
             "file": "textures/photon.png"

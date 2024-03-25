@@ -24,7 +24,7 @@ using namespace std;
 
 // Lock the screen size to fixed height regardless of aspect ratio
 #define SCENE_HEIGHT 720
-//#define WORLD_SIZE 3
+#define WORLD_SIZE 3
 
 #pragma mark -
 #pragma mark Constructors
@@ -55,7 +55,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _input.init();
 
     // Get the background image and constant values
-    _background = assets->get<Texture>("background");
+    sand = assets->get<Texture>("sand");
+    water = assets->get<Texture>("water");
     _constants = assets->get<JsonValue>("constants");
 
     overWorld.init(assets, getSize());
@@ -85,7 +86,19 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _textLose = TextLayout::allocWithText(lossMsg, assets->get<Font>("pixel32"));
     _textLose->layout();
     _collisions.init(getSize());
-    createMap();
+    
+    //delete
+    const int rows = 10;
+     const int cols = 10;
+     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+
+     for (int i = 0; i < rows; ++i) {
+         for (int j = 0; j < cols; ++j) {
+             matrix[i][j] = rand() % 2; // Assign random 0 or 1
+         }
+     }
+    
+    _world = World(Vec2(0, 0), matrix, sand, water);
     reset();
     return true;
 }
@@ -161,16 +174,6 @@ void GameScene::update(float timestep) {
 }
 
 void GameScene::createMap(){
-    const int rows = 10;
-     const int cols = 10;
-     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
-
-     for (int i = 0; i < rows; ++i) {
-         for (int j = 0; j < cols; ++j) {
-             matrix[i][j] = rand() % 2; // Assign random 0 or 1
-         }
-     }
-    
 }
 /**
  * Draws all this scene to the given SpriteBatch.

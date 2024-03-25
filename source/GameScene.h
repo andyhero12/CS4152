@@ -21,6 +21,7 @@
 #include "OverWorld.hpp"
 #include "MonsterController.h"
 #include "GlobalConstants.h"
+#include "World.h"
 
 /**
  * This class is the primary gameplay constroller for the demo.
@@ -50,7 +51,8 @@ protected:
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */
-    std::shared_ptr<cugl::Texture> _background;
+    std::shared_ptr<cugl::Texture> sand;
+    std::shared_ptr<cugl::Texture> water;
     /** The text with the win message */
     std::shared_ptr<cugl::TextLayout> _textWin;
     /** The text with the loss */
@@ -60,6 +62,7 @@ protected:
     std::shared_ptr<cugl::Sound> _bang;
     std::shared_ptr<cugl::Sound> _laser;
     std::shared_ptr<cugl::Sound> _blast;
+    World _world;
     
     bool _gameEnded;
     
