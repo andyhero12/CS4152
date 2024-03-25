@@ -23,13 +23,13 @@ void LevelParser::processLayers(){
     if (_level){
         for(auto& layer : _level->get("layers")->children()) {
             if (layer->getString("name")=="DrawTiles"){
-                processTiles(layer);
+                processMatrix(layer, _tile);
             }
             else if (layer->getString("name")=="Boundaries"){
-                processBounds(layer);
+                processMatrix(layer, _walls);
             }
             else if (layer->getString("name")=="Decorative"){
-                processDecors(layer);
+                processMatrix(layer, _decors);
             }
             else if (layer->getString("name")=="PlayerSpawn"){
                 float playerX = layer->get("name")->get("objects")->getFloat("x");
@@ -48,62 +48,22 @@ void LevelParser::processLayers(){
     }
 }
 
-void LevelParser::processTiles(std::shared_ptr<cugl::JsonValue> levelJson){
+void LevelParser::processMatrix(std::shared_ptr<cugl::JsonValue> levelJson, std::vector<std::vector<int>>& matrix){
     int row = levelJson->get("width")->asInt();
     int column = levelJson->get("height")->asInt();
     auto array = levelJson->get("data")->children();
     int x = 0;
     int y = 0;
-    _tile.resize(row);
-    _tile[x].resize(column);
+    matrix.resize(row);
+    matrix.resize(column);
     for (auto it = array.begin(); it != array.end(); it++)
     {
-        _tile.at(x).at(y) = (*it)->asInt();
+        matrix.at(x).at(y) = (*it)->asInt();
         y += 1;
         if(y == column){
             y = 0;
             x += 1;
-            _tile[x].resize(column);
-        }
-    }
-}
-
-void LevelParser::processBounds(std::shared_ptr<cugl::JsonValue> levelJson){
-    int row = levelJson->get("width")->asInt();
-    int column = levelJson->get("height")->asInt();
-    auto array = levelJson->get("data")->children();
-    int x = 0;
-    int y = 0;
-    _walls.resize(row);
-    _walls[x].resize(column);
-    for (auto it = array.begin(); it != array.end(); it++)
-    {
-        _walls.at(x).at(y) = (*it)->asInt();
-        y += 1;
-        if(y == column){
-            y = 0;
-            x += 1;
-            _walls[x].resize(column);
-        }
-    }
-}
-
-void LevelParser::processDecors(std::shared_ptr<cugl::JsonValue> levelJson){
-    int row = levelJson->get("width")->asInt();
-    int column = levelJson->get("height")->asInt();
-    auto array = levelJson->get("data")->children();
-    int x = 0;
-    int y = 0;
-    _decors.resize(row);
-    _decors[x].resize(column);
-    for (auto it = array.begin(); it != array.end(); it++)
-    {
-        _decors.at(x).at(y) = (*it)->asInt();
-        y += 1;
-        if(y == column){
-            y = 0;
-            x += 1;
-            _decors[x].resize(column);
+            matrix[x].resize(column);
         }
     }
 }

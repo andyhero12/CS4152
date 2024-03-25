@@ -19,11 +19,7 @@ public:
     
     void processLayers();
     
-    void processTiles(std::shared_ptr<cugl::JsonValue> levelJson);
-    
-    void processBounds(std::shared_ptr<cugl::JsonValue> levelJson);
-    
-    void processDecors(std::shared_ptr<cugl::JsonValue> levelJson);
+    void processMatrix(std::shared_ptr<cugl::JsonValue> levelJson, std::vector<std::vector<int>>& matrix);
     
     
 private:
