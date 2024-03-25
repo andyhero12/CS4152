@@ -25,28 +25,28 @@
             "file": "textures/dog/bite/medium-right-bite.png"
         },
         "basicEnemy0": {
-            "file": "textures/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
         "basicEnemy1": {
-            "file": "textures/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
         "basicEnemy2": {
-            "file": "textures/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
         "basicEnemy3": {
-            "file": "textures/IMG_0265.PNG"
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
         "basicEnemy4": {
-            "file": "textures/IMG_0265.PNG"
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
         "basicEnemy5": {
-            "file": "textures/IMG_0265.PNG"
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
         "basicEnemy6": {
-            "file": "textures/IMG_0265.PNG"
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
         "basicEnemy7": {
-            "file": "textures/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
         "monkey0":{
             "file": "textures/monkey/monkey-walk-0.png"
