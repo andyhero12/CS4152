@@ -27,7 +27,10 @@ public:
         return _baseExplosionDamage;
     }
     bool canAttack() const override{
-        return _attackCooldown == 60;
+        if (_attackCooldown > 60){
+            std::cout <<"WTF\n";
+        }
+        return _attackCooldown >= 60;
     }
     
     virtual void resetAttack() override{
