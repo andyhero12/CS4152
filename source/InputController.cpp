@@ -159,7 +159,6 @@ void InputController::readInput_joystick() {
         if (_gameContrl->isButtonDown(B)) {
             _didSpecial = true;
             _UseJoystick = true;
-            std::cout << "didspecial" << std::endl;
         }
 
         if (_gameContrl->isButtonDown(X)) {
