@@ -165,10 +165,28 @@ void GameScene::update(float timestep) {
     overWorld.postUpdate();
 }
 
+std::vector<std::vector<int>> rotate90(const std::vector<std::vector<int>>& matrix) {
+    if (matrix.empty()) return {};
+
+    int originalRows = matrix.size();
+    int originalCols = matrix[0].size();
+
+    // New matrix with flipped dimensions
+    std::vector<std::vector<int>> rotatedMatrix(originalCols, std::vector<int>(originalRows));
+
+    for (int i = 0; i < originalRows; ++i) {
+        for (int j = 0; j < originalCols; ++j) {
+            // Assign values in the rotated matrix
+            rotatedMatrix[j][originalRows - 1 - i] = matrix[i][j];
+        }
+    }
+
+    return rotatedMatrix;
+}
 
 void GameScene::createMap(){
-    const int rows = 10;
-     const int cols = 10;
+    const int rows = tile->getHeight()/32;
+     const int cols = tile->getWidth()/32;
      std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
 
      for (int i = 0; i < rows; ++i) {
@@ -178,14 +196,18 @@ void GameScene::createMap(){
      }
     
     std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
-
+    int counter = 1;
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            other[i][j] = (rand() % 10) + 1; // Assign random 0 or 1
+            other[i][j] = counter; 
+            counter += 1;// Assign random 0 or 1
         }
     }
     
-    _world = World(Vec2(0, 0), other , matrix, tile);
+    other = rotate90(other);
+    matrix = rotate90(matrix);
+    
+    _world = World(Vec2(0, 0), other, matrix, tile);
 }
 /**
  * Draws all this scene to the given SpriteBatch.
