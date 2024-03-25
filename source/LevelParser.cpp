@@ -9,6 +9,9 @@
 
 using namespace cugl;
 
+LevelParser::LevelParser(){
+}
+
 LevelParser::LevelParser(std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::JsonValue> levelJson){
     _assets = assets;
     _level = levelJson;

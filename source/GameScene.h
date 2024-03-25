@@ -22,6 +22,7 @@
 #include "MonsterController.h"
 #include "GlobalConstants.h"
 #include "World.h"
+#include "LevelParser.h"
 
 /**
  * This class is the primary gameplay constroller for the demo.
@@ -64,6 +65,7 @@ protected:
     std::shared_ptr<cugl::Sound> _laser;
     std::shared_ptr<cugl::Sound> _blast;
     World _world;
+    LevelParser _parser;
     
     bool _gameEnded;
     

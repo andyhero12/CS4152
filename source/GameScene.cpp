@@ -66,6 +66,9 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     
+    _parser = LevelParser(_assets, assets->get<JsonValue>("example_level"));
+    _parser.processLayers();
+    
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));

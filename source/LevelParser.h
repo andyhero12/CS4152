@@ -15,13 +15,32 @@ class LevelParser{
 public:
     LevelParser(std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::JsonValue> levelJson);
     
+    LevelParser();
+    
     ~LevelParser();
     
     void processLayers();
     
     void processMatrix(std::shared_ptr<cugl::JsonValue> levelJson, std::vector<std::vector<int>>& matrix);
     
+    int getLevelHeight(){return _levelHeight;};
     
+    int getLevelWidth(){return _levelWidth;}; 
+    
+    int getTileHeight(){return _tileHeight;};
+    
+    int getTileWidth(){return _tileWidth;};
+    
+    cugl::Vec2 getPlayerPos(){return _playerPos;};
+    
+    std::vector<cugl::Vec2> getSpawnersPos(){return _spawnersPos;};
+    
+    std::vector<std::vector<int>> getTile(){return _tile;};
+    
+    std::vector<std::vector<int>> getBoundaries(){return _walls;};
+    
+    std::vector<std::vector<int>> getDecorations(){return _decors;};
+
 private:
     std::shared_ptr<cugl::AssetManager> _assets;
     
