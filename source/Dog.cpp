@@ -131,10 +131,7 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
             anims.push_back(_sprite);
         }
         
-        std::cout<< anims.size() << "\n";
         biteAnimation = Animation(anims, 5, _frameflat);
-        std::cout<< biteAnimation.numAnimDirections;
-        
         
         
         Vec2 origin(biteAnimation.getSprite()->getFrameSize()/2);
