@@ -37,10 +37,10 @@ void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWo
     std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
     
     if (monsterDogCollision(overWorld.getDog(), monsterEnemies)){
-        CULog("MONSTER DOG COLLISION DETECTED\n");
+        // CULog("MONSTER DOG COLLISION DETECTED\n");
     }
     if (monsterDecoyCollision(overWorld.getDecoys(), monsterEnemies)){
-        CULog("MONSTER DECOY COLLISION DETECTED\n");
+        // CULog("MONSTER DECOY COLLISION DETECTED\n");
     }
     if (monsterBaseCollsion(overWorld.getBaseSet(), monsterEnemies)){
         CULog("Monster Base COLLISION DETECTED\n");
@@ -81,9 +81,9 @@ bool CollisionController::monsterBaseCollsion(std::shared_ptr<BaseSet> curBases,
             Vec2 norm = base->getPos() - enemy->getPos();
             float distance = norm.length();
             float impactDistance = enemy->getRadius()+ 10;
-            auto curA = itA++;
-            if (distance < impactDistance && enemy->canAttack()) {
-                enemy->resetAttack();
+            auto curA = itA;
+            itA++;
+            if (distance < impactDistance) {
                 hitSomething = true;
                 collision = true;
                 curEnemies.erase(curA);
@@ -148,7 +148,8 @@ void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, std:
     bool hitSomething = false;
     while ( itA != monsterEnemies.end()){
         const std::shared_ptr<AbstractEnemy>& enemy = *itA;
-        auto curA = itA++;
+        auto curA = itA;
+        itA++;
         if (bitePolygon.contains(enemy->getPos())){
             hitSomething = true;
             enemy->setHealth(enemy->getHealth() - 1);
@@ -184,7 +185,8 @@ void CollisionController::hugeBlastCollision(const cugl::Poly2& blastRectangle, 
     while (itA != enemies.end()){
         const std::shared_ptr<AbstractEnemy>& enemy = *itA;
         Vec2 enemyPos = enemy->getPos();
-        auto curA = itA++;
+        auto curA = itA;
+        itA++;
         if (blastRectangle.contains(enemyPos)){
             enemies.erase(curA);
         }
@@ -202,7 +204,8 @@ void CollisionController::resolveBlowup(const cugl::Poly2& blastCircle, std::uno
     auto itS = spawners.begin();
     while (itS != spawners.end()){
         const std::shared_ptr<AbstractSpawner>& spawn = *itS;
-        auto curS = itS++;
+        auto curS = itS;
+        itS++;
         if (blastCircle.contains(spawn->getPos())){
             spawners.erase(curS);
         }

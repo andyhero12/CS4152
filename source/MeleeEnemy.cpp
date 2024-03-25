@@ -26,7 +26,7 @@ void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Siz
     hptext->layout();
     Affine2 trans;
     trans.translate(pos);
-    auto sprite = getSprite();
+    const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     sprite->draw(batch, trans);
     batch->drawText(hptext, trans);
 }
