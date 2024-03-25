@@ -85,9 +85,9 @@ public:
     }
     
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        if(attacking){
-            _attackingAnimations.getSprite();
-        }
+//        if(attacking){
+//            _attackingAnimations.getSprite();
+//        }
         return _walkingAnimations.getSprite();
     }
     
