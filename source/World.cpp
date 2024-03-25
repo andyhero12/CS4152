@@ -7,7 +7,7 @@
 
 #include "World.h"
 using namespace cugl;
-cugl::Size size(40,40);
+cugl::Size size(64,64);
 
 World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset):start(bottomleft), tile(tileset){
     overworld.resize(map.size());
