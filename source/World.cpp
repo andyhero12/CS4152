@@ -22,6 +22,18 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
             }
         }
     }
+    int originalRows = (int) overworld.size();
+    int originalCols = (int) overworld.at(0).size();
+    int printIndexJ = 0;
+    for (int j =0  ;j< originalCols; j++){
+        int printIndexI = 0;
+        for (int i = originalRows -1; i > -1; i--){
+            TileInfo& t = overworld.at(i).at(j);
+            t.boundaryRect = Rect(Vec2((t.size.width )*printIndexJ, (t.size.height)*printIndexI), t.size);
+            printIndexI++;
+        }
+        printIndexJ++;
+    }
 }
 
 World::TileInfo::TileInfo(cugl::Size size, Terrain type, std::shared_ptr<cugl::Texture> texture)
@@ -39,7 +51,7 @@ void World::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
         for (int i = originalRows -1; i > -1; i--){
             Color4 tint = cugl::Color4("white");
             TileInfo& t = overworld.at(i).at(j);
-            batch->draw(t.texture, tint, Rect(Vec2((t.size.width )*printIndexJ, (t.size.height)*printIndexI), t.size));
+            batch->draw(t.texture, tint, t.boundaryRect);
             printIndexI++;
         }
         printIndexJ++;
