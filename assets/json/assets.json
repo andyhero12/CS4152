@@ -3,15 +3,6 @@
         "tile":{
             "file": "textures/tile/tile.png"
         },
-        "sand": {
-            "file": "textures/tile/sand.png"
-        },
-        "water": {
-            "file": "textures/tile/pool.png"
-        },
-        "photon": {
-            "file": "textures/photon.png"
-        },
         "shipleftidle": {
             "file": "textures/dog/run/medium-left-run.png"
         },
@@ -25,28 +16,28 @@
             "file": "textures/dog/bite/medium-right-bite.png"
         },
         "basicEnemy0": {
-            "file": "textures/basicEnemy/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy1": {
-            "file": "textures/basicEnemy/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy2": {
-            "file": "textures/basicEnemy/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy3": {
-            "file": "textures/basicEnemy/IMG_0265.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy4": {
-            "file": "textures/basicEnemy/IMG_0265.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy5": {
-            "file": "textures/basicEnemy/IMG_0265.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy6": {
-            "file": "textures/basicEnemy/IMG_0265.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "basicEnemy7": {
-            "file": "textures/basicEnemy/IMG_0265 right.PNG"
+            "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "monkey0":{
             "file": "textures/monkey/monkey-walk-0.png"

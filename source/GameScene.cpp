@@ -60,8 +60,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _input.init();
 
     // Get the background image and constant values
-    sand = assets->get<Texture>("sand");
-    water = assets->get<Texture>("water");
     tile = assets->get<Texture>("tile");
     _constants = assets->get<JsonValue>("constants");
 
@@ -146,7 +144,6 @@ void GameScene::update(float timestep)
         return;
     }
     overWorld.update(_input, Size(_world.overworld.at(0).size() * 22, _world.overworld.size() * 22), timestep);
-    //    std::cout << _world.overworld.at(0).size() * 40 << " " <<_world.overworld.size() * 40 << std::endl;
 
     _spawnerController.update(_monsterController, overWorld, timestep);
     _monsterController.update(getSize(), timestep, overWorld);

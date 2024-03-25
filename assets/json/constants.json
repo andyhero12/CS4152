@@ -23,15 +23,7 @@
         "sprite size": 5,
         "sprite frame": 1
     },
-    "photons": {
-        "speed": 5,
-        "mass": 5,
-        "max age": 20
-    },
     "asteroids": {
-        "mass": 2,
-        "damage": 5,
-        "hit ratio": 0.8,
         "sprite cols": 4,
         "sprite size": 4,
         "start": [
