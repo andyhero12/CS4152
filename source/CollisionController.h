@@ -77,14 +77,14 @@ public:
         return true;
     }
     
-    void resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<Spawner>>& spawners);
+    void resolveBlowup(const cugl::Poly2& blastCircle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies, std::unordered_set<std::shared_ptr<AbstractSpawner>>& spawners);
     
     void hugeBlastCollision(const cugl::Poly2& blastRectangle, std::unordered_set<std::shared_ptr<AbstractEnemy>>& enemies);
     
     bool healFromBaseCollsion( BaseSet& bset, std::shared_ptr<Dog> ship);
     
     void resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
-                           std::shared_ptr<Dog> dog);
+                           OverWorld& overWorld);
     
     // Post Update Functions
     void intraOverWorldCollisions( OverWorld& overWorld);

@@ -13,7 +13,7 @@ MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_tar
     
 }
 
-int convertToQuadrant(double radian) {
+int MeleeEnemy::convertToQuadrant(double radian) {
     double angleInDegrees = radian * (180 / M_PI);
     int quadrant = static_cast<int>(std::floor(angleInDegrees / 45.0)) % 8;
     return ( quadrant + 8 ) % 8;
@@ -26,7 +26,7 @@ void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Siz
     hptext->layout();
     Affine2 trans;
     trans.translate(pos);
-    auto sprite = getSprite();
+    const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     sprite->draw(batch, trans);
     batch->drawText(hptext, trans);
 }
