@@ -124,25 +124,25 @@ void HeavanApp::onResume() {
 void HeavanApp::update(float timestep) {
 //    CULog("%d , %d", transitionScene, currentScene->getTransition());
     
-    if(transitionScene != currentScene->getTransition()){
-        currentScene->resetTransition();
-        currentScene->dispose();
-        _gameplay.init(_assets);
-        transitionScene = currentScene->getTransition();
-        currentScene = &_gameplay;
-    }
-//    
-    currentScene->update(timestep);
+//     if(transitionScene != currentScene->getTransition()){
+//         currentScene->resetTransition();
+//         currentScene->dispose();
+//         _gameplay.init(_assets);
+//         transitionScene = currentScene->getTransition();
+//         currentScene = &_gameplay;
+//     }
+// //    
+//     currentScene->update(timestep);
     
-//    if (!_loaded && _loading.isActive()) {
-//        _loading.update(timestep);
-//    } else if (!_loaded) {
-//        _loading.dispose(); // Disables the input listeners in this mode
-//        _gameplay.init(_assets);
-//        _loaded = true;
-//    } else {
-//        _gameplay.update(timestep);
-//    }
+   if (!_loaded && _loading.isActive()) {
+       _loading.update(timestep);
+   } else if (!_loaded) {
+       _loading.dispose(); // Disables the input listeners in this mode
+       _gameplay.init(_assets);
+       _loaded = true;
+   } else {
+       _gameplay.update(timestep);
+   }
 }
 
 /**
@@ -155,12 +155,12 @@ void HeavanApp::update(float timestep) {
  * at all. The default implmentation does nothing.
  */
 void HeavanApp::draw() {
-    currentScene->render(_batch);
-//    if (!_loaded) {
-//        _loading.render(_batch);
-//    } else {
-//        _gameplay.render(_batch);
-//    }
+    // currentScene->render(_batch);
+   if (!_loaded) {
+       _loading.render(_batch);
+   } else {
+       _gameplay.render(_batch);
+   }
 }
 
 
