@@ -33,11 +33,11 @@ public:
     };
 private:
     // Matrix with information about the overworld
-    std::vector<std::vector<TileInfo>> overworld;
     std::shared_ptr<cugl::Texture> tile;
     cugl::Vec2 start;
     
 public:
+    std::vector<std::vector<TileInfo>> overworld;
     World () {};
     World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch);

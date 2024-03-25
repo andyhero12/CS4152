@@ -136,7 +136,8 @@ void GameScene::update(float timestep) {
     if (_gameEnded){
         return;
     }
-    overWorld.update(_input, getSize(),timestep);
+    overWorld.update(_input, Size(_world.overworld.at(0).size() * 22,_world.overworld.size() * 22),timestep);
+//    std::cout << _world.overworld.at(0).size() * 40 << " " <<_world.overworld.size() * 40 << std::endl;
     
 //    if (_input.didPressFire() && _ship->canFireWeapon()){
 //        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
