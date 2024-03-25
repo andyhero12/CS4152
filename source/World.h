@@ -25,25 +25,21 @@ public:
     // Information for a tile, add to this later since idk what this will include
     class TileInfo {
     public:
+        cugl::Size size;
+        std::shared_ptr<cugl::Texture> texture;
+        TileInfo(cugl::Size &size, Terrain type, std::shared_ptr<cugl::Texture> texture);
     private:
         Terrain type;
     };
 private:
     // Matrix with information about the overworld
     std::vector<std::vector<TileInfo>> overworld;
-    std::shared_ptr<cugl::Texture> passable;
-    std::shared_ptr<cugl::Texture> impassable;
-    int length = 40;
-    int width = 40;
     cugl::Vec2 start;
+    
 public:
-    
+    World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::shared_ptr<cugl::Texture> passable,     std::shared_ptr<cugl::Texture> impassable);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch);
-    void setPassableTexture(const std::shared_ptr<cugl::Texture>& value);
-    void setImpassableTexture(const std::shared_ptr<cugl::Texture>& value);
-//    void boundMovement(cugl::Size size, cugl::Vec2 pos);
-    
-    
+
 };
 
 #endif /* World_hpp */
