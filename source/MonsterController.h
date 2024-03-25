@@ -31,6 +31,7 @@ private:
     // Each Monster Type needs one of these
     AnimationDataStruct meleeAnimationData;
     AnimationDataStruct bombAnimationData;
+    std::shared_ptr<cugl::scene2::ProgressBar>  _healthBar;
 public:
         
     MonsterController(){
@@ -63,6 +64,8 @@ public:
                                const std::shared_ptr<cugl::AssetManager> _assets);
     void setBombAnimationData(std::shared_ptr<cugl::JsonValue> data,
                                const std::shared_ptr<cugl::AssetManager> _assets);
+    
+    void setHealthBar(std::shared_ptr<cugl::scene2::ProgressBar> bar);
     
 };
 

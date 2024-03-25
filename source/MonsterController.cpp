@@ -139,6 +139,9 @@ void MonsterController::setBombAnimationData(std::shared_ptr<cugl::JsonValue> da
     bombAnimationData._framecols = _framecols;
 }
 
+void MonsterController::setHealthBar(std::shared_ptr<cugl::scene2::ProgressBar> bar){
+    _healthBar = bar;
+}
 void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
     
     std::vector<std::shared_ptr<cugl::SpriteSheet>>& _texture = meleeAnimationData._sprite;
@@ -156,6 +159,7 @@ void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
         float _radius = std::max(_framecols, rows) / 2;
         std::shared_ptr<MeleeEnemy> basic = std::make_shared<MeleeEnemy>(pos, 3, _radius, chosenTarget);
         basic->setWalkingSprite(_texture, Vec2(0, 0));
+        basic->setHealthBar(_healthBar);
         _pending.emplace(basic);
     }
 }
@@ -174,6 +178,7 @@ void MonsterController::spawnStaticBasicEnemy(cugl::Vec2 pos, OverWorld& overWor
         float _radius = std::max(_framecols, rows) / 2;
         std::shared_ptr<StaticMeleeEnemy> static_enemy = std::make_shared<StaticMeleeEnemy>(pos, 3, _radius, 0);
         static_enemy->setWalkingSprite(_texture, Vec2(0, 0));
+        static_enemy->setHealthBar(_healthBar);
         _pending.emplace(static_enemy);
     }
 }
@@ -193,6 +198,7 @@ void MonsterController::spawnBombEnemy(cugl::Vec2 pos, OverWorld& overWorld){
         float _radius = std::max(_framecols, rows) / 2;
         std::shared_ptr<BombEnemy> bomb_enemy = std::make_shared<BombEnemy>(pos, 3, _radius, 0);
         bomb_enemy->setWalkingSprite(_texture, Vec2(0, 0));
+        bomb_enemy->setHealthBar(_healthBar);
         _pending.emplace(bomb_enemy);
     }
 }

@@ -86,6 +86,10 @@ public:
         _attackingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_FRAMES, 0);
     }
     
+    void setHealthBar(std::shared_ptr<cugl::scene2::ProgressBar> bar){
+        _healthBar = bar;
+    }
+    
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
 //        if(attacking){
 //            _attackingAnimations.getSprite();
@@ -99,6 +103,8 @@ protected:
     cugl::Vec2 position;
     Animation _walkingAnimations;
     Animation _attackingAnimations;
+    /** The health  bar */
+    std::shared_ptr<cugl::scene2::ProgressBar>  _healthBar;
     float _radius;
     int _prevDir;
     bool attacking;

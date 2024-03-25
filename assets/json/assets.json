@@ -1,6 +1,19 @@
 {
     "textures": {
-        "tile":{
+        "progress": {
+           "file":      "textures/progress.png",
+           "wrapS":     "clamp",
+           "wrapT":     "clamp",
+           "minfilter": "linear",
+           "magfilter": "linear",
+           "atlas":     {
+               "background" : [0,    0, 320, 45],
+               "foreground" : [24,  45, 296, 90],
+               "leftcap"    : [0,   45,  24, 90],
+               "rightcap"   : [296, 45, 320, 90]
+           }
+       },
+        "tile": {
             "file": "textures/tile/tile.png"
         },
         "sand": {
@@ -48,28 +61,28 @@
         "basicEnemy7": {
             "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
-        "monkey0":{
+        "monkey0": {
             "file": "textures/monkey/monkey-walk-0.png"
         },
-        "monkey1":{
+        "monkey1": {
             "file": "textures/monkey/monkey-walk-1.png"
         },
-        "monkey2":{
+        "monkey2": {
             "file": "textures/monkey/monkey-walk-2.png"
         },
-        "monkey3":{
+        "monkey3": {
             "file": "textures/monkey/monkey-walk-3.png"
         },
-        "monkey4":{
+        "monkey4": {
             "file": "textures/monkey/monkey-walk-4.png"
         },
-        "monkey5":{
+        "monkey5": {
             "file": "textures/monkey/monkey-walk-5.png"
         },
-        "monkey6":{
+        "monkey6": {
             "file": "textures/monkey/monkey-walk-6.png"
         },
-        "monkey7":{
+        "monkey7": {
             "file": "textures/monkey/monkey-walk-7.png"
         },
         "spawner": {

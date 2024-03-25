@@ -60,8 +60,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _input.init();
 
     // Get the background image and constant values
-    sand = assets->get<Texture>("sand");
-    water = assets->get<Texture>("water");
     tile = assets->get<Texture>("tile");
     _constants = assets->get<JsonValue>("constants");
 
@@ -77,7 +75,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
 
     _monsterController.setMeleeAnimationData(_constants->get("asteroids"), assets);
     _monsterController.setBombAnimationData(_constants->get("bomb"), assets);
-
+    
     // Get the bang sound
     _bang = assets->get<Sound>("bang");
     _laser = assets->get<Sound>("laser");
@@ -96,6 +94,36 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _collisions.init(getSize());
     createMap();
     reset();
+    
+    
+    
+    // used to create progress bars
+    std::shared_ptr<cugl::Texture> barImage = assets->get<Texture>("progress");
+    
+    float textureWidth = barImage->getWidth();
+    float textureHeight = barImage->getHeight();
+    
+//    "background" : [0,    0, 320, 45],
+//    "foreground" : [24,  45, 296, 90],
+//    "leftcap"    : [0,   45,  24, 90],
+//    "rightcap"   : [296, 45, 320, 90]
+    
+    std::shared_ptr<cugl::Texture> bg = barImage->getSubTexture(0/textureWidth, 320/textureWidth, 0/textureHeight, 45/textureHeight);
+    std::shared_ptr<cugl::Texture> fg = barImage->getSubTexture(24/textureWidth, 296/textureWidth, 45/textureHeight, 90/textureHeight);
+    std::shared_ptr<cugl::Texture> left_cap = barImage->getSubTexture(0/textureWidth, 24/textureWidth, 45/textureHeight, 90/textureHeight);
+    std::shared_ptr<cugl::Texture> right_cap = barImage->getSubTexture(296/textureWidth, 320/textureWidth, 45/textureHeight, 90/textureHeight);
+    
+    std::shared_ptr<cugl::scene2::ProgressBar> _bar = cugl::scene2::ProgressBar::allocWithCaps(bg, fg, left_cap, right_cap);
+    _bar->setProgress(1);
+    _monsterController.setHealthBar(_bar);
+    
+//    cugl::scene2::ProgressBar::allocWithCaps(assets->get<Texture>(""),assets->get<Texture>(""),assets->get<Texture>(""),assets->get<Texture>(""));
+//    std::dynamic_pointer_cast<scene2::ProgressBar>(assets->get<scene2::SceneNode>("load_bar"));
+    
+    
+    
+    
+    
     return true;
 }
 
@@ -215,16 +243,8 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     getCamera()->setPosition(pos);
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
-    // draw bg
-    //    CULog("%d %d", bgCellX, bgCellY);
-    //    for (int i = -2; i <= 30; i++) {
-    //        for (int j = -2; j <= 30; j++) {
-    //            Color4 tint;
-    //                tint = Color4("white");
-    //            batch->draw(_background, tint, Rect(Vec2(38*0, 38*j), Size(40,40)));
-    //        }
-    //    }
     _world.draw(batch);
+    
     _spawnerController.draw(batch, getSize());
     _monsterController.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     overWorld.draw(batch, getSize());

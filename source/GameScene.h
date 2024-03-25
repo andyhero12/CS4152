@@ -49,9 +49,7 @@ protected:
     std::shared_ptr<cugl::JsonValue> _constants;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
-    /** The backgrounnd image */
-    std::shared_ptr<cugl::Texture> sand;
-    std::shared_ptr<cugl::Texture> water;
+    /** The background image */
     std::shared_ptr<cugl::Texture> tile;
     /** The text with the win message */
     std::shared_ptr<cugl::TextLayout> _textWin;

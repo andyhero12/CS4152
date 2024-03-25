@@ -21,14 +21,16 @@ int MeleeEnemy::convertToQuadrant(double radian) {
 
 void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font){
     Vec2 pos = getPos();
-    std::string hpMsg = strtool::format(std::to_string(getHealth()));
-    std::shared_ptr<cugl::TextLayout> hptext = TextLayout::allocWithText(hpMsg, font);
-    hptext->layout();
+//    std::string hpMsg = strtool::format(std::to_string(getHealth()));
+//    std::shared_ptr<cugl::TextLayout> hptext = TextLayout::allocWithText(hpMsg, font);
+//    hptext->layout();
     Affine2 trans;
     trans.translate(pos);
     const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     sprite->draw(batch, trans);
-    batch->drawText(hptext, trans);
+//    batch->drawText(hptext, trans);
+    _healthBar->draw(batch, trans, Color4::WHITE);
+//    _healthBar->render(batch, trans, Color4::WHITE);
 }
 
 void MeleeEnemy::update(float dt, OverWorld& overWorld){
