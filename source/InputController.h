@@ -40,6 +40,12 @@ private:
     /** Did we press the special button? */
     bool _didSpecial;
 
+    cugl::Vec2 _Vel;
+
+    bool _UseKeyboard;
+
+    bool _UseJoystick;
+
 public:
 
     std::shared_ptr<cugl::GameController> _gameContrl;
@@ -123,6 +129,21 @@ public:
      * are more appropriate for menus and buttons (like the loading screen).
      */
     void readInput();
+
+    void readInput_joystick();
+
+    cugl::Vec2 getVelocity() const {
+        return _Vel;
+    }
+
+    bool getControllerState() {
+        return _UseJoystick;
+    }
+
+    bool getKeyboardState() {
+        return _UseKeyboard;
+    }
+
 };
 
 #endif /* __GL_INPUT_CONTROLLER_H__ */

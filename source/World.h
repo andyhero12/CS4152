@@ -34,12 +34,14 @@ public:
 private:
     // Matrix with information about the overworld
     std::vector<std::vector<TileInfo>> overworld;
+    std::shared_ptr<cugl::Texture> tile;
     cugl::Vec2 start;
     
 public:
     World () {};
-    World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::shared_ptr<cugl::Texture> passable,     std::shared_ptr<cugl::Texture> impassable);
+    World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch);
+    std::shared_ptr<cugl::Texture> getBox(int position);
 
 };
 

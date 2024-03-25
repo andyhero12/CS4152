@@ -72,6 +72,7 @@ private:
     float _shadows;
     float _explosionRadius;
     float _biteRadius;
+    float _shootRadius;
     
     int _modeCooldown;
     
@@ -258,6 +259,9 @@ public:
     float getBiteRadius() const{
         return _biteRadius;
     }
+    float getShootRadius() const {
+        return _shootRadius;
+    }
 
     /**
      * Returns the radius of the ship.
@@ -336,7 +340,7 @@ public:
      * @param turn      Amount to turn the ship
      * @param size      The size of the window (for wrap around)
      */
-    void move(float forward, float turn, cugl::Size size);
+    void move(float forward, float turn, cugl::Vec2 Vel, bool _UseController, bool _UseKeyboard, cugl::Size size);
 private:
     int direction(int dir);
 };

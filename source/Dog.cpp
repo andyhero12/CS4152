@@ -45,6 +45,7 @@ Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _shadows  = data->getFloat("shadow",0.0);
     _explosionRadius = data->getFloat("explosionRadius",100.0);
     _biteRadius = data->getFloat("biteRadius",150.0);
+    _shootRadius = data->getFloat("shootRadius", 500.0);
     // Sprite sheet information
     _framecols = data->getInt("sprite cols",0);
     _framesize = data->getInt("sprite size",0);
@@ -130,10 +131,7 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
             anims.push_back(_sprite);
         }
         
-        std::cout<< anims.size() << "\n";
         biteAnimation = Animation(anims, 5, _frameflat);
-        std::cout<< biteAnimation.numAnimDirections;
-        
         
         
         Vec2 origin(biteAnimation.getSprite()->getFrameSize()/2);
@@ -203,6 +201,7 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
     _pos = value;
 }
 
+
 int Dog::direction(int dir){
     return _prevTurn == 1 ? 1 : 0;
 }
@@ -222,25 +221,48 @@ void Dog::setAttack(){
  * @param forward    Amount to move forward
  * @param turn        Amount to turn the ship
  */
-void Dog::move(float forward, float turn, Size size) {
-    
-//    if (attack){
-//        return;
-//    }
-    // Process the ship turning.
-    
-    if (forward == 0.0f){
+void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Usekeyboard, Size size) {
+
+    //    if (attack){
+    //        return;
+    //    }
+        // Process the ship turning.
+
+    if (forward == 0.0f) {
         _vel = Vec2(0, 0);
     }
-    
-    _vel = Vec2(turn, forward);
-    
+    // Use the Keyboard input
+    if (_Usekeyboard) {
+        _vel = Vec2(turn, forward);
+    }
+    // Use the Joystick input
+    if (_UseJoystick) {
+        _vel = Vel;
+        //_vel = Vec2(turn, forward);
+    }
+
+
+    // Process the ship thrust.
+    //    if (forward != 0.0f) {
+    //        // Thrust key pressed; increase the ship velocity.
+    //        float rads = M_PI*_ang/180.0f+M_PI_2;
+    //        Vec2 dir(cosf(rads),sinf(rads));
+    //        _vel += dir * forward * _thrust;
+    //    }
+
     // Move the ship, updating it.
     // Adjust the angle by the change in angle
-    if (!(forward==0 && turn==0)) {
-        _ang = atan2(forward, turn) * (180/M_PI) - 90;
+    //std::cout <<"velocity"<< Vel.y << " $$"<< Vel.x << std::endl;
+    if (!(forward == 0 && turn == 0)) {
+        _ang = atan2(forward, turn) * (180 / M_PI) - 90;
         setAngle(_ang);
     }
+
+    if (abs(Vel.x) > 0.2 || abs(Vel.y) > 0.2) {
+        _ang = atan2(Vel.y, Vel.x) * (180 / M_PI) - 90;
+        setAngle(_ang);
+    }
+
     
     // INVARIANT: 0 <= ang < 360
     if (_ang > 360)
