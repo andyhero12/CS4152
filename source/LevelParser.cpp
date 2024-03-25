@@ -49,14 +49,62 @@ void LevelParser::processLayers(){
 }
 
 void LevelParser::processTiles(std::shared_ptr<cugl::JsonValue> levelJson){
-    
+    int row = levelJson->get("width")->asInt();
+    int column = levelJson->get("height")->asInt();
+    auto array = levelJson->get("data")->children();
+    int x = 0;
+    int y = 0;
+    _tile.resize(row);
+    _tile[x].resize(column);
+    for (auto it = array.begin(); it != array.end(); it++)
+    {
+        _tile.at(x).at(y) = (*it)->asInt();
+        y += 1;
+        if(y == column){
+            y = 0;
+            x += 1;
+            _tile[x].resize(column);
+        }
+    }
 }
 
 void LevelParser::processBounds(std::shared_ptr<cugl::JsonValue> levelJson){
-    
+    int row = levelJson->get("width")->asInt();
+    int column = levelJson->get("height")->asInt();
+    auto array = levelJson->get("data")->children();
+    int x = 0;
+    int y = 0;
+    _walls.resize(row);
+    _walls[x].resize(column);
+    for (auto it = array.begin(); it != array.end(); it++)
+    {
+        _walls.at(x).at(y) = (*it)->asInt();
+        y += 1;
+        if(y == column){
+            y = 0;
+            x += 1;
+            _walls[x].resize(column);
+        }
+    }
 }
 
 void LevelParser::processDecors(std::shared_ptr<cugl::JsonValue> levelJson){
-    
+    int row = levelJson->get("width")->asInt();
+    int column = levelJson->get("height")->asInt();
+    auto array = levelJson->get("data")->children();
+    int x = 0;
+    int y = 0;
+    _decors.resize(row);
+    _decors[x].resize(column);
+    for (auto it = array.begin(); it != array.end(); it++)
+    {
+        _decors.at(x).at(y) = (*it)->asInt();
+        y += 1;
+        if(y == column){
+            y = 0;
+            x += 1;
+            _decors[x].resize(column);
+        }
+    }
 }
 

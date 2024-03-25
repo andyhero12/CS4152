@@ -47,6 +47,8 @@ private:
     
     std::vector<cugl::Vec2> _spawnersPos;
     
+    std::vector<std::vector<int>> _tile;
+    
     std::vector<std::vector<int>> _walls;
     
     std::vector<std::vector<int>> _decors;
