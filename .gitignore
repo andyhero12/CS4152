@@ -10,4 +10,5 @@ xcuserdata/
 build/
 
 cugl/scripts
+cugl/scripts/__pycache__
 cugl/__pycache__

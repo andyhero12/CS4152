@@ -66,8 +66,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _constants = assets->get<JsonValue>("constants");
 
     overWorld.init(assets, getSize());
-    // Make a ship and set its texture
-    _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
 
     _parser = LevelParser(_assets, assets->get<JsonValue>("example_level"));
@@ -86,7 +84,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _blast = assets->get<Sound>("blast");
 
     // Create and layout the health meter
-    std::string msg = strtool::format("Health %d", _ship->getHealth());
+    std::string msg = strtool::format("Health %d", overWorld.getDog()->getHealth());
     _text = TextLayout::allocWithText(msg, assets->get<Font>("pixel32"));
     _text->layout();
     std::string winMsg = strtool::format("You Win!");
@@ -150,10 +148,6 @@ void GameScene::update(float timestep)
     overWorld.update(_input, Size(_world.overworld.at(0).size() * 22, _world.overworld.size() * 22), timestep);
     //    std::cout << _world.overworld.at(0).size() * 40 << " " <<_world.overworld.size() * 40 << std::endl;
 
-    //    if (_input.didPressFire() && _ship->canFireWeapon()){
-    //        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-    //    }
-    //
     _spawnerController.update(_monsterController, overWorld, timestep);
     _monsterController.update(getSize(), timestep, overWorld);
 
@@ -163,7 +157,7 @@ void GameScene::update(float timestep)
 
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     // Update the health meter
-    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), overWorld.getBaseSet()->getFirstHealth(), _ship->getMode().c_str()));
+    _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", overWorld.getDog()->getHealth(), overWorld.getDog()->getAbsorb(), overWorld.getBaseSet()->getFirstHealth(), overWorld.getDog()->getMode().c_str()));
     _text->layout();
 
     // Check if game ended
@@ -171,7 +165,7 @@ void GameScene::update(float timestep)
     {
         _gameEnded = true;
     }
-    else if (_ship->getHealth() == 0)
+    else if (overWorld.getDog()->getHealth() == 0)
     {
         _gameEnded = true;
     }
@@ -217,7 +211,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
 
     // shift camera to follow ship; draw ingame objects here
     cugl::Vec3 pos = cugl::Vec3();
-    pos.add(_ship->getPosition());
+    pos.add(overWorld.getDog()->getPosition());
     getCamera()->setPosition(pos);
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
@@ -256,7 +250,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
         batch->drawText(_textWin, trans);
         batch->setColor(Color4::WHITE);
     }
-    else if (_ship->getHealth() == 0 || baseSet->baseLost())
+    else if (overWorld.getDog()->getHealth() == 0 || baseSet->baseLost())
     {
         trans.translate(Vec2(getSize().width / 2.0f - scale_factor * _textLose->getBounds().size.width / 2.0f, getSize().height / 2.0f));
         batch->setColor(Color4::RED);

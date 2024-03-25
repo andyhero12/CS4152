@@ -47,8 +47,6 @@ protected:
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;
-    /** Location and animation information for the ship */
-    std::shared_ptr<Dog> _ship;
     // VIEW items are going to be individual variables
     // In the future, we will replace this with the scene graph
     /** The backgrounnd image */
