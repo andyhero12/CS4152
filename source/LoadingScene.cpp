@@ -61,7 +61,7 @@ bool LoadingScene::init(const std::shared_ptr<AssetManager>& assets) {
     _brand = assets->get<scene2::SceneNode>("load_name");
     _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("load_play"));
     _button->addListener([=](const std::string& name, bool down) {
-//        this->_active = down;
+        this->_active = down;
         transition = ScreenEnums::GAMEPLAY;
     });
     

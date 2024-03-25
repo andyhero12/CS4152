@@ -40,6 +40,7 @@ using namespace std;
  * @return true if the controller is initialized properly, false otherwise.
  */
 bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
+    std::cout << "INIT GAMESCENE\n";
     transition = ScreenEnums::GAMEPLAY;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
@@ -124,7 +125,9 @@ void GameScene::reset() {
  */
 void GameScene::update(float timestep) {
     // Read the keyboard for each controller.
+    _input.readInput_joystick();
     _input.readInput();
+
     if (_input.didPressReset()) {
         overWorld.reset(getSize());
         reset();
