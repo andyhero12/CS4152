@@ -25,7 +25,7 @@ public:
         return _contactDamage;
     }
     bool canAttack() const override{
-        return _attackCooldown == 60;
+        return _attackCooldown >= 60;
     }
     
     virtual void resetAttack() override{
