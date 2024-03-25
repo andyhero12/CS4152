@@ -57,7 +57,8 @@ bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data) {
                 cugl::Vec2 pos;
                 pos.x = entry->get(0)->get(0)->asFloat(0);
                 pos.y = entry->get(0)->get(1)->asFloat(0);
-                int spawnRate = entry->get(1)->asInt(0);
+//                int spawnRate = entry->get(1)->asInt(0);
+                int spawnRate = 200;
                 int health = 10;
                 std::shared_ptr<MeleeSpawner> curSpawner = std::make_shared<MeleeSpawner>(spawnRate,pos,health,0);
                 curSpawner->setTexture(_texture);

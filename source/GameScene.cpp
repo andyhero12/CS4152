@@ -172,14 +172,6 @@ void GameScene::update(float timestep) {
 void GameScene::createMap(){
     const int rows = 10;
      const int cols = 10;
-     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
-
-     for (int i = 0; i < rows; ++i) {
-         for (int j = 0; j < cols; ++j) {
-             matrix[i][j] = rand() % 2; // Assign random 0 or 1
-         }
-     }
-    
     std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
 
     for (int i = 0; i < rows; ++i) {
@@ -187,8 +179,8 @@ void GameScene::createMap(){
             other[i][j] = (rand() % 10) + 1; // Assign random 0 or 1
         }
     }
-    
-    _world = World(Vec2(0, 0), other , matrix, tile);
+    std::vector<std::vector<int>> matrix = _parser.getTile();
+    _world = World(Vec2(0, 0), matrix , other, tile);
 }
 /**
  * Draws all this scene to the given SpriteBatch.

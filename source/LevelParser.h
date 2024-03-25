@@ -17,7 +17,7 @@ public:
     
     LevelParser();
     
-    ~LevelParser();
+    ~LevelParser(){};
     
     void processLayers();
     
