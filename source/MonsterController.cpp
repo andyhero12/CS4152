@@ -133,6 +133,7 @@ void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
             rows++;
         }
         float _radius = std::max(_framecols, rows) / 2;
+        //_radius = 1000;
         std::shared_ptr<MeleeEnemy> basic = std::make_shared<MeleeEnemy>(pos, 3, _radius, chosenTarget);
         basic->setWalkingSprite(_texture, Vec2(0, 0));
         _pending.emplace(basic);

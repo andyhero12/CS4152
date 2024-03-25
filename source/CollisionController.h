@@ -92,6 +92,7 @@ public:
     void overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController);
     
     bool monsterDogCollision(std::shared_ptr<Dog> curDog, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
+    void monsterMonsterCollision(std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
     bool monsterDecoyCollision(std::shared_ptr<DecoySet> decoySet, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
     bool monsterBaseCollsion(std::shared_ptr<BaseSet> curBases, std::unordered_set<std::shared_ptr<AbstractEnemy>>& curEnemies);
     

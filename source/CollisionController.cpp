@@ -35,6 +35,7 @@ void CollisionController::intraOverWorldCollisions(OverWorld& overWorld){
 
 void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController){
     std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
+    monsterMonsterCollision(monsterEnemies);
     
     if (monsterDogCollision(overWorld.getDog(), monsterEnemies)){
         // CULog("MONSTER DOG COLLISION DETECTED\n");
@@ -46,6 +47,7 @@ void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWo
         CULog("Monster Base COLLISION DETECTED\n");
     }
 
+    
 }
 void CollisionController::attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController){
     AttackPolygons& attacks = overWorld.getAttackPolygons();
@@ -140,6 +142,30 @@ bool CollisionController::monsterDogCollision(std::shared_ptr<Dog> curDog, std::
     
     
     return false;
+}
+
+void CollisionController::monsterMonsterCollision(std::unordered_set<std::shared_ptr<AbstractEnemy>>& enemies) {
+    for (auto it1 = enemies.begin(); it1 != enemies.end(); ++it1) {
+        auto enemy1 = *it1;
+
+        for (auto it2 = enemies.begin(); it2 != enemies.end(); ++it2) {
+            auto enemy2 = *it2;
+            if (enemy1 == enemy2)
+                continue;
+
+            Vec2 norm = enemy1->getPos() - enemy2->getPos();
+            float distance = norm.length();
+            float impactDistance = enemy1->getRadius() + enemy2->getRadius();
+
+            if (distance < impactDistance) {
+                norm.normalize();
+                Vec2 temp = norm * ((impactDistance - distance) / 2);
+
+                enemy1->setPos(enemy1->getPos() + temp);
+                enemy2->setPos(enemy2->getPos() - temp);
+            }
+        }
+    }
 }
 
 void CollisionController::resolveBiteAttack(const cugl::Poly2& bitePolygon, std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies,
