@@ -1,5 +1,8 @@
 {
     "textures": {
+        "tile":{
+            "file": "textures/tile/tile.png"
+        },
         "sand": {
             "file": "textures/tile/sand.png"
         },
