@@ -46,18 +46,17 @@ void SpawnerController::update(MonsterController& monsterController, OverWorld& 
     
 }
 
-bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data) {
+bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data,const std::vector<cugl::Vec2>& startLocs) {
     if (data) {
         _spawners.clear();
         // CULog("INIT\n");
         if (data->get("start,Rate")){
             auto spawnerValues = data->get("start,Rate")->children();
-            for (auto it = spawnerValues.begin(); it != spawnerValues.end();it++){
-                std::shared_ptr<cugl::JsonValue> entry = (*it);
+            for (int i =0; i< startLocs.size(); i++){
+                std::shared_ptr<cugl::JsonValue> entry = spawnerValues[i];
                 cugl::Vec2 pos;
-                pos.x = entry->get(0)->get(0)->asFloat(0);
-                pos.y = entry->get(0)->get(1)->asFloat(0);
-//                int spawnRate = entry->get(1)->asInt(0);
+                pos.x = startLocs.at(i).x;
+                pos.y = startLocs.at(i).y;
                 int spawnRate = 200;
                 int health = 10;
                 std::shared_ptr<MeleeSpawner> curSpawner = std::make_shared<MeleeSpawner>(spawnRate,pos,health,0);
@@ -70,13 +69,12 @@ bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data) {
     return false;
 }
 
-
-
 void SpawnerController::setTexture(const std::shared_ptr<cugl::Texture>& value ){
     _texture = value;
 }
 
 void SpawnerController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
+    std::cout << "numSpawners " << _spawners.size() <<"\n";
     for(const std::shared_ptr<AbstractSpawner>& spawner : _spawners) {
         cugl::Vec2 pos = spawner->getPos();
         cugl::Vec2 origin(0, 0);

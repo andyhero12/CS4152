@@ -72,7 +72,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _parser.processLayers();
 
     // Init spawner controller
-    _spawnerController.init(_constants->get("spawner"));
+    _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos()); 
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
 
     _monsterController.setMeleeAnimationData(_constants->get("asteroids"), assets);
@@ -119,7 +119,7 @@ void GameScene::dispose()
 void GameScene::reset()
 {
     _gameEnded = false;
-    _spawnerController.init(_constants->get("spawner"));
+    _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos());
     _monsterController.init(_constants->get("asteroids"), overWorld);
 }
 

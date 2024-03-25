@@ -43,12 +43,18 @@ void LevelParser::processLayers(){
                 _playerPos = cugl::Vec2(playerX, playerY);
             }
             else if (layer->getString("name")=="SpawnerLocs"){
-                float spawnerX1 = layer->get("objects")->get(0)->get("x")->asFloat();
-                float spawnerY1 = layer->get("objects")->get(0)->get("x")->asFloat();
-                _spawnersPos.push_back(cugl::Vec2(spawnerX1, spawnerY1));
-                float spawnerX2 = layer->get("objects")->get(1)->get("x")->asFloat();
-                float spawnerY2 = layer->get("objects")->get(1)->get("x")->asFloat();
-                _spawnersPos.push_back(cugl::Vec2(spawnerX2, spawnerY2));
+                auto spawnerValues = layer->get("objects");
+                for (int i = 0 ; i< spawnerValues->size() ;i++){
+                    float spawnerX = layer->get("objects")->get(i)->get("x")->asFloat();
+                    float spawnerY = layer->get("objects")->get(i)->get("y")->asFloat();
+                    _spawnersPos.emplace_back(cugl::Vec2(spawnerX, spawnerY));
+                }
+//                float spawnerX1 = layer->get("objects")->get(0)->get("x")->asFloat();
+//                float spawnerY1 = layer->get("objects")->get(0)->get("x")->asFloat();
+//                _spawnersPos.push_back(cugl::Vec2(spawnerX1, spawnerY1));
+//                float spawnerX2 = layer->get("objects")->get(1)->get("x")->asFloat();
+//                float spawnerY2 = layer->get("objects")->get(1)->get("x")->asFloat();
+//                _spawnersPos.push_back(cugl::Vec2(spawnerX2, spawnerY2));
 //                for(auto it = objValues.begin(); it != objValues.end(); it++){
 //                    std::shared_ptr<cugl::JsonValue> layer = (*it);
 //                    float spawnerX = obj->getFloat("x");

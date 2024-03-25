@@ -39,8 +39,7 @@ public:
     void setTexture(const std::shared_ptr<cugl::Texture>& value);
     void update(MonsterController& monsterController, OverWorld& overWorld, float timestep);
     
-    bool init(std::shared_ptr<cugl::JsonValue> data);
-    
+    bool init(std::shared_ptr<cugl::JsonValue> data,const std::vector<cugl::Vec2>& startLocs);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size);
     
     bool win(){return _spawners.empty();}

@@ -33,13 +33,15 @@ public:
     
     cugl::Vec2 getPlayerPos(){return _playerPos;};
     
-    std::vector<cugl::Vec2> getSpawnersPos(){return _spawnersPos;};
+    const std::vector<cugl::Vec2>& getSpawnersPos(){
+        return _spawnersPos;
+    };
     
-    std::vector<std::vector<int>> getTile(){return _tile;};
+    const std::vector<std::vector<int>>& getTile(){return _tile;};
     
-    std::vector<std::vector<int>> getBoundaries(){return _walls;};
+    const std::vector<std::vector<int>>& getBoundaries(){return _walls;};
     
-    std::vector<std::vector<int>> getDecorations(){return _decors;};
+    const std::vector<std::vector<int>>& getDecorations(){return _decors;};
 
 private:
     std::shared_ptr<cugl::AssetManager> _assets;
