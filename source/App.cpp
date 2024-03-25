@@ -44,6 +44,7 @@ void HeavanApp::onStartup() {
 
     // Create a "loading" screen
     _loaded = false;
+    _firstInit = true;
     _loading.init(_assets);
     currentScene = &_loading;
     // Queue up the other assets
@@ -110,6 +111,34 @@ void HeavanApp::onResume() {
     AudioEngine::get()->resume();
 }
 
+void HeavanApp::transition(){
+    if(transitionScene == ScreenEnums::LOADING){
+        currentScene->dispose();
+    }
+    
+    
+    if(currentScene->getTransition() == ScreenEnums::LOADING){
+        // might delete; idk if we want to be able to go to loading
+        currentScene->resetTransition();
+        currentScene->dispose();
+        transitionScene = currentScene->getTransition();
+        currentScene = &_gameplay;
+    }
+    else if (currentScene->getTransition() == ScreenEnums::LEVELSELECT){
+        currentScene->resetTransition();
+        currentScene->dispose();
+        transitionScene = currentScene->getTransition();
+        currentScene = &_gameplay;
+    }
+    else if (currentScene->getTransition() == ScreenEnums::GAMEPLAY){
+        // Current one we have
+        currentScene->resetTransition();
+        currentScene->dispose();
+        transitionScene = currentScene->getTransition();
+        currentScene = &_gameplay;
+    }
+}
+
 /**
  * The method called to update the application data.
  *
@@ -122,27 +151,30 @@ void HeavanApp::onResume() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void HeavanApp::update(float timestep) {
+    
 //    CULog("%d , %d", transitionScene, currentScene->getTransition());
     
-//     if(transitionScene != currentScene->getTransition()){
-//         currentScene->resetTransition();
-//         currentScene->dispose();
-//         _gameplay.init(_assets);
-//         transitionScene = currentScene->getTransition();
-//         currentScene = &_gameplay;
-//     }
-// //    
-//     currentScene->update(timestep);
+     if(transitionScene != currentScene->getTransition()){
+         if(_firstInit){
+             _gameplay.init(_assets);
+             // add other scenes here
+             _firstInit = false;
+             _loaded = true;
+         }
+         transition();
+     }
+ //    
+     currentScene->update(timestep);
     
-   if (!_loaded && _loading.isActive()) {
-       _loading.update(timestep);
-   } else if (!_loaded) {
-       _loading.dispose(); // Disables the input listeners in this mode
-       _gameplay.init(_assets);
-       _loaded = true;
-   } else {
-       _gameplay.update(timestep);
-   }
+//   if (!_loaded && _loading.isActive()) {
+//       _loading.update(timestep);
+//   } else if (!_loaded) {
+//       _loading.dispose(); // Disables the input listeners in this mode
+//       _gameplay.init(_assets);
+//       _loaded = true;
+//   } else {
+//       _gameplay.update(timestep);
+//   }
 }
 
 /**
@@ -155,12 +187,12 @@ void HeavanApp::update(float timestep) {
  * at all. The default implmentation does nothing.
  */
 void HeavanApp::draw() {
-    // currentScene->render(_batch);
-   if (!_loaded) {
-       _loading.render(_batch);
-   } else {
-       _gameplay.render(_batch);
-   }
+     currentScene->render(_batch);
+//   if (!_loaded) {
+//       _loading.render(_batch);
+//   } else {
+//       _gameplay.render(_batch);
+//   }
 }
 
 

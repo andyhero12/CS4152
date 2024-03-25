@@ -40,7 +40,7 @@ bool InputController::init() {
             return false;
         }
         _gameContrl = controller -> open(deviceUUIDs[0]);
-        std::cout << deviceUUIDs[0] << std::endl;
+//        std::cout << deviceUUIDs[0] << std::endl;
         directions = { {-1,0},{0,-1},{1,0}, {0,1} }; // left up right down
         return true;
     }

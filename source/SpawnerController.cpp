@@ -74,7 +74,7 @@ void SpawnerController::setTexture(const std::shared_ptr<cugl::Texture>& value )
 }
 
 void SpawnerController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
-    std::cout << "numSpawners " << _spawners.size() <<"\n";
+//    std::cout << "numSpawners " << _spawners.size() <<"\n";
     for(const std::shared_ptr<AbstractSpawner>& spawner : _spawners) {
         cugl::Vec2 pos = spawner->getPos();
         cugl::Vec2 origin(0, 0);

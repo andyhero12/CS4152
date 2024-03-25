@@ -36,6 +36,7 @@ protected:
 
     /** Whether or not we have finished loading all assets */
     bool _loaded;
+    bool _firstInit;
     
 public:
     /**
@@ -57,6 +58,8 @@ public:
      * special to do here.
      */
     ~HeavanApp() { }
+    
+    void transition();
     
 #pragma mark Application State
     /**
