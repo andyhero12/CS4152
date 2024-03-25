@@ -73,7 +73,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos()); 
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
 
-    _monsterController.setMeleeAnimationData(_constants->get("asteroids"), assets);
+    _monsterController.setMeleeAnimationData(_constants->get("basicEnemy"), assets);
     _monsterController.setBombAnimationData(_constants->get("bomb"), assets);
 
     // Get the bang sound
