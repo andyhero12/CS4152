@@ -28,6 +28,7 @@
 #include "AttackPolygons.hpp"
 #include "OverWorld.hpp"
 #include "MonsterController.h"
+#include "World.h"
 
 /**
  * Namespace of functions implementing simple game physics.
@@ -99,6 +100,8 @@ public:
     
     void attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController);
     
+    bool playerTileCollision(World& world, std::shared_ptr<Dog> curDog);
+    void monsterTileCollision(World& world, MonsterController& monsterController);
 };
 
 #endif /* __SL_COLLISION_CONTROLLER_H__ */

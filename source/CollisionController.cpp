@@ -49,6 +49,76 @@ void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWo
 
     
 }
+
+
+bool CollisionController::playerTileCollision(World& world, std::shared_ptr<Dog> curDog) {
+    bool collision = false;
+    for (size_t i = 0; i < world.overworld.size(); ++i) {
+        for (size_t j = 0; j < world.overworld.at(i).size(); ++j) {
+            World::TileInfo tile = world.overworld.at(i).at(j);
+            // Access each element as overworld[i][j]
+            if (tile.type == World::Terrain::IMPASSIBLE) {
+                if (curDog->getPosition().x > i * tile.size.width && curDog->getPosition().x < (i + 1) * tile.size.width
+                    && curDog->getPosition().y > j * tile.size.height && curDog->getPosition().y < (j + 1) * tile.size.height) {
+                    int newX;
+                    int newY;
+                    if (curDog->getPosition().x - i * tile.size.width < (i + 1) * tile.size.width - curDog->getPosition().x) {
+                        newX = i * tile.size.width;
+                    }
+                    else {
+                        newX = (i + 1) * tile.size.width;
+                    }
+                    if (curDog->getPosition().y - j * tile.size.height < (j + 1) * tile.size.height - curDog->getPosition().y) {
+                        newY = j * tile.size.height;
+                    }
+                    else {
+                        newY = (j + 1) * tile.size.height;
+                    }
+                    curDog->setPosition(cugl::Vec2(newX, newY));
+                    collision = true;
+                }
+            }
+        }
+    }
+    return collision;
+}
+
+void CollisionController::monsterTileCollision(World& world, MonsterController& monsterController) {
+    std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
+    auto it = monsterEnemies.begin();
+    while (it != monsterEnemies.end()) {
+        std::shared_ptr<AbstractEnemy> enemy = *it;
+        for (size_t i = 0; i < world.overworld.size(); ++i) {
+            for (size_t j = 0; j < world.overworld.at(i).size(); ++j) {
+                World::TileInfo tile = world.overworld.at(i).at(j);
+                // Access each element as overworld[i][j]
+                if (tile.type == World::Terrain::IMPASSIBLE) {
+                    if (enemy->getPos().x > i * tile.size.width && enemy->getPos().x < (i + 1) * tile.size.width
+                        && enemy->getPos().y > j * tile.size.height && enemy->getPos().y < (j + 1) * tile.size.height) {
+                        int newX;
+                        int newY;
+                        if (enemy->getPos().x - i * tile.size.width < (i + 1) * tile.size.width - enemy->getPos().x) {
+                            newX = i * tile.size.width;
+                        }
+                        else {
+                            newX = (i + 1) * tile.size.width;
+                        }
+                        if (enemy->getPos().y - j * tile.size.height < (j + 1) * tile.size.height - enemy->getPos().y) {
+                            newY = j * tile.size.height;
+                        }
+                        else {
+                            newY = (j + 1) * tile.size.height;
+                        }
+                        enemy->setPos(cugl::Vec2(newX, newY));
+                    }
+                }
+            }
+        }
+        it++;
+    }
+        
+}
+
 void CollisionController::attackCollisions(OverWorld& overWorld, MonsterController& monsterController, SpawnerController& spawnerController){
     AttackPolygons& attacks = overWorld.getAttackPolygons();
     std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();

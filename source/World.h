@@ -27,13 +27,14 @@ public:
     public:
         cugl::Size size;
         std::shared_ptr<cugl::Texture> texture;
+        Terrain type;
         TileInfo(cugl::Size size, Terrain type, std::shared_ptr<cugl::Texture> texture);
     private:
-        Terrain type;
+        
     };
+    std::vector<std::vector<TileInfo>> overworld;
 private:
     // Matrix with information about the overworld
-    std::vector<std::vector<TileInfo>> overworld;
     std::shared_ptr<cugl::Texture> tile;
     cugl::Vec2 start;
     

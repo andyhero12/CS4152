@@ -147,6 +147,8 @@ void GameScene::update(float timestep) {
     _collisions.intraOverWorldCollisions(overWorld);
     _collisions.overWorldMonsterControllerCollisions(overWorld, _monsterController);
     _collisions.attackCollisions(overWorld, _monsterController, _spawnerController);
+    _collisions.playerTileCollision(_world, _ship);
+    _collisions.monsterTileCollision(_world, _monsterController);
     
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     // Update the health meter
@@ -191,7 +193,7 @@ void GameScene::createMap(){
 
      for (int i = 0; i < rows; ++i) {
          for (int j = 0; j < cols; ++j) {
-             matrix[i][j] = rand() % 2; // Assign random 0 or 1
+             matrix[i][j] = 0; // Assign random 0 or 1
          }
      }
     
