@@ -215,11 +215,12 @@ bool CollisionController::monsterDogCollision(std::shared_ptr<Dog> curDog, std::
 }
 
 void CollisionController::monsterMonsterCollision(std::unordered_set<std::shared_ptr<AbstractEnemy>>& enemies) {
+    
     for (auto it1 = enemies.begin(); it1 != enemies.end(); ++it1) {
-        auto enemy1 = *it1;
+        std::shared_ptr<AbstractEnemy> enemy1 = *it1;
 
         for (auto it2 = enemies.begin(); it2 != enemies.end(); ++it2) {
-            auto enemy2 = *it2;
+            std::shared_ptr<AbstractEnemy> enemy2 = *it2;
             if (enemy1 == enemy2)
                 continue;
 
@@ -228,6 +229,7 @@ void CollisionController::monsterMonsterCollision(std::unordered_set<std::shared
             float impactDistance = enemy1->getRadius() + enemy2->getRadius();
 
             if (distance < impactDistance) {
+                std::cout<<"Enemy collide"<<std::endl;
                 norm.normalize();
                 Vec2 temp = norm * ((impactDistance - distance) / 2);
 
