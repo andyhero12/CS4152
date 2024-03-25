@@ -1,9 +1,13 @@
 {
     "textures": {
-        "background": {
-            "file": "textures/ice.png",
-            "wrapS": "repeat",
-            "wrapT": "repeat"
+        "tile":{
+            "file": "textures/tile/tile.png"
+        },
+        "sand": {
+            "file": "textures/tile/sand.png"
+        },
+        "water": {
+            "file": "textures/tile/pool.png"
         },
         "photon": {
             "file": "textures/photon.png"
@@ -20,29 +24,29 @@
         "shiprightbite": {
             "file": "textures/dog/bite/medium-right-bite.png"
         },
-        "monkey0":{
-            "file": "textures/monkey/monkey-walk-0.png"
+        "monkey0": {
+            "file": "textures/IMG_0265 right.PNG"
         },
-        "monkey1":{
-            "file": "textures/monkey/monkey-walk-1.png"
+        "monkey1": {
+            "file": "textures/IMG_0265 right.PNG"
         },
-        "monkey2":{
-            "file": "textures/monkey/monkey-walk-2.png"
+        "monkey2": {
+            "file": "textures/IMG_0265 right.PNG"
         },
-        "monkey3":{
-            "file": "textures/monkey/monkey-walk-3.png"
+        "monkey3": {
+            "file": "textures/IMG_0265.PNG"
         },
-        "monkey4":{
-            "file": "textures/monkey/monkey-walk-4.png"
+        "monkey4": {
+            "file": "textures/IMG_0265.PNG"
         },
-        "monkey5":{
-            "file": "textures/monkey/monkey-walk-5.png"
+        "monkey5": {
+            "file": "textures/IMG_0265.PNG"
         },
-        "monkey6":{
-            "file": "textures/monkey/monkey-walk-6.png"
+        "monkey6": {
+            "file": "textures/IMG_0265.PNG"
         },
-        "monkey7":{
-            "file": "textures/monkey/monkey-walk-7.png"
+        "monkey7": {
+            "file": "textures/IMG_0265 right.PNG"
         },
         "asteroid1": {
             "file": "textures/monkeys.png"
@@ -51,15 +55,15 @@
             "file": "textures/asteroid2.png"
         },
         "spawner": {
-            "file": "textures/croc.png"
+            "file": "textures/spawner.png"
         },
         "base": {
             "file": "textures/target.png"
         },
-        "player0":{
+        "player0": {
             "file": "textures/player/player_fly_left_1.png"
         },
-        "player1":{
+        "player1": {
             "file": "textures/player/player_fly_right_1.png"
         }
     },

@@ -49,7 +49,7 @@ void SpawnerController::update(MonsterController& monsterController, OverWorld& 
 bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data) {
     if (data) {
         _spawners.clear();
-        CULog("INIT\n");
+        // CULog("INIT\n");
         if (data->get("start,Rate")){
             auto spawnerValues = data->get("start,Rate")->children();
             for (auto it = spawnerValues.begin(); it != spawnerValues.end();it++){

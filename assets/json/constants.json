@@ -12,6 +12,7 @@
         "shadow": 10,
         "explosionRadius": 90.0,
         "biteRadius": 180.0,
+        "shootRadius": 540.0,
         "sprite cols": 4,
         "sprite size": 4,
         "sprite frame": 1,
@@ -31,8 +32,8 @@
         "mass": 2,
         "damage": 5,
         "hit ratio": 0.8,
-        "sprite cols": 10,
-        "sprite size": 10,
+        "sprite cols": 4,
+        "sprite size": 4,
         "start": [
             [[50,200], [-2,2]],
             [[200,400], [2,-2]],

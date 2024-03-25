@@ -40,6 +40,7 @@ using namespace std;
  * @return true if the controller is initialized properly, false otherwise.
  */
 bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
+    std::cout << "INIT GAMESCENE\n";
     transition = ScreenEnums::GAMEPLAY;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
@@ -55,7 +56,9 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _input.init();
 
     // Get the background image and constant values
-    _background = assets->get<Texture>("background");
+    sand = assets->get<Texture>("sand");
+    water = assets->get<Texture>("water");
+    tile = assets->get<Texture>("tile");
     _constants = assets->get<JsonValue>("constants");
 
     overWorld.init(assets, getSize());
@@ -85,7 +88,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _textLose = TextLayout::allocWithText(lossMsg, assets->get<Font>("pixel32"));
     _textLose->layout();
     _collisions.init(getSize());
-    
+    createMap();
     reset();
     return true;
 }
@@ -122,7 +125,9 @@ void GameScene::reset() {
  */
 void GameScene::update(float timestep) {
     // Read the keyboard for each controller.
+    _input.readInput_joystick();
     _input.readInput();
+
     if (_input.didPressReset()) {
         overWorld.reset(getSize());
         reset();
@@ -160,6 +165,28 @@ void GameScene::update(float timestep) {
     overWorld.postUpdate();
 }
 
+
+void GameScene::createMap(){
+    const int rows = 10;
+     const int cols = 10;
+     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+
+     for (int i = 0; i < rows; ++i) {
+         for (int j = 0; j < cols; ++j) {
+             matrix[i][j] = rand() % 2; // Assign random 0 or 1
+         }
+     }
+    
+    std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            other[i][j] = (rand() % 10) + 1; // Assign random 0 or 1
+        }
+    }
+    
+    _world = World(Vec2(0, 0), other , matrix, tile);
+}
 /**
  * Draws all this scene to the given SpriteBatch.
  *
@@ -180,20 +207,15 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
     //draw bg
-    int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
-    int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
-    for (int i = -2; i <= 1; i++) {
-        for (int j = -2; j <= 1; j++) {
-            Color4 tint;
-            if (i + bgCellX < 0 || i + bgCellX >= WORLD_SIZE || j + bgCellY < 0 || j + bgCellY >= WORLD_SIZE) {
-                tint = Color4("gray");
-            }
-            else {
-                tint = Color4("white");
-            }
-            batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
-        }
-    }
+//    CULog("%d %d", bgCellX, bgCellY);
+//    for (int i = -2; i <= 30; i++) {
+//        for (int j = -2; j <= 30; j++) {
+//            Color4 tint;
+//                tint = Color4("white");
+//            batch->draw(_background, tint, Rect(Vec2(38*0, 38*j), Size(40,40)));
+//        }
+//    }
+    _world.draw(batch);
     _spawnerController.draw(batch, getSize());
     _monsterController.draw(batch, getSize(),_assets->get<Font>("pixel32"));
     overWorld.draw(batch, getSize());

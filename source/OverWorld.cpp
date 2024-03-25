@@ -94,7 +94,7 @@ void OverWorld::dogUpdate(InputController& _input, cugl::Size totalSize){
             CULog("NOTHING\n");
         }
     }
-    _dog->move( _input.getForward(),  _input.getTurn(), totalSize * WORLD_SIZE);
+    _dog->move( _input.getForward(),  _input.getTurn(),_input.getVelocity(), _input.getControllerState(),_input.getKeyboardState(), totalSize * WORLD_SIZE);
 }
 
 void OverWorld::devilUpdate(InputController& _input,cugl::Size totalSize){
