@@ -7,9 +7,9 @@
 
 #include "World.h"
 using namespace cugl;
+cugl::Size size(40,40);
 
 World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset):start(bottomleft), tile(tileset){
-    cugl::Size size(40,40);
     overworld.resize(map.size());
     for(int i = 0; i < map.size(); i++){
         for (int j = 0; j < map[0].size(); j++){
