@@ -86,19 +86,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     _textLose = TextLayout::allocWithText(lossMsg, assets->get<Font>("pixel32"));
     _textLose->layout();
     _collisions.init(getSize());
-    
-    //delete
-    const int rows = 10;
-     const int cols = 10;
-     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
-
-     for (int i = 0; i < rows; ++i) {
-         for (int j = 0; j < cols; ++j) {
-             matrix[i][j] = rand() % 2; // Assign random 0 or 1
-         }
-     }
-    
-    _world = World(Vec2(0, 0), matrix, sand, water);
+    createMap();
     reset();
     return true;
 }
@@ -174,6 +162,17 @@ void GameScene::update(float timestep) {
 }
 
 void GameScene::createMap(){
+    const int rows = 10;
+     const int cols = 10;
+     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+
+     for (int i = 0; i < rows; ++i) {
+         for (int j = 0; j < cols; ++j) {
+             matrix[i][j] = rand() % 2; // Assign random 0 or 1
+         }
+     }
+    
+    _world = World(Vec2(0, 0), matrix, sand, water);
 }
 /**
  * Draws all this scene to the given SpriteBatch.
@@ -203,6 +202,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
 //            batch->draw(_background, tint, Rect(Vec2(38*0, 38*j), Size(40,40)));
 //        }
 //    }
+    _world.draw(batch);
     _spawnerController.draw(batch, getSize());
     _monsterController.draw(batch, getSize(),_assets->get<Font>("pixel32"));
     overWorld.draw(batch, getSize());

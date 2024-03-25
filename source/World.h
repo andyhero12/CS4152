@@ -27,7 +27,7 @@ public:
     public:
         cugl::Size size;
         std::shared_ptr<cugl::Texture> texture;
-        TileInfo(cugl::Size &size, Terrain type, std::shared_ptr<cugl::Texture> texture);
+        TileInfo(cugl::Size size, Terrain type, std::shared_ptr<cugl::Texture> texture);
     private:
         Terrain type;
     };
@@ -37,6 +37,7 @@ private:
     cugl::Vec2 start;
     
 public:
+    World () {};
     World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::shared_ptr<cugl::Texture> passable,     std::shared_ptr<cugl::Texture> impassable);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch);
 
