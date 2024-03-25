@@ -31,7 +31,6 @@ texture(texture) {
 }
 
 void World::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
-//    std::vector<std::vector<World::TileInfo>> overworld90 = rotate90(overworld);
     int originalRows = (int) overworld.size();
     int originalCols = (int) overworld.at(0).size();
     int printIndexJ = 0;
@@ -45,8 +44,8 @@ void World::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
         }
         printIndexJ++;
     }
-
-
+    
+}
 std::shared_ptr<cugl::Texture> World::getBox(int position){
     int boxSize = 32;  // Each box is 32x32 pixels
     float textureWidth = tile->getWidth();
@@ -70,5 +69,6 @@ std::shared_ptr<cugl::Texture> World::getBox(int position){
     // Get the subTexture
     return tile->getSubTexture(minS, maxS, minT, maxT);
 }
+    
 
 
