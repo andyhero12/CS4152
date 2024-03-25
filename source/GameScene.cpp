@@ -66,7 +66,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     overWorld.init(assets, getSize());
     std::vector<std::shared_ptr<cugl::Texture>> textures;
 
-    _parser = LevelParser(_assets, assets->get<JsonValue>("example_level"));
+    _parser = LevelParser(_assets, assets->get<JsonValue>("ugly_level"));
     _parser.processLayers();
 
     // Init spawner controller
@@ -176,20 +176,20 @@ void GameScene::update(float timestep)
 
 void GameScene::createMap()
 {
-    const int rows = 10;
-    const int cols = 10;
-    std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
-
-    int counter = 1;
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
-        {
-            other[i][j] = counter;
-            counter += 1; // Assign random 0 or 1
-        }
-    }
     std::vector<std::vector<int>> matrix = _parser.getTile();
+    const int rows = (int) matrix.size();
+    const int cols = (int) matrix.at(0).size();
+    std::vector<std::vector<int>> other(rows, std::vector<int>(cols,0));
+
+//    int counter = 1;
+//    for (int i = 0; i < rows; ++i)
+//    {
+//        for (int j = 0; j < cols; ++j)
+//        {
+//            other[i][j] = counter;
+//            counter += 1; // Assign random 0 or 1
+//        }
+//    }
     _world = World(Vec2(0, 0), matrix, other, tile);
 }
 /**

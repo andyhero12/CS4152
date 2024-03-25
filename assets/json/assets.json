@@ -104,6 +104,7 @@
     },
     "jsons": {
         "constants": "json/constants.json",
+        "ugly_level": "json/levels/ugly_level.json",
         "example_level": "json/levels/example_level.json"
     }
 }
