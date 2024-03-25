@@ -24,35 +24,53 @@
         "shiprightbite": {
             "file": "textures/dog/bite/medium-right-bite.png"
         },
-        "monkey0": {
-            "file": "textures/IMG_0265 right.PNG"
+        "basicEnemy0": {
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
-        "monkey1": {
-            "file": "textures/IMG_0265 right.PNG"
+        "basicEnemy1": {
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
-        "monkey2": {
-            "file": "textures/IMG_0265 right.PNG"
+        "basicEnemy2": {
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
-        "monkey3": {
-            "file": "textures/IMG_0265.PNG"
+        "basicEnemy3": {
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
-        "monkey4": {
-            "file": "textures/IMG_0265.PNG"
+        "basicEnemy4": {
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
-        "monkey5": {
-            "file": "textures/IMG_0265.PNG"
+        "basicEnemy5": {
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
-        "monkey6": {
-            "file": "textures/IMG_0265.PNG"
+        "basicEnemy6": {
+            "file": "textures/basicEnemy/IMG_0265.PNG"
         },
-        "monkey7": {
-            "file": "textures/IMG_0265 right.PNG"
+        "basicEnemy7": {
+            "file": "textures/basicEnemy/IMG_0265 right.PNG"
         },
-        "asteroid1": {
-            "file": "textures/monkeys.png"
+        "monkey0":{
+            "file": "textures/monkey/monkey-walk-0.png"
         },
-        "asteroid2": {
-            "file": "textures/asteroid2.png"
+        "monkey1":{
+            "file": "textures/monkey/monkey-walk-1.png"
+        },
+        "monkey2":{
+            "file": "textures/monkey/monkey-walk-2.png"
+        },
+        "monkey3":{
+            "file": "textures/monkey/monkey-walk-3.png"
+        },
+        "monkey4":{
+            "file": "textures/monkey/monkey-walk-4.png"
+        },
+        "monkey5":{
+            "file": "textures/monkey/monkey-walk-5.png"
+        },
+        "monkey6":{
+            "file": "textures/monkey/monkey-walk-6.png"
+        },
+        "monkey7":{
+            "file": "textures/monkey/monkey-walk-7.png"
         },
         "spawner": {
             "file": "textures/spawner.png"

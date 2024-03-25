@@ -28,8 +28,8 @@ bool MonsterController::init(std::shared_ptr<cugl::JsonValue> data, OverWorld& o
                 pos.x = entry->get(0)->get(0)->asFloat(0);
                 pos.y = entry->get(0)->get(1)->asFloat(0);
                 spawnStaticBasicEnemy(pos, overWorld);
-//                pos += Vec2(20,20);
-//                spawnBombEnemy(pos,overWorld);
+               pos += Vec2(20,20);
+               spawnBombEnemy(pos,overWorld);
             }
         }
     }
@@ -102,6 +102,27 @@ void MonsterController::setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> d
     int _framecols = data->getFloat("sprite cols", 0);
     int _framesize = data->getFloat("sprite size", 0);
     std::vector<std::shared_ptr<cugl::Texture>> textures;
+    textures.push_back(_assets->get<Texture>("basicEnemy0"));
+    textures.push_back(_assets->get<Texture>("basicEnemy1"));
+    textures.push_back(_assets->get<Texture>("basicEnemy2"));
+    textures.push_back(_assets->get<Texture>("basicEnemy3"));
+    textures.push_back(_assets->get<Texture>("basicEnemy4"));
+    textures.push_back(_assets->get<Texture>("basicEnemy5"));
+    textures.push_back(_assets->get<Texture>("basicEnemy6"));
+    textures.push_back(_assets->get<Texture>("basicEnemy7"));
+    int rows = _framesize / _framecols;
+    for(auto& text : textures) {
+        meleeAnimationData._sprite.push_back(cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize));
+    }
+    meleeAnimationData._framesize = _framesize;
+    meleeAnimationData._framecols = _framecols;
+}
+
+void MonsterController::setBombAnimationData(std::shared_ptr<cugl::JsonValue> data,
+                           const std::shared_ptr<cugl::AssetManager> _assets){
+    int _framecols = data->getFloat("sprite cols", 0);
+    int _framesize = data->getFloat("sprite size", 0);
+    std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(_assets->get<Texture>("monkey0"));
     textures.push_back(_assets->get<Texture>("monkey1"));
     textures.push_back(_assets->get<Texture>("monkey2"));
@@ -112,10 +133,10 @@ void MonsterController::setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> d
     textures.push_back(_assets->get<Texture>("monkey7"));
     int rows = _framesize / _framecols;
     for(auto& text : textures) {
-        meleeAnimationData._sprite.push_back(cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize));
+        bombAnimationData._sprite.push_back(cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize));
     }
-    meleeAnimationData._framesize = _framesize;
-    meleeAnimationData._framecols = _framecols;
+    bombAnimationData._framesize = _framesize;
+    bombAnimationData._framecols = _framecols;
 }
 
 void MonsterController::spawnBasicEnemy(cugl::Vec2 pos, OverWorld& overWorld){
@@ -159,9 +180,9 @@ void MonsterController::spawnStaticBasicEnemy(cugl::Vec2 pos, OverWorld& overWor
 
 void MonsterController::spawnBombEnemy(cugl::Vec2 pos, OverWorld& overWorld){
     
-    std::vector<std::shared_ptr<cugl::SpriteSheet>>& _texture = meleeAnimationData._sprite;
-    int _framesize = meleeAnimationData._framesize;
-    int _framecols = meleeAnimationData._framecols;
+    std::vector<std::shared_ptr<cugl::SpriteSheet>>& _texture = bombAnimationData._sprite;
+    int _framesize = bombAnimationData._framesize;
+    int _framecols = bombAnimationData._framecols;
     if (_texture.size() > 0)
     {
         int rows = _framesize / _framecols;

@@ -39,18 +39,22 @@ using namespace std;
  *
  * @return true if the controller is initialized properly, false otherwise.
  */
-bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
+bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
+{
     std::cout << "INIT GAMESCENE\n";
     transition = ScreenEnums::GAMEPLAY;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
-    dimen *= SCENE_HEIGHT/dimen.height;
-    if (assets == nullptr) {
-        return false;
-    } else if (!Scene2::init(dimen)) {
+    dimen *= SCENE_HEIGHT / dimen.height;
+    if (assets == nullptr)
+    {
         return false;
     }
-    
+    else if (!Scene2::init(dimen))
+    {
+        return false;
+    }
+
     // Start up the input handler
     _assets = assets;
     _input.init();
@@ -65,21 +69,22 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     // Make a ship and set its texture
     _ship = overWorld.getDog();
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    
+
     _parser = LevelParser(_assets, assets->get<JsonValue>("example_level"));
     _parser.processLayers();
-    
+
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"));
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
 
     _monsterController.setMeleeAnimationData(_constants->get("asteroids"), assets);
-    
+    _monsterController.setBombAnimationData(_constants->get("bomb"), assets);
+
     // Get the bang sound
     _bang = assets->get<Sound>("bang");
     _laser = assets->get<Sound>("laser");
     _blast = assets->get<Sound>("blast");
-    
+
     // Create and layout the health meter
     std::string msg = strtool::format("Health %d", _ship->getHealth());
     _text = TextLayout::allocWithText(msg, assets->get<Font>("pixel32"));
@@ -99,24 +104,25 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
 /**
  * Disposes of all (non-static) resources allocated to this mode.
  */
-void GameScene::dispose() {
-    if (_active) {
+void GameScene::dispose()
+{
+    if (_active)
+    {
         removeAllChildren();
         _active = false;
     }
 }
-
 
 #pragma mark -
 #pragma mark Gameplay Handling
 /**
  * Resets the status of the game so that we can play again.
  */
-void GameScene::reset() {
+void GameScene::reset()
+{
     _gameEnded = false;
     _spawnerController.init(_constants->get("spawner"));
-    _monsterController.init(_constants->get("asteroids"),overWorld);
-    
+    _monsterController.init(_constants->get("asteroids"), overWorld);
 }
 
 /**
@@ -126,61 +132,74 @@ void GameScene::reset() {
  *
  * @param timestep  The amount of time (in seconds) since the last frame
  */
-void GameScene::update(float timestep) {
+void GameScene::update(float timestep)
+{
     // Read the keyboard for each controller.
     _input.readInput_joystick();
     _input.readInput();
 
-    if (_input.didPressReset()) {
+    if (_input.didPressReset())
+    {
         overWorld.reset(getSize());
         reset();
     }
-    if (_gameEnded){
+    if (_gameEnded)
+    {
         return;
     }
-    overWorld.update(_input, getSize(),timestep);
-    
-//    if (_input.didPressFire() && _ship->canFireWeapon()){
-//        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
-//    }
-//    
-    _spawnerController.update(_monsterController,overWorld, timestep);
+    overWorld.update(_input, Size(_world.overworld.at(0).size() * 22, _world.overworld.size() * 22), timestep);
+    //    std::cout << _world.overworld.at(0).size() * 40 << " " <<_world.overworld.size() * 40 << std::endl;
+
+    //    if (_input.didPressFire() && _ship->canFireWeapon()){
+    //        AudioEngine::get()->play("laser", _laser, false, _laser->getVolume(), true);
+    //    }
+    //
+    _spawnerController.update(_monsterController, overWorld, timestep);
     _monsterController.update(getSize(), timestep, overWorld);
-    
+
     _collisions.intraOverWorldCollisions(overWorld);
     _collisions.overWorldMonsterControllerCollisions(overWorld, _monsterController);
     _collisions.attackCollisions(overWorld, _monsterController, _spawnerController);
-    
+
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     // Update the health meter
     _text->setText(strtool::format("Health %d, Absorb %d, Base_Health %d Mode %s", _ship->getHealth(), _ship->getAbsorb(), overWorld.getBaseSet()->getFirstHealth(), _ship->getMode().c_str()));
     _text->layout();
-    
+
     // Check if game ended
-    if (_monsterController.isEmpty() && _spawnerController.win()){
+    if (_monsterController.isEmpty() && _spawnerController.win())
+    {
         _gameEnded = true;
-    }else if (_ship->getHealth() == 0){
+    }
+    else if (_ship->getHealth() == 0)
+    {
         _gameEnded = true;
-    }else if (baseSet->baseLost()){
+    }
+    else if (baseSet->baseLost())
+    {
         _gameEnded = true;
     }
     _monsterController.postUpdate(getSize(), timestep);
     overWorld.postUpdate();
 }
 
-
-void GameScene::createMap(){
+void GameScene::createMap()
+{
     const int rows = 10;
-     const int cols = 10;
+    const int cols = 10;
     std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            other[i][j] = (rand() % 10) + 1; // Assign random 0 or 1
+    int counter = 1;
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            other[i][j] = counter;
+            counter += 1; // Assign random 0 or 1
         }
     }
     std::vector<std::vector<int>> matrix = _parser.getTile();
-    _world = World(Vec2(0, 0), matrix , other, tile);
+    _world = World(Vec2(0, 0), matrix, other, tile);
 }
 /**
  * Draws all this scene to the given SpriteBatch.
@@ -191,52 +210,55 @@ void GameScene::createMap(){
  *
  * @param batch     The SpriteBatch to draw with.
  */
-void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
+void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
+{
     // For now we render 3152-style
     // DO NOT DO THIS IN YOUR FINAL GAME
 
-    //shift camera to follow ship; draw ingame objects here
+    // shift camera to follow ship; draw ingame objects here
     cugl::Vec3 pos = cugl::Vec3();
     pos.add(_ship->getPosition());
     getCamera()->setPosition(pos);
     getCamera()->update();
     batch->begin(getCamera()->getCombined());
-    //draw bg
-//    CULog("%d %d", bgCellX, bgCellY);
-//    for (int i = -2; i <= 30; i++) {
-//        for (int j = -2; j <= 30; j++) {
-//            Color4 tint;
-//                tint = Color4("white");
-//            batch->draw(_background, tint, Rect(Vec2(38*0, 38*j), Size(40,40)));
-//        }
-//    }
+    // draw bg
+    //    CULog("%d %d", bgCellX, bgCellY);
+    //    for (int i = -2; i <= 30; i++) {
+    //        for (int j = -2; j <= 30; j++) {
+    //            Color4 tint;
+    //                tint = Color4("white");
+    //            batch->draw(_background, tint, Rect(Vec2(38*0, 38*j), Size(40,40)));
+    //        }
+    //    }
     _world.draw(batch);
     _spawnerController.draw(batch, getSize());
-    _monsterController.draw(batch, getSize(),_assets->get<Font>("pixel32"));
+    _monsterController.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     overWorld.draw(batch, getSize());
     // draw actions
-    
+
     // shift camera to draw for absolute positioning
     getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
     getCamera()->update();
     batch->setPerspective(getCamera()->getCombined());
 
-
     batch->setColor(Color4::BLACK);
-    batch->drawText(_text,Vec2(10,getSize().height-_text->getBounds().size.height));
+    batch->drawText(_text, Vec2(10, getSize().height - _text->getBounds().size.height));
     batch->setColor(Color4::WHITE);
     cugl::Affine2 trans;
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
-    
+
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
-    if (_monsterController.isEmpty() && _spawnerController.win()){
-        trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textWin->getBounds().size.width/2.0f, getSize().height/2.0f));
+    if (_monsterController.isEmpty() && _spawnerController.win())
+    {
+        trans.translate(Vec2(getSize().width / 2.0f - scale_factor * _textWin->getBounds().size.width / 2.0f, getSize().height / 2.0f));
         batch->setColor(Color4::GREEN);
-        batch->drawText(_textWin,trans);
+        batch->drawText(_textWin, trans);
         batch->setColor(Color4::WHITE);
-    }else if (_ship->getHealth() == 0 || baseSet->baseLost()){
-        trans.translate(Vec2(getSize().width/2.0f - scale_factor * _textLose->getBounds().size.width/2.0f, getSize().height/2.0f));
+    }
+    else if (_ship->getHealth() == 0 || baseSet->baseLost())
+    {
+        trans.translate(Vec2(getSize().width / 2.0f - scale_factor * _textLose->getBounds().size.width / 2.0f, getSize().height / 2.0f));
         batch->setColor(Color4::RED);
         batch->drawText(_textLose, trans);
         batch->setColor(Color4::WHITE);
@@ -244,9 +266,9 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     batch->end();
 }
 
-ScreenEnums GameScene::getTransition(){return transition;}
+ScreenEnums GameScene::getTransition() { return transition; }
 
-
-void GameScene::resetTransition(){
+void GameScene::resetTransition()
+{
     transition = ScreenEnums::GAMEPLAY;
 }
