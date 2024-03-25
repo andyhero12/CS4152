@@ -115,26 +115,19 @@ void HeavanApp::transition(){
     if(transitionScene == ScreenEnums::LOADING){
         currentScene->dispose();
     }
-    
+    currentScene->resetTransition();
+    currentScene->dispose();
+    transitionScene = currentScene->getTransition();
     
     if(currentScene->getTransition() == ScreenEnums::LOADING){
         // might delete; idk if we want to be able to go to loading
-        currentScene->resetTransition();
-        currentScene->dispose();
-        transitionScene = currentScene->getTransition();
         currentScene = &_gameplay;
     }
     else if (currentScene->getTransition() == ScreenEnums::LEVELSELECT){
-        currentScene->resetTransition();
-        currentScene->dispose();
-        transitionScene = currentScene->getTransition();
         currentScene = &_gameplay;
     }
     else if (currentScene->getTransition() == ScreenEnums::GAMEPLAY){
         // Current one we have
-        currentScene->resetTransition();
-        currentScene->dispose();
-        transitionScene = currentScene->getTransition();
         currentScene = &_gameplay;
     }
 }
