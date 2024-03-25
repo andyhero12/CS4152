@@ -30,6 +30,7 @@ private:
     
     // Each Monster Type needs one of these
     AnimationDataStruct meleeAnimationData;
+    AnimationDataStruct bombAnimationData;
 public:
         
     MonsterController(){
@@ -59,6 +60,8 @@ public:
     void postUpdate(cugl::Size size, float timestep);
     
     void setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> data,
+                               const std::shared_ptr<cugl::AssetManager> _assets);
+    void setBombAnimationData(std::shared_ptr<cugl::JsonValue> data,
                                const std::shared_ptr<cugl::AssetManager> _assets);
     
 };
