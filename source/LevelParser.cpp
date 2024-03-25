@@ -27,7 +27,7 @@ void LevelParser::processLayers(){
         auto layerValues = _level->get("layers")->children();
         for(auto it = layerValues.begin(); it != layerValues.end(); it++) {
             std::shared_ptr<cugl::JsonValue> layer = (*it);
-            std::cout << layer->toString() << std::endl;
+//            std::cout << layer->toString() << std::endl;
             if (layer->getString("name")=="DrawTiles"){
                 processMatrix(layer, _tile);
             }
@@ -77,7 +77,7 @@ void LevelParser::processMatrix(std::shared_ptr<cugl::JsonValue> levelJson, std:
     matrix.at(x).resize(column);
     for (auto it = array.begin(); it != array.end(); it++)
     {
-        std::cout << x << " " << y << std::endl;
+//        std::cout << x << " " << y << std::endl;
         matrix.at(x).at(y) = (*it)->asInt();
         y += 1;
         if(y == column){
