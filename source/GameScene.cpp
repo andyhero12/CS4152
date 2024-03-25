@@ -168,8 +168,8 @@ void GameScene::update(float timestep) {
 
 
 void GameScene::createMap(){
-    const int rows = 10;
-     const int cols = 10;
+    const int rows = tile->getHeight()/32;
+     const int cols = tile->getWidth()/32;
      std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
 
      for (int i = 0; i < rows; ++i) {
@@ -179,10 +179,12 @@ void GameScene::createMap(){
      }
     
     std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
-
+    
+    int counter = 1;
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            other[i][j] = (rand() % 10) + 1; // Assign random 0 or 1
+            other[i][j] = counter;
+            counter += 1;// Assign random 0 or 1
         }
     }
     
