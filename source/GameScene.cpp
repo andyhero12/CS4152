@@ -58,6 +58,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     // Get the background image and constant values
     sand = assets->get<Texture>("sand");
     water = assets->get<Texture>("water");
+    tile = assets->get<Texture>("tile");
     _constants = assets->get<JsonValue>("constants");
 
     overWorld.init(assets, getSize());
@@ -124,7 +125,9 @@ void GameScene::reset() {
  */
 void GameScene::update(float timestep) {
     // Read the keyboard for each controller.
+    _input.readInput_joystick();
     _input.readInput();
+
     if (_input.didPressReset()) {
         overWorld.reset(getSize());
         reset();
@@ -162,6 +165,7 @@ void GameScene::update(float timestep) {
     overWorld.postUpdate();
 }
 
+
 void GameScene::createMap(){
     const int rows = 10;
      const int cols = 10;
@@ -173,7 +177,15 @@ void GameScene::createMap(){
          }
      }
     
-    _world = World(Vec2(0, 0), matrix, sand, water);
+    std::vector<std::vector<int>> other(rows, std::vector<int>(cols));
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            other[i][j] = (rand() % 10) + 1; // Assign random 0 or 1
+        }
+    }
+    
+    _world = World(Vec2(0, 0), other , matrix, tile);
 }
 /**
  * Draws all this scene to the given SpriteBatch.

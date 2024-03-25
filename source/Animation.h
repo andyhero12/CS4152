@@ -29,7 +29,7 @@ public:
     /** Attack animation frequency */
     float animFreq;
     /** Number of animation directions for the entity */
-    int numAnimDirections;
+    // int numAnimDirections;
     
     Animation(){}
     Animation(std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame);

@@ -53,6 +53,7 @@ protected:
     /** The backgrounnd image */
     std::shared_ptr<cugl::Texture> sand;
     std::shared_ptr<cugl::Texture> water;
+    std::shared_ptr<cugl::Texture> tile;
     /** The text with the win message */
     std::shared_ptr<cugl::TextLayout> _textWin;
     /** The text with the loss */
