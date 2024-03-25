@@ -30,9 +30,10 @@ void Spawner::subHealth(const int val){
 void Spawner::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
     if (_texture){
         cugl::Vec2 pos = getPos();
+        pos.add(-_texture->getWidth() / 2, -_texture->getHeight() / 2);
         cugl::Vec2 origin(0, 0);
         cugl::Affine2 trans;
-        float scale = 2;
+        float scale = 1;
         trans.scale(scale);
         trans.translate(pos);
         batch->draw(_texture, origin, trans);
