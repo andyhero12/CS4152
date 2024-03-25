@@ -1,9 +1,7 @@
 {
     "textures": {
         "background": {
-            "file": "textures/ice.png",
-            "wrapS": "repeat",
-            "wrapT": "repeat"
+            "file": "textures/tile/sand.png"
         },
         "photon": {
             "file": "textures/photon.png"

@@ -24,7 +24,7 @@ using namespace std;
 
 // Lock the screen size to fixed height regardless of aspect ratio
 #define SCENE_HEIGHT 720
-#define WORLD_SIZE 3
+//#define WORLD_SIZE 3
 
 #pragma mark -
 #pragma mark Constructors
@@ -182,16 +182,16 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch>& batch) {
     //draw bg
     int bgCellX = int(_ship->getPosition().x) / getSize().getIWidth();
     int bgCellY = int(_ship->getPosition().y) / getSize().getIHeight();
-    for (int i = -2; i <= 1; i++) {
-        for (int j = -2; j <= 1; j++) {
+    for (int i = -2; i <= 30; i++) {
+        for (int j = -2; j <= 30; j++) {
             Color4 tint;
-            if (i + bgCellX < 0 || i + bgCellX >= WORLD_SIZE || j + bgCellY < 0 || j + bgCellY >= WORLD_SIZE) {
-                tint = Color4("gray");
-            }
-            else {
+//            if (i + bgCellX < 0 || i + bgCellX >= WORLD_SIZE || j + bgCellY < 0 || j + bgCellY >= WORLD_SIZE) {
+//                tint = Color4("gray");
+//            }
+//            else {
                 tint = Color4("white");
-            }
-            batch->draw(_background, tint, Rect(Vec2(getSize().getIWidth() * (i + bgCellX), getSize().getIHeight() * (j + bgCellY)), getSize()));
+//            }
+            batch->draw(_background, tint, Rect(Vec2(35*i + (i + bgCellX), 35*j + (j + bgCellY)), Size(40,40)));
         }
     }
     _spawnerController.draw(batch, getSize());
