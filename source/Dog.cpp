@@ -120,7 +120,7 @@ void Dog::setRunTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> 
 
 
 void Dog::setRunTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, biteAnimationSmall);
+    setTexture(texture, runAnimationSmall);
 }
 void Dog::setBiteTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
     setTexture(texture, biteAnimationSmall);
@@ -131,11 +131,11 @@ void Dog::setShootTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>>
 }
 
 void Dog::setIdleTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, shootAnimationSmall);
+    setTexture(texture, idleAnimationSmall);
 }
 
 void Dog::setRunTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, biteAnimationLarge);
+    setTexture(texture, runAnimationLarge);
 }
 void Dog::setBiteTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
     setTexture(texture, biteAnimationLarge);
@@ -146,7 +146,7 @@ void Dog::setShootTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>
 }
 
 void Dog::setIdleTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, shootAnimationLarge);
+    setTexture(texture, idleAnimationLarge);
 }
 
 void Dog::setBiteTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
@@ -158,7 +158,7 @@ void Dog::setShootTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>
 }
 
 void Dog::setIdleTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, shootAnimationMedium);
+    setTexture(texture, idleAnimationMedium);
 }
 
 
@@ -213,7 +213,7 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         }
     }
     else if(idle && idleAnimation){
-        idleAnimation->updateDirection();
+//        idleAnimation->updateDirection();
     }
     // Don't draw if sprite not set
     if (runAnimation->getSprite() && biteAnimation->getSprite()) {
@@ -308,7 +308,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     
     if(_vel.x == 0 && _vel.y == 0){
         if(!bite && !shoot){
-//            setIdle();
+            setIdle();
         }
         return;
     }
