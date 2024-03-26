@@ -16,27 +16,9 @@
             "file": "textures/dog/bite/medium-right-bite.png"
         },
         "basicEnemy0": {
-            "file": "textures/basicEnemy/basicWalkRight.PNG"
+            "file": "textures/basicEnemy/basicWalkLeft.PNG"
         },
         "basicEnemy1": {
-            "file": "textures/basicEnemy/basicWalkRight.PNG"
-        },
-        "basicEnemy2": {
-            "file": "textures/basicEnemy/basicWalkRight.PNG"
-        },
-        "basicEnemy3": {
-            "file": "textures/basicEnemy/basicWalkLeft.PNG"
-        },
-        "basicEnemy4": {
-            "file": "textures/basicEnemy/basicWalkLeft.PNG"
-        },
-        "basicEnemy5": {
-            "file": "textures/basicEnemy/basicWalkLeft.PNG"
-        },
-        "basicEnemy6": {
-            "file": "textures/basicEnemy/basicWalkRight.PNG"
-        },
-        "basicEnemy7": {
             "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
         "monkey0":{

@@ -57,8 +57,8 @@ void Devil::move(cugl::Size size){
     while (_pos.y < 0) {
         _pos.y = 0;
     }
-    
-    runAnimation.update(direction.getAngle());
+    // should remove 90 when we have full 8 directions
+    runAnimation.update(direction.getAngle() - 90);
     
 }
 
