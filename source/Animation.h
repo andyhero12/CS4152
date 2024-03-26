@@ -63,5 +63,9 @@ public:
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const;
     
     void setOrigin(cugl::Vec2 &origin);
+    
+    int convertToQuadrant(double radian);
+    
+    void update(double radian);
 };
 #endif /* Animation_hpp */

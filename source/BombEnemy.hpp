@@ -43,7 +43,6 @@ public:
         return 1;
     }
     
-    int convertToQuadrant(double radian);
     
 protected:
     int _contactDamage;

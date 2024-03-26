@@ -16,9 +16,7 @@ class MeleeEnemy : public AbstractEnemy {
 public:
     MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex);
     virtual void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font) override;
-    
-    
-    int convertToQuadrant(double radian);
+
     virtual void update(float dt, OverWorld& overWorld) override;
     
     virtual int getDamage() override{

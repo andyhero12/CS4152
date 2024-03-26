@@ -97,7 +97,6 @@ protected:
     Animation _walkingAnimations;
     Animation _attackingAnimations;
     float _radius;
-    int _prevDir;
     bool attacking;
 };
 #endif /* AbstractEnemy_h */

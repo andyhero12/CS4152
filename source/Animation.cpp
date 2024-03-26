@@ -11,7 +11,7 @@ Animation::Animation( std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextu
     animSprite(animTextures)
 {
     currentAnimationDirection = 0;
-    currentAnimSprite = animSprite[currentAnimationDirection];
+    currentAnimSprite = animSprite.at(currentAnimationDirection);
     frame = startFrame;
 }
 
@@ -48,5 +48,28 @@ const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
 void Animation::setOrigin(cugl::Vec2 &origin){
     for(auto& spriteSheet : animSprite) {
         spriteSheet->setOrigin(origin);
+    }
+}
+
+int Animation::convertToQuadrant(double radian) {
+    int directions = static_cast<int> (animSprite.size());
+    double angleInDegrees = radian * (180 / M_PI);
+    float ang = 360.0f / (directions);
+    int quadrant = static_cast<int>(std::floor(angleInDegrees / ang)) % directions;
+    return ( quadrant + directions ) % directions;
+}
+
+/*
+ Takes in the vector angle
+ */
+void Animation::update(double radian){
+    int dir_quad = convertToQuadrant(radian);
+    
+    if (currentAnimationDirection != dir_quad){
+        resetAnimation(dir_quad);
+    }
+    updateAnimTime();
+    if (frameUpdateReady()){
+        stepAnimation();
     }
 }

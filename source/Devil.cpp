@@ -7,11 +7,6 @@
 
 #include "Devil.h"
 
-int convertToHalves(double radian) {
-    double angleInDegrees = (radian-90) * (180.0 / M_PI);
-    int half = static_cast<int>(std::floor(angleInDegrees / 180.0)) % 2;
-    return (half+2) % 2;
-}
 
 Devil::Devil(std::shared_ptr<Dog> inc_dog, const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _pos = pos;
@@ -63,16 +58,7 @@ void Devil::move(cugl::Size size){
         _pos.y = 0;
     }
     
-    if(prevDirection != convertToHalves(direction.getAngle())){
-        prevDirection = convertToHalves(direction.getAngle());
-        runAnimation.resetAnimation(prevDirection);
-    }
-        
-
-    runAnimation.updateAnimTime();
-    if (runAnimation.frameUpdateReady()){
-        runAnimation.stepAnimation();
-    }
+    runAnimation.update(direction.getAngle());
     
 }
 

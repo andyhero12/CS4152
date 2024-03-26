@@ -13,12 +13,6 @@ MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_tar
     
 }
 
-int MeleeEnemy::convertToQuadrant(double radian) {
-    double angleInDegrees = radian * (180 / M_PI);
-    int quadrant = static_cast<int>(std::floor(angleInDegrees / 45.0)) % 8;
-    return ( quadrant + 8 ) % 8;
-}
-
 void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font){
     Vec2 pos = getPos();
     std::string hpMsg = strtool::format(std::to_string(getHealth()));
@@ -42,16 +36,7 @@ void MeleeEnemy::update(float dt, OverWorld& overWorld){
     position += direction.normalize();
     cugl::Size size = overWorld.getTotalSize();
     
-    int dir_quad = convertToQuadrant(direction.getAngle());
-    
-    if (_prevDir != dir_quad){
-        _walkingAnimations.resetAnimation(dir_quad);
-    }
-    _prevDir = dir_quad;
-    _walkingAnimations.updateAnimTime();
-    if (_walkingAnimations.frameUpdateReady()){
-        _walkingAnimations.stepAnimation();
-    }
+    _walkingAnimations.update(direction.getAngle());
     
     while (position.x > size.width) {
         position.x = size.width;
