@@ -65,6 +65,8 @@ protected:
     bool _gameEnded;
     
     ScreenEnums transition;
+
+    cugl::physics2::ObstacleWorld _obstacleWorld;
     
 
     
