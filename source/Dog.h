@@ -314,8 +314,24 @@ public:
      *
      * @param texture   The texture for the sprite sheet
      */
-    void setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
-    void setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setRunTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setBiteTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setShootTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setIdleTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    
+    
+    void setRunTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setBiteTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setShootTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setIdleTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    
+    void setRunTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setBiteTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setShootTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    void setIdleTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
+    
+    
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation);
     
     /**
      * Draws this ship to the sprite batch within the given bounds.

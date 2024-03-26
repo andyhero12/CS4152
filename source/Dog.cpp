@@ -95,7 +95,7 @@ void Dog::subAbsorb(int value) {
  *
  * @param texture   The texture for the sprite sheet
  */
-void Dog::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+void Dog::setRunTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
         if (_framesize % _framecols != 0) {
@@ -115,28 +115,69 @@ void Dog::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & text
 }
 
 
-void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-//    std::cout << texture << std::endl;
-    if (_framecols > 0) {
-        int rows = _framesize/_framecols;
-        if (_framesize % _framecols != 0) {
-            rows++;
-        }
-        std::shared_ptr<cugl::SpriteSheet> _sprite ;
-        std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
-        for(auto& text : texture) {
-            _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
-            anims.push_back(_sprite);
-        }
-        
-        biteAnimationMedium = Animation(anims, 5, _frameflat);
-        
-        
-        Vec2 origin(biteAnimationMedium.getSprite()->getFrameSize()/2);
-        biteAnimationMedium.setOrigin(origin);
-//        _radius = std::max(biteAnimation.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
-    }
+void Dog::setRunTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, biteAnimationSmall);
 }
+void Dog::setBiteTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, biteAnimationSmall);
+}
+
+void Dog::setShootTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, shootAnimationSmall);
+}
+
+void Dog::setIdleTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, shootAnimationSmall);
+}
+
+
+void Dog::setRunTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, biteAnimationLarge);
+}
+void Dog::setBiteTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, biteAnimationLarge);
+}
+
+void Dog::setShootTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, shootAnimationLarge);
+}
+
+void Dog::setIdleTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, shootAnimationLarge);
+}
+
+
+
+void Dog::setBiteTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, biteAnimationMedium);
+}
+
+void Dog::setShootTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, shootAnimationMedium);
+}
+
+void Dog::setIdleTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
+    setTexture(texture, shootAnimationMedium);
+}
+
+
+void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation) {
+        if (_framecols > 0) {
+            int rows = _framesize / _framecols;
+            if (_framesize % _framecols != 0) {
+                rows++;
+            }
+            std::vector<std::shared_ptr<cugl::SpriteSheet>> anims;
+            for(auto& text : texture) {
+                auto _sprite = cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize);
+                anims.push_back(_sprite);
+            }
+
+            animation = Animation(anims, 5, _frameflat);
+            cugl::Vec2 origin(animation.getSprite()->getFrameSize() / 2);
+            animation.setOrigin(origin);
+        }
+    }
 
 
 /**
