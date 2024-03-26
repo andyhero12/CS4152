@@ -19,11 +19,20 @@ void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Siz
 //    std::shared_ptr<cugl::TextLayout> hptext = TextLayout::allocWithText(hpMsg, font);
 //    hptext->layout();
     Affine2 trans;
+    Affine2 trans_bar;
+    Vec2 pos_bar = Vec2(pos.x + 13, pos.y + 35);
     trans.translate(pos);
+    trans_bar.translate(pos_bar);
+    size.set(20, 10);
+
     const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
-    sprite->draw(batch, trans);
+    sprite->draw(batch, trans); // draw enemy animation
 //    batch->drawText(hptext, trans);
-    _healthBar->draw(batch, trans, Color4::WHITE);
+    _healthBar = cugl::scene2::ProgressBar::alloc(size);
+    //_healthBar->setBackgroundColor(cugl::Color4::BLUE);
+    //std::cout << size.getIHeight() << std::endl;
+    //_healthBar->draw(batch, trans, Color4::RED);
+    _healthBar->render(batch, trans_bar, Color4::WHITE);
 //    _healthBar->render(batch, trans, Color4::WHITE);
 }
 
