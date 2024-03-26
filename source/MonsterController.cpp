@@ -117,14 +117,14 @@ void MonsterController::setBombAnimationData(std::shared_ptr<cugl::JsonValue> da
     int _framecols = data->getFloat("sprite cols", 0);
     int _framesize = data->getFloat("sprite size", 0);
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(_assets->get<Texture>("monkey0"));
-    textures.push_back(_assets->get<Texture>("monkey1"));
-    textures.push_back(_assets->get<Texture>("monkey2"));
-    textures.push_back(_assets->get<Texture>("monkey3"));
-    textures.push_back(_assets->get<Texture>("monkey4"));
-    textures.push_back(_assets->get<Texture>("monkey5"));
-    textures.push_back(_assets->get<Texture>("monkey6"));
-    textures.push_back(_assets->get<Texture>("monkey7"));
+    textures.push_back(_assets->get<Texture>("bombEnemyIdle"));
+//    textures.push_back(_assets->get<Texture>("monkey1"));
+//    textures.push_back(_assets->get<Texture>("monkey2"));
+//    textures.push_back(_assets->get<Texture>("monkey3"));
+//    textures.push_back(_assets->get<Texture>("monkey4"));
+//    textures.push_back(_assets->get<Texture>("monkey5"));
+//    textures.push_back(_assets->get<Texture>("monkey6"));
+//    textures.push_back(_assets->get<Texture>("monkey7"));
     int rows = _framesize / _framecols;
     for(auto& text : textures) {
         bombAnimationData._sprite.push_back(cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize));
