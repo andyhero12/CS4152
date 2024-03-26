@@ -5,7 +5,7 @@
 //  Created by Andrew Cheng on 3/24/24.
 //
 
-#include "StaticMeleeEnemy.hpp"
+#include "StaticMeleeEnemy.h"
 #define DISTANCE_CUTOFF 250
 
 StaticMeleeEnemy::StaticMeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)

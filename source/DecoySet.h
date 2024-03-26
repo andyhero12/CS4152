@@ -7,7 +7,7 @@
 
 #ifndef DecoySet_hpp
 #define DecoySet_hpp
-#include "Decoy.hpp"
+#include "Decoy.h"
 #include <unordered_set>
 #include <vector>
 #include <cugl/cugl.h>

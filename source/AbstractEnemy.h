@@ -8,7 +8,7 @@
 #ifndef AbstractEnemy_h
 #define AbstractEnemy_h
 #include <cugl/cugl.h>
-#include "OverWorld.hpp"
+#include "OverWorld.h"
 #include "Animation.h"
 
 #define MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY 4

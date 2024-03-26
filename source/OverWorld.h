@@ -15,8 +15,8 @@
 #include "Animation.h"
 #include "BaseSet.h"
 #include "InputController.h"
-#include "AttackPolygons.hpp"
-#include "DecoySet.hpp"
+#include "AttackPolygons.h"
+#include "DecoySet.h"
 
 class OverWorld{
 private:

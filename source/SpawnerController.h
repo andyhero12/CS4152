@@ -15,8 +15,8 @@
 #include <vector>
 #include "MonsterController.h"
 #include "AbstractSpawner.h"
-#include "MeleeSpawner.hpp"
-#include "OverWorld.hpp"
+#include "MeleeSpawner.h"
+#include "OverWorld.h"
 
 
 class SpawnerController{

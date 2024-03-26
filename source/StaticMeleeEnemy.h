@@ -8,7 +8,7 @@
 #ifndef StaticMeleeEnemy_hpp
 #define StaticMeleeEnemy_hpp
 
-#include "MeleeEnemy.hpp"
+#include "MeleeEnemy.h"
 
 class StaticMeleeEnemy: public MeleeEnemy{
     

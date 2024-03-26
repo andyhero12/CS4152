@@ -5,7 +5,7 @@
 //  Created by Andrew Cheng on 3/14/24.
 //
 
-#include "MeleeEnemy.hpp"
+#include "MeleeEnemy.h"
 MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
 : AbstractEnemy(m_pos, m_health, m_radius, m_targetIndex)
 , _contactDamage(5)

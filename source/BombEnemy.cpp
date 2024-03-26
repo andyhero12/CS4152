@@ -4,7 +4,7 @@
 //
 //  Created by Andrew Cheng on 3/14/24.
 //
-#include "BombEnemy.hpp"
+#include "BombEnemy.h"
 
 #define EXPLOSION_RADIUS 50
 

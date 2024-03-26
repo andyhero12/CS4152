@@ -18,7 +18,7 @@
 #include "InputController.h"
 #include "CollisionController.h"
 #include "SpawnerController.h"
-#include "OverWorld.hpp"
+#include "OverWorld.h"
 #include "MonsterController.h"
 #include "GlobalConstants.h"
 #include "World.h"

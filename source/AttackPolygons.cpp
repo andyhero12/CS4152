@@ -4,7 +4,7 @@
 //  Created by Andrew Cheng on 3/12/24.
 //
 
-#include "AttackPolygons.hpp"
+#include "AttackPolygons.h"
 #define BITE_AGE 2
 void ActionPolygon::update(cugl::Size size){
     _age++;

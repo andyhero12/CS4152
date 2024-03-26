@@ -25,8 +25,8 @@
 #include "Dog.h"
 #include "BaseSet.h"
 #include "SpawnerController.h"
-#include "AttackPolygons.hpp"
-#include "OverWorld.hpp"
+#include "AttackPolygons.h"
+#include "OverWorld.h"
 #include "MonsterController.h"
 
 /**

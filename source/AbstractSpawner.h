@@ -9,7 +9,7 @@
 #define AbstractSpawner_h
 #include <cugl/cugl.h>
 #include "MonsterController.h"
-#include "OverWorld.hpp"
+#include "OverWorld.h"
 
 class AbstractSpawner{
 protected:

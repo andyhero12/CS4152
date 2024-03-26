@@ -9,10 +9,10 @@
 #define MonsterController_h
 
 #include "AbstractEnemy.h"
-#include "MeleeEnemy.hpp"
-#include "StaticMeleeEnemy.hpp"
-#include "BombEnemy.hpp"
-#include "OverWorld.hpp"
+#include "MeleeEnemy.h"
+#include "StaticMeleeEnemy.h"
+#include "BombEnemy.h"
+#include "OverWorld.h"
 #include <unordered_set>
 #include <vector>
 #include <random>

@@ -5,7 +5,7 @@
 //  Created by Andrew Cheng on 3/14/24.
 //
 
-#include "OverWorld.hpp"
+#include "OverWorld.h"
 
 #define WORLD_SIZE 3
 
@@ -120,13 +120,13 @@ bool OverWorld::initDevil(){
 bool OverWorld::initBases(){
     _bases = std::make_shared<BaseSet>();
     _bases->init(_constants->get("base"));
-    _bases->setTexture(_assets->get<Texture>("base"));
+    _bases->setTexture(_assets->get<cugl::Texture>("base"));
     return true;
 }
 
 bool OverWorld::initDecoys(){
     _decoys = std::make_shared<DecoySet>();
-    _decoys->setTexture(_assets->get<Texture>("base"));
+    _decoys->setTexture(_assets->get<cugl::Texture>("base"));
     return true;
 }
 

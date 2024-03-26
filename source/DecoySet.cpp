@@ -5,7 +5,7 @@
 //  Created by Andrew Cheng on 3/22/24.
 //
 
-#include "DecoySet.hpp"
+#include "DecoySet.h"
 
 void DecoySet::init(){
     _currentDecoys.clear();

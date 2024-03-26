@@ -5,4 +5,4 @@
 //  Created by Andrew Cheng on 3/14/24.
 //
 
-#include "RangedEnemy.hpp"
+#include "RangedEnemy.h"
