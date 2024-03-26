@@ -84,8 +84,26 @@ private:
     /** Radius of the ship in pixels (derived from sprite sheet) */
     float _radius;
     
-    Animation runAnimation;
-    Animation biteAnimation;
+    Animation runAnimationSmall;
+    Animation biteAnimationSmall;
+    Animation shootAnimationSmall;
+    Animation idleAnimationSmall;
+    
+    Animation runAnimationMedium;
+    Animation biteAnimationMedium;
+    Animation shootAnimationMedium;
+    Animation idleAnimationMedium;
+    
+    Animation runAnimationLarge;
+    Animation biteAnimationLarge;
+    Animation shootAnimationLarge;
+    Animation idleAnimationLarge;
+    
+    
+    Animation *runAnimation;
+    Animation *biteAnimation;
+    Animation *shootAnimation;
+    Animation *idleAnimation;
     bool attack;
 
 public:
@@ -285,17 +303,6 @@ public:
     }
     
 #pragma mark Graphics
-    /**
-     * Returns the sprite sheet for the ship
-     *
-     * The size and layout of the sprite sheet should already be specified
-     * in the initializing JSON. Otherwise, the contents of the sprite sheet
-     * will be ignored.     *
-     * @return the sprite sheet for the ship
-     */
-    const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        return runAnimation.getSprite();
-    }
 
     /**
      * Sets the texture for this ship.

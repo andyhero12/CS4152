@@ -107,10 +107,10 @@ void Dog::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & text
             _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
             anims.push_back(_sprite);
         }
-        runAnimation = Animation( anims, 10, _frameflat);
-        Vec2 origin(runAnimation.getSprite()->getFrameSize()/2);
-        runAnimation.setOrigin(origin);
-        _radius = std::max(runAnimation.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
+        runAnimationMedium = Animation( anims, 10, _frameflat);
+        Vec2 origin(runAnimationMedium.getSprite()->getFrameSize()/2);
+        runAnimationMedium.setOrigin(origin);
+        _radius = std::max(runAnimationMedium.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
     }
 }
 
@@ -129,11 +129,11 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
             anims.push_back(_sprite);
         }
         
-        biteAnimation = Animation(anims, 5, _frameflat);
+        biteAnimationMedium = Animation(anims, 5, _frameflat);
         
         
-        Vec2 origin(biteAnimation.getSprite()->getFrameSize()/2);
-        biteAnimation.setOrigin(origin);
+        Vec2 origin(biteAnimationMedium.getSprite()->getFrameSize()/2);
+        biteAnimationMedium.setOrigin(origin);
 //        _radius = std::max(biteAnimation.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
     }
 }
@@ -150,14 +150,21 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
  * @param size      The size of the window (for wrap around)
  */
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
+    biteAnimation = &biteAnimationMedium;
+    runAnimation = &runAnimationSmall;
+    
+    if(biteAnimationMedium.getSprite() && runAnimationMedium.getSprite()){
+        return;
+    }
+    
     if(attack){
-        biteAnimation.updateDirection();
-        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1){
+        biteAnimation->updateDirection();
+        if (biteAnimation->getFrame() == biteAnimation->getSprite()->getSize() -1){
             attack = false;
         }
     }
     // Don't draw if sprite not set
-    if (runAnimation.getSprite() && biteAnimation.getSprite()) {
+    if (runAnimation->getSprite() && biteAnimation->getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
         // super duper magic number
@@ -171,12 +178,12 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         
         
         if (!attack){
-            runAnimation.getSprite()->draw(batch,shadow,shadtrans);
-            runAnimation.getSprite()->draw(batch,shiptrans);
+            runAnimation->getSprite()->draw(batch,shadow,shadtrans);
+            runAnimation->getSprite()->draw(batch,shiptrans);
         }
         else{
-            biteAnimation.getSprite()->draw(batch,shadow,shadtrans);
-            biteAnimation.getSprite()->draw(batch,shiptrans);
+            biteAnimation->getSprite()->draw(batch,shadow,shadtrans);
+            biteAnimation->getSprite()->draw(batch,shiptrans);
         }
 
     }
@@ -198,7 +205,7 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 
 void Dog::setAttack(){
     attack = true;
-    biteAnimation.resetAnimation(_prevTurn);
+    biteAnimation->resetAnimation(_prevTurn);
 }
 
 /**
@@ -212,7 +219,6 @@ void Dog::setAttack(){
  * @param turn        Amount to turn the ship
  */
 void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Usekeyboard, Size size) {
-
     //    if (attack){
     //        return;
     //    }
@@ -274,8 +280,10 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _modeTimer++;
     }
     
-    runAnimation.update(_vel.getAngle());
-    _prevTurn = runAnimation.currentAnimationDirection;
+    if(runAnimation && runAnimation->getSprite()){
+        runAnimation->update(_vel.getAngle());
+        _prevTurn = runAnimation->currentAnimationDirection;
+    }
 }
 
 
