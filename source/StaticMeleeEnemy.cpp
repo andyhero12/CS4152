@@ -26,13 +26,15 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
     cugl::Vec2 direction;
     if (distance > DISTANCE_CUTOFF){ // too far from origin return
         direction = original_pos - position;
+        if (direction.lengthSquared() >= 1){
+            position += direction.normalize();
+        }
     }else{ // chase dog
         direction = dog_pos - position;
+        position += direction.normalize();
     }
     // Animate
-    position += direction.normalize();
     cugl::Size size = overWorld.getTotalSize();
-    
     _walkingAnimations.update(direction.getAngle() + 67.5f);
     
     while (position.x > size.width) {
