@@ -35,17 +35,17 @@ bool OverWorld::initDog(){
     textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontbite"));
     _dog->setBiteTextureMedium(textures);
     
-    textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightidle"));
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftbidle"));
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontidle"));
-    _dog->setIdleTextureMedium(textures);
-    
-    
-    textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightshoot"));
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftshoot"));
-    _dog->setShootTextureMedium(textures);
+//    textures.clear();
+//    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightidle"));
+//    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftbidle"));
+//    textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontidle"));
+//    _dog->setIdleTextureMedium(textures);
+//    
+//    
+//    textures.clear();
+//    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightshoot"));
+//    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftshoot"));
+//    _dog->setShootTextureMedium(textures);
     return true;
 }
 
