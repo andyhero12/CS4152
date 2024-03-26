@@ -34,8 +34,6 @@ private:
     
     std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
     
-    /** Position of the ship */
-    cugl::Vec2 _pos;
     /** Velocity of the ship */
     cugl::Vec2 _vel;
     
@@ -87,6 +85,9 @@ private:
     Animation runAnimation;
     Animation biteAnimation;
     bool attack;
+    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle;
+
+    
 
 public:
 #pragma mark Constructors
@@ -126,7 +127,7 @@ public:
      *
      * @return the position of this ship
      */
-    const cugl::Vec2& getPosition() const { return _pos; }
+    const cugl::Vec2 getPosition() const { return _boxObstacle->getPosition(); }
     
     /**
      * Sets the position of this ship.
@@ -137,7 +138,7 @@ public:
      *
      * @param value the position of this ship
      */
-    void setPosition(cugl::Vec2 value) { _pos = value; }
+    void setPosition(cugl::Vec2 value) { _boxObstacle->setPosition(value); }
     
     /**
      * Sets the position of this ship, supporting wrap-around.
@@ -282,6 +283,13 @@ public:
     void toggleMode(){
         int length = sizeof(modes) / sizeof(modes[0]);
         _mode = (_mode + 1) % length;
+    }
+
+    /**
+    * Return the pointer to the physics obstacle (currently box, but we maybe we change later)
+    */
+    std::shared_ptr<cugl::physics2::BoxObstacle> getObstacle() {
+        return _boxObstacle;
     }
     
 #pragma mark Graphics

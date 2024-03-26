@@ -65,13 +65,17 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
 
     // initialize physics engine
     // I am not entirely sure what the significance of bounds is. For now, I set it to a large value so we should not hit it.
-    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0, 0));
+    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.01, -0.01));
+    _obstacleWorld.setPositionIterations(18);
 
     // Get the background image and constant values
     tile = assets->get<Texture>("tile");
     _constants = assets->get<JsonValue>("constants");
 
     overWorld.init(assets, getSize());
+    _obstacleWorld.addObstacle(overWorld.getDog()->getObstacle());
+    
+
     std::vector<std::shared_ptr<cugl::Texture>> textures;
 
     _parser = LevelParser(_assets, assets->get<JsonValue>("ugly_level"));
@@ -203,6 +207,12 @@ void GameScene::createMap()
 //        }
 //    }
     _world = World(Vec2(0, 0), matrix, other, tile);
+    for (auto& row : _world.overworld) { // Access by reference to avoid copying
+        for (auto& tile : row) {
+            if(tile.boxObstacle != nullptr)
+                _obstacleWorld.addObstacle(tile.boxObstacle);
+        }
+    }
 }
 /**
  * Draws all this scene to the given SpriteBatch.

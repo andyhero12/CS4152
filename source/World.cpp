@@ -9,12 +9,13 @@
 using namespace cugl;
 
 cugl::Size size(1,1);
+#define DRAW_WIREFRAME true
 
 World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset):start(bottomleft), tile(tileset){
     overworld.resize(map.size());
     for(int i = 0; i < map.size(); i++){
         for (int j = 0; j < map[0].size(); j++){
-            if(passable.at(i).at(j) == 0 && i != 10){
+            if(passable.at(i).at(j) == 0 && i != 26){
                 overworld[i].emplace_back(size, Terrain::PASSABLE, getBox(map.at(i).at(j)));
             }
             else{
@@ -30,6 +31,12 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
         for (int i = originalRows -1; i > -1; i--){
             TileInfo& t = overworld.at(i).at(j);
             t.boundaryRect = Rect(Vec2((t.size.width )*printIndexJ, (t.size.height)*printIndexI), t.size);
+            t.boxObstacle = t.type == Terrain::IMPASSIBLE ? physics2::BoxObstacle::alloc(t.boundaryRect.origin, t.boundaryRect.size) : nullptr;
+            if (t.boxObstacle != nullptr) {
+                t.boxObstacle->setBodyType(b2_dynamicBody);
+                t.boxObstacle->setDensity(1);
+                //t.boxObstacle->setLinearDamping(0.1f);
+            }
             printIndexI++;
         }
         printIndexJ++;
@@ -52,6 +59,14 @@ void World::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
             Color4 tint = cugl::Color4("white");
             TileInfo& t = overworld.at(i).at(j);
             batch->draw(t.texture, tint, t.boundaryRect);
+            if (t.boxObstacle != nullptr && DRAW_WIREFRAME) {
+                //std::cout << "hello " + std::to_string(t.boxObstacle->getDimension().width) + " "
+                //    + std::to_string(t.boxObstacle->getDimension().height) + "\n";
+                Color4 wireframeColor = Color4("green");
+                batch->setColor(wireframeColor);
+                batch->setTexture(nullptr);
+                batch->outline(Rect(t.boxObstacle->getPosition(), t.boxObstacle->getDimension()));
+            }
             printIndexI++;
         }
         printIndexJ++;

@@ -28,10 +28,13 @@ public:
         cugl::Size size;
         std::shared_ptr<cugl::Texture> texture;
         cugl::Rect boundaryRect;
+        // NULL POINTER ALERT!
+        std::shared_ptr<cugl::physics2::BoxObstacle> boxObstacle;
+        Terrain type;
         TileInfo(cugl::Size size, Terrain type, std::shared_ptr<cugl::Texture> texture);
     private:
         
-        Terrain type;
+        
     };
 private:
     // Matrix with information about the overworld

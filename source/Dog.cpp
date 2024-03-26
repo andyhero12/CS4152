@@ -20,6 +20,8 @@
 
 using namespace cugl;
 
+#define DRAW_WIREFRAME true
+
 /**
  * Creates a ship wiht the given position and data.
  *
@@ -30,7 +32,6 @@ using namespace cugl;
  * @param data  The data defining the physics constants
  */
 Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
-    _pos = pos;
     _ang  = 0;
     _refire = 0;
     _radius = 0;
@@ -54,6 +55,12 @@ Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _health = data->getInt("health",0);
     _maxHealth = _health;
     _modeCooldown = data->getInt("mode cooldown",0);
+    
+    _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
+    _boxObstacle->setBodyType(b2_kinematicBody);
+    _boxObstacle->setDensity(1);
+    _boxObstacle->setLinearDamping(0.1);
+    
 }
 
 /**
@@ -165,11 +172,12 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         // account for sprite size so we are by logic coordinates
         shiptrans.scale(1 / runAnimation.getSprite()->getFrameSize().height);
 //        shiptrans.rotate(_ang*M_PI/180);
-        shiptrans.translate(_pos);
+        shiptrans.translate(_boxObstacle->getPosition());
         // Transform to place the shadow, and its color
         Affine2 shadtrans = shiptrans;
         shadtrans.translate(_shadows,-_shadows);
         Color4f shadow(0,0,0,0.5f);
+
         
         
         if (!attack){
@@ -180,7 +188,12 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
             biteAnimation.getSprite()->draw(batch,shadow,shadtrans);
             biteAnimation.getSprite()->draw(batch,shiptrans);
         }
-
+        if (DRAW_WIREFRAME) {
+            Color4 wireframeColor = Color4("green");
+            batch->setColor(wireframeColor);
+            batch->setTexture(nullptr);
+            batch->outline(Rect(getObstacle()->getPosition(), getObstacle()->getDimension()));
+        }
     }
 }
 
@@ -194,7 +207,7 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
  * @param size      The size of the window (for wrap around)
  */
 void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
-    _pos = value;
+    _boxObstacle->setPosition(value);
 }
 
 
@@ -251,20 +264,25 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     _vel = _vel.normalize();
     
     // Move the ship position by the ship velocity
-    _pos += (_vel*0.06);
-    //std::cout << _pos.x << " " << _pos.y << "\n";
-    while (_pos.x > size.width) {
-        _pos.x = size.width;
+    Vec2 pos = _boxObstacle->getPosition();
+    pos += _vel * 0.06;
+    while (pos.x > size.width) {
+        pos.x = size.width;
     }
-    while (_pos.x < 0) {
-        _pos.x = 0;
+    while (pos.x < 0) {
+        pos.x = 0;
     }
-    while (_pos.y > size.height) {
-        _pos.y = size.height;
+    while (pos.y > size.height) {
+        pos.y = size.height;
     }
-    while (_pos.y < 0) {
-        _pos.y = 0;
+    while (pos.y < 0) {
+        pos.y = 0;
     }
+    setPosition(pos);
+
+    //std::cout << _boxObstacle->get();
+    //std::cout << "\n";
+
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
