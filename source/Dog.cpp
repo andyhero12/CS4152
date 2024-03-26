@@ -56,10 +56,7 @@ Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _maxHealth = _health;
     _modeCooldown = data->getInt("mode cooldown",0);
     
-    _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
-    _boxObstacle->setBodyType(b2_kinematicBody);
-    _boxObstacle->setDensity(1);
-    _boxObstacle->setLinearDamping(0.1);
+    
     
 }
 
@@ -297,6 +294,8 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     
     runAnimation.update(_vel.getAngle() - 90);
     _prevTurn = runAnimation.currentAnimationDirection;
+    // #@!$
+    getObstacle()->markDirty(true);
 }
 
 

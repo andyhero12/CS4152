@@ -33,9 +33,9 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
             t.boundaryRect = Rect(Vec2((t.size.width )*printIndexJ, (t.size.height)*printIndexI), t.size);
             t.boxObstacle = t.type == Terrain::IMPASSIBLE ? physics2::BoxObstacle::alloc(t.boundaryRect.origin, t.boundaryRect.size) : nullptr;
             if (t.boxObstacle != nullptr) {
-                t.boxObstacle->setBodyType(b2_dynamicBody);
+                t.boxObstacle->setBodyType(b2_staticBody);
                 t.boxObstacle->setDensity(1);
-                //t.boxObstacle->setLinearDamping(0.1f);
+                t.boxObstacle->setLinearDamping(0.1f);
             }
             printIndexI++;
         }

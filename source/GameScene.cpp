@@ -65,7 +65,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
 
     // initialize physics engine
     // I am not entirely sure what the significance of bounds is. For now, I set it to a large value so we should not hit it.
-    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.01, -0.01));
+    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.00, -0.01));
     _obstacleWorld.setPositionIterations(18);
 
     // Get the background image and constant values
@@ -73,7 +73,14 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _constants = assets->get<JsonValue>("constants");
 
     overWorld.init(assets, getSize());
+    /*
+    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
+    _boxObstacle->setBodyType(b2_dynamicBody);
+    _boxObstacle->setDensity(1);
+    _boxObstacle->setLinearDamping(0.1);
+    overWorld.getDog()->_boxObstacle = _boxObstacle;
     _obstacleWorld.addObstacle(overWorld.getDog()->getObstacle());
+    */
     
 
     std::vector<std::shared_ptr<cugl::Texture>> textures;
@@ -160,9 +167,11 @@ void GameScene::update(float timestep)
     _spawnerController.update(_monsterController, overWorld, timestep);
     _monsterController.update(getSize(), timestep, overWorld);
 
+    /*
     _collisions.intraOverWorldCollisions(overWorld);
     _collisions.overWorldMonsterControllerCollisions(overWorld, _monsterController);
     _collisions.attackCollisions(overWorld, _monsterController, _spawnerController);
+    */
 
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     // Update the health meter
@@ -207,12 +216,23 @@ void GameScene::createMap()
 //        }
 //    }
     _world = World(Vec2(0, 0), matrix, other, tile);
-    for (auto& row : _world.overworld) { // Access by reference to avoid copying
+    //std::shared_ptr<cugl::physics2::BoxObstacle> lastObstacle;
+    bool b = true;
+    for (auto& row : _world.overworld) {
         for (auto& tile : row) {
-            if(tile.boxObstacle != nullptr)
+            if (tile.boxObstacle != nullptr) {
+                if (b) {
+                    overWorld.getDog()->_boxObstacle = tile.boxObstacle;
+                    overWorld.getDog()->_boxObstacle->setBodyType(b2_dynamicBody);
+                    b = false;
+                }
                 _obstacleWorld.addObstacle(tile.boxObstacle);
+                //lastObstacle = tile.boxObstacle;
+            }
         }
     }
+    //_obstacleWorld.addObstacle(overWorld.getDog()->_boxObstacle);
+    
 }
 /**
  * Draws all this scene to the given SpriteBatch.

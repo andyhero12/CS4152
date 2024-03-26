@@ -85,11 +85,11 @@ private:
     Animation runAnimation;
     Animation biteAnimation;
     bool attack;
-    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle;
 
     
 
 public:
+    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle;
 #pragma mark Constructors
     /**
      * Creates a ship wiht the given position and data.
