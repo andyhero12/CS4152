@@ -90,8 +90,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _monsterController.setHealthBar(_bar);
     
     
-    
-
+    // init monster controller
     _monsterController.setMeleeAnimationData(_constants->get("basicEnemy"), assets);
     _monsterController.setBombAnimationData(_constants->get("bomb"), assets);
     
@@ -200,19 +199,7 @@ void GameScene::update(float timestep)
 void GameScene::createMap()
 {
     std::vector<std::vector<int>> matrix = _parser.getTile();
-    const int rows = (int) matrix.size();
-    const int cols = (int) matrix.at(0).size();
-    std::vector<std::vector<int>> other(rows, std::vector<int>(cols,0));
-
-//    int counter = 1;
-//    for (int i = 0; i < rows; ++i)
-//    {
-//        for (int j = 0; j < cols; ++j)
-//        {
-//            other[i][j] = counter;
-//            counter += 1; // Assign random 0 or 1
-//        }
-//    }
+    std::vector<std::vector<int>> other = _parser.getBoundaries();
     _world = World(Vec2(0, 0), matrix, other, tile);
 }
 /**
