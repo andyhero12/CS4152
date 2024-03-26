@@ -27,8 +27,10 @@ public:
     public:
         cugl::Size size;
         std::shared_ptr<cugl::Texture> texture;
+        cugl::Rect boundaryRect;
         TileInfo(cugl::Size size, Terrain type, std::shared_ptr<cugl::Texture> texture);
     private:
+        
         Terrain type;
     };
 private:

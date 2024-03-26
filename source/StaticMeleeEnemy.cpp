@@ -33,16 +33,7 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
     position += direction.normalize();
     cugl::Size size = overWorld.getTotalSize();
     
-    int dir_quad = convertToQuadrant(direction.getAngle());
-    
-    if (_prevDir != dir_quad){
-        _walkingAnimations.resetAnimation(dir_quad);
-    }
-    _prevDir = dir_quad;
-    _walkingAnimations.updateAnimTime();
-    if (_walkingAnimations.frameUpdateReady()){
-        _walkingAnimations.stepAnimation();
-    }
+    _walkingAnimations.update(direction.getAngle() - 90);
     
     while (position.x > size.width) {
         position.x = size.width;

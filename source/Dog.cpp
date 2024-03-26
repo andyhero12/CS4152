@@ -96,7 +96,6 @@ void Dog::subAbsorb(int value) {
  * @param texture   The texture for the sprite sheet
  */
 void Dog::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-//    std::cout << texture << std::endl;
     if (_framecols > 0) {
         int rows = _framesize/_framecols;
         if (_framesize % _framecols != 0) {
@@ -107,7 +106,6 @@ void Dog::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>> & text
         for(auto& text : texture) {
             _sprite = SpriteSheet::alloc(text, rows, _framecols, _framesize);
             anims.push_back(_sprite);
-//
         }
         runAnimation = Animation( anims, 10, _frameflat);
         Vec2 origin(runAnimation.getSprite()->getFrameSize()/2);
@@ -153,17 +151,13 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
  */
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if(attack){
-        biteAnimation.updateAnimTime();
-        if (biteAnimation.frameUpdateReady()){
-            biteAnimation.stepAnimation();
-        }
-        
-        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1 ){
+        biteAnimation.updateDirection();
+        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1){
             attack = false;
         }
     }
     // Don't draw if sprite not set
-    if (runAnimation.getSprite()) {
+    if (runAnimation.getSprite() && biteAnimation.getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
         // super duper magic number
@@ -202,13 +196,9 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 }
 
 
-int Dog::direction(int dir){
-    return _prevTurn == 1 ? 1 : 0;
-}
-
 void Dog::setAttack(){
     attack = true;
-    biteAnimation.resetAnimation(direction(_prevTurn));
+    biteAnimation.resetAnimation(_prevTurn);
 }
 
 /**
@@ -226,8 +216,6 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     //    if (attack){
     //        return;
     //    }
-        // Process the ship turning.
-
     if (forward == 0.0f) {
         _vel = Vec2(0, 0);
     }
@@ -240,19 +228,8 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _vel = Vel;
         //_vel = Vec2(turn, forward);
     }
-
-
-    // Process the ship thrust.
-    //    if (forward != 0.0f) {
-    //        // Thrust key pressed; increase the ship velocity.
-    //        float rads = M_PI*_ang/180.0f+M_PI_2;
-    //        Vec2 dir(cosf(rads),sinf(rads));
-    //        _vel += dir * forward * _thrust;
-    //    }
-
-    // Move the ship, updating it.
-    // Adjust the angle by the change in angle
-    //std::cout <<"velocity"<< Vel.y << " $$"<< Vel.x << std::endl;
+    
+    
     if (!(forward == 0 && turn == 0)) {
         _ang = atan2(forward, turn) * (180 / M_PI) - 90;
         setAngle(_ang);
@@ -297,23 +274,8 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _modeTimer++;
     }
     
-    if (forward != 0 || turn != 0){
-        if (_prevTurn != turn){
-            if (turn == -1){
-                runAnimation.resetAnimation(0);
-            }
-            else if (turn == 1){
-                runAnimation.resetAnimation(1);
-            }
-        }
-        _prevTurn = turn;
-        
-
-        runAnimation.updateAnimTime();
-        if (runAnimation.frameUpdateReady()){
-            runAnimation.stepAnimation();
-        }
-    }
+    runAnimation.update(_vel.getAngle() - 90);
+    _prevTurn = runAnimation.currentAnimationDirection;
 }
 
 

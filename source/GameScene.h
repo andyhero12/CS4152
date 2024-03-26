@@ -31,7 +31,8 @@
  * really a mini-GameEngine in its own right.  As in 3152, we separate it out
  * so that we can have a separate mode for the loading screen.
  */
-class GameScene : public cugl::Scene2 {
+class GameScene : public cugl::Scene2
+{
 protected:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -62,13 +63,11 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     World _world;
     LevelParser _parser;
-    
-    bool _gameEnded;
-    
-    ScreenEnums transition;
-    
 
-    
+    bool _gameEnded;
+
+    ScreenEnums transition;
+
 public:
 #pragma mark -
 #pragma mark Constructors
@@ -79,7 +78,7 @@ public:
      * This allows us to use the object without a heap pointer.
      */
     GameScene() : cugl::Scene2() {}
-    
+
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      *
@@ -87,12 +86,12 @@ public:
      * static resources, like the input controller.
      */
     ~GameScene() { dispose(); }
-    
+
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      */
     void dispose() override;
-    
+
     /**
      * Initializes the controller contents, and starts the game
      *
@@ -104,9 +103,8 @@ public:
      *
      * @return true if the controller is initialized properly, false otherwise.
      */
-    bool init(const std::shared_ptr<cugl::AssetManager>& assets);
+    bool init(const std::shared_ptr<cugl::AssetManager> &assets);
 
-    
 #pragma mark -
 #pragma mark Gameplay Handling
     /**
@@ -117,7 +115,7 @@ public:
      * @param timestep  The amount of time (in seconds) since the last frame
      */
     void update(float timestep) override;
-    
+
     ScreenEnums getTransition() override;
 
     /**
@@ -129,15 +127,15 @@ public:
      *
      * @param batch     The SpriteBatch to draw with.
      */
-    void render(const std::shared_ptr<cugl::SpriteBatch>& batch) override;
-    
+    void render(const std::shared_ptr<cugl::SpriteBatch> &batch) override;
+
     void resetTransition() override;
 
     /**
      * Resets the status of the game so that we can play again.
      */
     void reset() override;
-    
+
     void createMap();
 };
 

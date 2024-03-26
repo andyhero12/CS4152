@@ -11,7 +11,7 @@
 #include "OverWorld.hpp"
 #include "Animation.h"
 
-#define MAGIC_NUMBER_ENEMY_FRAMES 4
+#define MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY 4
 
 class AbstractEnemy {
 public:
@@ -78,12 +78,12 @@ public:
     }
     void setWalkingSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
         _walkingAnimations.setOrigin(origin);
-        _walkingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_FRAMES, 0);
+        _walkingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY, 0);
     }
     
     void setAttackingSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
         _attackingAnimations.setOrigin(origin);
-        _attackingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_FRAMES, 0);
+        _attackingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY, 0);
     }
     
     void setHealthBar(std::shared_ptr<cugl::scene2::ProgressBar> bar){
@@ -91,9 +91,6 @@ public:
     }
     
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-//        if(attacking){
-//            _attackingAnimations.getSprite();
-//        }
         return _walkingAnimations.getSprite();
     }
     
@@ -106,7 +103,6 @@ protected:
     /** The health  bar */
     std::shared_ptr<cugl::scene2::ProgressBar>  _healthBar;
     float _radius;
-    int _prevDir;
     bool attacking;
 };
 #endif /* AbstractEnemy_h */

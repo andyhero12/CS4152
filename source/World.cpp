@@ -22,55 +22,42 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
             }
         }
     }
-}
-
-
-#include <iostream>
-
-template<typename T>
-std::vector<std::vector<T>> rotate90(const std::vector<std::vector<T>>& matrix) {
-    if (matrix.empty() || matrix[0].empty()) return {};
-
-    int originalRows = matrix.size();
-    int originalCols = matrix[0].size();
-
-    // Create an outer vector with the correct size, but don't initialize the inner vectors yet
-    std::vector<std::vector<T>> rotatedMatrix(originalCols);
-
-    for (int j = 0; j < originalCols; ++j) {
-        // Create a new inner vector for each column of the original matrix
-        std::vector<T> newRow;
-
-        for (int i = originalRows - 1; i >= 0; --i) {
-            // Push elements into the new row vector in the correct order
-            newRow.push_back(matrix[i][j]);
+    int originalRows = (int) overworld.size();
+    int originalCols = (int) overworld.at(0).size();
+    int printIndexJ = 0;
+    for (int j =0  ;j< originalCols; j++){
+        int printIndexI = 0;
+        for (int i = originalRows -1; i > -1; i--){
+            TileInfo& t = overworld.at(i).at(j);
+            t.boundaryRect = Rect(Vec2((t.size.width )*printIndexJ, (t.size.height)*printIndexI), t.size);
+            printIndexI++;
         }
-
-        // Assign the newly created row to the rotated matrix
-        rotatedMatrix[j] = newRow;
+        printIndexJ++;
     }
-
-    return rotatedMatrix;
 }
 
 World::TileInfo::TileInfo(cugl::Size size, Terrain type, std::shared_ptr<cugl::Texture> texture)
-: size(size), type(type), texture(texture) {
-    // Debug print to verify texture assignment (optional)
-//    std::cout << "Texture assigned: " << texture << std::endl;
+: size(size), 
+type(type),
+texture(texture) {
 }
 
 void World::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
-    std::vector<std::vector<World::TileInfo>> overworld90 = rotate90(overworld);
-    for (int i = 0; i < overworld90.size(); i++) {
-           for (int j = 0; j < overworld90[0].size(); j++) {
-               Color4 tint = cugl::Color4("white");
-               TileInfo t = overworld90.at(i).at(j);
-               batch->draw(t.texture, tint, Rect(Vec2((t.size.width )*i, (t.size.height)*j), t.size));
-           }
-       }
-};
-
-
+    int originalRows = (int) overworld.size();
+    int originalCols = (int) overworld.at(0).size();
+    int printIndexJ = 0;
+    for (int j =0  ;j< originalCols; j++){
+        int printIndexI = 0;
+        for (int i = originalRows -1; i > -1; i--){
+            Color4 tint = cugl::Color4("white");
+            TileInfo& t = overworld.at(i).at(j);
+            batch->draw(t.texture, tint, t.boundaryRect);
+            printIndexI++;
+        }
+        printIndexJ++;
+    }
+    
+}
 std::shared_ptr<cugl::Texture> World::getBox(int position){
     int boxSize = 32;  // Each box is 32x32 pixels
     float textureWidth = tile->getWidth();
@@ -94,5 +81,6 @@ std::shared_ptr<cugl::Texture> World::getBox(int position){
     // Get the subTexture
     return tile->getSubTexture(minS, maxS, minT, maxT);
 }
+    
 
 
