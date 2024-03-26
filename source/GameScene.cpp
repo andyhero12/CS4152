@@ -65,7 +65,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
 
     // initialize physics engine
     // I am not entirely sure what the significance of bounds is. For now, I set it to a large value so we should not hit it.
-    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.00, -0.01));
+    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.00, -0.00));
     _obstacleWorld.setPositionIterations(18);
 
     // Get the background image and constant values
@@ -222,9 +222,11 @@ void GameScene::createMap()
         for (auto& tile : row) {
             if (tile.boxObstacle != nullptr) {
                 if(b) {                 
-                    //overWorld.getDog()->_boxObstacle = tile.boxObstacle;
+                    overWorld.getDog()->_boxObstacle = overWorld.getDog()->buildObstacle();
                     //overWorld.getDog()->_boxObstacle->setBodyType(b2_dynamicBody);
-                    _obstacleWorld.addObstacle(overWorld.getDog()->buildObstacle());
+
+                    // shared ptr boxobstacle
+                   _obstacleWorld.addObstacle(overWorld.getDog()->_boxObstacle);
                     b = false;
                 }
                 _obstacleWorld.addObstacle(tile.boxObstacle);
