@@ -35,8 +35,9 @@ bool BaseSet::init(std::shared_ptr<cugl::JsonValue> data)
             {
                 std::shared_ptr<cugl::JsonValue> entry = (*it);
                 cugl::Vec2 pos;
-                pos.x = entry->get(0)->get(0)->asFloat(0);
-                pos.y = entry->get(0)->get(1)->asFloat(0);
+                // TEMPORARY MAGIC NUMBERS
+                pos.x = entry->get(0)->get(0)->asFloat(0) / 64;
+                pos.y = entry->get(0)->get(1)->asFloat(0) / 64;
                 int health = entry->get(1)->asInt(0);
                 _bases.emplace_back(std::make_shared<Base>(health, pos));
             }
@@ -59,7 +60,7 @@ void BaseSet::draw(const std::shared_ptr<cugl::SpriteBatch> &batch, cugl::Size s
         cugl::Vec2 origin(0, 0);
         cugl::Affine2 trans;
         float scale = 1;
-        trans.scale(scale);
+        trans.scale(scale / _texture->getHeight());
         trans.translate(pos);
         batch->draw(_texture, origin, trans);
     }

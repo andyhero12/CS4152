@@ -6,7 +6,7 @@
 //
 #include "BombEnemy.hpp"
 
-#define EXPLOSION_RADIUS 50
+#define EXPLOSION_RADIUS 0.5
 
 BombEnemy::BombEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
 : AbstractEnemy(m_pos, m_health, m_radius, m_targetIndex)
