@@ -30,6 +30,13 @@
  * Model class representing an alien ship.
  */
 class Dog {
+//public:
+//    enum class States : int{
+//        IDLE = 0,
+//        RUN = 1,
+//        BITE= 2,
+//        SHOOT = 3
+//    };
 private:
     
     std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
@@ -100,11 +107,13 @@ private:
     Animation idleAnimationLarge;
     
     
-    Animation *runAnimation;
-    Animation *biteAnimation;
-    Animation *shootAnimation;
-    Animation *idleAnimation;
-    bool attack;
+    std::shared_ptr<Animation> runAnimation;
+    std::shared_ptr<Animation> biteAnimation;
+    std::shared_ptr<Animation> shootAnimation;
+    std::shared_ptr<Animation> idleAnimation;
+    bool bite;
+    bool shoot;
+    bool idle;
 
 public:
 #pragma mark Constructors
@@ -234,7 +243,7 @@ public:
      * @return true if the ship can fire
      */
     bool canFireWeapon() const{
-        return !attack && _refire > _firerate;
+        return !bite && _refire > _firerate;
     }
     
     void reloadWeapon() {

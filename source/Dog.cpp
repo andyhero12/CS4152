@@ -20,6 +20,10 @@
 
 using namespace cugl;
 
+void switchAnimation(std::shared_ptr<Animation>& animationPointer, Animation& newAnimation) {
+       animationPointer = std::shared_ptr<Animation>(&newAnimation, [](Animation*){});
+}
+
 /**
  * Creates a ship wiht the given position and data.
  *
@@ -130,7 +134,6 @@ void Dog::setIdleTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> 
     setTexture(texture, shootAnimationSmall);
 }
 
-
 void Dog::setRunTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
     setTexture(texture, biteAnimationLarge);
 }
@@ -145,8 +148,6 @@ void Dog::setShootTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>
 void Dog::setIdleTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
     setTexture(texture, shootAnimationLarge);
 }
-
-
 
 void Dog::setBiteTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
     setTexture(texture, biteAnimationMedium);
@@ -191,17 +192,18 @@ void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture,
  * @param size      The size of the window (for wrap around)
  */
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
-    biteAnimation = &biteAnimationMedium;
-    runAnimation = &runAnimationSmall;
     
-    if(biteAnimationMedium.getSprite() && runAnimationMedium.getSprite()){
-        return;
-    }
+    // switch animation based on form
     
-    if(attack){
+    switchAnimation(biteAnimation, biteAnimationMedium);
+    switchAnimation(runAnimation, runAnimationMedium);
+    switchAnimation(shootAnimation, shootAnimationMedium);
+    switchAnimation(idleAnimation, idleAnimationMedium);
+    
+    if(bite){
         biteAnimation->updateDirection();
         if (biteAnimation->getFrame() == biteAnimation->getSprite()->getSize() -1){
-            attack = false;
+            bite = false;
         }
     }
     // Don't draw if sprite not set
@@ -218,7 +220,7 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         Color4f shadow(0,0,0,0.5f);
         
         
-        if (!attack){
+        if (!bite){
             runAnimation->getSprite()->draw(batch,shadow,shadtrans);
             runAnimation->getSprite()->draw(batch,shiptrans);
         }
@@ -245,7 +247,7 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 
 
 void Dog::setAttack(){
-    attack = true;
+    bite = true;
     biteAnimation->resetAnimation(_prevTurn);
 }
 
@@ -281,7 +283,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _ang = atan2(forward, turn) * (180 / M_PI) - 90;
         setAngle(_ang);
     }
-
+    
     if (abs(Vel.x) > 0.2 || abs(Vel.y) > 0.2) {
         _ang = atan2(Vel.y, Vel.x) * (180 / M_PI) - 90;
         setAngle(_ang);
