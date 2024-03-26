@@ -252,7 +252,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     
     // Move the ship position by the ship velocity
     _pos += (_vel*0.06);
-    std::cout << _pos.x << " " << _pos.y << "\n";
+    //std::cout << _pos.x << " " << _pos.y << "\n";
     while (_pos.x > size.width) {
         _pos.x = size.width;
     }

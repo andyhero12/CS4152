@@ -41,10 +41,10 @@ void Devil::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>>& tex
 void Devil::move(cugl::Size size){
     
     cugl::Vec2 direction = dog->getPosition()- _pos ;
-    if (direction.length() < 50){
+    if (direction.length() < 0.8){
         return;
     }
-    _pos += direction.normalize()*3;
+    _pos += direction.normalize()*0.07;
     while (_pos.x > size.width) {
         _pos.x = size.width;
     }
