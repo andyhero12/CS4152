@@ -16,6 +16,24 @@
         "tile": {
             "file": "textures/tile/tile.png"
         },
+        "mediumdogleftidle": {
+            "file": "textures/dog/idle/medium-left-idle.png"
+        },
+        "mediumdogfrontidle": {
+            "file": "textures/dog/idle/medium-front-idle.png"
+        },
+        "mediumdogrightidle": {
+            "file": "textures/dog/idle/medium-right-idle.png"
+        },
+        "mediumdogleftshoot": {
+            "file": "textures/dog/shoot/medium-left-shoot.png"
+        },
+        "mediumdogfrontshoot": {
+            "file": "textures/dog/shoot/medium-front-shoot.png"
+        },
+        "mediumdogrightshoot": {
+            "file": "textures/dog/shoot/medium-right-shoot.png"
+        },
         "mediumdogleftrun": {
             "file": "textures/dog/run/medium-left-run.png"
         },

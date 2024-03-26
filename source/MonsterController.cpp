@@ -102,8 +102,8 @@ void MonsterController::setMeleeAnimationData(std::shared_ptr<cugl::JsonValue> d
     int _framecols = data->getFloat("sprite cols", 0);
     int _framesize = data->getFloat("sprite size", 0);
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(_assets->get<Texture>("basicEnemy1"));
     textures.push_back(_assets->get<Texture>("basicEnemy0"));
+    textures.push_back(_assets->get<Texture>("basicEnemy1"));
     int rows = _framesize / _framecols;
     for(auto& text : textures) {
         meleeAnimationData._sprite.push_back(cugl::SpriteSheet::alloc(text, rows, _framecols, _framesize));
