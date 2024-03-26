@@ -40,8 +40,8 @@ public:
     }
     
     void reset(cugl::Size resetSize);
-    bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize);
-    bool initDog();
+    bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize, std::shared_ptr<cugl::physics2::ObstacleWorld> obstacleWorld);
+    bool initDog(std::shared_ptr<cugl::physics2::ObstacleWorld> obstacleWorld);
     bool initDevil();
     bool initBases();
     bool initDecoys();

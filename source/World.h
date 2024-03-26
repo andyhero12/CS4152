@@ -44,7 +44,7 @@ private:
 public:
     std::vector<std::vector<TileInfo>> overworld;
     World () {};
-    World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset);
+    World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset, std::shared_ptr<cugl::physics2::ObstacleWorld> physicsworld);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch);
     std::shared_ptr<cugl::Texture> getBox(int position);
 

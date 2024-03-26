@@ -66,7 +66,7 @@ protected:
     
     ScreenEnums transition;
 
-    cugl::physics2::ObstacleWorld _obstacleWorld;
+    std::shared_ptr<cugl::physics2::ObstacleWorld> _obstacleWorld;
     
 
     

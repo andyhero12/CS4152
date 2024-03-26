@@ -21,7 +21,7 @@ void OverWorld::reset(cugl::Size resetSize) {
     _attackPolygonSet.init();
 }
 
-bool OverWorld::initDog(){
+bool OverWorld::initDog(std::shared_ptr<cugl::physics2::ObstacleWorld> obstacleWorld){
     _dog = std::make_shared<Dog>(Vec2(0, 0), _constants->get("ship"));
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(_assets->get<cugl::Texture>("shipleftidle"));
@@ -32,6 +32,7 @@ bool OverWorld::initDog(){
     textures.push_back(_assets->get<cugl::Texture>("shipleftbite"));
     textures.push_back(_assets->get<cugl::Texture>("shiprightbite"));
     _dog->setBiteTexture(textures);
+    _dog->buildObstacle(obstacleWorld);
     return true;
 }
 
@@ -57,11 +58,12 @@ bool OverWorld::initDecoys(){
     return true;
 }
 
-bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize){
+bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize,std::shared_ptr<cugl::physics2::ObstacleWorld> obstacleWorld){
+    std::cout << "Overworld physics world address " << obstacleWorld <<std::endl;
     _assets = assets;
     _constants = assets->get<cugl::JsonValue>("constants");
     _totalSize = totalSize;
-    initDog();
+    initDog(obstacleWorld);
     initDevil();
     initBases();
     initDecoys();

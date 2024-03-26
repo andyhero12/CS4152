@@ -63,12 +63,14 @@ Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     */
 }
 
-std::shared_ptr<cugl::physics2::BoxObstacle> Dog::buildObstacle() {
+void Dog::buildObstacle(std::shared_ptr<cugl::physics2::ObstacleWorld> world) {
+    std::cout << "dog physic world address " << world <<std::endl;
     _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0.1, 0.1), Size(1, 1));
     _boxObstacle->setBodyType(b2_dynamicBody);
     _boxObstacle->setDensity(1);
     _boxObstacle->setLinearDamping(0.1f);
-    return _boxObstacle;
+    _boxObstacle->setEnabled(true);
+    world->addObstacle(_boxObstacle);
 }
 
 /**

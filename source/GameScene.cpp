@@ -65,22 +65,15 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
 
     // initialize physics engine
     // I am not entirely sure what the significance of bounds is. For now, I set it to a large value so we should not hit it.
-    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.00, -0.00));
-    _obstacleWorld.setPositionIterations(18);
+    
+    _obstacleWorld = cugl::physics2::ObstacleWorld::alloc(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.00, -0.00));
+//    _obstacleWorld = Oz(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0.00, -0.00));
+    _obstacleWorld->setPositionIterations(18);
 
     // Get the background image and constant values
     tile = assets->get<Texture>("tile");
     _constants = assets->get<JsonValue>("constants");
 
-    overWorld.init(assets, getSize());
-    /*
-    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
-    _boxObstacle->setBodyType(b2_dynamicBody);
-    _boxObstacle->setDensity(1);
-    _boxObstacle->setLinearDamping(0.1);
-    overWorld.getDog()->_boxObstacle = _boxObstacle;
-    _obstacleWorld.addObstacle(overWorld.getDog()->getObstacle());
-    */
     
 
     std::vector<std::shared_ptr<cugl::Texture>> textures;
@@ -88,6 +81,17 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _parser = LevelParser(_assets, assets->get<JsonValue>("ugly_level"));
     _parser.processLayers();
 
+    
+    std::cout << "Game Scene -> overworld " << _obstacleWorld <<std::endl;
+    
+    overWorld.init(assets, getSize(), _obstacleWorld);
+    std::vector<std::vector<int>> matrix = _parser.getTile();
+    std::vector<std::vector<int>> other = _parser.getBoundaries();
+    
+    std::cout << "Game Scene -> tiles" << _obstacleWorld <<std::endl;
+    _world = World(Vec2(0, 0), matrix, other, tile,  _obstacleWorld);
+    
+    
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos()); 
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
@@ -111,7 +115,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _textLose = TextLayout::allocWithText(lossMsg, assets->get<Font>("pixel32"));
     _textLose->layout();
     _collisions.init(getSize());
-    createMap();
+//    createMap();
     reset();
     return true;
 }
@@ -196,52 +200,15 @@ void GameScene::update(float timestep)
     overWorld.postUpdate();
 
     // We may need to consider determinism in the future
-    _obstacleWorld.update(timestep);
+    _obstacleWorld->update(timestep);
 }
 
 void GameScene::createMap()
 {
     std::vector<std::vector<int>> matrix = _parser.getTile();
-    const int rows = (int) matrix.size();
-    const int cols = (int) matrix.at(0).size();
-    std::vector<std::vector<int>> other(rows, std::vector<int>(cols,0));
-
-//    int counter = 1;
-//    for (int i = 0; i < rows; ++i)
-//    {
-//        for (int j = 0; j < cols; ++j)
-//        {
-//            other[i][j] = counter;
-//            counter += 1; // Assign random 0 or 1
-//        }
-//    }
-    _world = World(Vec2(0, 0), matrix, other, tile);
-    //std::shared_ptr<cugl::physics2::BoxObstacle> lastObstacle;
-    bool b = true;
-    for (auto& row : _world.overworld) {
-        for (auto& tile : row) {
-            if (tile.boxObstacle != nullptr) {
-                if(b) {                 
-                    overWorld.getDog()->_boxObstacle = overWorld.getDog()->buildObstacle();
-                    //overWorld.getDog()->_boxObstacle->setBodyType(b2_dynamicBody);
-
-                    // shared ptr boxobstacle
-                   _obstacleWorld.addObstacle(overWorld.getDog()->_boxObstacle);
-                    b = false;
-                }
-                _obstacleWorld.addObstacle(tile.boxObstacle);
-                //lastObstacle = tile.boxObstacle;
-            }
-        }
-    }
-    /*
-    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
-    _boxObstacle->setBodyType(b2_dynamicBody);
-    _boxObstacle->setDensity(1);
-    _boxObstacle->setLinearDamping(0.1f);
-    overWorld.getDog()->_boxObstacle = _boxObstacle;
-    _obstacleWorld.addObstacle(overWorld.getDog()->_boxObstacle);
-    */
+    std::vector<std::vector<int>> other = _parser.getBoundaries();
+    _world = World(Vec2(0, 0), matrix, other, tile,  _obstacleWorld);
+    
 }
 /**
  * Draws all this scene to the given SpriteBatch.

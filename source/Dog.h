@@ -91,7 +91,7 @@ private:
 public:
     std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle;
 
-    std::shared_ptr<cugl::physics2::BoxObstacle> buildObstacle();
+    void buildObstacle(std::shared_ptr<cugl::physics2::ObstacleWorld> world);
 #pragma mark Constructors
     /**
      * Creates a ship wiht the given position and data.

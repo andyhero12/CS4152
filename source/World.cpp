@@ -11,7 +11,9 @@ using namespace cugl;
 cugl::Size size(1,1);
 #define DRAW_WIREFRAME true
 
-World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset):start(bottomleft), tile(tileset){
+World::World(cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset, std::shared_ptr<cugl::physics2::ObstacleWorld> physicsworld):start(bottomleft), tile(tileset){
+    
+    std::cout <<  "world map tile " << physicsworld <<std::endl;
     overworld.resize(map.size());
     for(int i = 0; i < map.size(); i++){
         for (int j = 0; j < map[0].size(); j++){
@@ -32,10 +34,12 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
             TileInfo& t = overworld.at(i).at(j);
             t.boundaryRect = Rect(Vec2((t.size.width )*printIndexJ, (t.size.height)*printIndexI), t.size);
             t.boxObstacle = t.type == Terrain::IMPASSIBLE ? physics2::BoxObstacle::alloc(t.boundaryRect.origin, t.boundaryRect.size) : nullptr;
-            if (t.boxObstacle != nullptr) {
+            if (t.boxObstacle) {
                 t.boxObstacle->setBodyType(b2_staticBody);
                 t.boxObstacle->setDensity(1);
                 t.boxObstacle->setLinearDamping(0.1f);
+                t.boxObstacle->setEnabled(true);
+                physicsworld->addObstacle(t.boxObstacle);
             }
             printIndexI++;
         }
