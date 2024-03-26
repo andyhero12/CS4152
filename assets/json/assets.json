@@ -34,6 +34,9 @@
         "basicEnemy1": {
             "file": "textures/basicEnemy/basicWalkRight.PNG"
         },
+        "bombEnemyIdle": {
+            "file": "textures/bomb/bombIdle.png"
+        },
         "monkey0": {
             "file": "textures/monkey/monkey-walk-0.png"
         },
