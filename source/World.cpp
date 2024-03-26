@@ -14,7 +14,7 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
     overworld.resize(map.size());
     for(int i = 0; i < map.size(); i++){
         for (int j = 0; j < map[0].size(); j++){
-            if(passable.at(i).at(j) == 0){
+            if(passable.at(i).at(j) == 0 && i != 10){
                 overworld[i].emplace_back(size, Terrain::PASSABLE, getBox(map.at(i).at(j)));
             }
             else{
