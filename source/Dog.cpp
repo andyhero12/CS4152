@@ -151,17 +151,13 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
  */
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if(attack){
-        biteAnimation.updateAnimTime();
-        if (biteAnimation.frameUpdateReady()){
-            biteAnimation.stepAnimation();
-        }
-        
-        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1 ){
+        biteAnimation.updateDirection();
+        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1){
             attack = false;
         }
     }
     // Don't draw if sprite not set
-    if (runAnimation.getSprite()) {
+    if (runAnimation.getSprite() && biteAnimation.getSprite()) {
         // Transform to place the ship
         Affine2 shiptrans;
         // super duper magic number
@@ -202,13 +198,9 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 }
 
 
-int Dog::direction(int dir){
-    return _prevTurn == 1 ? 1 : 0;
-}
-
 void Dog::setAttack(){
     attack = true;
-    biteAnimation.resetAnimation(direction(_prevTurn));
+    biteAnimation.resetAnimation(_prevTurn);
 }
 
 /**
@@ -285,23 +277,8 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _modeTimer++;
     }
     
-    if (forward != 0 || turn != 0){
-        if (_prevTurn != turn){
-            if (turn == -1){
-                runAnimation.resetAnimation(0);
-            }
-            else if (turn == 1){
-                runAnimation.resetAnimation(1);
-            }
-        }
-        _prevTurn = turn;
-        
-
-        runAnimation.updateAnimTime();
-        if (runAnimation.frameUpdateReady()){
-            runAnimation.stepAnimation();
-        }
-    }
+    runAnimation.update(_vel.getAngle() - 90);
+    _prevTurn = runAnimation.currentAnimationDirection;
 }
 
 
