@@ -306,14 +306,6 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _vel = Vel;
     }
     
-    if(_vel.x == 0 && _vel.y == 0){
-        if(!bite && !shoot){
-            setIdle();
-        }
-        return;
-    }
-    
-    idle = false;
     if (!(forward == 0 && turn == 0)) {
         _ang = atan2(forward, turn) * (180 / M_PI) - 90;
         setAngle(_ang);
@@ -357,6 +349,15 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     if (_modeTimer <= _modeCooldown){
         _modeTimer++;
     }
+    
+    if(_vel.x == 0 && _vel.y == 0){
+        if(!bite && !shoot){
+            setIdle();
+        }
+        return;
+    }
+    
+    idle = false;
     
     if(runAnimation && runAnimation->getSprite()){
         runAnimation->update(_vel.getAngle());
