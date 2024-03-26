@@ -206,6 +206,15 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
             bite = false;
         }
     }
+    else if(shoot){
+        shootAnimation->updateDirection();
+        if (shootAnimation->getFrame() == shootAnimation->getSprite()->getSize() -1){
+            shoot = false;
+        }
+    }
+    else if(idle && idleAnimation){
+        idleAnimation->updateDirection();
+    }
     // Don't draw if sprite not set
     if (runAnimation->getSprite() && biteAnimation->getSprite()) {
         // Transform to place the ship
@@ -220,13 +229,21 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         Color4f shadow(0,0,0,0.5f);
         
         
-        if (!bite){
-            runAnimation->getSprite()->draw(batch,shadow,shadtrans);
-            runAnimation->getSprite()->draw(batch,shiptrans);
-        }
-        else{
+        if (bite){
             biteAnimation->getSprite()->draw(batch,shadow,shadtrans);
             biteAnimation->getSprite()->draw(batch,shiptrans);
+        }
+        else if(shoot){
+            shootAnimation->getSprite()->draw(batch,shadow,shadtrans);
+            shootAnimation->getSprite()->draw(batch,shiptrans);
+        }
+        else if (idle){
+            idleAnimation->getSprite()->draw(batch,shadow,shadtrans);
+            idleAnimation->getSprite()->draw(batch,shiptrans);
+        }
+        else{
+            runAnimation->getSprite()->draw(batch,shadow,shadtrans);
+            runAnimation->getSprite()->draw(batch,shiptrans);
         }
 
     }
@@ -246,9 +263,21 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 }
 
 
-void Dog::setAttack(){
+void Dog::setBite(){
     bite = true;
     biteAnimation->resetAnimation(_prevTurn);
+}
+
+void Dog::setIdle(){
+    idle = true;
+    if(idleAnimation){
+        idleAnimation->resetAnimation(_prevTurn);
+    }
+}
+
+void Dog::setShoot(){
+    shoot = true;
+    shootAnimation->resetAnimation(_prevTurn);
 }
 
 /**
@@ -275,10 +304,16 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     // Use the Joystick input
     if (_UseJoystick) {
         _vel = Vel;
-        //_vel = Vec2(turn, forward);
     }
     
+    if(_vel.x == 0 && _vel.y == 0){
+        if(!bite && !shoot){
+//            setIdle();
+        }
+        return;
+    }
     
+    idle = false;
     if (!(forward == 0 && turn == 0)) {
         _ang = atan2(forward, turn) * (180 / M_PI) - 90;
         setAngle(_ang);

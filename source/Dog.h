@@ -114,6 +114,10 @@ private:
     bool bite;
     bool shoot;
     bool idle;
+    
+    
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation);
+    
 
 public:
 #pragma mark Constructors
@@ -254,7 +258,9 @@ public:
     }
     
     
-    void setAttack();
+    void setBite();
+    void setShoot();
+    void setIdle();
     
     bool canHeal() const {
         return (_healCooldown > _healRate);
@@ -339,9 +345,7 @@ public:
     void setShootTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
     void setIdleTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>>& texture);
     
-    
-    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation);
-    
+
     /**
      * Draws this ship to the sprite batch within the given bounds.
      *

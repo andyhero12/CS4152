@@ -148,7 +148,7 @@ void OverWorld::dogUpdate(InputController& _input, cugl::Size totalSize){
     }
     if (_input.didPressFire() && _dog->canFireWeapon()){
         _dog->reloadWeapon();
-        _dog->setAttack();
+        _dog->setBite();
         _attackPolygonSet.addBite(_dog);
     }
     if (_input.didPressSpecial() && _dog->canFireWeapon()){
