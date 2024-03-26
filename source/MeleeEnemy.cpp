@@ -15,25 +15,22 @@ MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_tar
 
 void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font){
     Vec2 pos = getPos();
-//    std::string hpMsg = strtool::format(std::to_string(getHealth()));
-//    std::shared_ptr<cugl::TextLayout> hptext = TextLayout::allocWithText(hpMsg, font);
-//    hptext->layout();
+    
+    float maxHealth = 3;
     Affine2 trans;
-    Affine2 trans_bar;
-    Vec2 pos_bar = Vec2(pos.x + 13, pos.y + 35);
     trans.translate(pos);
-    trans_bar.translate(pos_bar);
-    size.set(20, 10);
+//    trans_bar.translate(pos_bar);
 
     const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     sprite->draw(batch, trans); // draw enemy animation
-//    batch->drawText(hptext, trans);
-    _healthBar = cugl::scene2::ProgressBar::alloc(size);
-    //_healthBar->setBackgroundColor(cugl::Color4::BLUE);
-    //std::cout << size.getIHeight() << std::endl;
-    //_healthBar->draw(batch, trans, Color4::RED);
-    _healthBar->render(batch, trans_bar, Color4::WHITE);
-//    _healthBar->render(batch, trans, Color4::WHITE);
+    
+    Affine2 trans_bar;
+    trans_bar.scale(0.1);
+    Vec2 pos_bar = Vec2(pos.x + 5, pos.y + 35);
+    trans_bar.translate(pos_bar);
+    
+    _healthBar->setProgress(getHealth()/maxHealth);
+    _healthBar->render(batch, trans_bar, Color4::RED);
 }
 
 void MeleeEnemy::update(float dt, OverWorld& overWorld){

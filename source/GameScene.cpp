@@ -72,6 +72,25 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     // Init spawner controller
     _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos()); 
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
+    
+    
+    // used to create progress bars
+    std::shared_ptr<cugl::Texture> barImage = assets->get<Texture>("progress");
+    
+    float textureWidth = barImage->getWidth();
+    float textureHeight = barImage->getHeight();
+    
+    std::shared_ptr<cugl::Texture> bg = barImage->getSubTexture(0/textureWidth, 320/textureWidth, 0/textureHeight, 45/textureHeight);
+    std::shared_ptr<cugl::Texture> fg = barImage->getSubTexture(24/textureWidth, 296/textureWidth, 45/textureHeight, 90/textureHeight);
+    std::shared_ptr<cugl::Texture> left_cap = barImage->getSubTexture(0/textureWidth, 24/textureWidth, 45/textureHeight, 90/textureHeight);
+    std::shared_ptr<cugl::Texture> right_cap = barImage->getSubTexture(296/textureWidth, 320/textureWidth, 45/textureHeight, 90/textureHeight);
+    
+     _bar = cugl::scene2::ProgressBar::allocWithCaps(bg, fg, left_cap, right_cap);
+    _bar->setProgress(0);
+    _monsterController.setHealthBar(_bar);
+    
+    
+    
 
     _monsterController.setMeleeAnimationData(_constants->get("basicEnemy"), assets);
     _monsterController.setBombAnimationData(_constants->get("bomb"), assets);
@@ -95,33 +114,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     createMap();
     reset();
     
-    
-    
-    // used to create progress bars
-    std::shared_ptr<cugl::Texture> barImage = assets->get<Texture>("progress");
-    
-    float textureWidth = barImage->getWidth();
-    float textureHeight = barImage->getHeight();
-    
-//    "background" : [0,    0, 320, 45],
-//    "foreground" : [24,  45, 296, 90],
-//    "leftcap"    : [0,   45,  24, 90],
-//    "rightcap"   : [296, 45, 320, 90]
-    
-    std::shared_ptr<cugl::Texture> bg = barImage->getSubTexture(0/textureWidth, 320/textureWidth, 0/textureHeight, 45/textureHeight);
-    std::shared_ptr<cugl::Texture> fg = barImage->getSubTexture(24/textureWidth, 296/textureWidth, 45/textureHeight, 90/textureHeight);
-    std::shared_ptr<cugl::Texture> left_cap = barImage->getSubTexture(0/textureWidth, 24/textureWidth, 45/textureHeight, 90/textureHeight);
-    std::shared_ptr<cugl::Texture> right_cap = barImage->getSubTexture(296/textureWidth, 320/textureWidth, 45/textureHeight, 90/textureHeight);
-    
-    std::shared_ptr<cugl::scene2::ProgressBar> _bar = cugl::scene2::ProgressBar::allocWithCaps(bg, fg, left_cap, right_cap);
-    _bar->setProgress(1);
-    _monsterController.setHealthBar(_bar);
-    
-//    cugl::scene2::ProgressBar::allocWithCaps(assets->get<Texture>(""),assets->get<Texture>(""),assets->get<Texture>(""),assets->get<Texture>(""));
-//    std::dynamic_pointer_cast<scene2::ProgressBar>(assets->get<scene2::SceneNode>("load_bar"));
-    
-    
-    
+
     
     
     return true;

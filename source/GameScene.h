@@ -61,6 +61,7 @@ protected:
     std::shared_ptr<cugl::Sound> _bang;
     std::shared_ptr<cugl::Sound> _laser;
     std::shared_ptr<cugl::Sound> _blast;
+    std::shared_ptr<cugl::scene2::ProgressBar> _bar;
     World _world;
     LevelParser _parser;
 
