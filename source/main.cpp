@@ -41,19 +41,11 @@ using namespace cugl;
  *
  * @return the exit status of the application
  */
-int main(int argc, char * argv[]) {
-    // Open a file in write mode.
-//    std::ofstream outFile("C:/Users/Alan/Documents/CS 4152/debug.txt");
-
-    // Save the buffer of std::cout.
-//    std::streambuf* coutBuf = std::cout.rdbuf();
-
-    // Redirect std::cout's buffer to the file.
-//    std::cout.rdbuf(outFile.rdbuf());
-
+int main(int argc, char *argv[])
+{
     // Change this to your application class
     HeavanApp app;
-    
+
     // Set the properties of your application
     app.setName("Heaven");
     app.setOrganization("GDIAC");
@@ -64,14 +56,16 @@ int main(int argc, char * argv[]) {
     app.setDisplaySize(1280, 720); // 16x9,  Android phones, PC Gaming
 
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
-    if (!app.init()) {
+    if (!app.init())
+    {
         return 1;
     }
-    
+
     app.onStartup();
-    while (app.step());
+    while (app.step())
+        ;
     app.onShutdown();
 
-    exit(0);    // Necessary to quit on mobile devices
-    return 0;   // This line is never reached
+    exit(0);  // Necessary to quit on mobile devices
+    return 0; // This line is never reached
 }
