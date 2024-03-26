@@ -20,6 +20,7 @@ public:
     AbstractEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
     : position{m_pos}
     , _health{m_health}
+    , _maxHealth{m_health}
     , _radius{m_radius}
     , targetIndex{m_targetIndex}
     {
@@ -95,6 +96,7 @@ public:
     }
     
 protected:
+    int _maxHealth;
     int _health;
     int targetIndex;
     cugl::Vec2 position;

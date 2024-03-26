@@ -15,21 +15,20 @@ MeleeEnemy::MeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_tar
 
 void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font){
     Vec2 pos = getPos();
-    
-    float maxHealth = 3;
+
     Affine2 trans;
     trans.translate(pos);
-//    trans_bar.translate(pos_bar);
-
     const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     sprite->draw(batch, trans); // draw enemy animation
     
     Affine2 trans_bar;
+    
+    // Might need to change; this was specifically for the default health bar
     trans_bar.scale(0.1);
     Vec2 pos_bar = Vec2(pos.x + 5, pos.y + 35);
     trans_bar.translate(pos_bar);
     
-    _healthBar->setProgress(getHealth()/maxHealth);
+    _healthBar->setProgress(getHealth()/(float)_maxHealth);
     _healthBar->render(batch, trans_bar, Color4::RED);
 }
 
