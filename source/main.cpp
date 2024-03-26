@@ -42,15 +42,6 @@ using namespace cugl;
  * @return the exit status of the application
  */
 int main(int argc, char * argv[]) {
-    // Open a file in write mode.
-    std::ofstream outFile("C:/Users/Alan/Documents/CS 4152/debug.txt");
-
-    // Save the buffer of std::cout.
-    std::streambuf* coutBuf = std::cout.rdbuf();
-
-    // Redirect std::cout's buffer to the file.
-    std::cout.rdbuf(outFile.rdbuf());
-
     // Change this to your application class
     HeavanApp app;
     
