@@ -59,6 +59,13 @@ int Animation::convertToQuadrant(double radian) {
     return ( quadrant + directions ) % directions;
 }
 
+
+void Animation::updateDirection(){
+    updateAnimTime();
+    if (frameUpdateReady()){
+        stepAnimation();
+    }
+}
 /*
  Takes in the vector angle
  */
@@ -68,8 +75,5 @@ void Animation::update(double radian){
     if (currentAnimationDirection != dir_quad){
         resetAnimation(dir_quad);
     }
-    updateAnimTime();
-    if (frameUpdateReady()){
-        stepAnimation();
-    }
+    updateDirection();
 }

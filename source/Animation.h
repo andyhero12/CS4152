@@ -66,6 +66,9 @@ public:
     
     int convertToQuadrant(double radian);
     
+    void updateDirection();
+    
     void update(double radian);
+    
 };
 #endif /* Animation_hpp */

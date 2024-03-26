@@ -151,12 +151,8 @@ void Dog::setBiteTexture(const std::vector<std::shared_ptr<cugl::Texture>> & tex
  */
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     if(attack){
-        biteAnimation.updateAnimTime();
-        if (biteAnimation.frameUpdateReady()){
-            biteAnimation.stepAnimation();
-        }
-        
-        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1 ){
+        biteAnimation.updateDirection();
+        if (biteAnimation.getFrame() == biteAnimation.getSprite()->getSize() -1){
             attack = false;
         }
     }
