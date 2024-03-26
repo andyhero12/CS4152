@@ -24,13 +24,15 @@ void OverWorld::reset(cugl::Size resetSize) {
 bool OverWorld::initDog(){
     _dog = std::make_shared<Dog>(_totalSize/2, _constants->get("ship"));
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(_assets->get<cugl::Texture>("shipleftidle"));
-    textures.push_back(_assets->get<cugl::Texture>("shiprightidle"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightrun"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftrun"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontrun"));
     _dog->setRunTexture(textures);
     
     textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("shipleftbite"));
-    textures.push_back(_assets->get<cugl::Texture>("shiprightbite"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightbite"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftbite"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontbite"));
     _dog->setBiteTexture(textures);
     return true;
 }

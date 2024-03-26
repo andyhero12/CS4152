@@ -274,7 +274,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _modeTimer++;
     }
     
-    runAnimation.update(_vel.getAngle() - 90);
+    runAnimation.update(_vel.getAngle());
     _prevTurn = runAnimation.currentAnimationDirection;
 }
 

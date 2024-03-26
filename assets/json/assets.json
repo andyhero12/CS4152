@@ -16,16 +16,22 @@
         "tile": {
             "file": "textures/tile/tile.png"
         },
-        "shipleftidle": {
+        "mediumdogleftrun": {
             "file": "textures/dog/run/medium-left-run.png"
         },
-        "shiprightidle": {
+        "mediumdogfrontrun": {
+            "file": "textures/dog/run/medium-front-run.png"
+        },
+        "mediumdogrightrun": {
             "file": "textures/dog/run/medium-right-run.png"
         },
-        "shipleftbite": {
+        "mediumdogfrontbite": {
+            "file": "textures/dog/bite/medium-front-bite.png"
+        },
+        "mediumdogleftbite": {
             "file": "textures/dog/bite/medium-left-bite.png"
         },
-        "shiprightbite": {
+        "mediumdogrightbite": {
             "file": "textures/dog/bite/medium-right-bite.png"
         },
         "basicEnemy0": {
