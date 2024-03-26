@@ -6,7 +6,7 @@
 //
 
 #include "StaticMeleeEnemy.hpp"
-#define DISTANCE_CUTOFF 250
+#define DISTANCE_CUTOFF 5
 
 StaticMeleeEnemy::StaticMeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
 : MeleeEnemy(m_pos, m_health, m_radius, m_targetIndex)
@@ -30,8 +30,11 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
         direction = dog_pos - position;
     }
     // Animate
-    position += direction.normalize();
+    position += direction.normalize() * 0.05;
     cugl::Size size = overWorld.getTotalSize();
+
+    std::cout << position.x;
+    std::cout << "\n";
     
     _walkingAnimations.update(direction.getAngle() - 90);
     

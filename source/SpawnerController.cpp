@@ -78,7 +78,7 @@ void SpawnerController::setTexture(const std::shared_ptr<cugl::Texture>& value )
 
 void SpawnerController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
     for(const std::shared_ptr<AbstractSpawner>& spawner : _spawners) {
-        std::cout << "draw\n";
+        //std::cout << "draw\n";
         spawner->draw(batch, size);
         // why didnt we use spawner draw?
         /*
