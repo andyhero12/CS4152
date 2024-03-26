@@ -194,12 +194,23 @@ void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture,
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     
     // switch animation based on form
-    
-    switchAnimation(biteAnimation, biteAnimationMedium);
-    switchAnimation(runAnimation, runAnimationMedium);
-    switchAnimation(shootAnimation, shootAnimationMedium);
-    switchAnimation(idleAnimation, idleAnimationMedium);
-    
+    if (_absorbValue < 10){
+        switchAnimation(biteAnimation, biteAnimationSmall);
+        switchAnimation(runAnimation, runAnimationSmall);
+        switchAnimation(shootAnimation, shootAnimationSmall);
+        switchAnimation(idleAnimation, idleAnimationSmall);
+    }else if (_absorbValue < 25){
+        switchAnimation(biteAnimation, biteAnimationMedium);
+        switchAnimation(runAnimation, runAnimationMedium);
+        switchAnimation(shootAnimation, shootAnimationMedium);
+        switchAnimation(idleAnimation, idleAnimationMedium);
+    }
+//    else{
+//        switchAnimation(biteAnimation, biteAnimationLarge);
+//        switchAnimation(runAnimation, runAnimationLarge);
+//        switchAnimation(shootAnimation, shootAnimationLarge);
+//        switchAnimation(idleAnimation, idleAnimationLarge);
+//    }
     if(bite){
         biteAnimation->updateDirection();
         if (biteAnimation->getFrame() == biteAnimation->getSprite()->getSize() -1){
