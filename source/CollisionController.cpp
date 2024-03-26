@@ -34,6 +34,7 @@ void CollisionController::intraOverWorldCollisions(OverWorld& overWorld){
 }
 
 void CollisionController::overWorldMonsterControllerCollisions(OverWorld& overWorld, MonsterController& monsterController){
+    return;
     std::unordered_set<std::shared_ptr<AbstractEnemy>>& monsterEnemies = monsterController.getEnemies();
     
     if (monsterDogCollision(overWorld.getDog(), monsterEnemies)){

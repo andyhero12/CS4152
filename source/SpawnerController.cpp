@@ -55,8 +55,11 @@ bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data,const std::ve
             for (int i =0; i< startLocs.size(); i++){
                 std::shared_ptr<cugl::JsonValue> entry = spawnerValues[i];
                 cugl::Vec2 pos;
-                pos.x = startLocs.at(i).x;
-                pos.y = startLocs.at(i).y;
+                // TEMPORARY MAGIC NUMBER STUFF
+                pos.x = startLocs.at(i).x / 64;
+                pos.y = startLocs.at(i).y / 64;
+                //pos.x = 0;
+                //pos.y = 0;
                 int spawnRate = 200;
                 int health = 10;
                 std::shared_ptr<MeleeSpawner> curSpawner = std::make_shared<MeleeSpawner>(spawnRate,pos,health,0);
@@ -75,6 +78,10 @@ void SpawnerController::setTexture(const std::shared_ptr<cugl::Texture>& value )
 
 void SpawnerController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
     for(const std::shared_ptr<AbstractSpawner>& spawner : _spawners) {
+        std::cout << "draw\n";
+        spawner->draw(batch, size);
+        // why didnt we use spawner draw?
+        /*
         cugl::Vec2 pos = spawner->getPos();
         cugl::Vec2 origin(0, 0);
         cugl::Affine2 trans;
@@ -82,6 +89,7 @@ void SpawnerController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cu
         trans.scale(scale);
         trans.translate(pos);
         spawner->draw(batch, size);
+        */
     }
     
 }
