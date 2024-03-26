@@ -166,6 +166,8 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         Affine2 shiptrans;
         // super duper magic number
         shiptrans.scale(getScale() * 0.75f);
+        // account for sprite size so we are by logic coordinates
+        shiptrans.scale(1 / runAnimation.getSprite()->getFrameSize().height);
 //        shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(_pos);
         // Transform to place the shadow, and its color
@@ -257,7 +259,8 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     _vel = _vel.normalize();
     
     // Move the ship position by the ship velocity
-    _pos += (_vel*3);
+    _pos += (_vel*0.06);
+    std::cout << _pos.x << " " << _pos.y << "\n";
     while (_pos.x > size.width) {
         _pos.x = size.width;
     }

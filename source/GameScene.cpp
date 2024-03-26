@@ -234,11 +234,10 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     //            batch->draw(_background, tint, Rect(Vec2(38*0, 38*j), Size(40,40)));
     //        }
     //    }
-    //_world.draw(batch);
+    _world.draw(batch);
     _spawnerController.draw(batch, getSize());
     _monsterController.draw(batch, getSize(), _assets->get<Font>("pixel32"));
     overWorld.draw(batch, getSize());
-    _world.draw(batch);
     // draw actions
 
     // shift camera to draw for absolute positioning
