@@ -30,11 +30,11 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
         direction = dog_pos - position;
     }
     // Animate
-    position += direction.normalize() * 0.05;
+    position += direction.normalize() * 0.03;
     cugl::Size size = overWorld.getTotalSize();
 
-    std::cout << position.x;
-    std::cout << "\n";
+    //std::cout << position.x;
+    //std::cout << "\n";
     
     _walkingAnimations.update(direction.getAngle() - 90);
     

@@ -22,8 +22,9 @@ void BombEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size
     std::shared_ptr<cugl::TextLayout> hptext = TextLayout::allocWithText(hpMsg, font);
     hptext->layout();
     Affine2 trans;
-    trans.translate(pos);
     auto sprite = getSprite();
+    trans.scale(1 / sprite->getFrameSize().height);
+    trans.translate(pos);
     sprite->draw(batch, trans);
     batch->drawText(hptext, trans);
 }
@@ -36,7 +37,7 @@ void BombEnemy::update(float dt, OverWorld& overWorld){
     cugl::Vec2 target_pos = getTargetPositionFromIndex(overWorld);
     cugl::Vec2 direction = target_pos- position;
     // Animate
-    position += direction.normalize();
+    position += direction.normalize() * 0.03;
     cugl::Size size = overWorld.getTotalSize();
     
     _walkingAnimations.update(direction.getAngle());
