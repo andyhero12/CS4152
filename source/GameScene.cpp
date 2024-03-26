@@ -221,9 +221,10 @@ void GameScene::createMap()
     for (auto& row : _world.overworld) {
         for (auto& tile : row) {
             if (tile.boxObstacle != nullptr) {
-                if (b) {
-                    overWorld.getDog()->_boxObstacle = tile.boxObstacle;
-                    overWorld.getDog()->_boxObstacle->setBodyType(b2_dynamicBody);
+                if(b) {                 
+                    //overWorld.getDog()->_boxObstacle = tile.boxObstacle;
+                    //overWorld.getDog()->_boxObstacle->setBodyType(b2_dynamicBody);
+                    _obstacleWorld.addObstacle(overWorld.getDog()->buildObstacle());
                     b = false;
                 }
                 _obstacleWorld.addObstacle(tile.boxObstacle);
@@ -231,8 +232,14 @@ void GameScene::createMap()
             }
         }
     }
-    //_obstacleWorld.addObstacle(overWorld.getDog()->_boxObstacle);
-    
+    /*
+    std::shared_ptr<cugl::physics2::BoxObstacle> _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
+    _boxObstacle->setBodyType(b2_dynamicBody);
+    _boxObstacle->setDensity(1);
+    _boxObstacle->setLinearDamping(0.1f);
+    overWorld.getDog()->_boxObstacle = _boxObstacle;
+    _obstacleWorld.addObstacle(overWorld.getDog()->_boxObstacle);
+    */
 }
 /**
  * Draws all this scene to the given SpriteBatch.

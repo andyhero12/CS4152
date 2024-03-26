@@ -55,9 +55,20 @@ Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _health = data->getInt("health",0);
     _maxHealth = _health;
     _modeCooldown = data->getInt("mode cooldown",0);
-    
-    
-    
+    /*
+    _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0, 0), Size(1, 1));
+    _boxObstacle->setBodyType(b2_dynamicBody);
+    _boxObstacle->setDensity(1);
+    _boxObstacle->setLinearDamping(0.1);
+    */
+}
+
+std::shared_ptr<cugl::physics2::BoxObstacle> Dog::buildObstacle() {
+    _boxObstacle = physics2::BoxObstacle::alloc(Vec2(0.1, 0.1), Size(1, 1));
+    _boxObstacle->setBodyType(b2_dynamicBody);
+    _boxObstacle->setDensity(1);
+    _boxObstacle->setLinearDamping(0.1f);
+    return _boxObstacle;
 }
 
 /**
