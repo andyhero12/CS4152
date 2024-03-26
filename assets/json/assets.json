@@ -16,6 +16,33 @@
         "tile": {
             "file": "textures/tile/tile.png"
         },
+        "smalldogleftidle": {
+            "file": "textures/dog/idle/small-left-idle.png"
+        },
+        "smalldogrightidle": {
+            "file": "textures/dog/idle/small-right-idle.png"
+        },
+        "smalldogleftshoot": {
+            "file": "textures/dog/shoot/medium-left-shoot.png"
+        },
+        "smalldogrightshoot": {
+            "file": "textures/dog/shoot/medium-right-shoot.png"
+        },
+        "smalldogleftrun": {
+            "file": "textures/dog/run/small-left-run.png"
+        },
+        "smalldogrightrun": {
+            "file": "textures/dog/run/small-right-run.png"
+        },
+        "smalldogfrontbite": {
+            "file": "textures/dog/bite/medium-front-bite.png"
+        },
+        "smalldogleftbite": {
+            "file": "textures/dog/bite/medium-left-bite.png"
+        },
+        "smalldogrightbite": {
+            "file": "textures/dog/bite/medium-right-bite.png"
+        },
         "mediumdogleftidle": {
             "file": "textures/dog/idle/medium-left-idle.png"
         },
@@ -27,9 +54,6 @@
         },
         "mediumdogleftshoot": {
             "file": "textures/dog/shoot/medium-left-shoot.png"
-        },
-        "mediumdogfrontshoot": {
-            "file": "textures/dog/shoot/medium-front-shoot.png"
         },
         "mediumdogrightshoot": {
             "file": "textures/dog/shoot/medium-right-shoot.png"
@@ -50,6 +74,33 @@
             "file": "textures/dog/bite/medium-left-bite.png"
         },
         "mediumdogrightbite": {
+            "file": "textures/dog/bite/medium-right-bite.png"
+        },
+        "largedogleftidle": {
+            "file": "textures/dog/idle/large-idle-left.png"
+        },
+        "largedogrightidle": {
+            "file": "textures/dog/idle/large-idle-right.png"
+        },
+        "largedogleftshoot": {
+            "file": "textures/dog/shoot/medium-left-shoot.png"
+        },
+        "largedogrightshoot": {
+            "file": "textures/dog/shoot/medium-right-shoot.png"
+        },
+        "largedogleftrun": {
+            "file": "textures/dog/run/medium-left-run.png"
+        },
+        "largedogrightrun": {
+            "file": "textures/dog/run/medium-right-run.png"
+        },
+        "largedogfrontbite": {
+            "file": "textures/dog/bite/medium-front-bite.png"
+        },
+        "largedogleftbite": {
+            "file": "textures/dog/bite/medium-left-bite.png"
+        },
+        "largedogrightbite": {
             "file": "textures/dog/bite/medium-right-bite.png"
         },
         "basicEnemy0": {
