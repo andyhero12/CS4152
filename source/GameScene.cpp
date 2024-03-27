@@ -221,7 +221,7 @@ std::shared_ptr<cugl::Texture> GameScene::getSizeBarTexture(float size){
     
     GLfloat minS = 0;
     GLfloat maxS = 1;
-    GLfloat minT = 1 - size/30.0;
+    GLfloat minT = 1 - size/MAX_ABSORB;
     GLfloat maxT = 1;
     
     return _sizefill->getSubTexture(minS, maxS, minT, maxT);
