@@ -52,6 +52,13 @@ protected:
     // In the future, we will replace this with the scene graph
     /** The background image */
     std::shared_ptr<cugl::Texture> tile;
+    
+    /** Game UI Elements **/
+    std::shared_ptr<cugl::Texture> _healthbar;
+    std::shared_ptr<cugl::Texture> _bombtoggle;
+    std::shared_ptr<cugl::Texture> _shoottoggle;
+    std::shared_ptr<cugl::Texture> _baittoggle;
+    
     /** The text with the win message */
     std::shared_ptr<cugl::TextLayout> _textWin;
     /** The text with the loss */
@@ -63,6 +70,8 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     std::shared_ptr<cugl::scene2::ProgressBar> _bar;
     World _world;
+    
+    
     LevelParser _parser;
 
     bool _gameEnded;
