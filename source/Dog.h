@@ -116,7 +116,7 @@ private:
     bool idle;
     
     
-    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation);
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation, int speed);
     
 
 public:
