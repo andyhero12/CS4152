@@ -13,7 +13,7 @@
 //  Author: Walker White
 //  Version: 1/20/22
 //
-#include "LoadingScene.h"
+#include "MenuScene.h"
 
 using namespace cugl;
 
@@ -34,38 +34,44 @@ using namespace cugl;
  *
  * @return true if the controller is initialized properly, false otherwise.
  */
-bool LoadingScene::init(const std::shared_ptr<AssetManager>& assets) {
-    transition = ScreenEnums::LOADING;
+bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
+    //transition = ScreenEnums::LOADING;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     // Lock the scene to a reasonable resolution
     if (dimen.width > dimen.height) {
-        dimen *= SCENE_SIZE/dimen.width;
-    } else {
-        dimen *= SCENE_SIZE/dimen.height;
+        dimen *= SCENE_SIZE / dimen.width;
+    }
+    else {
+        dimen *= SCENE_SIZE / dimen.height;
     }
     if (assets == nullptr) {
         return false;
-    } else if (!Scene2::init(dimen)) {
+    }
+    else if (!Scene2::init(dimen)) {
         return false;
     }
-    
+
     // IMMEDIATELY load the splash screen assets
     _assets = assets;
-    _assets->loadDirectory("json/loading.json");
-    auto layer = assets->get<scene2::SceneNode>("load");
+    _assets->loadDirectory("json/mainmenu.json");
+    auto layer = assets->get<scene2::SceneNode>("main");
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
-    
-    _bar = std::dynamic_pointer_cast<scene2::ProgressBar>(assets->get<scene2::SceneNode>("load_bar"));
-    _brand = assets->get<scene2::SceneNode>("load_name");
-    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("load_play"));
+
+    _bar = std::dynamic_pointer_cast<scene2::ProgressBar>(assets->get<scene2::SceneNode>("main_mbar"));
+    _brand = assets->get<scene2::SceneNode>("main_mname");
+    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("main_mplay"));
+
+    _active = false;
     _button->addListener([=](const std::string& name, bool down) {
-        this->_active = down;
-        transition = ScreenEnums::MAINMENU;
-    });
-    
-    Application::get()->setClearColor(Color4(192,192,192,255));
+        if (down) {
+            std::cout << "Play" << std::endl;
+            transition = ScreenEnums::GAMEPLAY;
+        }
+        });
+
+    Application::get()->setClearColor(Color4(192, 192, 192, 255));
     addChild(layer);
     return true;
 }
@@ -73,7 +79,7 @@ bool LoadingScene::init(const std::shared_ptr<AssetManager>& assets) {
 /**
  * Disposes of all (non-static) resources allocated to this mode.
  */
-void LoadingScene::dispose() {
+void MenuScene::dispose() {
     // Deactivate the button (platform dependent)
     if (isPending()) {
         _button->deactivate();
@@ -95,7 +101,8 @@ void LoadingScene::dispose() {
  *
  * @param timestep  The amount of time (in seconds) since the last frame
  */
-void LoadingScene::update(float progress) {
+void MenuScene::update(float progress) {
+    
     if (_progress < 1) {
         _progress = _assets->progress();
         if (_progress >= 1) {
@@ -109,20 +116,23 @@ void LoadingScene::update(float progress) {
     }
 }
 
+
+
 /**
  * Returns true if loading is complete, but the player has not pressed play
  *
  * @return true if loading is complete, but the player has not pressed play
  */
-bool LoadingScene::isPending( ) const {
+bool MenuScene::isPending() const {
     return _button != nullptr && _button->isVisible();
 }
 
 
-ScreenEnums LoadingScene::getTransition(){
+
+ScreenEnums MenuScene::getTransition() {
     return transition;
 }
 
-void LoadingScene::resetTransition(){
+void MenuScene::resetTransition() {
     transition = ScreenEnums::LOADING;
 }

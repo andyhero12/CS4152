@@ -14,6 +14,7 @@
 #include <cugl/cugl.h>
 #include "GameScene.h"
 #include "LoadingScene.h"
+#include "MenuScene.h"
 
 /**
  * This class represents the application root for the ship demo.
@@ -30,6 +31,8 @@ protected:
     GameScene _gameplay;
     /** The controller for the loading screen */
     LoadingScene _loading;
+
+    MenuScene _mainmenu;
     
     Scene2 * currentScene;
     ScreenEnums transitionScene;

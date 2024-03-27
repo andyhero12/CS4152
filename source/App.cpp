@@ -40,6 +40,7 @@ void HeavanApp::onStartup() {
     _assets->attach<Sound>(SoundLoader::alloc()->getHook());
     _assets->attach<Font>(FontLoader::alloc()->getHook());
     _assets->attach<JsonValue>(JsonLoader::alloc()->getHook());
+    //_assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook()); // Needed for loading screen
 
     // Create a "loading" screen
@@ -70,6 +71,7 @@ void HeavanApp::onStartup() {
 void HeavanApp::onShutdown() {
     _loading.dispose();
     _gameplay.dispose();
+    _mainmenu.dispose();
     _assets = nullptr;
     _batch = nullptr;
     
@@ -112,22 +114,26 @@ void HeavanApp::onResume() {
 }
 
 void HeavanApp::transition(){
-    if(transitionScene == ScreenEnums::LOADING){
+
+    if (transitionScene == ScreenEnums::LOADING) {
         currentScene->dispose();
     }
-    currentScene->resetTransition();
-    currentScene->dispose();
+    else {
+        currentScene->resetTransition();
+    }
     transitionScene = currentScene->getTransition();
     
-    if(currentScene->getTransition() == ScreenEnums::LOADING){
-        // might delete; idk if we want to be able to go to loading
-        currentScene = &_gameplay;
+    
+    if (currentScene->getTransition() == ScreenEnums::MAINMENU) {
+        currentScene = &_mainmenu;
+        std::cout << "In mainmenu" << std::endl;
     }
     else if (currentScene->getTransition() == ScreenEnums::LEVELSELECT){
         currentScene = &_gameplay;
     }
     else if (currentScene->getTransition() == ScreenEnums::GAMEPLAY){
         // Current one we have
+        std::cout << "In gamemenu" << std::endl;
         currentScene = &_gameplay;
     }
 }
@@ -150,6 +156,7 @@ void HeavanApp::update(float timestep) {
      if(transitionScene != currentScene->getTransition()){
          if(_firstInit){
              _gameplay.init(_assets);
+             _mainmenu.init(_assets);
              // add other scenes here
              _firstInit = false;
              _loaded = true;
