@@ -27,18 +27,21 @@ bool OverWorld::initDog(){
     // medium dog assets
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(_assets->get<cugl::Texture>("mediumdogrightrun"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogbackrun"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogleftrun"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontrun"));
     _dog->setRunTextureMedium(textures);
     
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("mediumdogrightbite"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogbackbite"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogleftbite"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontbite"));
     _dog->setBiteTextureMedium(textures);
     
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("mediumdogrightidle"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogbackidle"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogleftidle"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontidle"));
     _dog->setIdleTextureMedium(textures);
@@ -46,64 +49,70 @@ bool OverWorld::initDog(){
     
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("mediumdogrightshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogbackshoot"));
     textures.push_back(_assets->get<cugl::Texture>("mediumdogleftshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontshoot"));
     _dog->setShootTextureMedium(textures);
-    
+
     // small dog assets
-    
-    textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("smalldogrightshoot"));
-    textures.push_back(_assets->get<cugl::Texture>("smalldogleftshoot"));
-    _dog->setShootTextureSmall(textures);
-    
-    
-    
-    textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("smalldogrightidle"));
-    textures.push_back(_assets->get<cugl::Texture>("smalldogleftidle"));
-    _dog->setIdleTextureSmall(textures);
-    
-    
-    
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("smalldogrightrun"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogbackrun"));
     textures.push_back(_assets->get<cugl::Texture>("smalldogleftrun"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogfrontrun"));
     _dog->setRunTextureSmall(textures);
-    
-    
+
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("smalldogrightbite"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogbackbite"));
     textures.push_back(_assets->get<cugl::Texture>("smalldogleftbite"));
     textures.push_back(_assets->get<cugl::Texture>("smalldogfrontbite"));
     _dog->setBiteTextureSmall(textures);
+
+    textures.clear();
+    textures.push_back(_assets->get<cugl::Texture>("smalldogrightidle"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogbackidle"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogleftidle"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogfrontidle"));
+    _dog->setIdleTextureSmall(textures);
+
+
+    textures.clear();
+    textures.push_back(_assets->get<cugl::Texture>("smalldogrightshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogbackshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogleftshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("smalldogfrontshoot"));
+    _dog->setShootTextureSmall(textures);
     
     // large dog assets
-    
-    textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("largedogrightshoot"));
-    textures.push_back(_assets->get<cugl::Texture>("largedogleftshoot"));
-    _dog->setShootTextureLarge(textures);
-    
-    
-    
-    textures.clear();
-    textures.push_back(_assets->get<cugl::Texture>("largedogrightidle"));
-    textures.push_back(_assets->get<cugl::Texture>("largedogleftidle"));
-    _dog->setIdleTextureLarge(textures);
-    
-    
-    
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("largedogrightrun"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogbackrun"));
     textures.push_back(_assets->get<cugl::Texture>("largedogleftrun"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogfrontrun"));
     _dog->setRunTextureLarge(textures);
-    
-    
+
     textures.clear();
     textures.push_back(_assets->get<cugl::Texture>("largedogrightbite"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogbackbite"));
     textures.push_back(_assets->get<cugl::Texture>("largedogleftbite"));
     textures.push_back(_assets->get<cugl::Texture>("largedogfrontbite"));
     _dog->setBiteTextureLarge(textures);
+
+    textures.clear();
+    textures.push_back(_assets->get<cugl::Texture>("largedogrightidle"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogbackidle"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogleftidle"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogfrontidle"));
+    _dog->setIdleTextureLarge(textures);
+
+
+    textures.clear();
+    textures.push_back(_assets->get<cugl::Texture>("largedogrightshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogbackshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogleftshoot"));
+    textures.push_back(_assets->get<cugl::Texture>("largedogfrontshoot"));
+    _dog->setShootTextureLarge(textures);
     
     return true;
 }

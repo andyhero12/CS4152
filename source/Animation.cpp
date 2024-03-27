@@ -26,7 +26,7 @@ bool Animation::frameUpdateReady() {
 
 void Animation::resetAnimation(int aimingDir){
     currentAnimationDirection = aimingDir;
-    currentAnimSprite = animSprite[aimingDir];
+    currentAnimSprite = animSprite.at(aimingDir);
     frame = 0;
 }
 
@@ -77,6 +77,17 @@ void Animation::update(double radian){
     
     if (currentAnimationDirection != dir_quad){
         resetAnimation(dir_quad);
+    }
+    updateDirection();
+}
+
+
+/*
+ Takes in the vector angle
+ */
+void Animation::update(int prevDir){
+    if (currentAnimationDirection != prevDir){
+        resetAnimation(prevDir);
     }
     updateDirection();
 }

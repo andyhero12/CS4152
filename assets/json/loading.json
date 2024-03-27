@@ -1,14 +1,14 @@
 {
 	"textures": {
 		"logo": {
-			"file":      "textures/cugl-logo.png",
+			"file":      "textures/TITLE.PNG",
             "wrapS":     "clamp",
             "wrapT":     "clamp",
             "minfilter": "linear",
             "magfilter": "linear"
 		},
         "name": {
-            "file":      "textures/cugl-name.png",
+            "file":      "textures/TITLE.PNG",
             "wrapS":     "clamp",
             "wrapT":     "clamp",
             "minfilter": "linear",
@@ -53,7 +53,7 @@
                     "data"   : {
                         "texture"  : "logo",
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.75
+                        "scale"    : 3.25
                     },
                     "layout" : {
                         "x_anchor" : "center",
@@ -70,12 +70,12 @@
                     "data"   : {
                         "texture"  : "name",
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.75
+                        "scale"    : 3.25
                     },
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : -55,
+                        "y_offset" : 115,
                         "absolute" : true
                     }
                 },
