@@ -120,49 +120,49 @@ void Dog::setRunTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> 
 
 
 void Dog::setRunTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, runAnimationSmall);
+    setTexture(texture, runAnimationSmall, 5);
 }
 void Dog::setBiteTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, biteAnimationSmall);
+    setTexture(texture, biteAnimationSmall, 5);
 }
 
 void Dog::setShootTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, shootAnimationSmall);
+    setTexture(texture, shootAnimationSmall, 5);
 }
 
 void Dog::setIdleTextureSmall(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, idleAnimationSmall);
+    setTexture(texture, idleAnimationSmall, 20);
 }
 
 void Dog::setRunTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, runAnimationLarge);
+    setTexture(texture, runAnimationLarge, 5);
 }
 void Dog::setBiteTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, biteAnimationLarge);
+    setTexture(texture, biteAnimationLarge, 5);
 }
 
 void Dog::setShootTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, shootAnimationLarge);
+    setTexture(texture, shootAnimationLarge, 5);
 }
 
 void Dog::setIdleTextureLarge(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, idleAnimationLarge);
+    setTexture(texture, idleAnimationLarge, 20);
 }
 
 void Dog::setBiteTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, biteAnimationMedium);
+    setTexture(texture, biteAnimationMedium, 5);
 }
 
 void Dog::setShootTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, shootAnimationMedium);
+    setTexture(texture, shootAnimationMedium, 5);
 }
 
 void Dog::setIdleTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> & texture) {
-    setTexture(texture, idleAnimationMedium);
+    setTexture(texture, idleAnimationMedium, 20);
 }
 
 
-void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation) {
+void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation, int speed) {
         if (_framecols > 0) {
             int rows = _framesize / _framecols;
             if (_framesize % _framecols != 0) {
@@ -174,7 +174,7 @@ void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture,
                 anims.push_back(_sprite);
             }
 
-            animation = Animation(anims, 5, _frameflat);
+            animation = Animation(anims, speed, _frameflat);
             cugl::Vec2 origin(animation.getSprite()->getFrameSize() / 2);
             animation.setOrigin(origin);
         }

@@ -67,7 +67,7 @@ void MonsterController::retargetCloset( OverWorld& overWorld){
         }
         int sizeDecoys = decoySize;
         for (int i = 0 ;i < sizeDecoys; i++){
-            Vec2 decoyPos = overWorld.getDecoys()->getCurrentDecoys()[i]->getPos();
+            Vec2 decoyPos = overWorld.getDecoys()->getCurrentDecoys().at(i)->getPos();
             float curDist = (enemyPos -  decoyPos).length();
             if (curDist < dist){
                 dist = curDist;
