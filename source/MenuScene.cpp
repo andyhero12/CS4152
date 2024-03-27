@@ -37,6 +37,7 @@ using namespace cugl;
 bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //transition = ScreenEnums::LOADING;
     // Initialize the scene to a locked width
+    
     Size dimen = Application::get()->getDisplaySize();
     // Lock the scene to a reasonable resolution
     if (dimen.width > dimen.height) {
@@ -54,22 +55,26 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
 
     // IMMEDIATELY load the splash screen assets
     _assets = assets;
-    _assets->loadDirectory("json/mainmenu.json");
-    auto layer = assets->get<scene2::SceneNode>("main");
+    _assets->loadDirectory("json/mainassets.json");
+    std::shared_ptr<scene2::SceneNode> layer = _assets->get<scene2::SceneNode>("Menu");
+    std::cout << dimen.width << "  " << dimen.height << std::endl;
+    dimen.set(dimen.width-240, dimen.height+120);
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
 
-    _bar = std::dynamic_pointer_cast<scene2::ProgressBar>(assets->get<scene2::SceneNode>("main_mbar"));
-    _brand = assets->get<scene2::SceneNode>("main_mname");
-    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("main_mplay"));
+    _button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button1"));
+    _button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button2"));
+    _button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3"));
 
     _active = false;
-    _button->addListener([=](const std::string& name, bool down) {
+    _button1->addListener([=](const std::string& name, bool down) {
         if (down) {
             std::cout << "Play" << std::endl;
             transition = ScreenEnums::GAMEPLAY;
         }
         });
+
+    _firstset = false;
 
     Application::get()->setClearColor(Color4(192, 192, 192, 255));
     addChild(layer);
@@ -82,11 +87,11 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
 void MenuScene::dispose() {
     // Deactivate the button (platform dependent)
     if (isPending()) {
-        _button->deactivate();
+        _button1->deactivate();
     }
-    _button = nullptr;
-    _brand = nullptr;
-    _bar = nullptr;
+    _button1= nullptr;
+    _button2 = nullptr;
+    _button3 = nullptr;
     _assets = nullptr;
     _progress = 0.0f;
 }
@@ -102,18 +107,13 @@ void MenuScene::dispose() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void MenuScene::update(float progress) {
-    
-    if (_progress < 1) {
-        _progress = _assets->progress();
-        if (_progress >= 1) {
-            _progress = 1.0f;
-            _bar->setVisible(false);
-            _brand->setVisible(false);
-            _button->setVisible(true);
-            _button->activate();
-        }
-        _bar->setProgress(_progress);
+    if (!_firstset) {
+        _button1->activate();
+        _button2->activate();
+        _button3->activate();
+        _firstset = true;
     }
+
 }
 
 
@@ -124,7 +124,7 @@ void MenuScene::update(float progress) {
  * @return true if loading is complete, but the player has not pressed play
  */
 bool MenuScene::isPending() const {
-    return _button != nullptr && _button->isVisible();
+    return _button1 != nullptr && _button1->isVisible();
 }
 
 
