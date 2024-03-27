@@ -19,7 +19,7 @@ using namespace cugl;
 
 /** This is the ideal size of the logo */
 #define SCENE_SIZE  1024
-
+#define SCENE_HEIGHT  720
 #pragma mark -
 #pragma mark Constructors
 
@@ -39,13 +39,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     // Initialize the scene to a locked width
     
     Size dimen = Application::get()->getDisplaySize();
-    // Lock the scene to a reasonable resolution
-    if (dimen.width > dimen.height) {
-        dimen *= SCENE_SIZE / dimen.width;
-    }
-    else {
-        dimen *= SCENE_SIZE / dimen.height;
-    }
+    dimen *= SCENE_HEIGHT / dimen.height;
     if (assets == nullptr) {
         return false;
     }
@@ -58,10 +52,9 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     _assets->loadDirectory("json/mainassets.json");
     std::shared_ptr<scene2::SceneNode> layer = _assets->get<scene2::SceneNode>("Menu");
     std::cout << dimen.width << "  " << dimen.height << std::endl;
-    dimen.set(dimen.width-240, dimen.height+120);
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
-
+    
     _button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button1"));
     _button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button2"));
     _button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3"));

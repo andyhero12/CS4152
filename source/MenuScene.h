@@ -33,7 +33,6 @@ class MenuScene : public cugl::Scene2 {
 protected:
     /** The asset manager for loading. */
     std::shared_ptr<cugl::AssetManager> _assets;
-
     // NO CONTROLLER (ALL IN SEPARATE THREAD)
 
     // VIEW
