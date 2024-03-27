@@ -174,7 +174,7 @@ bool CollisionController::healFromBaseCollsion( BaseSet& bset, std::shared_ptr<D
         itP++;
         if (distance < healDistanceCutoff){
             ship->resetHeal();
-            ship->setHealth(ship->getHealth()+base->getHealValue());
+            ship->setHealth(std::min(ship->getHealth()+base->getHealValue(),ship->getMaxHealth()));
             return true;
         }
     }
