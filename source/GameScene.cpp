@@ -205,6 +205,28 @@ void GameScene::createMap()
     std::vector<std::vector<int>> other = _parser.getBoundaries();
     _world = World(Vec2(0, 0), matrix, other, tile);
 }
+
+std::shared_ptr<cugl::Texture> GameScene::getHealthBarTexture(float health){
+    
+    GLfloat minS = 0;
+    GLfloat maxS = health/100.0;
+    CULog("%f", maxS);
+    GLfloat minT = 0;
+    GLfloat maxT = 1;
+    
+    return _healthfill->getSubTexture(minS, maxS, minT, maxT);
+}
+
+std::shared_ptr<cugl::Texture> GameScene::getSizeBarTexture(float size){
+    
+    GLfloat minS = 0;
+    GLfloat maxS = 1;
+    GLfloat minT = 1 - size/30.0;
+    GLfloat maxT = 1;
+    
+    return _sizefill->getSubTexture(minS, maxS, minT, maxT);
+}
+
 /**
  * Draws all this scene to the given SpriteBatch.
  *
@@ -262,7 +284,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     healthfilltrans.scale(scale);
     healthfilltrans.translate(-1 * scale, getSize().height - (_healthfill->getHeight() - 11) * scale);
     
-    batch->draw(_healthfill, origin, healthfilltrans);
+    batch->draw(getHealthBarTexture(overWorld.getDog()->getHealth()), origin, healthfilltrans);
     batch->draw(_healthframe, origin, healthframetrans);
     
     
@@ -271,9 +293,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     sizetrans.scale(scale);
     sizetrans.translate(0, 0);
     batch->draw(_sizeframe, origin, sizetrans);
-    batch->draw(_sizefill, origin, sizetrans);
-    
-    
+    batch->draw(getSizeBarTexture(overWorld.getDog()->getAbsorb()), origin, sizetrans);
     
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     if (_monsterController.isEmpty() && _spawnerController.win())

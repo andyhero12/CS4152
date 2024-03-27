@@ -150,6 +150,10 @@ public:
     void reset() override;
 
     void createMap();
+    
+    std::shared_ptr<cugl::Texture> getHealthBarTexture(float health);
+    
+    std::shared_ptr<cugl::Texture> getSizeBarTexture(float size);
 };
 
 #endif /* __SG_GAME_SCENE_H__ */
