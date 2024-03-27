@@ -99,7 +99,10 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _blast = assets->get<Sound>("blast");
     
     // Get gameplay ui elements
-    _healthbar = assets->get<Texture>("healthframe");
+    _healthframe = assets->get<Texture>("healthframe");
+    _healthfill = assets->get<Texture>("healthfill");
+    _sizeframe = assets->get<Texture>("sizeframe");
+    _sizefill = assets->get<Texture>("sizefill");
     _bombtoggle = assets->get<Texture>("bombtoggle");
     
     // Create and layout the health meter
@@ -242,13 +245,25 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     trans.scale(scale_factor);
     
     // Draw Gameplay UI;
+    //Toggle
+    Vec2 origin = Vec2(0, 0);
     cugl::Affine2 trans2;
-    float scale = 4;
+    float scale = 4.5;
     trans2.scale(scale);
-    Vec2 o = Vec2(0, 0);
     trans2.translate(getSize().width - _bombtoggle->getWidth() * scale, getSize().height - _bombtoggle->getHeight() * scale);
-    batch->draw(_bombtoggle, o, trans2);
+    batch->draw(_bombtoggle, origin, trans2);
     
+    // Health bar
+    cugl::Affine2 trans3;
+    trans3.scale(scale);
+    trans3.translate(0, getSize().height - _healthframe->getHeight() * scale);
+    batch->draw(_healthframe, origin, trans3);
+    
+    // Size bar
+    cugl::Affine2 trans4;
+    trans4.scale(scale);
+    trans4.translate(0, 0);
+    batch->draw(_sizeframe, origin, trans4);
     
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     if (_monsterController.isEmpty() && _spawnerController.win())

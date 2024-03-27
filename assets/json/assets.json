@@ -1,16 +1,24 @@
 {
     "textures": {
         "healthframe": {
-          "file": "textures/game_ui/HEALTH_FRAME.png"
+          "file": "textures/game_ui/HEALTH_FRAME.png",
+          "minfilter": "linear",
+          "magfilter": "nearest"
         },
         "healthfill": {
-          "file": "textures/game_ui/HEALTH_FILL.png"
+          "file": "textures/game_ui/HEALTH_FILL.png",
+          "minfilter": "linear",
+          "magfilter": "nearest"
         },
         "sizeframe": {
-            "file": "textures/game_ui/SIZE_FRAME.png"
+            "file": "textures/game_ui/SIZE_FRAME.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
         },
         "sizefill": {
-            "file": "textures/game_ui/SIZE_FILL.png"
+            "file": "textures/game_ui/SIZE_FILL.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
         },
         "baittoggle": {
             "file": "textures/game_ui/BAIT_TOGGLE.png",

@@ -54,7 +54,10 @@ protected:
     std::shared_ptr<cugl::Texture> tile;
     
     /** Game UI Elements **/
-    std::shared_ptr<cugl::Texture> _healthbar;
+    std::shared_ptr<cugl::Texture> _healthframe;
+    std::shared_ptr<cugl::Texture> _healthfill;
+    std::shared_ptr<cugl::Texture> _sizeframe;
+    std::shared_ptr<cugl::Texture> _sizefill;
     std::shared_ptr<cugl::Texture> _bombtoggle;
     std::shared_ptr<cugl::Texture> _shoottoggle;
     std::shared_ptr<cugl::Texture> _baittoggle;
