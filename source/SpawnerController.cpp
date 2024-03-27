@@ -53,7 +53,7 @@ bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data,const std::ve
         if (data->get("start,Rate")){
             auto spawnerValues = data->get("start,Rate")->children();
             for (int i =0; i< startLocs.size(); i++){
-                std::shared_ptr<cugl::JsonValue> entry = spawnerValues[i];
+                std::shared_ptr<cugl::JsonValue> entry = spawnerValues.at(i);
                 cugl::Vec2 pos;
                 pos.x = startLocs.at(i).x;
                 pos.y = startLocs.at(i).y;

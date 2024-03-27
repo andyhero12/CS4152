@@ -116,7 +116,7 @@ private:
     bool idle;
     
     
-    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation);
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation, int speed);
     
 
 public:
@@ -309,11 +309,11 @@ public:
     }
     
     std::string getMode(){
-        return modes[_mode];
+        return modes.at(_mode);
     }
     
     void toggleMode(){
-        int length = sizeof(modes) / sizeof(modes[0]);
+        int length = sizeof(modes) / sizeof(modes.at(0));
         _mode = (_mode + 1) % length;
     }
     

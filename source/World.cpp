@@ -13,7 +13,7 @@ cugl::Size size(64,64);
 World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::vector<std::vector<int>> &passable, std::shared_ptr<cugl::Texture> tileset):start(bottomleft), tile(tileset){
     overworld.resize(map.size());
     for(int i = 0; i < map.size(); i++){
-        for (int j = 0; j < map[0].size(); j++){
+        for (int j = 0; j < map.at(0).size(); j++){
             if(passable.at(i).at(j) == 0){
                 overworld[i].emplace_back(size, Terrain::PASSABLE, getBox(map.at(i).at(j)));
             }
@@ -25,7 +25,7 @@ World::World (cugl::Vec2 bottomleft, std::vector<std::vector<int>> &map, std::ve
     int originalRows = (int) overworld.size();
     int originalCols = (int) overworld.at(0).size();
     int printIndexJ = 0;
-    for (int j =0  ;j< originalCols; j++){
+    for (int j =0; j< originalCols; j++){
         int printIndexI = 0;
         for (int i = originalRows -1; i > -1; i--){
             TileInfo& t = overworld.at(i).at(j);

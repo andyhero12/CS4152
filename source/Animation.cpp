@@ -42,7 +42,7 @@ void Animation::stepAnimation(){
 
 const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
     if(currentAnimSprite == nullptr){
-        return nullptr;
+        return currentAnimSprite;
     }
     currentAnimSprite->setFrame(frame);
     return currentAnimSprite;
