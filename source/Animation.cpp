@@ -26,7 +26,7 @@ bool Animation::frameUpdateReady() {
 
 void Animation::resetAnimation(int aimingDir){
     currentAnimationDirection = aimingDir;
-    currentAnimSprite = animSprite[aimingDir];
+    currentAnimSprite = animSprite.at(aimingDir);
     frame = 0;
 }
 
