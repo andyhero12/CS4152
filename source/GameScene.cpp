@@ -247,23 +247,33 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     // Draw Gameplay UI;
     //Toggle
     Vec2 origin = Vec2(0, 0);
-    cugl::Affine2 trans2;
+    cugl::Affine2 bombtrans;
     float scale = 4.5;
-    trans2.scale(scale);
-    trans2.translate(getSize().width - _bombtoggle->getWidth() * scale, getSize().height - _bombtoggle->getHeight() * scale);
-    batch->draw(_bombtoggle, origin, trans2);
+    bombtrans.scale(scale);
+    bombtrans.translate(getSize().width - _bombtoggle->getWidth() * scale, getSize().height - _bombtoggle->getHeight() * scale);
+    batch->draw(_bombtoggle, origin, bombtrans);
     
     // Health bar
-    cugl::Affine2 trans3;
-    trans3.scale(scale);
-    trans3.translate(0, getSize().height - _healthframe->getHeight() * scale);
-    batch->draw(_healthframe, origin, trans3);
+    cugl::Affine2 healthframetrans;
+    healthframetrans.scale(scale);
+    healthframetrans.translate(0, getSize().height - _healthframe->getHeight() * scale);
+    
+    cugl::Affine2 healthfilltrans;
+    healthfilltrans.scale(scale);
+    healthfilltrans.translate(-1 * scale, getSize().height - (_healthfill->getHeight() - 11) * scale);
+    
+    batch->draw(_healthfill, origin, healthfilltrans);
+    batch->draw(_healthframe, origin, healthframetrans);
+    
     
     // Size bar
-    cugl::Affine2 trans4;
-    trans4.scale(scale);
-    trans4.translate(0, 0);
-    batch->draw(_sizeframe, origin, trans4);
+    cugl::Affine2 sizetrans;
+    sizetrans.scale(scale);
+    sizetrans.translate(0, 0);
+    batch->draw(_sizeframe, origin, sizetrans);
+    batch->draw(_sizefill, origin, sizetrans);
+    
+    
     
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     if (_monsterController.isEmpty() && _spawnerController.win())
