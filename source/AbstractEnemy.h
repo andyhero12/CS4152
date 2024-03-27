@@ -71,9 +71,9 @@ public:
         if (_targetIndex == 0){
             target_pos = curDog->getPosition();
         }else if (_targetIndex <= baseSet->_bases.size()){
-            target_pos = baseSet->_bases[_targetIndex-1]->getPos();
+            target_pos = baseSet->_bases.at(_targetIndex-1)->getPos();
         }else{
-            target_pos = decoySet->getCurrentDecoys()[_targetIndex-1-baseSet->_bases.size()]->getPos();
+            target_pos = decoySet->getCurrentDecoys().at(_targetIndex-1-baseSet->_bases.size())->getPos();
         }
         return target_pos;
     }
