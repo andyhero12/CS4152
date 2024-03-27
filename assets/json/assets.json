@@ -77,10 +77,10 @@
             "file": "textures/dog/bite/medium-right-bite.png"
         },
         "largedogleftidle": {
-            "file": "textures/dog/idle/large-idle-left.png"
+            "file": "textures/dog/idle/large-left-idle.png"
         },
         "largedogrightidle": {
-            "file": "textures/dog/idle/large-idle-right.png"
+            "file": "textures/dog/idle/large-right-idle.png"
         },
         "largedogleftshoot": {
             "file": "textures/dog/shoot/medium-left-shoot.png"
