@@ -224,7 +224,7 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         }
     }
     else if(idle && idleAnimation){
-//        idleAnimation->updateDirection();
+        idleAnimation->updateDirection();
     }
     // Don't draw if sprite not set
     if (runAnimation->getSprite() && biteAnimation->getSprite()) {
@@ -282,7 +282,7 @@ void Dog::setBite(){
 void Dog::setIdle(){
     idle = true;
     if(idleAnimation){
-        idleAnimation->resetAnimation(_prevTurn);
+        idleAnimation->update(_prevTurn);
     }
 }
 
@@ -371,7 +371,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     idle = false;
     
     if(runAnimation && runAnimation->getSprite()){
-        runAnimation->update(_vel.getAngle());
+        runAnimation->update(_vel.getAngle() + 45);
         _prevTurn = runAnimation->currentAnimationDirection;
     }
 }

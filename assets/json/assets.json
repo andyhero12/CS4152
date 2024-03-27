@@ -22,11 +22,23 @@
         "smalldogrightidle": {
             "file": "textures/dog/idle/small-right-idle.png"
         },
+        "smalldogfrontidle": {
+            "file": "textures/dog/idle/small-front-idle.png"
+        },
+        "smalldogbackidle": {
+            "file": "textures/dog/idle/small-back-idle.png"
+        },
         "smalldogleftshoot": {
             "file": "textures/dog/shoot/medium-left-shoot.png"
         },
         "smalldogrightshoot": {
             "file": "textures/dog/shoot/medium-right-shoot.png"
+        },
+        "smalldogfrontshoot": {
+            "file": "textures/dog/shoot/medium-front-shoot.png"
+        },
+        "smalldogbackshoot": {
+            "file": "textures/dog/shoot/medium-back-shoot.png"
         },
         "smalldogleftrun": {
             "file": "textures/dog/run/small-left-run.png"
@@ -34,8 +46,17 @@
         "smalldogrightrun": {
             "file": "textures/dog/run/small-right-run.png"
         },
+        "smalldogfrontrun": {
+            "file": "textures/dog/run/small-front-run.png"
+        },
+        "smalldogbackrun": {
+            "file": "textures/dog/run/small-back-run.png"
+        },
         "smalldogfrontbite": {
             "file": "textures/dog/bite/medium-front-bite.png"
+        },
+        "smalldogbackbite": {
+            "file": "textures/dog/bite/medium-back-bite.png"
         },
         "smalldogleftbite": {
             "file": "textures/dog/bite/medium-left-bite.png"
@@ -52,11 +73,20 @@
         "mediumdogrightidle": {
             "file": "textures/dog/idle/medium-right-idle.png"
         },
+        "mediumdogbackidle": {
+            "file": "textures/dog/idle/medium-back-idle.png"
+        },
         "mediumdogleftshoot": {
             "file": "textures/dog/shoot/medium-left-shoot.png"
         },
         "mediumdogrightshoot": {
             "file": "textures/dog/shoot/medium-right-shoot.png"
+        },
+        "mediumdogfrontshoot": {
+            "file": "textures/dog/shoot/medium-front-shoot.png"
+        },
+        "mediumdogbackshoot": {
+            "file": "textures/dog/shoot/medium-back-shoot.png"
         },
         "mediumdogleftrun": {
             "file": "textures/dog/run/medium-left-run.png"
@@ -67,6 +97,9 @@
         "mediumdogrightrun": {
             "file": "textures/dog/run/medium-right-run.png"
         },
+        "mediumdogbackrun": {
+            "file": "textures/dog/run/medium-back-run.png"
+        },
         "mediumdogfrontbite": {
             "file": "textures/dog/bite/medium-front-bite.png"
         },
@@ -76,33 +109,58 @@
         "mediumdogrightbite": {
             "file": "textures/dog/bite/medium-right-bite.png"
         },
-        "largedogleftidle": {
-            "file": "textures/dog/idle/large-idle-left.png"
+        "mediumdogbackbite": {
+            "file": "textures/dog/bite/medium-back-bite.png"
         },
-        "largedogrightidle": {
-            "file": "textures/dog/idle/large-idle-right.png"
-        },
-        "largedogleftshoot": {
-            "file": "textures/dog/shoot/medium-left-shoot.png"
-        },
-        "largedogrightshoot": {
-            "file": "textures/dog/shoot/medium-right-shoot.png"
-        },
-        "largedogleftrun": {
-            "file": "textures/dog/run/medium-left-run.png"
-        },
-        "largedogrightrun": {
-            "file": "textures/dog/run/medium-right-run.png"
-        },
-        "largedogfrontbite": {
-            "file": "textures/dog/bite/medium-front-bite.png"
-        },
-        "largedogleftbite": {
-            "file": "textures/dog/bite/medium-left-bite.png"
-        },
-        "largedogrightbite": {
-            "file": "textures/dog/bite/medium-right-bite.png"
-        },
+       
+       "largedogleftidle": {
+           "file": "textures/dog/idle/large-left-idle.png"
+       },
+       "largedogfrontidle": {
+           "file": "textures/dog/idle/large-front-idle.png"
+       },
+       "largedogrightidle": {
+           "file": "textures/dog/idle/large-right-idle.png"
+       },
+       "largedogbackidle": {
+           "file": "textures/dog/idle/large-back-idle.png"
+       },
+       "largedogleftshoot": {
+           "file": "textures/dog/shoot/large-left-shoot.png"
+       },
+       "largedogrightshoot": {
+           "file": "textures/dog/shoot/large-right-shoot.png"
+       },
+       "largedogfrontshoot": {
+           "file": "textures/dog/shoot/large-front-shoot.png"
+       },
+       "largedogbackshoot": {
+           "file": "textures/dog/shoot/large-back-shoot.png"
+       },
+       "largedogleftrun": {
+           "file": "textures/dog/run/large-left-run.png"
+       },
+       "largedogfrontrun": {
+           "file": "textures/dog/run/large-front-run.png"
+       },
+       "largedogrightrun": {
+           "file": "textures/dog/run/large-right-run.png"
+       },
+       "largedogbackrun": {
+           "file": "textures/dog/run/large-back-run.png"
+       },
+       "largedogfrontbite": {
+           "file": "textures/dog/bite/large-front-bite.png"
+       },
+       "largedogleftbite": {
+           "file": "textures/dog/bite/large-left-bite.png"
+       },
+       "largedogrightbite": {
+           "file": "textures/dog/bite/large-right-bite.png"
+       },
+       "largedogbackbite": {
+           "file": "textures/dog/bite/large-back-bite.png"
+       },
         "basicEnemy0": {
             "file": "textures/basicEnemy/basicWalkLeft.PNG"
         },
