@@ -29,16 +29,10 @@
 /**
  * Model class representing an alien ship.
  */
-class Dog {
-//public:
-//    enum class States : int{
-//        IDLE = 0,
-//        RUN = 1,
-//        BITE= 2,
-//        SHOOT = 3
-//    };
-private:
+class Dog : public cugl::physics2::BoxObstacle{
     
+private:
+    CU_DISALLOW_COPY_AND_ASSIGN(Dog);
     std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
     
     /** Position of the ship */
@@ -63,8 +57,6 @@ private:
     
 
     // JSON DEFINED ATTRIBUTES
-    /** Mass/weight of the ship. Used in collisions. */
-    float _mass;
     /** The number of frames until we can fire again */
     int _firerate;
     /** The number of frames until we can fire again */
@@ -87,9 +79,6 @@ private:
     
     // Asset references. These should be set by GameScene
     /** Reference to the ships sprite sheet */
-//    std::shared_ptr<cugl::SpriteSheet> _sprite;
-    /** Radius of the ship in pixels (derived from sprite sheet) */
-    float _radius;
     
     Animation runAnimationSmall;
     Animation biteAnimationSmall;
@@ -118,9 +107,54 @@ private:
     
     void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation, int speed);
     
-
+    void dispose(){
+        _geometry = nullptr;
+    }
 public:
+    
+#pragma mark -
+#pragma mark Static Constructors
+    
+    /**
+     * Creates a new Dog at the given position.
+     *
+     * The Dog is sized according to the given drawing scale.
+     *
+     * The scene graph is completely decoupled from the physics system.
+     * The node does not have to be the same size as the physics body. We
+     * only guarantee that the scene graph node is positioned correctly
+     * according to the drawing scale.
+     *
+     * @param pos   Initial position in world coordinates
+     * @param size  The size of the dude in world units
+     * @param scale The drawing scale (world to screen)
+     *
+     * @return  A newly allocated DudeModel at the given position with the given scale
+     */
+    static std::shared_ptr<Dog> alloc(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, const cugl::Size& size, float scale) {
+        std::shared_ptr<Dog> result = std::make_shared<Dog>();
+        return (result->init(data, pos, size, scale) ? result : nullptr);
+    }
 #pragma mark Constructors
+    /**
+     * Initializes a new Dog at the given position.
+     *
+     * The dude is sized according to the given drawing scale.
+     *
+     * The scene graph is completely decoupled from the physics system.
+     * The node does not have to be the same size as the physics body. We
+     * only guarantee that the scene graph node is positioned correctly
+     * according to the drawing scale.
+     *
+     * @param pos   Initial position in world coordinates
+     * @param size  The size of the dude in world units
+     * @param scale The drawing scale (world to screen)
+     *
+     * @return  true if the obstacle is initialized properly, false otherwise.
+     */
+    virtual bool init(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, const cugl::Size& size, float scale);
+
+    
     /**
      * Creates a ship wiht the given position and data.
      *
@@ -135,8 +169,12 @@ public:
     /**
      * Disposes the ship, releasing all resources.
      */
-    ~Dog() {}
-
+    ~Dog() {
+        dispose();
+    }
+    Dog(){
+        
+    }
     
 #pragma mark Properties
     // Explodes if too big
@@ -157,7 +195,7 @@ public:
      *
      * @return the position of this ship
      */
-    const cugl::Vec2& getPosition() const { return _pos; }
+    cugl::Vec2 getPosition() const override { return _pos; }
     
     /**
      * Sets the position of this ship.
@@ -168,7 +206,7 @@ public:
      *
      * @param value the position of this ship
      */
-    void setPosition(cugl::Vec2 value) { _pos = value; }
+    void setPosition(cugl::Vec2 value) override { _pos = value; }
     
     /**
      * Sets the position of this ship, supporting wrap-around.
@@ -206,7 +244,7 @@ public:
      *
      * @return the angle of the ship
      */
-    float getAngle() const { return _ang; }
+    float getAngle() const override { return _ang; }
     
     float getScale() const { return (1 + getAbsorb()/30.0f);}
     /**
@@ -217,7 +255,7 @@ public:
      *
      * @param value the angle of the ship
      */
-    void setAngle(float value) { _ang = value; }
+    void setAngle(float value) override{ _ang = value; }
     /**
      * Returns the current ship health.
      * 
@@ -273,18 +311,6 @@ public:
         _modeTimer = 0;
     }
     
-    /**
-     * Returns the mass of the ship.
-     *
-     * This value is necessary to resolve collisions. It is set by the
-     * initial JSON file.
-     *
-     * @return the ship mass
-     */
-    float getMass() const {
-        return _mass;
-    }
-    
     float getExplosionRadius() const{
         return _explosionRadius;
     }
@@ -294,18 +320,6 @@ public:
     }
     float getShootRadius() const {
         return _shootRadius;
-    }
-
-    /**
-     * Returns the radius of the ship.
-     *
-     * This value is necessary to resolve collisions. It is computed from
-     * the sprite sheet.
-     *
-     * @return the ship radius
-     */
-    float getRadius() {
-        return _radius;
     }
     
     std::string getMode(){

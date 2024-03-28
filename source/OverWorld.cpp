@@ -197,6 +197,6 @@ void OverWorld::draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size 
     _attackPolygonSet.draw(batch,totalSize);
     _bases->draw(batch,totalSize);
     _dog->draw(batch, totalSize);
-    _devil->draw(batch, totalSize);
+//    _devil->draw(batch, totalSize);
     _decoys->draw(batch);
 }

@@ -66,7 +66,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     _active = false;
     _button->addListener([=](const std::string& name, bool down) {
         if (down) {
-            std::cout << "Play" << std::endl;
+//            std::cout << "Play" << std::endl;
             transition = ScreenEnums::GAMEPLAY;
         }
         });

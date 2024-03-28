@@ -24,6 +24,18 @@ void switchAnimation(std::shared_ptr<Animation>& animationPointer, Animation& ne
        animationPointer = std::shared_ptr<Animation>(&newAnimation, [](Animation*){});
 }
 
+
+bool Dog::init(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, const cugl::Size& size, float scale){
+    
+    if (BoxObstacle::init(pos,size)){
+        setDensity(1.0);
+        setFriction(0.0f);
+    }
+    
+    return false;
+}
+
+
 /**
  * Creates a ship wiht the given position and data.
  *
@@ -37,13 +49,11 @@ Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
     _pos = pos;
     _ang  = 0;
     _refire = 0;
-    _radius = 0;
     _absorbValue = 0;
     _modeTimer = 0;
     _healCooldown = 0;
     
     // Physics
-    _mass = data->getFloat("mass",1.0);
     _firerate = data->getInt("fire rate",0);
     _healRate = data->getInt("heal rate",0);
     _shadows  = data->getFloat("shadow",0.0);
@@ -114,7 +124,6 @@ void Dog::setRunTextureMedium(const std::vector<std::shared_ptr<cugl::Texture>> 
         runAnimationMedium = Animation( anims, 10, _frameflat);
         Vec2 origin(runAnimationMedium.getSprite()->getFrameSize()/2);
         runAnimationMedium.setOrigin(origin);
-        _radius = std::max(runAnimationMedium.getSprite()->getFrameSize().width, _sprite->getFrameSize().height)/2;
     }
 }
 

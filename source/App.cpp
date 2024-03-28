@@ -126,14 +126,14 @@ void HeavanApp::transition(){
     
     if (currentScene->getTransition() == ScreenEnums::MAINMENU) {
         currentScene = &_mainmenu;
-        std::cout << "In mainmenu" << std::endl;
+//        std::cout << "In mainmenu" << std::endl;
     }
     else if (currentScene->getTransition() == ScreenEnums::LEVELSELECT){
         currentScene = &_gameplay;
     }
     else if (currentScene->getTransition() == ScreenEnums::GAMEPLAY){
         // Current one we have
-        std::cout << "In gamemenu" << std::endl;
+//        std::cout << "In gamemenu" << std::endl;
         currentScene = &_gameplay;
     }
 }

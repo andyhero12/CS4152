@@ -68,7 +68,6 @@ void Devil::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size bou
         cugl::Affine2 shiptrans;
         shiptrans.scale(1);
         shiptrans.translate(_pos);
-        
         runAnimation.getSprite()->draw(batch,shiptrans);
     }
 }

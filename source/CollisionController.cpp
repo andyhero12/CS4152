@@ -122,7 +122,7 @@ bool CollisionController::monsterDogCollision(std::shared_ptr<Dog> curDog, std::
         std::shared_ptr<AbstractEnemy> enemy = *it;
         Vec2 norm = curDog->getPosition() - enemy->getPos();
         float distance = norm.length();
-        float impactDistance = curDog->getRadius() + enemy->getRadius();
+        float impactDistance = enemy->getRadius();
         it++;
         if (distance < impactDistance) {
             norm.normalize();
