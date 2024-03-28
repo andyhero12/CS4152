@@ -20,7 +20,7 @@
         },
         "smalldogleftidle": {
             "file": "textures/dog/idle/small-left-idle.png",
-              "minfilter": "linear",  
+              "minfilter": "linear",
               "magfilter": "nearest"
         },
         "smalldogrightidle": {

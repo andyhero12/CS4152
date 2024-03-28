@@ -276,7 +276,9 @@ void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
 
 void Dog::setBite(){
     bite = true;
-    biteAnimation->resetAnimation(_prevTurn);
+    if(biteAnimation){
+        biteAnimation->resetAnimation(_prevTurn);
+    }
 }
 
 void Dog::setIdle(){
@@ -288,7 +290,9 @@ void Dog::setIdle(){
 
 void Dog::setShoot(){
     shoot = true;
-    shootAnimation->resetAnimation(_prevTurn);
+    if(shootAnimation){
+        shootAnimation->resetAnimation(_prevTurn);
+    }
 }
 
 /**
