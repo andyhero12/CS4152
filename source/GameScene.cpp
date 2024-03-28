@@ -25,6 +25,11 @@ using namespace std;
 // Lock the screen size to fixed height regardless of aspect ratio
 #define SCENE_HEIGHT 720
 #define WORLD_SIZE 3
+/** Width of the game world in Box2d units */
+#define DEFAULT_WIDTH   1000.0f
+/** Height of the game world in Box2d units */
+#define DEFAULT_HEIGHT  1000.0f
+#define DEFAULT_GRAVITY -28.9f
 
 #pragma mark -
 #pragma mark Constructors
@@ -43,6 +48,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
 {
     std::cout << "INIT GAMESCENE\n";
     transition = ScreenEnums::GAMEPLAY;
+    obstacleWorld = physics2::ObstacleWorld::alloc(Rect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT),Vec2(0,DEFAULT_GRAVITY));
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_HEIGHT / dimen.height;
@@ -138,7 +144,12 @@ void GameScene::dispose()
  */
 void GameScene::reset()
 {
+    overWorld.reset(getSize());
     _gameEnded = false;
+    obstacleWorld->clear();
+    obstacleWorld->addObstacle(overWorld.getDog());
+    
+    
 //    _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos());
     _monsterController.init(_constants->get("asteroids"), overWorld);
 }
@@ -158,7 +169,6 @@ void GameScene::update(float timestep)
 
     if (_input.didPressReset())
     {
-        overWorld.reset(getSize());
         reset();
     }
     if (_gameEnded)

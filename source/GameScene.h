@@ -45,6 +45,9 @@ protected:
 
     SpawnerController _spawnerController;
     MonsterController _monsterController;
+    /** The Box2D world */
+    std::shared_ptr<cugl::physics2::ObstacleWorld> obstacleWorld;
+    
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;

@@ -26,8 +26,6 @@ void switchAnimation(std::shared_ptr<Animation>& animationPointer, Animation& ne
 
 
 bool Dog::init(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, const cugl::Size& size, float scale){
-    
-    std::cout << pos.x <<' '<< pos.y <<'\n';
     if (BoxObstacle::init(pos,size)){
         setDensity(1.0);
         setFriction(0.0f);
