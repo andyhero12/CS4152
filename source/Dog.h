@@ -247,7 +247,7 @@ public:
      * @return true if the ship can fire
      */
     bool canFireWeapon() const{
-        return !bite && _refire > _firerate;
+        return !bite && (_refire > _firerate);
     }
     
     void reloadWeapon() {
