@@ -19,7 +19,7 @@ using namespace cugl;
 
 /** This is the ideal size of the logo */
 #define SCENE_SIZE  1024
-#define SCENE_HEIGHT  720
+#define SCENE_HEIGHT  800
 #pragma mark -
 #pragma mark Constructors
 

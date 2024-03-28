@@ -23,7 +23,7 @@ using namespace std;
 #pragma mark Level Layout
 
 // Lock the screen size to fixed height regardless of aspect ratio
-#define SCENE_HEIGHT 720
+#define SCENE_HEIGHT 800
 #define WORLD_SIZE 3
 
 #pragma mark -
