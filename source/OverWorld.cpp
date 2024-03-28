@@ -10,11 +10,12 @@
 #define WORLD_SIZE 3
 
 void OverWorld::reset(cugl::Size resetSize) {
-    _dog->setPosition(resetSize/2);
-    _dog->setAbsorbValue(0);
-    _dog->setAngle(0);
-    _dog->setVelocity(cugl::Vec2::ZERO);
-    _dog->setHealth(_constants->get("ship")->getInt("health",0));
+//    _dog->setPosition(resetSize/2);
+//    _dog->setAbsorbValue(0);
+//    _dog->setAngle(0);
+//    _dog->setVelocity(cugl::Vec2::ZERO);
+//    _dog->setHealth(_constants->get("ship")->getInt("health",0));
+    initDog();
     _devil->setPosition(resetSize/2);
     _bases->init(_constants->get("base"));
     _decoys->init();
@@ -22,7 +23,8 @@ void OverWorld::reset(cugl::Size resetSize) {
 }
 
 bool OverWorld::initDog(){
-    _dog = std::make_shared<Dog>(_totalSize/2, _constants->get("ship"));
+    _dog = Dog::alloc(_constants->get("ship"),_totalSize/2, cugl::Size(1,1), 1.0);
+//    _dog = std::make_shared<Dog>(_totalSize/2, _constants->get("ship"));
     
     // medium dog assets
     std::vector<std::shared_ptr<cugl::Texture>> textures;

@@ -27,9 +27,31 @@ void switchAnimation(std::shared_ptr<Animation>& animationPointer, Animation& ne
 
 bool Dog::init(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, const cugl::Size& size, float scale){
     
+    std::cout << pos.x <<' '<< pos.y <<'\n';
     if (BoxObstacle::init(pos,size)){
         setDensity(1.0);
         setFriction(0.0f);
+        // Physics
+        
+        _refire = 0;
+        _absorbValue = 0;
+        _modeTimer = 0;
+        _healCooldown = 0;
+        _firerate = data->getInt("fire rate",0);
+        _healRate = data->getInt("heal rate",0);
+        _shadows  = data->getFloat("shadow",0.0);
+        _explosionRadius = data->getFloat("explosionRadius",100.0);
+        _biteRadius = data->getFloat("biteRadius",150.0);
+        _shootRadius = data->getFloat("shootRadius", 500.0);
+        // Sprite sheet information
+        _framecols = data->getInt("sprite cols",0);
+        _framesize = data->getInt("sprite size",0);
+        _frameflat = data->getInt("sprite frame",0);
+        
+        _health = data->getInt("health",0);
+        _maxHealth = _health;
+        _modeCooldown = data->getInt("mode cooldown",0);
+        return true;
     }
     
     return false;
@@ -46,8 +68,6 @@ bool Dog::init(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, con
  * @param data  The data defining the physics constants
  */
 Dog::Dog(const cugl::Vec2& pos, std::shared_ptr<cugl::JsonValue> data) {
-    _pos = pos;
-    _ang  = 0;
     _refire = 0;
     _absorbValue = 0;
     _modeTimer = 0;
@@ -202,39 +222,39 @@ void Dog::setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture,
  */
 void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
     
-    // switch animation based on form
-    if (_absorbValue < 10){
-        switchAnimation(biteAnimation, biteAnimationSmall);
-        switchAnimation(runAnimation, runAnimationSmall);
-        switchAnimation(shootAnimation, shootAnimationSmall);
-        switchAnimation(idleAnimation, idleAnimationSmall);
-    }else if (_absorbValue < 25){
+//    // switch animation based on form
+//    if (_absorbValue < 10){
+//        switchAnimation(biteAnimation, biteAnimationSmall);
+//        switchAnimation(runAnimation, runAnimationSmall);
+//        switchAnimation(shootAnimation, shootAnimationSmall);
+//        switchAnimation(idleAnimation, idleAnimationSmall);
+//    }else if (_absorbValue < 25){
         switchAnimation(biteAnimation, biteAnimationMedium);
         switchAnimation(runAnimation, runAnimationMedium);
         switchAnimation(shootAnimation, shootAnimationMedium);
         switchAnimation(idleAnimation, idleAnimationMedium);
-    }
+//    }
 //    else{
 //        switchAnimation(biteAnimation, biteAnimationLarge);
 //        switchAnimation(runAnimation, runAnimationLarge);
 //        switchAnimation(shootAnimation, shootAnimationLarge);
 //        switchAnimation(idleAnimation, idleAnimationLarge);
 //    }
-    if(bite){
-        biteAnimation->updateDirection();
-        if (biteAnimation->getFrame() == biteAnimation->getSprite()->getSize() -1){
-            bite = false;
-        }
-    }
-    else if(shoot){
-        shootAnimation->updateDirection();
-        if (shootAnimation->getFrame() == shootAnimation->getSprite()->getSize() -1){
-            shoot = false;
-        }
-    }
-    else if(idle && idleAnimation){
-        idleAnimation->updateDirection();
-    }
+//    if(bite){
+//        biteAnimation->updateDirection();
+//        if (biteAnimation->getFrame() == biteAnimation->getSprite()->getSize() -1){
+//            bite = false;
+//        }
+//    }
+//    else if(shoot){
+//        shootAnimation->updateDirection();
+//        if (shootAnimation->getFrame() == shootAnimation->getSprite()->getSize() -1){
+//            shoot = false;
+//        }
+//    }
+//    else if(idle && idleAnimation){
+//        idleAnimation->updateDirection();
+//    }
     // Don't draw if sprite not set
     if (runAnimation->getSprite() && biteAnimation->getSprite()) {
         // Transform to place the ship
@@ -242,45 +262,34 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         // super duper magic number
         shiptrans.scale(getScale() * 0.75f);
 //        shiptrans.rotate(_ang*M_PI/180);
-        shiptrans.translate(_pos);
+        shiptrans.translate(getPosition());
         // Transform to place the shadow, and its color
         Affine2 shadtrans = shiptrans;
         shadtrans.translate(_shadows,-_shadows);
         Color4f shadow(0,0,0,0.5f);
         
         
-        if (bite){
-            biteAnimation->getSprite()->draw(batch,shadow,shadtrans);
-            biteAnimation->getSprite()->draw(batch,shiptrans);
-        }
-        else if(shoot){
-            shootAnimation->getSprite()->draw(batch,shadow,shadtrans);
-            shootAnimation->getSprite()->draw(batch,shiptrans);
-        }
-        else if (idle){
-            idleAnimation->getSprite()->draw(batch,shadow,shadtrans);
-            idleAnimation->getSprite()->draw(batch,shiptrans);
-        }
-        else{
+//        if (bite){
+//            biteAnimation->getSprite()->draw(batch,shadow,shadtrans);
+//            biteAnimation->getSprite()->draw(batch,shiptrans);
+//        }
+//        else if(shoot){
+//            shootAnimation->getSprite()->draw(batch,shadow,shadtrans);
+//            shootAnimation->getSprite()->draw(batch,shiptrans);
+//        }
+//        else if (idle){
+//            idleAnimation->getSprite()->draw(batch,shadow,shadtrans);
+//            idleAnimation->getSprite()->draw(batch,shiptrans);
+//        }
+//        else{
             runAnimation->getSprite()->draw(batch,shadow,shadtrans);
             runAnimation->getSprite()->draw(batch,shiptrans);
-        }
+//        }
 
     }
 }
 
 #pragma mark Movement
-/**
- * Sets the position of this ship, supporting wrap-around.
- *
- * This is the preferred way to "bump" a ship in a collision.
- *
- * @param value     The position of this ship
- * @param size      The size of the window (for wrap around)
- */
-void Dog::setPosition(cugl::Vec2 value, cugl::Vec2 size) {
-    _pos = value;
-}
 
 
 void Dog::setBite(){
@@ -311,9 +320,7 @@ void Dog::setShoot(){
  * @param turn        Amount to turn the ship
  */
 void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Usekeyboard, Size size) {
-    //    if (attack){
-    //        return;
-    //    }
+    cugl::Vec2 _vel;
     if (forward == 0.0f) {
         _vel = Vec2(0, 0);
     }
@@ -325,7 +332,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     if (_UseJoystick) {
         _vel = Vel;
     }
-    
+    float _ang = getAngle();
     if (!(forward == 0 && turn == 0)) {
         _ang = atan2(forward, turn) * (180 / M_PI) - 90;
         setAngle(_ang);
@@ -336,7 +343,6 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         setAngle(_ang);
     }
 
-    
     // INVARIANT: 0 <= ang < 360
     if (_ang > 360)
         _ang -= 360;
@@ -345,19 +351,19 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     _vel = _vel.normalize();
     
     // Move the ship position by the ship velocity
-    _pos += (_vel*3);
-    while (_pos.x > size.width) {
-        _pos.x = size.width;
-    }
-    while (_pos.x < 0) {
-        _pos.x = 0;
-    }
-    while (_pos.y > size.height) {
-        _pos.y = size.height;
-    }
-    while (_pos.y < 0) {
-        _pos.y = 0;
-    }
+    setPosition(getPosition() + (_vel*3));
+//    while (getPosition().x > size.width) {
+//        _pos.x = size.width;
+//    }
+//    while (_pos.x < 0) {
+//        _pos.x = 0;
+//    }
+//    while (_pos.y > size.height) {
+//        _pos.y = size.height;
+//    }
+//    while (_pos.y < 0) {
+//        _pos.y = 0;
+//    }
     //Increment the refire readiness counter
     if (_refire <= _firerate) {
         _refire++;
@@ -370,36 +376,17 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         _modeTimer++;
     }
     
-    if(_vel.x == 0 && _vel.y == 0){
-        if(!bite && !shoot){
-            setIdle();
-        }
-        return;
-    }
-    
-    idle = false;
+//    if(_vel.x == 0 && _vel.y == 0){
+//        if(!bite && !shoot){
+//            setIdle();
+//        }
+//        return;
+//    }
+//    
+//    idle = false;
     
     if(runAnimation && runAnimation->getSprite()){
         runAnimation->update(_vel.getAngle() + 45);
         _prevTurn = runAnimation->currentAnimationDirection;
     }
-}
-
-
-Poly2 Dog::getBlastRec(){
-    Vec2 center = getPosition();
-    float longSide = 400;
-    float shortSide = 50;
-    Rect org;
-    if (_ang < 85){ // up
-        org.set(center.x-20, center.y-20, shortSide, longSide);
-    }else if (_ang < 175){ // left
-        org.set(center.x - longSide, center.y-20, longSide, shortSide);
-    }else if (_ang < 265){
-        org.set(center.x-20, center.y- longSide-20, shortSide, longSide);
-    }else{
-        org.set(center.x, center.y-20, longSide, shortSide);
-    }
-    Poly2 resultingRect(org);
-    return resultingRect;
 }

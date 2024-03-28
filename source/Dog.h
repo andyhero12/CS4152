@@ -34,19 +34,8 @@ class Dog : public cugl::physics2::BoxObstacle{
 private:
     CU_DISALLOW_COPY_AND_ASSIGN(Dog);
     std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
-    
-    /** Position of the ship */
-    cugl::Vec2 _pos;
-    /** Velocity of the ship */
-    cugl::Vec2 _vel;
-    
     int _mode = 0;
-    
     int _absorbValue;
-    // The following are protected, because they have no accessors
-    /** Current angle of the ship */
-    float _ang;
-    /** Countdown to limit refire rate */
     int _refire;
     // heal timer
     int _healCooldown;
@@ -188,74 +177,8 @@ public:
         _absorbValue = x;
         _absorbValue = fmin(_absorbValue, MAX_ABSORB);
     }
-    /**
-     * Returns the position of this ship.
-     *
-     * This is location of the center pixel of the ship on the screen.
-     *
-     * @return the position of this ship
-     */
-    cugl::Vec2 getPosition() const override { return _pos; }
-    
-    /**
-     * Sets the position of this ship.
-     *
-     * This is location of the center pixel of the ship on the screen.
-     * Setting this value does NOT respect wrap around. It is possible
-     * to use this method to place the ship off screen (so be careful).
-     *
-     * @param value the position of this ship
-     */
-    void setPosition(cugl::Vec2 value) override { _pos = value; }
-    
-    /**
-     * Sets the position of this ship, supporting wrap-around.
-     *
-     * This is the preferred way to "bump" a ship in a collision.
-     *
-     * @param value     The position of this ship
-     * @param size      The size of the window (for wrap around)
-     */
-    void setPosition(cugl::Vec2 value, cugl::Vec2 size);
-    
-    /**
-     * Returns the velocity of this ship.
-     *
-     * This value is necessary to control momementum in ship movement.
-     *
-     * @return the velocity of this ship
-     */
-    const cugl::Vec2& getVelocity() const { return _vel; }
-
-    /**
-     * Sets the velocity of this ship.
-     *
-     * This value is necessary to control momementum in ship movement.
-     *
-     * @param value the velocity of this ship
-     */
-    void setVelocity(cugl::Vec2 value) { _vel = value; }
-    
-    /**
-     * Returns the angle that this ship is facing.
-     *
-     * The angle is specified in degrees. The angle is counter clockwise
-     * from the line facing north.
-     *
-     * @return the angle of the ship
-     */
-    float getAngle() const override { return _ang; }
     
     float getScale() const { return (1 + getAbsorb()/30.0f);}
-    /**
-     * Sets the angle that this ship is facing.
-     *
-     * The angle is specified in degrees. The angle is counter clockwise
-     * from the line facing north.
-     *
-     * @param value the angle of the ship
-     */
-    void setAngle(float value) override{ _ang = value; }
     /**
      * Returns the current ship health.
      * 
@@ -273,9 +196,6 @@ public:
      * @param value The current ship health.
      */
     void setHealth(int value);
-    
-    
-    cugl::Poly2 getBlastRec();
     /**
      * Returns true if the ship can fire its weapon
      *
@@ -285,7 +205,7 @@ public:
      * @return true if the ship can fire
      */
     bool canFireWeapon() const{
-        return !bite && _refire > _firerate;
+        return _refire > _firerate;
     }
     
     void reloadWeapon() {
