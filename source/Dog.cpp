@@ -214,9 +214,9 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
             shoot = false;
         }
     }
-    else if(idle && idleAnimation){
-        idleAnimation->updateDirection();
-    }
+//    else if(idle && idleAnimation){
+//        idleAnimation->updateDirection();
+//    }
     // Don't draw if sprite not set
     if (runAnimation->getSprite() && biteAnimation->getSprite()) {
         // Transform to place the ship
@@ -273,14 +273,14 @@ void Dog::setBite(){
 }
 
 void Dog::setIdle(){
-    std::cout << " dog idle not working" << std::endl;
+//    std::cout << " dog idle not working" << std::endl;
 
     idle = true;
     if(idleAnimation){
         std:: cout << idleAnimation << " " << _prevTurn << std::endl;
-        idleAnimation->update(_prevTurn);
+        idleAnimation->updateDir(_prevTurn);
     }
-      std::cout << " dog idle working" << std::endl;
+//      std::cout << " dog idle working" << std::endl;
 }
 
 void Dog::setShoot(){
