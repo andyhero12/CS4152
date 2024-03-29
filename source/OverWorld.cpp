@@ -26,10 +26,10 @@ bool OverWorld::initDog(){
     
     // medium dog assets
     std::vector<std::shared_ptr<cugl::Texture>> textures;
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogrightrun"));
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogbackrun"));
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogleftrun"));
-    textures.push_back(_assets->get<cugl::Texture>("mediumdogfrontrun"));
+    textures.push_back(_dogAssets->get<cugl::Texture>("mediumdogrightrun"));
+    textures.push_back(_dogAssets->get<cugl::Texture>("mediumdogbackrun"));
+    textures.push_back(_dogAssets->get<cugl::Texture>("mediumdogleftrun"));
+    textures.push_back(_dogAssets->get<cugl::Texture>("mediumdogfrontrun"));
     _dog->setRunTextureMedium(textures);
     
     textures.clear();
@@ -142,6 +142,8 @@ bool OverWorld::initDecoys(){
 bool OverWorld::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize){
     _assets = assets;
     _constants = assets->get<cugl::JsonValue>("constants");
+    _dogAssets = assets->get<cugl::AssetManager>("dog");
+//    std::cout << _mediumDog->toString() << std::endl;
     _totalSize = totalSize;
     initDog();
     initDevil();

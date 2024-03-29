@@ -25,6 +25,7 @@ private:
     std::shared_ptr<DecoySet> _decoys;
     std::shared_ptr<BaseSet> _bases;
     std::shared_ptr<cugl::JsonValue> _constants;
+    std::shared_ptr<cugl::AssetManager> _dogAssets;
     std::shared_ptr<cugl::AssetManager> _assets;
     cugl::Size _totalSize;
     AttackPolygons _attackPolygonSet;

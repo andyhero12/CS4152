@@ -29,6 +29,7 @@ using namespace cugl;
  */
 void HeavanApp::onStartup() {
     _assets = AssetManager::alloc();
+    _dog = AssetManager::alloc();
     _batch  = SpriteBatch::alloc();
     auto cam = OrthographicCamera::alloc(getDisplaySize());
     
@@ -42,6 +43,9 @@ void HeavanApp::onStartup() {
     _assets->attach<JsonValue>(JsonLoader::alloc()->getHook());
     //_assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook()); // Needed for loading screen
+    
+    _dog->attach<Texture>(TextureLoader::alloc()->getHook());
+    _dog->attach<JsonValue>(JsonLoader::alloc()->getHook());
 
     // Create a "loading" screen
     _loaded = false;
@@ -50,6 +54,7 @@ void HeavanApp::onStartup() {
     currentScene = &_loading;
     // Queue up the other assets
     _assets->loadDirectoryAsync("json/assets.json",nullptr);
+    _dog->loadDirectoryAsync("json/game_assets/dog.json",nullptr);
     
     AudioEngine::start();
     Application::onStartup(); // YOU MUST END with call to parent
@@ -73,6 +78,7 @@ void HeavanApp::onShutdown() {
     _gameplay.dispose();
     _mainmenu.dispose();
     _assets = nullptr;
+    _dog = nullptr;
     _batch = nullptr;
     
 

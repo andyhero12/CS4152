@@ -1,0 +1,37 @@
+{
+    "monkey1": {
+        "file": "textures/monkey/monkey-walk-1.png",
+              "minfilter": "linear",
+              "magfilter": "nearest"
+    },
+    "monkey2": {
+        "file": "textures/monkey/monkey-walk-2.png",
+              "minfilter": "linear",
+              "magfilter": "nearest"
+    },
+    "monkey3": {
+        "file": "textures/monkey/monkey-walk-3.png",
+              "minfilter": "linear",
+              "magfilter": "nearest"
+    },
+    "monkey4": {
+        "file": "textures/monkey/monkey-walk-4.png",
+              "minfilter": "linear",
+              "magfilter": "nearest"
+    },
+    "monkey5": {
+        "file": "textures/monkey/monkey-walk-5.png",
+              "minfilter": "linear",
+              "magfilter": "nearest"
+    },
+    "monkey6": {
+        "file": "textures/monkey/monkey-walk-6.png",
+          "minfilter": "linear",
+          "magfilter": "nearest"
+    },
+    "monkey7": {
+        "file": "textures/monkey/monkey-walk-7.png",
+          "minfilter": "linear",
+          "magfilter": "nearest"
+    }
+}
