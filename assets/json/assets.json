@@ -1,23 +1,49 @@
 {
     "textures": {
+        "healthframe": {
+          "file": "textures/game_ui/HEALTH_FRAME.png",
+          "minfilter": "linear",
+          "magfilter": "nearest"
+        },
+        "healthfill": {
+          "file": "textures/game_ui/HEALTH_FILL.png",
+          "minfilter": "linear",
+          "magfilter": "nearest"
+        },
+        "sizeframe": {
+            "file": "textures/game_ui/SIZE_FRAME.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
+        },
+        "sizefill": {
+            "file": "textures/game_ui/SIZE_FILL.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
+        },
+        "baittoggle": {
+            "file": "textures/game_ui/BAIT_TOGGLE.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
+        },
+        "bombtoggle": {
+            "file": "textures/game_ui/BOMB_TOGGLE.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
+        },
+        "shoottoggle": {
+            "file": "textures/game_ui/SHOOT_TOGGLE.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
+        },
         "progress": {
-           "file":      "textures/progress.png",
-           "wrapS":     "clamp",
-           "wrapT":     "clamp",
-           "minfilter": "linear",
-           "magfilter": "linear",
-           "atlas":     {
-               "background" : [0,    0, 320, 45],
-               "foreground" : [24,  45, 296, 90],
-               "leftcap"    : [0,   45,  24, 90],
-               "rightcap"   : [296, 45, 320, 90]
-           }
-       },
+            "file": "textures/progress.png"
+        },
         "tile": {
             "file": "textures/tile/tile.png",
               "minfilter": "linear",
               "magfilter": "nearest"
         },
+        
         "smalldogleftidle": {
             "file": "textures/dog/idle/small-left-idle.png",
               "minfilter": "linear",
