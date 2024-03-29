@@ -41,10 +41,10 @@ void Devil::setRunTexture(const std::vector<std::shared_ptr<cugl::Texture>>& tex
 void Devil::move(cugl::Size size){
     
     cugl::Vec2 direction = dog->getPosition()- _pos ;
-    if (direction.length() < 50){
+    if (direction.length() < 0.8){
         return;
     }
-    _pos += direction.normalize()*3;
+    _pos += direction.normalize()*0.07;
     while (_pos.x > size.width) {
         _pos.x = size.width;
     }
@@ -66,7 +66,7 @@ void Devil::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size bou
     // Don't draw if sprite not set
     if (runAnimation.getSprite()) {
         cugl::Affine2 shiptrans;
-        shiptrans.scale(1);
+        shiptrans.scale(1.5 / runAnimation.getSprite()->getFrameSize().height);
         shiptrans.translate(_pos);
         runAnimation.getSprite()->draw(batch,shiptrans);
     }

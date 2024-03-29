@@ -30,6 +30,8 @@ using namespace std;
 /** Height of the game world in Box2d units */
 #define DEFAULT_HEIGHT  1000.0f
 #define DEFAULT_GRAVITY -28.9f
+// number of tiles of height to be displayed
+#define CANVAS_TILE_HEIGHT 10
 
 #pragma mark -
 #pragma mark Constructors
@@ -64,6 +66,10 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     // Start up the input handler
     _assets = assets;
     _input.init();
+
+    // initialize physics engine
+    // I am not entirely sure what the significance of bounds is. For now, I set it to a large value so we should not hit it.
+    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0, 0));
 
     // Get the background image and constant values
     tile = assets->get<Texture>("tile");
@@ -202,8 +208,12 @@ void GameScene::update(float timestep)
     {
         _gameEnded = true;
     }
+
     _monsterController.postUpdate(getSize(), timestep);
     overWorld.postUpdate();
+
+    // We may need to consider determinism in the future
+    _obstacleWorld.update(timestep);
 }
 
 void GameScene::createMap()
@@ -228,6 +238,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
 
     // shift camera to follow ship; draw ingame objects here
     cugl::Vec3 pos = cugl::Vec3();
+    std::dynamic_pointer_cast<OrthographicCamera>(getCamera())->setZoom(SCENE_HEIGHT / CANVAS_TILE_HEIGHT);
     pos.add(overWorld.getDog()->getPosition());
     getCamera()->setPosition(pos);
     getCamera()->update();

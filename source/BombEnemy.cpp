@@ -6,7 +6,7 @@
 //
 #include "BombEnemy.h"
 
-#define EXPLOSION_RADIUS 50
+#define EXPLOSION_RADIUS 0.5
 
 BombEnemy::BombEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
 : AbstractEnemy(m_pos, m_health, m_radius, m_targetIndex)
@@ -19,8 +19,9 @@ BombEnemy::BombEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targe
 void BombEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size,  std::shared_ptr<cugl::Font> font){
     Vec2 pos = getPos();
     Affine2 trans;
-    trans.translate(pos);
     auto sprite = getSprite();
+    trans.scale(1 / sprite->getFrameSize().height);
+    trans.translate(pos);
     sprite->draw(batch, trans);
     
     // Might need to change; this was specifically for the default health bar
@@ -41,7 +42,7 @@ void BombEnemy::update(float dt, OverWorld& overWorld){
     cugl::Vec2 target_pos = getTargetPositionFromIndex(overWorld);
     cugl::Vec2 direction = target_pos- position;
     // Animate
-    position += direction.normalize();
+    position += direction.normalize() * 0.03;
     cugl::Size size = overWorld.getTotalSize();
     
     _walkingAnimations.update(direction.getAngle());

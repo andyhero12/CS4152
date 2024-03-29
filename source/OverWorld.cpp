@@ -120,7 +120,7 @@ bool OverWorld::initDog(){
 }
 
 bool OverWorld::initDevil(){
-    _devil = std::make_shared<Devil>(_dog, _totalSize/2, _constants->get("devil"));
+    _devil = std::make_shared<Devil>(_dog, Vec2(1, 1), _constants->get("devil"));
     std::vector<std::shared_ptr<cugl::Texture>> textures;
     textures.push_back(_assets->get<cugl::Texture>("player0"));
     textures.push_back(_assets->get<cugl::Texture>("player1"));

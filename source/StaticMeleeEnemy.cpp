@@ -6,7 +6,7 @@
 //
 
 #include "StaticMeleeEnemy.h"
-#define DISTANCE_CUTOFF 250
+#define DISTANCE_CUTOFF 5
 
 StaticMeleeEnemy::StaticMeleeEnemy(cugl::Vec2 m_pos, int m_health, float m_radius, int m_targetIndex)
 : MeleeEnemy(m_pos, m_health, m_radius, m_targetIndex)
@@ -31,7 +31,7 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
         }
     }else{ // chase dog
         direction = dog_pos - position;
-        position += direction.normalize();
+        position += direction.normalize() * 0.03;
     }
     // Animate
     cugl::Size size = overWorld.getTotalSize();

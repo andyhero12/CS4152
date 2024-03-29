@@ -25,8 +25,9 @@ bool MonsterController::init(std::shared_ptr<cugl::JsonValue> data, OverWorld& o
             for (auto it = initEnemies.begin(); it != initEnemies.end(); it++){
                 std::shared_ptr<JsonValue> entry = (*it);
                 Vec2 pos;
-                pos.x = entry->get(0)->get(0)->asFloat(0);
-                pos.y = entry->get(0)->get(1)->asFloat(0);
+                // TEMPORARY MAGIC NUMBERS
+                pos.x = entry->get(0)->get(0)->asFloat(0) / 64;
+                pos.y = entry->get(0)->get(1)->asFloat(0) / 64;
                 spawnStaticBasicEnemy(pos, overWorld);
 //               pos += Vec2(20,20);
 //               spawnBombEnemy(pos,overWorld);

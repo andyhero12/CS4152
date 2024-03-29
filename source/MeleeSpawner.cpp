@@ -32,8 +32,8 @@ void MeleeSpawner::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::S
     cugl::Vec2 pos = getPos();
     cugl::Vec2 origin(0, 0);
     cugl::Affine2 trans;
-    float scale = 2;
-    trans.scale(scale);
+    float scale = 1;
+    trans.scale(scale / _texture->getHeight());
     trans.translate(pos);
     batch->draw(_texture, origin, trans);
 }
