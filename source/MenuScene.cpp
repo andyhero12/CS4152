@@ -1,15 +1,5 @@
 //
-//  GLLoadingScene.cpp
-//
-//  This module provides a very barebones loading screen.  Most of the time you
-//  will not need a loading screen, because the assets will load so fast.  But
-//  just in case, this is a simple example you can use in your games.
-//
-//  We know from 3152 that you all like to customize this screen.  Therefore,
-//  we have kept it as simple as possible so that it is easy to modify. In
-//  fact, this loading screen uses the new modular JSON format for defining
-//  scenes.  See the file "loading.json" for how to change this scene.
-//
+//  MenuScene.cpp
 //  Author: Walker White
 //  Version: 1/20/22
 //
@@ -24,11 +14,6 @@ using namespace cugl;
 #pragma mark Constructors
 
 /**
- * Initializes the controller contents, making it ready for loading
- *
- * The constructor does not allocate any objects or memory.  This allows
- * us to have a non-pointer reference to this controller, reducing our
- * memory allocation.  Instead, allocation happens in this method.
  *
  * @param assets    The (loaded) assets for this game mode
  *
@@ -67,6 +52,20 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
         }
         });
 
+     _button2->addListener([=](const std::string& name, bool down) {
+        if (down) {
+            std::cout << "Level" << std::endl;
+            transition = ScreenEnums::GAMEPLAY;
+        }
+        });
+
+     _button3->addListener([=](const std::string& name, bool down) {
+        if (down) {
+            std::cout << "Setting" << std::endl;
+            transition = ScreenEnums::GAMEPLAY;
+        }
+        });    
+
     _firstset = false;
 
     Application::get()->setClearColor(Color4(192, 192, 192, 255));
@@ -86,7 +85,7 @@ void MenuScene::dispose() {
     _button2 = nullptr;
     _button3 = nullptr;
     _assets = nullptr;
-    _progress = 0.0f;
+    _firstset = false;
 }
 
 
