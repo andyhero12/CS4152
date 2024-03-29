@@ -14,9 +14,13 @@
 
 #define UI_SCALE 4.5
 
+using namespace cugl;
+
 class UIController{
     
 private:
+    
+    const Vec2 origin = Vec2(0, 0);
     
     /** Game UI Elements **/
     cugl::Size _screenSize;

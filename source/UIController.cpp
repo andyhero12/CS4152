@@ -43,7 +43,6 @@ std::shared_ptr<cugl::Texture> UIController::getSizeBarTexture(float size){
 }
 
 void UIController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
-    Vec2 origin = Vec2(0, 0);
     
     //Toggle
     cugl::Affine2 bombtrans;
