@@ -73,6 +73,9 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos()); 
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
     
+    // Initialize UI Controller
+    _uiController.init(assets, getSize(), overWorld.getDog());
+    
     // used to create progress bars
     std::shared_ptr<cugl::Texture> barImage = assets->get<Texture>("progress");
     
@@ -97,13 +100,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _bang = assets->get<Sound>("bang");
     _laser = assets->get<Sound>("laser");
     _blast = assets->get<Sound>("blast");
-    
-    // Get gameplay ui elements
-    _healthframe = assets->get<Texture>("healthframe");
-    _healthfill = assets->get<Texture>("healthfill");
-    _sizeframe = assets->get<Texture>("sizeframe");
-    _sizefill = assets->get<Texture>("sizefill");
-    _bombtoggle = assets->get<Texture>("bombtoggle");
     
     // Create and layout the health meter
     std::string msg = strtool::format("Health %d", overWorld.getDog()->getHealth());
@@ -206,27 +202,6 @@ void GameScene::createMap()
     _world = World(Vec2(0, 0), matrix, other, tile);
 }
 
-std::shared_ptr<cugl::Texture> GameScene::getHealthBarTexture(float health){
-    
-    GLfloat minS = 0;
-    GLfloat maxS = health/100.0;
-    CULog("%f", maxS);
-    GLfloat minT = 0;
-    GLfloat maxT = 1;
-    
-    return _healthfill->getSubTexture(minS, maxS, minT, maxT);
-}
-
-std::shared_ptr<cugl::Texture> GameScene::getSizeBarTexture(float size){
-    
-    GLfloat minS = 0;
-    GLfloat maxS = 1;
-    GLfloat minT = 1 - size/MAX_ABSORB;
-    GLfloat maxT = 1;
-    
-    return _sizefill->getSubTexture(minS, maxS, minT, maxT);
-}
-
 /**
  * Draws all this scene to the given SpriteBatch.
  *
@@ -267,34 +242,8 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     trans.scale(scale_factor);
     
     // Draw Gameplay UI;
-    //Toggle
-    Vec2 origin = Vec2(0, 0);
-    cugl::Affine2 bombtrans;
-    float scale = 4.5;
-    bombtrans.scale(scale);
-    bombtrans.translate(getSize().width - _bombtoggle->getWidth() * scale, getSize().height - _bombtoggle->getHeight() * scale);
-    batch->draw(_bombtoggle, origin, bombtrans);
-    
-    // Health bar
-    cugl::Affine2 healthframetrans;
-    healthframetrans.scale(scale);
-    healthframetrans.translate(0, getSize().height - _healthframe->getHeight() * scale);
-    
-    cugl::Affine2 healthfilltrans;
-    healthfilltrans.scale(scale);
-    healthfilltrans.translate(-1 * scale, getSize().height - (_healthfill->getHeight() - 11) * scale);
-    
-    batch->draw(getHealthBarTexture(overWorld.getDog()->getHealth()), origin, healthfilltrans);
-    batch->draw(_healthframe, origin, healthframetrans);
-    
-    
-    // Size bar
-    cugl::Affine2 sizetrans;
-    sizetrans.scale(scale);
-    sizetrans.translate(0, 0);
-    batch->draw(_sizeframe, origin, sizetrans);
-    batch->draw(getSizeBarTexture(overWorld.getDog()->getAbsorb()), origin, sizetrans);
-    
+    _uiController.draw(batch);
+
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     if (_monsterController.isEmpty() && _spawnerController.win())
     {

@@ -17,6 +17,7 @@
 #include "Dog.h"
 #include "InputController.h"
 #include "CollisionController.h"
+#include "UIController.h"
 #include "SpawnerController.h"
 #include "OverWorld.h"
 #include "MonsterController.h"
@@ -45,6 +46,8 @@ protected:
 
     SpawnerController _spawnerController;
     MonsterController _monsterController;
+    UIController _uiController;
+    
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;
@@ -52,15 +55,6 @@ protected:
     // In the future, we will replace this with the scene graph
     /** The background image */
     std::shared_ptr<cugl::Texture> tile;
-    
-    /** Game UI Elements **/
-    std::shared_ptr<cugl::Texture> _healthframe;
-    std::shared_ptr<cugl::Texture> _healthfill;
-    std::shared_ptr<cugl::Texture> _sizeframe;
-    std::shared_ptr<cugl::Texture> _sizefill;
-    std::shared_ptr<cugl::Texture> _bombtoggle;
-    std::shared_ptr<cugl::Texture> _shoottoggle;
-    std::shared_ptr<cugl::Texture> _baittoggle;
     
     /** The text with the win message */
     std::shared_ptr<cugl::TextLayout> _textWin;
