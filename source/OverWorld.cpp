@@ -23,7 +23,7 @@ void OverWorld::reset(cugl::Size resetSize) {
 }
 
 bool OverWorld::initDog(){
-    _dog = Dog::alloc(_constants->get("ship"),_totalSize/2, cugl::Size(1,1), 1.0);
+    _dog = Dog::alloc(_constants->get("ship"),Vec2(0, 0), cugl::Size(1, 1), 1.0);
 //    _dog = std::make_shared<Dog>(_totalSize/2, _constants->get("ship"));
     
     // medium dog assets

@@ -67,9 +67,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _assets = assets;
     _input.init();
 
-    // initialize physics engine
-    // I am not entirely sure what the significance of bounds is. For now, I set it to a large value so we should not hit it.
-    _obstacleWorld.init(Rect(Vec2(0, 0), Vec2(WORLD_WIDTH, WORLD_HEIGHT)), Vec2(0, 0));
 
     // Get the background image and constant values
     tile = assets->get<Texture>("tile");
@@ -213,7 +210,7 @@ void GameScene::update(float timestep)
     overWorld.postUpdate();
 
     // We may need to consider determinism in the future
-    _obstacleWorld.update(timestep);
+    obstacleWorld->update(timestep);
 }
 
 void GameScene::createMap()

@@ -20,7 +20,6 @@ void MeleeEnemy::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Siz
     const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     trans.scale(1 / sprite->getFrameSize().height);
     trans.translate(pos);
-    const std::shared_ptr<cugl::SpriteSheet>& sprite = getSprite();
     sprite->draw(batch, trans); // draw enemy animation
     
     Affine2 trans_bar;

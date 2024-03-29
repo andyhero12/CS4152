@@ -260,7 +260,7 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
         // super duper magic number
         shiptrans.scale(getScale() * 0.75f);
         // account for sprite size so we are by logic coordinates
-        shiptrans.scale(1 / runAnimation.getSprite()->getFrameSize().height);
+        shiptrans.scale(1 / runAnimation->getSprite()->getFrameSize().height);
 //        shiptrans.rotate(_ang*M_PI/180);
         shiptrans.translate(getPosition());
         // Transform to place the shadow, and its color
