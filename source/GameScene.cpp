@@ -10,6 +10,9 @@
 //  Version: 1/20/22
 //
 #include <cugl/cugl.h>
+#include <box2d/b2_world.h>
+#include <box2d/b2_contact.h>
+#include <box2d/b2_collision.h>
 #include <iostream>
 #include <sstream>
 
@@ -30,8 +33,12 @@ using namespace std;
 /** Height of the game world in Box2d units */
 #define DEFAULT_HEIGHT  1000.0f
 #define DEFAULT_GRAVITY 0
+/** Friction of most platforms */
+#define BASIC_FRICTION  0.4f
+/** The restitution for all physics objects */
+#define BASIC_RESTITUTION   0.1f
 // number of tiles of height to be displayed
-#define CANVAS_TILE_HEIGHT 10
+#define CANVAS_TILE_HEIGHT 8
 #define DRAW_WIREFRAME true
 #define POSITION_ITERATIONS 18
 
@@ -53,6 +60,13 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     std::cout << "INIT GAMESCENE\n";
     transition = ScreenEnums::GAMEPLAY;
     obstacleWorld = physics2::ObstacleWorld::alloc(Rect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT),Vec2(0,DEFAULT_GRAVITY));
+    obstacleWorld->activateCollisionCallbacks(true);
+    obstacleWorld->onBeginContact = [this](b2Contact* contact) {
+      beginContact(contact);
+    };
+    obstacleWorld->onEndContact = [this](b2Contact* contact) {
+      endContact(contact);
+    };
     //obstacleWorld->setPositionIterations(POSITION_ITERATIONS);
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
@@ -150,19 +164,29 @@ void GameScene::dispose()
  */
 void GameScene::reset()
 {
+    createMap();
     overWorld.reset(getSize());
     _gameEnded = false;
     obstacleWorld->clear();
-    for (auto& row : _world.overworld) {
-        for (auto& tile : row) {
-            if (tile.type == World::Terrain::IMPASSIBLE) {
-                std::shared_ptr<cugl::physics2::BoxObstacle> boxObstacle = physics2::BoxObstacle::alloc(tile.boundaryRect.origin, Vec2(0.99, 0.99));
-                boxObstacle->setBodyType(b2_staticBody);
-                boxObstacle->setDensity(1000000);
-                obstacleWorld->addObstacle(boxObstacle);
+    for (auto& row : _world.overworld){
+        for(auto& tile : row){
+            if (tile->type == Terrain::IMPASSIBLE){
+                obstacleWorld->addObstacle(tile);
             }
         }
     }
+//    for (auto& row : _world.overworld) {
+//        for (auto& tile : row) {
+//            if (tile.type == World::Terrain::IMPASSIBLE) {
+//                std::shared_ptr<cugl::physics2::BoxObstacle> boxObstacle = physics2::BoxObstacle::alloc(tile.boundaryRect.origin, Vec2(0.99, 0.99));
+//                boxObstacle->setBodyType(b2_staticBody);
+//                boxObstacle->setDensity(10.f);
+//                boxObstacle->setFriction(BASIC_FRICTION);
+//                boxObstacle->setRestitution(BASIC_RESTITUTION);
+//                obstacleWorld->addObstacle(boxObstacle);
+//            }
+//        }
+//    }
     obstacleWorld->addObstacle(overWorld.getDog());
     
     
@@ -313,4 +337,79 @@ ScreenEnums GameScene::getTransition() { return transition; }
 void GameScene::resetTransition()
 {
     transition = ScreenEnums::GAMEPLAY;
+}
+
+
+
+#pragma mark -
+#pragma mark Collision Handling
+/**
+ * Processes the start of a collision
+ *
+ * This method is called when we first get a collision between two objects.  We use
+ * this method to test if it is the "right" kind of collision.  In particular, we
+ * use it to test if we make it to the win door.
+ *
+ * @param  contact  The two bodies that collided
+ */
+void GameScene::beginContact(b2Contact* contact) {
+    b2Fixture* fix1 = contact->GetFixtureA();
+    b2Fixture* fix2 = contact->GetFixtureB();
+
+    b2Body* body1 = fix1->GetBody();
+    b2Body* body2 = fix2->GetBody();
+
+    std::string* fd1 = reinterpret_cast<std::string*>(fix1->GetUserData().pointer);
+    std::string* fd2 = reinterpret_cast<std::string*>(fix2->GetUserData().pointer);
+
+    physics2::Obstacle* bd1 = reinterpret_cast<physics2::Obstacle*>(body1->GetUserData().pointer);
+    physics2::Obstacle* bd2 = reinterpret_cast<physics2::Obstacle*>(body2->GetUserData().pointer);
+    
+    if (bd1 == overWorld.getDog().get() || bd2 == overWorld.getDog().get()){
+        std::cout << "CONTACT WITH WALL\n";
+    }
+//
+//
+//    // See if we have landed on the ground.
+//    if ((_avatar->getSensorName() == fd2 && _avatar.get() != bd1) ||
+//        (_avatar->getSensorName() == fd1 && _avatar.get() != bd2)) {
+//        _avatar->setGrounded(true);
+//        // Could have more than one ground
+//        _sensorFixtures.emplace(_avatar.get() == bd1 ? fix2 : fix1);
+//    }
+//
+//    // If we hit the "win" door, we are done
+//    if((bd1 == _avatar.get()   && bd2 == _goalDoor.get()) ||
+//        (bd1 == _goalDoor.get() && bd2 == _avatar.get())) {
+//        setComplete(true);
+//    }
+}
+
+/**
+ * Callback method for the start of a collision
+ *
+ * This method is called when two objects cease to touch.  The main use of this method
+ * is to determine when the characer is NOT on the ground.  This is how we prevent
+ * double jumping.
+ */
+void GameScene::endContact(b2Contact* contact) {
+    b2Fixture* fix1 = contact->GetFixtureA();
+    b2Fixture* fix2 = contact->GetFixtureB();
+
+    b2Body* body1 = fix1->GetBody();
+    b2Body* body2 = fix2->GetBody();
+
+    std::string* fd1 = reinterpret_cast<std::string*>(fix1->GetUserData().pointer);
+    std::string* fd2 = reinterpret_cast<std::string*>(fix2->GetUserData().pointer);
+
+    physics2::Obstacle* bd1 = reinterpret_cast<physics2::Obstacle*>(body1->GetUserData().pointer);
+    physics2::Obstacle* bd2 = reinterpret_cast<physics2::Obstacle*>(body2->GetUserData().pointer);
+//
+//    if ((_avatar->getSensorName() == fd2 && _avatar.get() != bd1) ||
+//        (_avatar->getSensorName() == fd1 && _avatar.get() != bd2)) {
+//        _sensorFixtures.erase(_avatar.get() == bd1 ? fix2 : fix1);
+//        if (_sensorFixtures.empty()) {
+//            _avatar->setGrounded(false);
+//        }
+//    }
 }
