@@ -78,13 +78,13 @@ public:
         return target_pos;
     }
     void setWalkingSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
-        _walkingAnimations.setOrigin(origin);
-        _walkingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY, 0);
+        _walkingAnimations = std::make_shared<Animation>(anims, MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY, 0);
+        _walkingAnimations->setOrigin(origin);
     }
     
     void setAttackingSprite(std::vector<std::shared_ptr<cugl::SpriteSheet>>& anims, cugl::Vec2 origin ){
-        _attackingAnimations.setOrigin(origin);
-        _attackingAnimations = Animation(anims, MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY, 0);
+        _attackingAnimations = std::make_shared<Animation>(anims, MAGIC_NUMBER_ENEMY_ANIMATION_FREQUENECY, 0);
+        _attackingAnimations->setOrigin(origin);
     }
     
     void setHealthBar(std::shared_ptr<cugl::scene2::ProgressBar> bar){
@@ -92,7 +92,7 @@ public:
     }
     
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const {
-        return _walkingAnimations.getSprite();
+        return _walkingAnimations->getSprite();
     }
     
 protected:
@@ -100,8 +100,8 @@ protected:
     int _health;
     int targetIndex;
     cugl::Vec2 position;
-    Animation _walkingAnimations;
-    Animation _attackingAnimations;
+    std::shared_ptr<Animation> _walkingAnimations;
+    std::shared_ptr<Animation> _attackingAnimations;
     /** The health  bar */
     std::shared_ptr<cugl::scene2::ProgressBar>  _healthBar;
     float _radius;
