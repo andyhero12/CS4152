@@ -39,7 +39,7 @@ class Dog {
 //    };
 private:
     
-    std::array<std::string,4> modes = {"SHOOT", "BUILD", "EXPLODE", "NOTHING"};
+    std::array<std::string,4> modes = {"SHOOT", "BOMB", "BAIT", "NOTHING"};
     
     /** Position of the ship */
     cugl::Vec2 _pos;

@@ -17,6 +17,8 @@ bool UIController::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl:
     _sizeframe = assets->get<Texture>("sizeframe");
     _sizefill = assets->get<Texture>("sizefill");
     _bombtoggle = assets->get<Texture>("bombtoggle");
+    _shoottoggle = assets->get<Texture>("shoottoggle");
+    _baittoggle = assets->get<Texture>("baittoggle");
     _dog = dog;
     
     return true;
@@ -49,10 +51,17 @@ std::shared_ptr<cugl::Texture> UIController::getSizeBarTexture(float size){
 void UIController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch){
     
     //Toggle
-    cugl::Affine2 bombtrans;
-    bombtrans.scale(UI_SCALE);
-    bombtrans.translate(_screenSize.width - _bombtoggle->getWidth() * UI_SCALE, _screenSize.height - _bombtoggle->getHeight() * UI_SCALE);
-    batch->draw(_bombtoggle, origin, bombtrans);
+    cugl::Affine2 toggletrans;
+    toggletrans.scale(UI_SCALE);
+    toggletrans.translate(_screenSize.width - _bombtoggle->getWidth() * UI_SCALE, _screenSize.height - _bombtoggle->getHeight() * UI_SCALE);
+   
+    if(_dog->getMode() == "BOMB"){
+        batch->draw(_bombtoggle, origin, toggletrans);
+    } else if (_dog->getMode() == "SHOOT"){
+        batch->draw(_shoottoggle, origin, toggletrans);
+    } else if (_dog->getMode() == "BAIT"){
+        batch->draw(_baittoggle, origin, toggletrans);
+    }
     
     // Health bar
     cugl::Affine2 healthframetrans;

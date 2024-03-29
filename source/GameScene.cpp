@@ -235,7 +235,7 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     batch->setPerspective(getCamera()->getCombined());
 
     batch->setColor(Color4::BLACK);
-    batch->drawText(_text, Vec2(10, getSize().height - _text->getBounds().size.height));
+    //batch->drawText(_text, Vec2(10, getSize().height - _text->getBounds().size.height));
     batch->setColor(Color4::WHITE);
     cugl::Affine2 trans;
     float scale_factor = 3.0f;
