@@ -1,14 +1,14 @@
 {
 	"textures": {
 		"mainlogo": {
-			"file":      "textures/cugl-name.png",
+			"file":      "textures/car.PNG",
             "wrapS":     "clamp",
             "wrapT":     "clamp",
             "minfilter": "linear",
             "magfilter": "linear"
 		},
         "mainname": {
-            "file":      "textures/cugl-name.png",
+            "file":      "textures/car.PNG",
             "wrapS":     "clamp",
             "wrapT":     "clamp",
             "minfilter": "linear",
