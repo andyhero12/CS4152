@@ -49,6 +49,8 @@ bool Dog::init(std::shared_ptr<cugl::JsonValue> data, const cugl::Vec2& pos, con
         _health = data->getInt("health",0);
         _maxHealth = _health;
         _modeCooldown = data->getInt("mode cooldown",0);
+
+        setBodyType(b2_dynamicBody);
         return true;
     }
     
@@ -389,4 +391,5 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
         runAnimation->update(_vel.getAngle() + 45);
         _prevTurn = runAnimation->currentAnimationDirection;
     }
+    markDirty(true);
 }

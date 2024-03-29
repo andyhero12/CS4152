@@ -33,6 +33,7 @@ using namespace std;
 // number of tiles of height to be displayed
 #define CANVAS_TILE_HEIGHT 10
 #define DRAW_WIREFRAME true
+#define POSITION_ITERATIONS 18
 
 #pragma mark -
 #pragma mark Constructors
@@ -52,6 +53,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     std::cout << "INIT GAMESCENE\n";
     transition = ScreenEnums::GAMEPLAY;
     obstacleWorld = physics2::ObstacleWorld::alloc(Rect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT),Vec2(0,DEFAULT_GRAVITY));
+    //obstacleWorld->setPositionIterations(POSITION_ITERATIONS);
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_HEIGHT / dimen.height;
@@ -151,6 +153,16 @@ void GameScene::reset()
     overWorld.reset(getSize());
     _gameEnded = false;
     obstacleWorld->clear();
+    for (auto& row : _world.overworld) {
+        for (auto& tile : row) {
+            if (tile.type == World::Terrain::IMPASSIBLE) {
+                std::shared_ptr<cugl::physics2::BoxObstacle> boxObstacle = physics2::BoxObstacle::alloc(tile.boundaryRect.origin, Vec2(0.99, 0.99));
+                boxObstacle->setBodyType(b2_staticBody);
+                boxObstacle->setDensity(1000000);
+                obstacleWorld->addObstacle(boxObstacle);
+            }
+        }
+    }
     obstacleWorld->addObstacle(overWorld.getDog());
     
     
