@@ -91,20 +91,20 @@ private:
     /** Radius of the ship in pixels (derived from sprite sheet) */
     float _radius;
     
-    Animation runAnimationSmall;
-    Animation biteAnimationSmall;
-    Animation shootAnimationSmall;
-    Animation idleAnimationSmall;
+    std::shared_ptr<Animation> runAnimationSmall;
+    std::shared_ptr<Animation> biteAnimationSmall;
+    std::shared_ptr<Animation> shootAnimationSmall;
+    std::shared_ptr<Animation> idleAnimationSmall;
     
-    Animation runAnimationMedium;
-    Animation biteAnimationMedium;
-    Animation shootAnimationMedium;
-    Animation idleAnimationMedium;
+    std::shared_ptr<Animation> runAnimationMedium;
+    std::shared_ptr<Animation> biteAnimationMedium;
+    std::shared_ptr<Animation> shootAnimationMedium;
+    std::shared_ptr<Animation> idleAnimationMedium;
     
-    Animation runAnimationLarge;
-    Animation biteAnimationLarge;
-    Animation shootAnimationLarge;
-    Animation idleAnimationLarge;
+    std::shared_ptr<Animation> runAnimationLarge;
+    std::shared_ptr<Animation> biteAnimationLarge;
+    std::shared_ptr<Animation> shootAnimationLarge;
+    std::shared_ptr<Animation> idleAnimationLarge;
     
     
     std::shared_ptr<Animation> runAnimation;
@@ -116,7 +116,7 @@ private:
     bool idle;
     
     
-    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, Animation &animation, int speed);
+    void setTexture(const std::vector<std::shared_ptr<cugl::Texture>> &texture, std::shared_ptr<Animation> &animation, int speed);
     
 
 public:
