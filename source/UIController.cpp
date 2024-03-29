@@ -23,9 +23,11 @@ bool UIController::init(const std::shared_ptr<cugl::AssetManager>& assets, cugl:
 }
 
 std::shared_ptr<cugl::Texture> UIController::getHealthBarTexture(float health){
+    // The percentage of the health bar that is empty space, needed to adjust how fast the health bar decreases
+    GLfloat emptyPercent = 15.0/_healthfill->getWidth();
     
     GLfloat minS = 0;
-    GLfloat maxS = health/100.0;
+    GLfloat maxS = emptyPercent + (1.0 - emptyPercent) * health/100.0;
     GLfloat minT = 0;
     GLfloat maxT = 1;
     
@@ -33,10 +35,12 @@ std::shared_ptr<cugl::Texture> UIController::getHealthBarTexture(float health){
 }
 
 std::shared_ptr<cugl::Texture> UIController::getSizeBarTexture(float size){
+    // The percentage of the size bar that is empty space, needed to adjust how fast the health bar decreases
+    GLfloat emptyPercent = 3.2/_sizefill->getWidth();
     
     GLfloat minS = 0;
     GLfloat maxS = 1;
-    GLfloat minT = 1 - size/MAX_ABSORB;
+    GLfloat minT = 1 - (emptyPercent + (1.0 - emptyPercent) * size/MAX_ABSORB);
     GLfloat maxT = 1;
     
     return _sizefill->getSubTexture(minS, maxS, minT, maxT);
