@@ -27,7 +27,7 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
     if (distance > DISTANCE_CUTOFF){ // too far from origin return
         direction = original_pos - position;
         if (direction.lengthSquared() >= 1){
-            position += direction.normalize();
+            position += direction.normalize() * 0.03;
         }
     }else{ // chase dog
         direction = dog_pos - position;

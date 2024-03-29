@@ -29,9 +29,10 @@ using namespace std;
 #define DEFAULT_WIDTH   1000.0f
 /** Height of the game world in Box2d units */
 #define DEFAULT_HEIGHT  1000.0f
-#define DEFAULT_GRAVITY -28.9f
+#define DEFAULT_GRAVITY 0
 // number of tiles of height to be displayed
 #define CANVAS_TILE_HEIGHT 10
+#define DRAW_WIREFRAME true
 
 #pragma mark -
 #pragma mark Constructors
@@ -247,7 +248,25 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     overWorld.draw(batch, getSize());
     // draw actions
 
+    //draw physics
+    if (DRAW_WIREFRAME) {
+        for (const auto& obstacle : obstacleWorld->getObstacles()) {
+            // Attempt to cast the shared_ptr<Obstacle> to shared_ptr<BoxObstacle>
+            std::shared_ptr<physics2::BoxObstacle> boxObstacle = std::dynamic_pointer_cast<physics2::BoxObstacle>(obstacle);
+
+            // Check if the cast was successful
+            if (boxObstacle) {
+                // The obstacle is indeed an instance of BoxObstacle, so do the specific action
+                Color4 wireframeColor = Color4("green");
+                batch->setColor(wireframeColor);
+                batch->setTexture(nullptr);
+                batch->outline(Rect(boxObstacle->getPosition(), boxObstacle->getDimension()));
+            }
+        }
+    }
+
     // shift camera to draw for absolute positioning
+    std::dynamic_pointer_cast<OrthographicCamera>(getCamera())->setZoom(1);
     getCamera()->setPosition(cugl::Vec3(getSize().width / 2.0f, getSize().height / 2.0f, 0));
     getCamera()->update();
     batch->setPerspective(getCamera()->getCombined());
