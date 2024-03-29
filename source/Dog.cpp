@@ -273,13 +273,14 @@ void Dog::setBite(){
 }
 
 void Dog::setIdle(){
-    if(idle){
-        return;
-    }
+    std::cout << " dog idle not working" << std::endl;
+
     idle = true;
     if(idleAnimation){
-        idleAnimation->resetAnimation(_prevTurn);
+        std:: cout << idleAnimation << " " << _prevTurn << std::endl;
+        idleAnimation->update(_prevTurn);
     }
+      std::cout << " dog idle working" << std::endl;
 }
 
 void Dog::setShoot(){
