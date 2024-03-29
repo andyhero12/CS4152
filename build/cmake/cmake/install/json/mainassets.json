@@ -383,13 +383,13 @@
                                                 0.5
                                             ],
                                             "size": [
-                                                289,
-                                                58
+                                                276,
+                                                63
                                             ],
                                             "angle": 0,
                                             "position": [
                                                 144.5,
-                                                206
+                                                116.5
                                             ],
                                             "visible": true,
                                             "upnode": "purplebutton"
@@ -404,13 +404,13 @@
                                                         0
                                                     ],
                                                     "size": [
-                                                        290.61,
-                                                        84.44
+                                                        294.95,
+                                                        83.73
                                                     ],
                                                     "angle": 0,
                                                     "position": [
-                                                        0,
-                                                        -16.45
+                                                        -9.69,
+                                                        -10.53
                                                     ],
                                                     "visible": true
                                                 },
@@ -418,11 +418,11 @@
                                                     "x_anchor": "left",
                                                     "y_anchor": "bottom",
                                                     "absolute": false,
-                                                    "x_offset": 0,
-                                                    "y_offset": -0.2
+                                                    "x_offset": -0.04,
+                                                    "y_offset": -40
                                                 }
                                             },
-                                            "Setting": {
+                                            "SETTING": {
                                                 "type": "Label",
                                                 "data": {
                                                     "anchor": [
@@ -434,13 +434,13 @@
                                                         39
                                                     ],
                                                     "position": [
-                                                        37.87963104248047,
-                                                        7.013360977172852
+                                                        31.28997802734375,
+                                                        12.84197998046875
                                                     ],
                                                     "angle": 0,
                                                     "visible": true,
                                                     "font": "04b3038.6204719543457",
-                                                    "text": "Setting",
+                                                    "text": "SETTING",
                                                     "foreground": "#ffffffff",
                                                     "background": "#00000000",
                                                     "padding": [
@@ -458,15 +458,15 @@
                                                     "y_anchor": "bottom",
                                                     "absolute": false,
                                                     "x_offset": 0,
-                                                    "y_offset": 0.12
+                                                    "y_offset": -40
                                                 }
                                             }
                                         },
                                         "layout": {
-                                            "priority": 2,
+                                            "priority": 1,
                                             "padding": [
                                                 0,
-                                                0,
+                                                29,
                                                 0,
                                                 0
                                             ]

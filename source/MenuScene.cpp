@@ -43,7 +43,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     _button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button1"));
     _button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button2"));
     _button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3"));
-
+    
     _active = false;
     _button1->addListener([=](const std::string& name, bool down) {
         if (down) {
