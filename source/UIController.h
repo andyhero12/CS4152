@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Dog.h"
 
-#define UI_SCALE 4.5
+#define UI_SCALE 6
 
 using namespace cugl;
 
