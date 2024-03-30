@@ -35,7 +35,7 @@ void StaticMeleeEnemy::update(float dt, OverWorld& overWorld){
     }
     // Animate
     cugl::Size size = overWorld.getTotalSize();
-    _walkingAnimations->update(direction.getAngle() + 67.5f);
+    _walkingAnimations->updateByAngle(direction.getAngle() + 67.5f);
     
     while (position.x > size.width) {
         position.x = size.width;

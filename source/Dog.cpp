@@ -278,7 +278,7 @@ void Dog::setIdle(){
     idle = true;
     if(idleAnimation){
 //        std:: cout << idleAnimation << " " << _prevTurn << std::endl;
-        idleAnimation->updateDir(_prevTurn);
+        idleAnimation->updateByDirection(_prevTurn);
     }
 //      std::cout << " dog idle working" << std::endl;
 }
@@ -370,7 +370,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     idle = false;
     
     if(runAnimation && runAnimation->getSprite()){
-        runAnimation->update(_vel.getAngle() + 45);
+        runAnimation->updateByAngle(_vel.getAngle() + 45);
         _prevTurn = runAnimation->currentAnimationDirection;
     }
 }

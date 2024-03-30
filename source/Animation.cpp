@@ -72,7 +72,7 @@ void Animation::updateDirection(){
 /*
  Takes in the vector angle
  */
-void Animation::update(double radian){
+void Animation::updateByAngle(double radian){
     int dir_quad = convertToQuadrant(radian);
     
     if (currentAnimationDirection != dir_quad){
@@ -85,7 +85,7 @@ void Animation::update(double radian){
 /*
  Takes in the previous animation direction
  */
-void Animation::updateDir(int prevDir){
+void Animation::updateByDirection(int prevDir){
     if (currentAnimationDirection != prevDir){
         resetAnimation(prevDir);
     }

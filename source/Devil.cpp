@@ -58,7 +58,7 @@ void Devil::move(cugl::Size size){
         _pos.y = 0;
     }
 
-    runAnimation.update(direction.getAngle() + 67.5f);
+    runAnimation.updateByAngle(direction.getAngle() + 67.5f);
     
 }
 
