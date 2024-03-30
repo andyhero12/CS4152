@@ -73,6 +73,8 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _spawnerController.init(_constants->get("spawner"), _parser.getSpawnersPos()); 
     _spawnerController.setTexture(assets->get<Texture>("spawner"));
     
+    // Initialize UI Controller
+    _uiController.init(assets, getSize(), overWorld.getDog());
     
     // used to create progress bars
     std::shared_ptr<cugl::Texture> barImage = assets->get<Texture>("progress");
@@ -98,7 +100,7 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _bang = assets->get<Sound>("bang");
     _laser = assets->get<Sound>("laser");
     _blast = assets->get<Sound>("blast");
-
+    
     // Create and layout the health meter
     std::string msg = strtool::format("Health %d", overWorld.getDog()->getHealth());
     _text = TextLayout::allocWithText(msg, assets->get<Font>("pixel32"));
@@ -112,9 +114,6 @@ bool GameScene::init(const std::shared_ptr<cugl::AssetManager> &assets)
     _collisions.init(getSize());
     createMap();
     reset();
-    
-
-    
     
     return true;
 }
@@ -202,6 +201,7 @@ void GameScene::createMap()
     std::vector<std::vector<int>> other = _parser.getBoundaries();
     _world = World(Vec2(0, 0), matrix, other, tile);
 }
+
 /**
  * Draws all this scene to the given SpriteBatch.
  *
@@ -235,11 +235,14 @@ void GameScene::render(const std::shared_ptr<cugl::SpriteBatch> &batch)
     batch->setPerspective(getCamera()->getCombined());
 
     batch->setColor(Color4::BLACK);
-    batch->drawText(_text, Vec2(10, getSize().height - _text->getBounds().size.height));
+    //batch->drawText(_text, Vec2(10, getSize().height - _text->getBounds().size.height));
     batch->setColor(Color4::WHITE);
     cugl::Affine2 trans;
     float scale_factor = 3.0f;
     trans.scale(scale_factor);
+    
+    // Draw Gameplay UI;
+    _uiController.draw(batch);
 
     std::shared_ptr<BaseSet> baseSet = overWorld.getBaseSet();
     if (_monsterController.isEmpty() && _spawnerController.win())

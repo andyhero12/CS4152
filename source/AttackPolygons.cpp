@@ -83,6 +83,7 @@ void AttackPolygons::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl:
 
 void AttackPolygons::addShoot(const std::shared_ptr<Dog>& ship){
     Vec2 center = ship->getPosition();
+
     float degree = 60;
     PolyFactory curFactory;
     Poly2 resultingPolygon_shoot = curFactory.makeArc(center, ship->getShootRadius(), ship->getAngle() + degree, degree);

@@ -277,7 +277,7 @@ void Dog::setIdle(){
 
     idle = true;
     if(idleAnimation){
-        std:: cout << idleAnimation << " " << _prevTurn << std::endl;
+//        std:: cout << idleAnimation << " " << _prevTurn << std::endl;
         idleAnimation->updateDir(_prevTurn);
     }
 //      std::cout << " dog idle working" << std::endl;

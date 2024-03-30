@@ -17,6 +17,7 @@
 #include "Dog.h"
 #include "InputController.h"
 #include "CollisionController.h"
+#include "UIController.h"
 #include "SpawnerController.h"
 #include "OverWorld.h"
 #include "MonsterController.h"
@@ -45,6 +46,8 @@ protected:
 
     SpawnerController _spawnerController;
     MonsterController _monsterController;
+    UIController _uiController;
+    
     // MODELS should be shared pointers or a data structure of shared pointers
     /** The JSON value with all of the constants */
     std::shared_ptr<cugl::JsonValue> _constants;
@@ -52,6 +55,7 @@ protected:
     // In the future, we will replace this with the scene graph
     /** The background image */
     std::shared_ptr<cugl::Texture> tile;
+    
     /** The text with the win message */
     std::shared_ptr<cugl::TextLayout> _textWin;
     /** The text with the loss */
@@ -63,6 +67,8 @@ protected:
     std::shared_ptr<cugl::Sound> _blast;
     std::shared_ptr<cugl::scene2::ProgressBar> _bar;
     World _world;
+    
+    
     LevelParser _parser;
 
     bool _gameEnded;
@@ -138,6 +144,10 @@ public:
     void reset() override;
 
     void createMap();
+    
+    std::shared_ptr<cugl::Texture> getHealthBarTexture(float health);
+    
+    std::shared_ptr<cugl::Texture> getSizeBarTexture(float size);
 };
 
 #endif /* __SG_GAME_SCENE_H__ */

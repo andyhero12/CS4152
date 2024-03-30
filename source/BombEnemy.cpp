@@ -44,7 +44,7 @@ void BombEnemy::update(float dt, OverWorld& overWorld){
     position += direction.normalize();
     cugl::Size size = overWorld.getTotalSize();
     
-    _walkingAnimations.update(direction.getAngle());
+    _walkingAnimations->update(direction.getAngle());
     
     while (position.x > size.width) {
         position.x = size.width;
