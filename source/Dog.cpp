@@ -203,13 +203,13 @@ void Dog::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, Size bounds) {
 //        switchAnimation(idleAnimation, idleAnimationLarge);
 //    }
     if(bite && biteAnimation){
-        biteAnimation->updateDirection();
+        biteAnimation->updateCurrentDirection();
         if (biteAnimation->getFrame() == biteAnimation->getSprite()->getSize() - 1){
             bite = false;
         }
     }
     else if(shoot && shootAnimation){
-        shootAnimation->updateDirection();
+        shootAnimation->updateCurrentDirection();
         if (shootAnimation->getFrame() == shootAnimation->getSprite()->getSize() -1){
             shoot = false;
         }
@@ -371,7 +371,7 @@ void Dog::move(float forward, float turn, Vec2 Vel, bool _UseJoystick, bool _Use
     
     if(runAnimation && runAnimation->getSprite()){
         runAnimation->updateByAngle(_vel.getAngle() + 45);
-        _prevTurn = runAnimation->currentAnimationDirection;
+        _prevTurn = runAnimation->getCurrentDirection();
     }
 }
 

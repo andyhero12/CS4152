@@ -63,7 +63,7 @@ int Animation::convertToQuadrant(double radian) {
 }
 
 
-void Animation::updateDirection(){
+void Animation::updateCurrentDirection(){
     updateAnimTime();
     if (frameUpdateReady()){
         stepAnimation();
@@ -78,7 +78,7 @@ void Animation::updateByAngle(double radian){
     if (currentAnimationDirection != dir_quad){
         resetAnimation(dir_quad);
     }
-    updateDirection();
+    updateCurrentDirection();
 }
 
 
@@ -89,5 +89,5 @@ void Animation::updateByDirection(int prevDir){
     if (currentAnimationDirection != prevDir){
         resetAnimation(prevDir);
     }
-    updateDirection();
+    updateCurrentDirection();
 }
