@@ -43,7 +43,6 @@ void Animation::stepAnimation(){
 const std::shared_ptr<cugl::SpriteSheet>& Animation::getSprite() const {
     if(currentAnimSprite == nullptr){
         return currentAnimSprite;
-        
     }
     currentAnimSprite->setFrame(frame);
     return currentAnimSprite;
@@ -84,9 +83,9 @@ void Animation::update(double radian){
 
 
 /*
- Takes in the vector angle
+ Takes in the previous animation direction
  */
-void Animation::update(int prevDir){
+void Animation::updateDir(int prevDir){
     if (currentAnimationDirection != prevDir){
         resetAnimation(prevDir);
     }
