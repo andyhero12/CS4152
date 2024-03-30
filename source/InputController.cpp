@@ -26,7 +26,11 @@ _didChangeMode(false),
 _didReset(false),
 _didSpecial(false),
 _UseJoystick(false),
-_UseKeyboard(false){
+_UseKeyboard(false),
+_Leftright(0),
+_updown(0),
+_controllerKey(0),
+_confirm(false){
 }
 
 bool InputController::init() {

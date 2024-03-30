@@ -32,40 +32,40 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     else if (!Scene2::init(dimen)) {
         return false;
     }
-
+    //_input.init();
     // IMMEDIATELY load the splash screen assets
     _assets = assets;
-    _assets->loadDirectory("json/mainassets.json");
+    _assets->loadDirectory("json/mainmenuassets.json");
     std::shared_ptr<scene2::SceneNode> layer = _assets->get<scene2::SceneNode>("Menu");
     std::cout << dimen.width << "  " << dimen.height << std::endl;
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
     _input.init_withlistener();
-    _buttonset.push_back(_button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button1")));
-    _buttonset.push_back(_button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button2")));
-    _buttonset.push_back(_button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3")));
+    _buttonset.push_back(_button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_button1")));
+    _buttonset.push_back(_button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_button2")));
+    _buttonset.push_back(_button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_button3")));
 
     _active = false;
- /*   _button1->addListener([=](const std::string& name, bool down) {
+     _button1->addListener([=](const std::string& name, bool down) {
         if (down) {
             std::cout << "Play" << std::endl;
             transition = ScreenEnums::GAMEPLAY;
         }
         });
-
+     
      _button2->addListener([=](const std::string& name, bool down) {
         if (down) {
             std::cout << "Level" << std::endl;
-            transition = ScreenEnums::GAMEPLAY;
+            //transition = ScreenEnums::GAMEPLAY;
         }
         });
 
      _button3->addListener([=](const std::string& name, bool down) {
         if (down) {
             std::cout << "Setting" << std::endl;
-            transition = ScreenEnums::GAMEPLAY;
+            //transition = ScreenEnums::GAMEPLAY;
         }
-        });    */
+        });    
 
     _firstset = false;
     _counter = 0;
@@ -110,7 +110,7 @@ void MenuScene::update(float timestep) {
     }
     
     timeSinceLastSwitch += timestep;
-    std::cout << timeSinceLastSwitch << std::endl;
+    //std::cout << timeSinceLastSwitch << std::endl;
     if (timeSinceLastSwitch >= switchFreq) {
         if (_input._updown != 0) { 
             if (_input._updown == 1 && _counter > 0) {
