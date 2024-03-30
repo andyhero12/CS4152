@@ -16,7 +16,7 @@ class TextureAnimation {
 private:
     /** Tracks the texture currently being used */
     std::shared_ptr<cugl::Texture> currentTexture;
-    /** Array of texture that represent the sprites for each walking direction */
+    /** Array of textures to form a sprite */
     std::vector<std::shared_ptr<cugl::Texture>> allTexture;
     /** */
     GLfloat minS;
@@ -32,6 +32,20 @@ private:
     float timeSinceLastAnim;
     /** Attack animation frequency */
     float animFreq;
+    /**
+    Returns true if enough time has passed since the last animation frame update
+    @param
+     */
+    bool frameUpdateReady();
+    /**
+    Update frame number
+     */
+    void stepAnimation();
+    /**
+    Update numer of frames that have passed
+     */
+    void updateAnimTime();
+    
 public:
     TextureAnimation(){}
     /** Defaults to using the entire texture*/
@@ -42,5 +56,9 @@ public:
     TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq, int startFrame, int x1, int x2, int y1, int y2);
     
     ~TextureAnimation() {}
+    
+
+    
+    void updateTexture();
 };
 #endif /* TextureAnimation_hpp */

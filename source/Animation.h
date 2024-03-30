@@ -27,6 +27,21 @@ private:
     float timeSinceLastAnim;
     /** Attack animation frequency */
     float animFreq;
+    
+    int convertToQuadrant(double radian);
+    /**
+    Returns true if enough time has passed since the last animation frame update
+    @param
+     */
+    bool frameUpdateReady();
+    /**
+    Update frame number
+     */
+    void stepAnimation();
+    /**
+    Update numer of frames that have passed
+     */
+    void updateAnimTime();
 public:
     /** Number of animation directions for the entity */
     // int numAnimDirections;
@@ -44,29 +59,28 @@ public:
     const std::shared_ptr<cugl::SpriteSheet>& getSprite() const;
 
     /**
-    Returns true if enough time has passed since the last animation frame update
-    @param
+     Specifies the origin of EVERY sprite
      */
-    bool frameUpdateReady();
+    void setOrigin(cugl::Vec2 &origin);
+    
     /**
     Start the animation at a new direction
     @param aimingDir corresopnds to thei index of the sprite you want to draw
      */
     void resetAnimation(int aimingDir);
     /**
-    Update frame number
+     Updates the animation in the current direction
      */
-    void stepAnimation();
-    /**
-    Update numer of frames that have passed
-     */
-    void updateAnimTime();
-    
-    void setOrigin(cugl::Vec2 &origin);
-    int convertToQuadrant(double radian);
-    
     void updateCurrentDirection();
+    /**
+     Changes the animation based on the angle provided. Afterwards updates the animation corresponding to the specified angle
+     @param radian an angle in radians; can retrieve via vector.getAngle()
+     */
     void updateByAngle(double radian);
+    /**
+     Changes the animation based on the direction provided.. Afterwards updates the animation corresponding to the specified angle
+     @param prevDir the direction you want the character to move in. prevDir should be in the range (0, # direction - 1 )
+     */
     void updateByDirection(int prevDir);
     
 };
