@@ -46,7 +46,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     _buttonset.push_back(_button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3")));
 
     _active = false;
-    _button3->addListener([=](const std::string& name, bool down) {
+ /*   _button1->addListener([=](const std::string& name, bool down) {
         if (down) {
             std::cout << "Play" << std::endl;
             transition = ScreenEnums::GAMEPLAY;
@@ -65,7 +65,7 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
             std::cout << "Setting" << std::endl;
             transition = ScreenEnums::GAMEPLAY;
         }
-        });    
+        });    */
 
     _firstset = false;
     _counter = 0;
@@ -101,7 +101,7 @@ void MenuScene::dispose() {
  *
  * @param timestep  The amount of time (in seconds) since the last frame
  */
-void MenuScene::update(float progress) {
+void MenuScene::update(float timestep) {
     if (!_firstset) {
         _button1->activate();
         _button2->activate();
@@ -109,11 +109,10 @@ void MenuScene::update(float progress) {
         _firstset = true;
     }
     
-    timeSinceLastSwitch += progress;
+    timeSinceLastSwitch += timestep;
     std::cout << timeSinceLastSwitch << std::endl;
     if (timeSinceLastSwitch >= switchFreq) {
-        if (_input._updown != 0) { // 检查输入决定切换方向
-            // 执行切换逻辑
+        if (_input._updown != 0) { 
             if (_input._updown == 1 && _counter > 0) {
                 _buttonset.at(_counter)->setDown(false);
                 _counter--;
@@ -124,8 +123,6 @@ void MenuScene::update(float progress) {
                 _counter++;
                 _buttonset.at(_counter)->setDown(true);
             }
-
-            // 重置时间和输入
             timeSinceLastSwitch = 0;
            
         }
