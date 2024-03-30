@@ -16,6 +16,7 @@
 #include "MenuScene.h"
 
 using namespace cugl;
+using namespace std::chrono;
 
 /** This is the ideal size of the logo */
 #define SCENE_SIZE  1024
@@ -37,7 +38,7 @@ using namespace cugl;
 bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     //transition = ScreenEnums::LOADING;
     // Initialize the scene to a locked width
-    
+
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_HEIGHT / dimen.height;
     if (assets == nullptr) {
@@ -54,20 +55,22 @@ bool MenuScene::init(const std::shared_ptr<AssetManager>& assets) {
     std::cout << dimen.width << "  " << dimen.height << std::endl;
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
-    
-    _button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button1"));
-    _button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button2"));
-    _button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3"));
+    _input.init_withlistener();
+    _buttonset.push_back(_button1 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button1")));
+    _buttonset.push_back(_button2 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button2")));
+    _buttonset.push_back(_button3 = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("Menu_startmenu_startmenu_menu_button3")));
 
     _active = false;
-    _button1->addListener([=](const std::string& name, bool down) {
+    _button3->addListener([=](const std::string& name, bool down) {
         if (down) {
             std::cout << "Play" << std::endl;
             transition = ScreenEnums::GAMEPLAY;
         }
-        });
+    });
 
     _firstset = false;
+    _counter = 0;
+    switchFreq = 0.2;
 
     Application::get()->setClearColor(Color4(192, 192, 192, 255));
     addChild(layer);
@@ -82,7 +85,7 @@ void MenuScene::dispose() {
     if (isPending()) {
         _button1->deactivate();
     }
-    _button1= nullptr;
+    _button1 = nullptr;
     _button2 = nullptr;
     _button3 = nullptr;
     _assets = nullptr;
@@ -106,7 +109,29 @@ void MenuScene::update(float progress) {
         _button3->activate();
         _firstset = true;
     }
+    
+    timeSinceLastSwitch += progress;
+    std::cout << timeSinceLastSwitch << std::endl;
+    if (timeSinceLastSwitch >= switchFreq) {
+        if (_input._updown != 0) { // 检查输入决定切换方向
+            // 执行切换逻辑
+            if (_input._updown == 1 && _counter > 0) {
+                _buttonset.at(_counter)->setDown(false);
+                _counter--;
+                _buttonset.at(_counter)->setDown(true);
+            }
+            else if (_input._updown == -1 && _counter < _buttonset.size() - 1) {
+                _buttonset.at(_counter)->setDown(false);
+                _counter++;
+                _buttonset.at(_counter)->setDown(true);
+            }
 
+            // 重置时间和输入
+            timeSinceLastSwitch = 0;
+           
+        }
+    }
+    _input._updown = 0;
 }
 
 

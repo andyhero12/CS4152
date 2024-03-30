@@ -79,6 +79,7 @@ void HeavanApp::onShutdown() {
     // Shutdown input
     Input::deactivate<Keyboard>();
     Input::deactivate<Mouse>();
+    Input::deactivate<GameControllerInput>();
 
     AudioEngine::stop();
     Application::onShutdown();  // YOU MUST END with call to parent

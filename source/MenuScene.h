@@ -17,6 +17,8 @@
 #define __SL_MAINMENU_SCENE_H__
 #include <cugl/cugl.h>
 #include "GlobalConstants.h"
+#include "InputController.h"
+#include <chrono>
 
 /**
  * This class is a simple loading screen for asychronous asset loading.
@@ -31,10 +33,12 @@
  */
 class MenuScene : public cugl::Scene2 {
 protected:
+
     /** The asset manager for loading. */
     std::shared_ptr<cugl::AssetManager> _assets;
     // NO CONTROLLER (ALL IN SEPARATE THREAD)
-
+    InputController _input;
+    std::chrono::steady_clock::time_point lastInputTime;
     // VIEW
     ///** The animated progress bar */
     //std::shared_ptr<cugl::scene2::ProgressBar>  _bar;
@@ -44,7 +48,7 @@ protected:
     std::shared_ptr<cugl::scene2::Button>    _button1;
     std::shared_ptr<cugl::scene2::Button>    _button2;
     std::shared_ptr<cugl::scene2::Button>    _button3;
-    
+    std::vector<std::shared_ptr<cugl::scene2::Button>> _buttonset;
 
     // MODEL
     /** The progress displayed on the screen */
@@ -53,6 +57,12 @@ protected:
     bool  _completed;
 
     bool _firstset;
+
+    int _counter;
+
+    float timeSinceLastSwitch;
+
+    float switchFreq;
 
     ScreenEnums transition;
 
@@ -66,7 +76,7 @@ public:
      * This constructor does not allocate any objects or start the game.
      * This allows us to use the object without a heap pointer.
      */
-    MenuScene() : cugl::Scene2(), _progress(0.0f) {}
+    MenuScene() : cugl::Scene2(), _progress(0.0f),lastInputTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(500)) {}
 
     /**
      * Disposes of all (non-static) resources allocated to this mode.

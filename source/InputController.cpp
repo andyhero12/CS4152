@@ -1,16 +1,10 @@
 //
-//  GLInputController.cpp
+//  GInputController.cpp
 //  Dog Lab
 //
-//  This class buffers in input from the devices and converts it into its
-//  semantic meaning. If your game had an option that allows the player to
-//  remap the control keys, you would store this information in this class.
-//  That way, the main game scene does not have to keep track of the current
-//  key mapping.
-//
-//  Author: Walker M. White
+//  Author: Zekai Li
 //  Based on original GameX Ship Demo by Rama C. Hoetzlein, 2002
-//  Version: 1/20/22
+//  Version: 3/29/24
 //
 #include <cugl/cugl.h>
 #include "InputController.h"
@@ -27,7 +21,12 @@ using namespace cugl;
 InputController::InputController() :
 _forward(0),
 _turning(0),
-_didFire(false) {
+_didFire(false),
+_didChangeMode(false),
+_didReset(false),
+_didSpecial(false),
+_UseJoystick(false),
+_UseKeyboard(false){
 }
 
 bool InputController::init() {
@@ -49,14 +48,31 @@ bool InputController::init() {
 
 }
 
-/**
- * Reads the input for this player and converts the result into game logic.
- *
- * This is an example of polling input.  Instead of registering a listener,
- * we ask the controller about its current state.  When the game is running,
- * it is typically best to poll input instead of using listeners.  Listeners
- * are more appropriate for menus and buttons (like the loading screen).
- */
+bool InputController::init_withlistener() {
+    bool contSuccess = Input::activate<GameControllerInput>();
+    if (contSuccess) {
+        GameControllerInput* controller = Input::get<GameControllerInput>();
+        std::vector<std::string> deviceUUIDs = controller->devices();
+        _gameContrl = controller->open(deviceUUIDs.at(0));
+        if (deviceUUIDs.size() == 0) {
+            return false;
+        }
+        _controllerKey = controller->acquireKey();
+        //std::cout << _controllerKey << std::endl;
+        _gameContrl->addAxisListener(_controllerKey, [=](const GameControllerAxisEvent& event, bool focus) {
+            this->getAxisAngle(event, focus);
+            });
+        _gameContrl->addButtonListener(_controllerKey, [=](const GameControllerButtonEvent& event, bool focus) {
+            this->getButton(event, focus);
+            });
+        return true;
+    }
+
+    return false;
+
+}
+
+
  /**
   * Reads the input for this player and converts the result into game logic.
   *
@@ -218,5 +234,35 @@ void InputController::readInput_joystick() {
             //    
             //}
         }
+    }
+}
+
+
+void InputController::getAxisAngle(const cugl::GameControllerAxisEvent& event, bool focus) {
+    if (event.axis == cugl::GameController::Axis::LEFT_Y|| event.axis == cugl::GameController::Axis::RIGHT_Y){
+        float UD = event.value;
+        if (UD < -0.2) {
+            _updown = 1; //Up
+        }
+        else if (UD > 0.2) {
+            _updown = -1; //down
+        }
+    }
+    else if (event.axis == cugl::GameController::Axis::LEFT_X || event.axis == cugl::GameController::Axis::RIGHT_X) {
+        float LR = event.value;
+        if (LR < -0.2) {
+            _Leftright = -1; //Left
+        }
+        else if (LR > 0.2) {
+            _Leftright = 1; //Right
+        }
+    }
+}
+
+
+void InputController::getButton(const cugl::GameControllerButtonEvent& event, bool focus) {
+    if (event.button == cugl::GameController::Button::A) {
+        _confirm = true;
+        std::cout << "button" << std::endl;
     }
 }
