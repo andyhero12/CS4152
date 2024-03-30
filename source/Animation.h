@@ -25,7 +25,7 @@ private:
     int currentAnimationDirection;
     /** Number of frames that passed*/
     float timeSinceLastAnim;
-    /** Attack animation frequency */
+    /** Attack animation frequency; represents the number of frames until update */
     float animFreq;
     
     int convertToQuadrant(double radian);
@@ -47,6 +47,10 @@ public:
     // int numAnimDirections;
     
     Animation(){}
+    /**
+    Initializes a Animation Object
+    @param freq is the number of frames until the sprite steps to the next animation
+     */
     Animation(std::vector<std::shared_ptr<cugl::SpriteSheet>>& animTextures, float freq, int startFrame);
     ~Animation() {}
     

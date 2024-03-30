@@ -24,13 +24,13 @@ private:
     GLfloat minT;
     GLfloat maxT;
     
-    /** Current frame number*/
-    int frame;
+    /** Current index number*/
+    int idx;
     /** Index of the current animation direction*/
     int currentAnimationDirection;
     /** Number of frames that passed*/
     float timeSinceLastAnim;
-    /** Attack animation frequency */
+    /** Attack animation frequency; represents the number of frames until update */
     float animFreq;
     /**
     Returns true if enough time has passed since the last animation frame update
@@ -49,16 +49,16 @@ private:
 public:
     TextureAnimation(){}
     /** Defaults to using the entire texture*/
-    TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq, int startFrame);
+    TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq);
     /** minS, maxS, minT, maxT range from 0 to 1, representing the percentage of the texture's width and height.*/
-    TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq, int startFrame, GLfloat minS, GLfloat maxS, GLfloat minT, GLfloat maxT);
+    TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq, GLfloat minS, GLfloat maxS, GLfloat minT, GLfloat maxT);
     /** x1,y1 is the location of the pixel's top left corner  and x2,y2 is the location of the pixel's bottom right corner*/
-    TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq, int startFrame, int x1, int x2, int y1, int y2);
+    TextureAnimation(std::vector<std::shared_ptr<cugl::Texture>>& animTextures, float freq, int x1, int x2, int y1, int y2);
     
     ~TextureAnimation() {}
     
-
-    
     void updateTexture();
+    
+    const std::shared_ptr<cugl::Texture>& getTexture() const {return currentTexture;}
 };
 #endif /* TextureAnimation_hpp */
