@@ -46,7 +46,6 @@
 #include <cugl/math/cu_math.h>
 #include <cugl/scene2/graph/CUSceneNode.h>
 #include <cugl/render/CUOrthographicCamera.h>
-#include "../../../../source/GlobalConstants.h"
 
 namespace cugl {
     
@@ -114,13 +113,6 @@ public:
      * scene will be released. They will be deleted if no other object owns them.
      */
     virtual void dispose();
-    
-    virtual ScreenEnums getTransition() {
-        CULog("Don't use Scene2 Trans\n");
-        return ScreenEnums::LOADING;
-    }
-    
-    virtual void resetTransition(){};
     
     /**
      * Initializes a Scene2 with the given viewport.

@@ -12,28 +12,21 @@
 #include <cugl/cugl.h>
 #include <unordered_set>
 #include <vector>
-
+#include "SpriteAnimationNode.h"
 class Base{
     
 private:
-    
-    std::shared_ptr<cugl::Texture> _texture;
-    
     int _health;
     int _healVal;
     cugl::Vec2 _position;
     
 public:
-    
     Base(int health, cugl::Vec2 pos);
     void update();
     void reduceHealth(int val);
     
     bool lost(){
         return _health <= 0;
-    }
-    const std::shared_ptr<cugl::Texture>& getTexture() const {
-        return _texture;
     }
     
     const cugl::Vec2& getPos() const {

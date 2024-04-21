@@ -13,52 +13,65 @@
 
 class AbstractSpawner{
 protected:
-    std::shared_ptr<cugl::Texture> _texture;
-    int _spawnRate;
-    int _respawnCnt;
+    std::shared_ptr<cugl::scene2::PolygonNode> polyNode;
+    float _regularDelay;
+    float _accumulatedDelay;
     int _health;
-    int _delay;
-    double _timeElapsed;
+    float _delay;
+    float _timeElapsed;
     cugl::Vec2 _position;
     
 public:
-    
-    AbstractSpawner(int rate, cugl::Vec2 pos, int health, int delay)
-    : _spawnRate(rate)
+
+    std::shared_ptr<cugl::scene2::SceneNode> getSpawnerNode(){
+        return polyNode;
+    }
+    void setSpawnerNode(std::shared_ptr<cugl::scene2::PolygonNode>  inc){
+        polyNode = inc;
+    }
+    AbstractSpawner(float regularDelay, cugl::Vec2 pos, int health, float delay)
+    : _regularDelay(regularDelay)
     , _position(pos)
     , _health(health)
     , _timeElapsed(0.0)
+    , _accumulatedDelay(-delay + regularDelay)
     , _delay{delay}
     {
-        
     }
-    const std::shared_ptr<cugl::Texture>& getTexture() const {
-        return _texture;
-    }
-    void setTexture(const std::shared_ptr<cugl::Texture>& value){
-        _texture = value;
-    }
-    double getTimeElapsed() const{
+    
+    float getTimeElapsed() const{
         return _timeElapsed;
     }
+
+    void updateTime(float dt){
+        _accumulatedDelay += dt;
+        _timeElapsed += dt;
+    }
+
     bool canSpawn() const {
-        return (_respawnCnt > _spawnRate);
+        return (_accumulatedDelay > _regularDelay);
     }
     void reloadSpawner() {
-        _respawnCnt = 0;
+        _accumulatedDelay = 0;
     }
-    const int getCnt() const {
-        return _respawnCnt;
+    void setSceneNode(std::shared_ptr<cugl::Texture> _texture){
+        polyNode = cugl::scene2::PolygonNode::allocWithTexture(_texture);
+        polyNode->setContentSize(Vec2(1, 1));
+        polyNode->setScale(cugl::Size(1,1)/48);
+    }
+    const float getAccumulatedDelay() const {
+        return _accumulatedDelay;
     }
     cugl::Vec2 getPos() const {
         return _position; }
-    void subHealth(const int val);
+    void subHealth(const int val) {
+        _health -= val;
+        cout << _health;
+    }
     bool dead(){
         return _health <= 0;
     }
+    virtual void update(MonsterController& monsterController, OverWorld& overWorld, float timestep, float difficulty) = 0;
     
-    virtual void update(MonsterController& monsterController, OverWorld& overWorld, float timestep) = 0;
-    
-    virtual void draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size) = 0;
 };
 #endif /* AbstractSpawner_h */

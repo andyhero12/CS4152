@@ -1,5 +1,10 @@
 {
 	"textures": {
+        "backgroundl":{
+            "file":      "textures/level-complete.png",
+            "minfilter": "linear",
+            "magfilter": "nearest"
+        },
 		"logo": {
 			"file":      "textures/TITLE.PNG",
             "wrapS":     "clamp",

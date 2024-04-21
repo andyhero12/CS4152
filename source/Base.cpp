@@ -11,11 +11,9 @@ Base::Base(int health, cugl::Vec2 pos)
 ,_position{pos}
 ,_healVal{5}
 {
-    
 }
 
 void Base::update(){
-    
 }
 
 void Base::reduceHealth(int val){

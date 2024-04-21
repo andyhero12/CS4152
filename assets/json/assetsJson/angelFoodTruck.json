@@ -1,0 +1,14 @@
+{ "columns":30,
+ "image":"Downloads\/angel food truck.png",
+ "imageheight":160,
+ "imagewidth":960,
+ "margin":0,
+ "name":"angelFoodTruck",
+ "spacing":0,
+ "tilecount":150,
+ "tiledversion":"1.10.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

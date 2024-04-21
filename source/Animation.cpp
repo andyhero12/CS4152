@@ -83,9 +83,9 @@ void Animation::update(double radian){
 
 
 /*
- Takes in the previous animation direction
+ Takes in the vector angle
  */
-void Animation::updateDir(int prevDir){
+void Animation::update(int prevDir){
     if (currentAnimationDirection != prevDir){
         resetAnimation(prevDir);
     }

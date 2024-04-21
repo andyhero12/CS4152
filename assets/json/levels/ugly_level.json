@@ -117,7 +117,7 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":30,
          "id":5,
-         "name":"Decorative",
+         "name":"Decor",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,

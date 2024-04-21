@@ -1,0 +1,14 @@
+{ "columns":19,
+ "image":"Downloads\/angelMotel.png",
+ "imageheight":352,
+ "imagewidth":608,
+ "margin":0,
+ "name":"angelMotel",
+ "spacing":0,
+ "tilecount":209,
+ "tiledversion":"1.10.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

@@ -9,7 +9,7 @@
 #ifndef Devil_h
 #define Devil_h
 
-#include "Dog.h"
+#include "NLDog.h"
 #include "Animation.h"
 #include <cugl/cugl.h>
 

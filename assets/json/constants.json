@@ -23,7 +23,7 @@
         "sprite size": 7,
         "sprite frame": 0
     },
-    "asteroids": {
+    "monsters": {
         "sprite cols": 4,
         "sprite size": 4,
         "start": [
@@ -46,8 +46,16 @@
         ]
     },
     "bomb": {
+        "sprite cols": 9,
+        "sprite size": 9
+    },
+    "absorbEnemy": {
         "sprite cols": 8,
         "sprite size": 8
+    },
+    "spawnerEnemy": {
+        "sprite cols": 4,
+        "sprite size": 4
     },
     "spawner": {
         "start,Rate": [

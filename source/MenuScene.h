@@ -1,69 +1,69 @@
 //
-//  SLLoadingScene.h
+//  NLMenuScene.h
+//  Network Lab
 //
-//  This module provides a very barebones loading screen.  Most of the time you
-//  will not need a loading screen, because the assets will load so fast.  But
-//  just in case, this is a simple example you can use in your games.
+//  This class presents the initial menu scene.  It allows the player to
+//  choose to be a host or a client.
 //
-//  We know from 3152 that you all like to customize this screen.  Therefore,
-//  we have kept it as simple as possible so that it is easy to modify. In
-//  fact, this loading screen uses the new modular JSON format for defining
-//  scenes.  See the file "loading.json" for how to change this scene.
+//  Author: Walker White, Aidan Hobler
+//  Version: 2/8/22
 //
-//  Author: Walker White
-//  Version: 1/20/22
-//
-#ifndef __SL_MAINMENU_SCENE_H__
-#define __SL_MAINMENU_SCENE_H__
+#ifndef __NL_MENU_SCENE_H__
+#define __NL_MENU_SCENE_H__
 #include <cugl/cugl.h>
+#include <vector>
+#include <chrono>
 #include "GlobalConstants.h"
 
+
 /**
- * This class is a simple loading screen for asychronous asset loading.
+ * This class presents the menu to the player.
  *
- * The screen will display a very minimal progress bar that displays the
- * status of the asset manager.  Make sure that all asychronous load requests
- * are issued BEFORE calling update for the first time, or else this screen
- * will think that asset loading is complete.
- *
- * Once asset loading is completed, it will display a play button.  Clicking
- * this button will inform the application root to switch to the gameplay mode.
+ * There is no need for an input controller, as all input is managed by
+ * listeners on the scene graph.  We only need getters so that the main
+ * application can retrieve the state and communicate it to other scenes.
  */
 class MenuScene : public cugl::Scene2 {
+public:
+    /**
+     * The menu choice.
+     *
+     * This state allows the top level application to know what the user
+     * chose.
+     */
+    enum Choice {
+        /** User has not yet made a choice */
+        NONE,
+        /** User wants to host a game */
+        HOST,
+        /** User wants to join a game */
+        JOIN
+    };
+
 protected:
-    /** The asset manager for loading. */
+    /** The asset manager for this scene. */
     std::shared_ptr<cugl::AssetManager> _assets;
+    /** The menu button for hosting a game */
+    std::shared_ptr<cugl::scene2::Button> _hostbutton;
+    /** The menu button for joining a game */
+    std::shared_ptr<cugl::scene2::Button> _joinbutton;
+    /** The player menu choice */
+    std::shared_ptr<cugl::scene2::Button> _back;
+    Choice _choice;
 
-    // NO CONTROLLER (ALL IN SEPARATE THREAD)
-
-    // VIEW
-    /** The animated progress bar */
-    std::shared_ptr<cugl::scene2::ProgressBar>  _bar;
-    /** The engine name */
-    std::shared_ptr<cugl::scene2::SceneNode>  _brand;
-    /** The "play" button */
-    std::shared_ptr<cugl::scene2::Button>    _button;
-
-    // MODEL
-    /** The progress displayed on the screen */
-    float _progress;
-    /** Whether or not the player has pressed play to continue */
-    bool  _completed;
-
-    ScreenEnums transition;
-
-
+    bool _backclicked;
+    
 public:
 #pragma mark -
 #pragma mark Constructors
     /**
-     * Creates a new loading mode with the default values.
+     * Creates a new  menu scene with the default values.
      *
      * This constructor does not allocate any objects or start the game.
      * This allows us to use the object without a heap pointer.
      */
-    MenuScene() : cugl::Scene2(), _progress(0.0f) {}
-
+    MenuScene() : cugl::Scene2() {}
+    
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      *
@@ -71,18 +71,21 @@ public:
      * static resources, like the input controller.
      */
     ~MenuScene() { dispose(); }
-
+    
     /**
      * Disposes of all (non-static) resources allocated to this mode.
      */
     void dispose() override;
-
+    
     /**
-     * Initializes the controller contents, making it ready for loading
+     * Initializes the controller contents.
      *
-     * The constructor does not allocate any objects or memory.  This allows
-     * us to have a non-pointer reference to this controller, reducing our
-     * memory allocation.  Instead, allocation happens in this method.
+     * In previous labs, this method "started" the scene.  But in this
+     * case, we only use to initialize the scene user interface.  We
+     * do not activate the user interface yet, as an active user
+     * interface will still receive input EVEN WHEN IT IS HIDDEN.
+     *
+     * That is why we have the method {@link #setActive}.
      *
      * @param assets    The (loaded) assets for this game mode
      *
@@ -90,28 +93,27 @@ public:
      */
     bool init(const std::shared_ptr<cugl::AssetManager>& assets);
 
-
-#pragma mark -
-#pragma mark Progress Monitoring
     /**
-     * The method called to update the game mode.
+     * Sets whether the scene is currently active
      *
-     * This method updates the progress bar amount.
+     * This method should be used to toggle all the UI elements.  Buttons
+     * should be activated when it is made active and deactivated when
+     * it is not.
      *
-     * @param timestep  The amount of time (in seconds) since the last frame
+     * @param value whether the scene is currently active
      */
-    void update(float timestep) override;
-
-    ScreenEnums getTransition() override;
-
-    void resetTransition() override;
-
+    virtual void setActive(bool value) override;
+    
     /**
-     * Returns true if loading is complete, but the player has not pressed play
+     * Returns the user's menu choice.
      *
-     * @return true if loading is complete, but the player has not pressed play
+     * This will return NONE if the user had no yet made a choice.
+     *
+     * @return the user's menu choice.
      */
-    bool isPending() const;
+    Choice getChoice() const { return _choice; }
+
+    bool getBackclick(){ return _backclicked; }
 };
 
-#endif /* __SL_MAINMENU_SCENE_H__ */
+#endif /* __NL_MENU_SCENE_H__ */

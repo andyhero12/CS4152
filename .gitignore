@@ -1,14 +1,11 @@
-.DS_Store
+build
+*.DS_Store
+*.plist
+.vs
+assets/log_host.txt
+assets/log_client.txt
 
-## User settings
-xcuserdata/
 
-## Xcode 8 and earlier
-*.xcscmblueprint
-*.xccheckout
-
-build/
-
-cugl/scripts
-cugl/scripts/__pycache__
+cugl/
 cugl/__pycache__
+cugl/scripts/__pycache__

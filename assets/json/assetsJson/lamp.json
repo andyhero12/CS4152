@@ -1,0 +1,14 @@
+{ "columns":6,
+ "image":"Downloads\/lampPost.PNG",
+ "imageheight":191,
+ "imagewidth":193,
+ "margin":0,
+ "name":"lamp",
+ "spacing":0,
+ "tilecount":30,
+ "tiledversion":"1.10.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

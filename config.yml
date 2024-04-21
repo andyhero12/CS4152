@@ -1,8 +1,8 @@
 ---
-name:   Heavens Devils                    # The application display name
-short:  Heavan                        # A shortened name for reference
-appid:  edu.cornell.gdiac.code14152Group     # Application identifier for Mac, iOS, Android
-suffix: G0C251FB
+name:   HeavensDevils                     # The application display name
+short:  Heaven                            # A shortened name for reference
+appid:  edu.cornell.gdiac.HeavensDevils   # Application identifier for Mac, iOS, Android
+suffix: GEC5DABA
 
 build:  build                       # The build directory (targets are each a subdirectory)
 assets: assets                      # The folder with the game assets (do not list asset)
@@ -19,4 +19,4 @@ targets:                        # The target platforms to build for
     - android                   # Android Studio
     - apple                     # XCode (note macOS and iOS use one project)
     - windows                   # Windows Sisual Studio
-    - cmake                     # This supports all Desktop platfor G0C251FB
+    - cmake                     # This supports all Desktop platfor GEC5DABA

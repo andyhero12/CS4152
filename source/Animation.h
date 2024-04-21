@@ -69,7 +69,7 @@ public:
     void updateDirection();
     
     void update(double radian);
-    void updateDir(int prevDir);
+    void update(int prevDir);
     
 };
 #endif /* Animation_hpp */

@@ -10,114 +10,122 @@
 #include <cugl/cugl.h>
 #include <unordered_set>
 #include "Base.h"
-#include "Dog.h"
+#include "NLDog.h"
 #include "Devil.h"
 #include "Animation.h"
 #include "BaseSet.h"
-#include "InputController.h"
+#include "NLInput.h"
 #include "AttackPolygons.h"
 #include "DecoySet.h"
+#include "NLLevelModel.h"
+#include "NLDecoyEvent.h"
+#include "NLRecallEvent.h"
+#include "NLBiteEvent.h"
+#include "NLExplodeEvent.h"
+#include "NLShootEvent.h"
+#include "World.h"
+#include "NLDashEvent.h"
+#include "NLSizeEvent.h"
 
-class OverWorld{
+class OverWorld
+{
 private:
+    std::shared_ptr<LevelModel> _level;
+    std::shared_ptr<NetEventController> _network;
+    cugl::Size _activeSize;
     std::shared_ptr<Dog> _dog;
+    std::shared_ptr<Dog> _dogClient;
     std::shared_ptr<Devil> _devil;
     std::shared_ptr<DecoySet> _decoys;
     std::shared_ptr<BaseSet> _bases;
     std::shared_ptr<cugl::JsonValue> _constants;
     std::shared_ptr<cugl::AssetManager> _assets;
-    cugl::Size _totalSize;
     AttackPolygons _attackPolygonSet;
-    
-    void drawDecoy(const std::shared_ptr<cugl::SpriteBatch>& batch);
+    AttackPolygons _clientAttackPolygonSet;
+    std::shared_ptr<World> _world;
+
+    void drawDecoy(const std::shared_ptr<cugl::SpriteBatch> &batch);
+
 public:
-    
-    OverWorld(){
-        
+    bool _isHost;
+    OverWorld()
+    {
     }
-    ~OverWorld(){
-        
+    ~OverWorld()
+    {
     }
-    
-    void reset(cugl::Size resetSize);
-    bool init(const std::shared_ptr<cugl::AssetManager>& assets, cugl::Size totalSize);
-    bool initDog();
+
+    void reset();
+    bool init(const std::shared_ptr<cugl::AssetManager> &assets, const std::shared_ptr<LevelModel> &_level, cugl::Size activeSize, std::shared_ptr<cugl::physics2::net::NetEventController> network, bool isHost, std::shared_ptr<World> world);
+    bool initDogModel();
     bool initDevil();
     bool initBases();
     bool initDecoys();
-    
-    void dogUpdate(InputController& _input,cugl::Size totalSize);
-    void devilUpdate(InputController& _input,cugl::Size totalSize);
-    void update(InputController& input, cugl::Size totalSize, float timestep);
+    bool initPolygons();
+    bool initWorld();
+
+    bool setRootNode(const std::shared_ptr<scene2::SceneNode> &_worldNode, const std::shared_ptr<scene2::SceneNode> &_debugNode, std::shared_ptr<cugl::physics2::net::NetWorld> _world);
+    // will add Obstacle nodes too
+    void dogUpdate(InputController &_input, cugl::Size totalSize);
+    void devilUpdate(InputController &_input, cugl::Size totalSize);
+    void update(InputController &input, cugl::Size totalSize, float timestep);
     void postUpdate();
-    
+    void ownedDogUpdate(InputController& _input, cugl::Size, std::shared_ptr<Dog> _curDog);
+    void processShootEvent(const std::shared_ptr<ShootEvent>& shootEvent);
+    void processSizeEvent(const std::shared_ptr<SizeEvent>& sizeEvent);
+    void processBiteEvent(const std::shared_ptr<BiteEvent>& biteEvent);
+    void processRecallEvent(const std::shared_ptr<RecallEvent>& recallEvent);
+    void processExplodeEvent(const std::shared_ptr<ExplodeEvent>& explodeEvent);
+    void processDashEvent(const std::shared_ptr<DashEvent>& dashEvent);
+    void recallDogToClosetBase(std::shared_ptr<Dog> _curDog);
     void draw(const std::shared_ptr<cugl::SpriteBatch>& batch,cugl::Size totalSize);
-    
-    // Might want to be more specific with tile types
-    enum Terrain {
-        PASSABLE,
-        IMPASSIBLE
-    };
-    
-    // Information for a tile, add to this later since idk what this will include
-    class TileInfo {
-    public:
-    private:
-        Terrain type;
-    };
-    
-    // Matrix with information about the overworld
-    std::vector<std::vector<TileInfo>> overworld;
-    
     std::shared_ptr<Dog> getDog() const {
         return _dog;
     }
-    std::shared_ptr<Devil> getDevil()const {
+    std::shared_ptr<Dog> getClientDog() const
+    {
+        return _dogClient;
+    }
+    std::shared_ptr<Devil> getDevil() const
+    {
         return _devil;
     }
-    std::shared_ptr<DecoySet> getDecoys() const{
+    std::shared_ptr<DecoySet> getDecoys() const
+    {
         return _decoys;
     }
-    std::shared_ptr<BaseSet> getBaseSet(){
+    std::shared_ptr<BaseSet> getBaseSet()
+    {
         return _bases;
     }
-    int getTotalTargets() const {
-        return 1 + (int) _bases->_bases.size() + (int) _decoys->getCurrentDecoys().size();
+    std::shared_ptr<LevelModel> getLevelModel()
+    {
+        return _level;
     }
-    AttackPolygons& getAttackPolygons(){
+    std::shared_ptr<World> getWorld()
+    {
+        return _world;
+    }
+
+    int getTotalTargets() const
+    {
+        return 1 + (int)_bases->_bases.size() + (int)_decoys->getCurrentDecoys().size();
+    }
+    AttackPolygons &getAttackPolygons()
+    {
         return _attackPolygonSet;
     }
-    void setDog(std::shared_ptr<Dog> m_dog){
+    AttackPolygons &getAttackPolygonsClient()
+    {
+        return _clientAttackPolygonSet;
+    }
+    void setDog(std::shared_ptr<Dog> m_dog)
+    {
         _dog = m_dog;
     }
-    void setDevil(std::shared_ptr<Devil> m_devil){
+    void setDevil(std::shared_ptr<Devil> m_devil)
+    {
         _devil = m_devil;
     }
-    
-    cugl::Size getTotalSize() const {
-        return _totalSize;
-    }
-    
-    /**
-    Get the type of terrain at the tile at (x, y)
-     */
-    Terrain getTerrain(int x, int y);
-    
-    /**
-    Whether the terrain at (x, y) is passable
-     */
-    bool isPassable(int x, int y);
-    
-    /**
-     Gets the width of the overworld in tile coordinates
-     */
-    int getRows();
-    
-    /**
-     Gets the height of the overworld in tile coordinates
-     */
-    int getCols();
-    
-    
 };
 #endif /* OverWorld_hpp */

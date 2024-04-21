@@ -5,6 +5,7 @@
 //
 #include "SpawnerController.h"
 #include <random>
+#include <cmath>
 
 SpawnerController::SpawnerController(){
     
@@ -23,21 +24,27 @@ int generateRandomValue(int left, int right) {
 }
 
 void SpawnerController::update(MonsterController& monsterController, OverWorld& overWorld, float timestep){
+    //_difficulty *= 1.00077046f;
+   // _difficulty *= 1.00003851f;
+    accumulatedTime += timestep;
+    //cout << (std::to_string(difficulty));
     for(auto& spawner : _spawners) {
-        spawner->update(monsterController, overWorld, timestep);
-//        if (spawner->canSpawn()){
-//            spawner->reloadSpawner();
-//            monsterController.spawnBasicEnemy(spawner->getPos(),overWorld);
-//        }
+        spawner->update(monsterController, overWorld, timestep, (float)std::pow(1.00231316, accumulatedTime) + difficulty);
+        
     }
-    
+    for (auto& spawner : animationNodes){
+        spawner->update();
+    }
     
     auto it = _spawners.begin();
     while (it != _spawners.end()){
         std::shared_ptr<AbstractSpawner> spawner = *it;
         
         if (spawner->dead()){
+            //CULog("nani");
             it = _spawners.erase(it);
+            spawner->getSpawnerNode()->removeFromParent();
+            difficulty += 0.1;
         }
         else{
             ++it;
@@ -46,42 +53,35 @@ void SpawnerController::update(MonsterController& monsterController, OverWorld& 
     
 }
 
-bool SpawnerController::init(std::shared_ptr<cugl::JsonValue> data,const std::vector<cugl::Vec2>& startLocs) {
-    if (data) {
-        _spawners.clear();
-        // CULog("INIT\n");
-        if (data->get("start,Rate")){
-            auto spawnerValues = data->get("start,Rate")->children();
-            for (int i =0; i< startLocs.size(); i++){
-                std::shared_ptr<cugl::JsonValue> entry = spawnerValues.at(i);
-                cugl::Vec2 pos;
-                pos.x = startLocs.at(i).x;
-                pos.y = startLocs.at(i).y;
-                int spawnRate = 200;
-                int health = 10;
-                std::shared_ptr<MeleeSpawner> curSpawner = std::make_shared<MeleeSpawner>(spawnRate,pos,health,0);
-                curSpawner->setTexture(_texture);
-                _spawners.insert(curSpawner);
-            }
-        }
-        return true;
+bool SpawnerController::init(const std::vector<LevelModel::Spawner>& startLocs, std::shared_ptr<cugl::AssetManager> assets) {
+    _spawners.clear();
+    animationNodes.clear();
+    baseSpawnerNode = cugl::scene2::SceneNode::alloc();
+    for (int i =0; i< startLocs.size(); i++){
+        LevelModel::Spawner spawner = startLocs.at(i);
+        cugl::Vec2 pos = Vec2(spawner.spawnerX, spawner.spawnerY);
+        int health = spawner.hp;
+        std::shared_ptr<SimpleSpawner> curSpawner = std::make_shared<SimpleSpawner>(spawner.regularDelay,pos,health,spawner.initDelay,spawner.primaryEnemy, spawner.secondaryEnemy, spawner.tertiaryEnemy);
+//        auto drawNode = cugl::scene2::PolygonNode::allocWithTexture(assets->get<cugl::Texture>("spawner"));
+        auto drawNode = SpriteAnimationNode::allocWithSheet(assets->get<cugl::Texture>("spawner"), 1,1,1);
+        drawNode->setScale(cugl::Size(1,1)/48);
+//        drawNode->setContentSize(cugl::Size(1,1));
+        drawNode->setPosition(pos);
+        drawNode->setAnchor(cugl::Vec2::ANCHOR_CENTER);
+//        animationNodes.push_back(drawNode);
+        baseSpawnerNode->addChild(drawNode);
+        curSpawner->setSpawnerNode(drawNode);
+        _spawners.insert(curSpawner);
     }
-    return false;
+    difficulty = 0;
+    accumulatedTime = 0;
+    return true;
 }
-
-void SpawnerController::setTexture(const std::shared_ptr<cugl::Texture>& value ){
-    _texture = value;
-}
-
-void SpawnerController::draw(const std::shared_ptr<cugl::SpriteBatch>& batch, cugl::Size size){
-    for(const std::shared_ptr<AbstractSpawner>& spawner : _spawners) {
-        cugl::Vec2 pos = spawner->getPos();
-        cugl::Vec2 origin(0, 0);
-        cugl::Affine2 trans;
-        float scale = 2;
-        trans.scale(scale);
-        trans.translate(pos);
-        spawner->draw(batch, size);
-    }
+void SpawnerController::setRootNode(const std::shared_ptr<scene2::SceneNode>& _worldNode, bool isHost){
+    
+    _isHost = isHost;
+    // Add the Base Spawner Node
+    _worldNode->addChild(baseSpawnerNode);
+    
     
 }

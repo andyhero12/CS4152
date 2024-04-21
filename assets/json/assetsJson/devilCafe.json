@@ -1,0 +1,14 @@
+{ "columns":4,
+ "image":"Downloads\/devil cafe-2.png",
+ "imageheight":192,
+ "imagewidth":128,
+ "margin":0,
+ "name":"devilCafe",
+ "spacing":0,
+ "tilecount":24,
+ "tiledversion":"1.10.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}
